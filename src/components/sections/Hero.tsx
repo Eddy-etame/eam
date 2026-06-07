@@ -1,6 +1,7 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useGSAP } from '@gsap/react'
 import { gsap } from '@/lib/gsap'
@@ -8,9 +9,18 @@ import { localizedPath } from '@/lib/seo'
 import type { Locale } from '@/i18n/config'
 import type { Dictionary } from '@/i18n/dictionaries'
 
+const HeroCanvas = dynamic(() => import('@/components/three/HeroCanvas'), { ssr: false })
+
 export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const root = useRef<HTMLElement>(null)
   const { hero } = dict
+  const [enable3D, setEnable3D] = useState(false)
+
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const small = window.matchMedia('(max-width: 767px)').matches
+    if (!reduce && !small) setEnable3D(true)
+  }, [])
 
   useGSAP(
     () => {
@@ -53,6 +63,12 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           }}
         />
       </div>
+
+      {enable3D && (
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <HeroCanvas />
+        </div>
+      )}
 
       <p data-hero-eyebrow className="text-mono-label mb-8 text-gold/85">
         {hero.eyebrow}
