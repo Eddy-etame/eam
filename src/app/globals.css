@@ -1,26 +1,255 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*═══════════════════════════════════════════════════════════════════════════
+  EAM — DESIGN SYSTEM  ·  Tailwind v4 (CSS-first)
+  Color & font tokens are mapped via `@theme inline` to live CSS variables
+  (--c-*, --font-*). The whole palette is swapped at runtime by setting
+  [data-theme] on <html> — see src/lib/themes.ts + ThemeProvider.
+═══════════════════════════════════════════════════════════════════════════*/
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Palette → resolves from the active [data-theme] block below */
+  --color-deep:        var(--c-deep);
+  --color-navy:        var(--c-navy);
+  --color-surface:     var(--c-surface);
+  --color-surface-2:   var(--c-surface-2);
+  --color-ink:         var(--c-ink);
+  --color-muted:       var(--c-muted);
+  --color-faint:       var(--c-faint);
+  --color-gold:        var(--c-gold);
+  --color-gold-dim:    var(--c-gold-dim);
+  --color-gold-bright: var(--c-gold-bright);
+  --color-line:        var(--c-line);
+  --color-line-strong: var(--c-line-strong);
+
+  /* Typography (next/font variables) */
+  --font-display: var(--font-fraunces);
+  --font-body:    var(--font-jakarta);
+  --font-mono:    var(--font-jetbrains);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  /* Fluid type scale (clamp → no breakpoints needed) */
+  --text-2xs:  clamp(0.65rem, 1.2vw, 0.72rem);
+  --text-xs:   clamp(0.72rem, 1.4vw, 0.80rem);
+  --text-sm:   clamp(0.85rem, 1.6vw, 0.95rem);
+  --text-base: clamp(1rem,    1.8vw, 1.10rem);
+  --text-lg:   clamp(1.12rem, 2.2vw, 1.35rem);
+  --text-xl:   clamp(1.40rem, 3.0vw, 2.00rem);
+  --text-2xl:  clamp(2.00rem, 4.0vw, 3.00rem);
+  --text-3xl:  clamp(2.50rem, 6.0vw, 5.00rem);
+  --text-4xl:  clamp(3.25rem, 8.0vw, 8.00rem);
+  --text-hero: clamp(3.50rem, 12vw, 13rem);
+
+  /* Signature easings */
+  --ease-reveal: cubic-bezier(0.16, 1, 0.30, 1);
+  --ease-silk:   cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  --ease-snap:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-gold:   cubic-bezier(0.76, 0, 0.24, 1);
+
+  /* Radii */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius:    8px;
+  --radius-lg: 16px;
+}
+
+/*── THEME PALETTES ─────────────────────────────────────────────────────────*/
+
+/* 1 · Heraldic Maison (default) — deep navy, warm white, heraldic gold */
+:root,
+[data-theme='heraldic'] {
+  color-scheme: dark;
+  --c-deep:        #070D18;
+  --c-navy:        #0D1F3C;
+  --c-surface:     #0F1A2E;
+  --c-surface-2:   #13243F;
+  --c-ink:         #F5F0E8;
+  --c-muted:       #8892A4;
+  --c-faint:       #4A5568;
+  --c-gold:        #C9A96E;
+  --c-gold-dim:    #8C6F3E;
+  --c-gold-bright: #E4CE9C;
+  --c-line:        rgb(201 169 110 / 0.16);
+  --c-line-strong: rgb(201 169 110 / 0.42);
+}
+
+/* 2 · Precision Atelier — cooler steel, sharper, blueprint (stub) */
+[data-theme='atelier'] {
+  color-scheme: dark;
+  --c-deep:        #06090E;
+  --c-navy:        #0B141C;
+  --c-surface:     #0D1822;
+  --c-surface-2:   #122231;
+  --c-ink:         #E9EEF3;
+  --c-muted:       #7E8C9A;
+  --c-faint:       #3C4856;
+  --c-gold:        #A9B7C4;
+  --c-gold-dim:    #5C6B79;
+  --c-gold-bright: #D6E0E9;
+  --c-line:        rgb(169 183 196 / 0.16);
+  --c-line-strong: rgb(169 183 196 / 0.40);
+}
+
+/* 3 · Editorial Quiet-Luxury — light, cream/paper (stub) */
+[data-theme='editorial'] {
+  color-scheme: light;
+  --c-deep:        #F4EFE6;
+  --c-navy:        #EAE2D4;
+  --c-surface:     #FBF8F1;
+  --c-surface-2:   #FFFFFF;
+  --c-ink:         #16110A;
+  --c-muted:       #5C5346;
+  --c-faint:       #9A8E78;
+  --c-gold:        #8C6F3E;
+  --c-gold-dim:    #B79B6A;
+  --c-gold-bright: #5E4A22;
+  --c-line:        rgb(22 17 10 / 0.12);
+  --c-line-strong: rgb(22 17 10 / 0.32);
+}
+
+/* 4 · Bold Grotesk — stark black/white, single gold accent (stub) */
+[data-theme='bold'] {
+  color-scheme: dark;
+  --c-deep:        #0A0A0A;
+  --c-navy:        #0F0F0F;
+  --c-surface:     #151515;
+  --c-surface-2:   #1E1E1E;
+  --c-ink:         #FAFAF7;
+  --c-muted:       #9A9A95;
+  --c-faint:       #565652;
+  --c-gold:        #C9A96E;
+  --c-gold-dim:    #8C6F3E;
+  --c-gold-bright: #E4CE9C;
+  --c-line:        rgb(255 255 255 / 0.14);
+  --c-line-strong: rgb(255 255 255 / 0.38);
+}
+
+/*── BASE ───────────────────────────────────────────────────────────────────*/
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--c-line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    /* Lenis drives smooth scroll; keep native behaviour neutral */
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-color: var(--c-deep);
+    color: var(--c-ink);
+    font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: 'ss01', 'cv01';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display), Georgia, 'Times New Roman', serif;
+    font-weight: 560;
+    line-height: 0.96;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--c-gold);
+    color: var(--c-deep);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--c-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Slender heraldic scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--c-deep); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--c-gold-dim);
+    border: 3px solid var(--c-deep);
+    border-radius: 99px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/*── UTILITIES ────────────────────────────────────────────────────────────*/
+@layer utilities {
+  /* Fine film grain — apply to dark sections via class="grain" */
+  .grain { position: relative; }
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Gold-foil text */
+  .foil {
+    background: linear-gradient(
+      100deg,
+      var(--c-gold-dim) 0%,
+      var(--c-gold-bright) 38%,
+      var(--c-gold) 55%,
+      var(--c-gold-bright) 72%,
+      var(--c-gold-dim) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Heraldic hairline rule */
+  .hairline {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, var(--c-line-strong), transparent);
+  }
+
+  .text-mono-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: var(--text-xs);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  /* Scroll-reveal primitive (toggled by IntersectionObserver → .is-visible) */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(1.6rem);
+    transition:
+      opacity 0.9s var(--ease-reveal),
+      transform 0.9s var(--ease-reveal);
+    will-change: opacity, transform;
+  }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/*── MOTION SAFETY ──────────────────────────────────────────────────────────*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

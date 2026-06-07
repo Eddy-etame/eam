@@ -1,0 +1,34 @@
+# EAM — Creative Digital Agency
+
+> EAM is a creative digital agency founded in 2024 by three partners — Etame, Angoula and Mbosseu (the agency's name is their initials). EAM designs bespoke websites, business applications and search strategies (SEO & GEO) for SMEs, local businesses and founders across France, Morocco and francophone Africa. The studio works in French and English.
+
+## About
+- Founders: Etame, Angoula, Mbosseu (a team of 3)
+- Founded: 2024
+- Services: bespoke websites; business applications (dashboards, multi-tenant SaaS, PWAs); e-commerce; brand & visual identity; SEO and GEO (Generative Engine Optimization)
+- Technologies: Next.js, React, Astro, TypeScript, Tailwind CSS, Supabase, PostgreSQL
+- Languages: French (default), English
+- Contact: eam.agency@gmail.com
+- Area served: France, Morocco, francophone Africa, international
+
+## What is GEO?
+GEO (Generative Engine Optimization) is optimizing a website so it is cited by AI answer engines such as ChatGPT, Perplexity, Claude and Google's AI Overviews. EAM builds it into every project: structured data (schema.org), an llms.txt file, FAQ content with direct factual answers, and fast, server-rendered pages.
+
+## Key pages
+- Home (FR): https://eam.vercel.app/fr
+- Home (EN): https://eam.vercel.app/en
+- Work / portfolio: https://eam.vercel.app/fr/work
+- Studio / about: https://eam.vercel.app/fr/about
+- Contact: https://eam.vercel.app/fr/contact
+
+## Selected projects
+- Beldi Fusion — immersive site for a Moroccan fusion restaurant (Toulouse)
+- Mon Boum — digital showcase for a 10-location halal fast-food chain (Toulouse)
+- F2M Consulting — institutional site for a Qualiopi-certified training body
+- La Brigade Mobile — rebuild of a phone-repair & refurbished-device platform
+- KermHosting — SaaS hosting platform for francophone Africa (1,000+ users)
+- ID SKILLZ — showcase site for a creative agency
+
+## Notes
+- Some internal and client tools are under NDA and are shown without live links or screenshots.
+- Metrics shown in case studies are provisional pending client validation.

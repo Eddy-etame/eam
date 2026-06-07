@@ -1,0 +1,40 @@
+import { Reveal } from '@/components/ui/Reveal'
+import type { Dictionary } from '@/i18n/dictionaries'
+
+/**
+ * GEO-critical section: native <details> keeps every question and answer in the
+ * server-rendered DOM (answer engines read it without JS), and the page emits a
+ * matching FAQPage JSON-LD node.
+ */
+export function FAQ({ dict }: { dict: Dictionary }) {
+  const { faq } = dict
+  return (
+    <section id="faq" className="border-t border-line px-6 py-24 md:px-12 md:py-32 lg:px-20">
+      <div className="mx-auto grid max-w-[1640px] gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+        <Reveal>
+          <p className="text-mono-label text-gold/85">{faq.eyebrow}</p>
+          <h2 className="mt-5 text-3xl">{faq.title}</h2>
+        </Reveal>
+
+        <div className="border-t border-line">
+          {faq.items.map((item, i) => (
+            <details key={item.q} open={i === 0} className="group border-b border-line py-5">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6">
+                <h3 className="font-display text-xl text-ink transition-colors group-hover:text-gold">
+                  {item.q}
+                </h3>
+                <span
+                  aria-hidden
+                  className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line-strong text-gold transition-transform duration-300 group-open:rotate-45"
+                >
+                  +
+                </span>
+              </summary>
+              <p className="mt-4 max-w-2xl leading-relaxed text-muted">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
