@@ -69,7 +69,7 @@
   --c-faint:       #4A5568;
   --c-gold:        #C9A96E;
   --c-gold-dim:    #8C6F3E;
-  --c-gold-bright: #E4CE9C;
+  --c-gold-bright: #F3DCA6;
   --c-line:        rgb(201 169 110 / 0.16);
   --c-line-strong: rgb(201 169 110 / 0.42);
 }
@@ -142,6 +142,10 @@
 
   body {
     background-color: var(--c-deep);
+    background-image:
+      radial-gradient(ellipse 90% 55% at 50% -8%, color-mix(in srgb, var(--c-navy) 78%, transparent), transparent 72%),
+      radial-gradient(ellipse 55% 45% at 92% 3%, color-mix(in srgb, var(--c-gold) 8%, transparent), transparent 60%);
+    background-attachment: fixed;
     color: var(--c-ink);
     font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
     font-feature-settings: 'ss01', 'cv01';
@@ -235,6 +239,32 @@
   [data-reveal].is-visible {
     opacity: 1;
     transform: none;
+  }
+
+  /* Luminous accents — depth & life */
+  .glow-gold { text-shadow: 0 0 28px color-mix(in srgb, var(--c-gold) 40%, transparent); }
+  .shadow-gold { box-shadow: 0 18px 60px -22px color-mix(in srgb, var(--c-gold) 55%, transparent); }
+  .glass {
+    background: color-mix(in srgb, var(--c-surface) 62%, transparent);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  }
+  .aura { position: relative; isolation: isolate; }
+  .aura::before {
+    content: '';
+    position: absolute;
+    inset: -30%;
+    z-index: -1;
+    background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--c-gold) 22%, transparent), transparent 62%);
+    pointer-events: none;
+  }
+  .foil-anim {
+    background-size: 200% 100%;
+    animation: foil-shimmer 7s var(--ease-silk) infinite;
+  }
+  @keyframes foil-shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 }
 

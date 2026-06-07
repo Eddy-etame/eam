@@ -36,11 +36,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const setTheme = useCallback((next: ThemeId) => {
     setThemeState(next)
     document.documentElement.setAttribute('data-theme', next)
-    try {
-      localStorage.setItem(THEME_STORAGE_KEY, next)
-    } catch {
-      /* storage unavailable — ignore */
-    }
+    // Persist via cookie so the server renders the correct palette on next load.
+    document.cookie = `${THEME_STORAGE_KEY}=${next};path=/;max-age=31536000;samesite=lax`
   }, [])
 
   return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>

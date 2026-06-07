@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { cookies } from 'next/headers'
 import '../globals.css'
 import { fontVariables } from '@/lib/fonts'
 import { locales, isLocale } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
 import { buildMetadata } from '@/lib/seo'
 import { siteConfig } from '@/lib/site.config'
-import { ThemeScript } from '@/components/providers/ThemeScript'
+import { defaultThemeId, isThemeId, THEME_STORAGE_KEY } from '@/lib/themes'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { SmoothScroll } from '@/components/providers/SmoothScroll'
 import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher'
@@ -49,11 +50,19 @@ export default async function LocaleLayout({
   if (!isLocale(locale)) notFound()
   const dict = getDictionary(locale)
 
+  // Resolve the active palette on the server from a cookie — no inline script,
+  // no flash of the wrong theme, no React 19 script-tag warning.
+  const cookieStore = await cookies()
+  const stored = cookieStore.get(THEME_STORAGE_KEY)?.value
+  const theme = isThemeId(stored) ? stored : defaultThemeId
+
   return (
-    <html lang={locale} className={fontVariables} suppressHydrationWarning>
-      <head>
-        <ThemeScript />
-      </head>
+    <html
+      lang={locale}
+      data-theme={theme}
+      className={fontVariables}
+      suppressHydrationWarning
+    >
       <body className="grain">
         <a
           href="#content"
