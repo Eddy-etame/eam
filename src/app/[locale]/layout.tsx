@@ -1,19 +1,17 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { cookies } from 'next/headers'
 import '../globals.css'
 import { fontVariables } from '@/lib/fonts'
 import { locales, isLocale } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
 import { buildMetadata } from '@/lib/seo'
 import { siteConfig } from '@/lib/site.config'
-import { defaultThemeId, isThemeId, THEME_STORAGE_KEY } from '@/lib/themes'
-import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import { defaultThemeId } from '@/lib/themes'
 import { SmoothScroll } from '@/components/providers/SmoothScroll'
-import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { Cursor } from '@/components/layout/Cursor'
+import { Preloader } from '@/components/layout/Preloader'
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
@@ -50,16 +48,12 @@ export default async function LocaleLayout({
   if (!isLocale(locale)) notFound()
   const dict = getDictionary(locale)
 
-  // Resolve the active palette on the server from a cookie — no inline script,
-  // no flash of the wrong theme, no React 19 script-tag warning.
-  const cookieStore = await cookies()
-  const stored = cookieStore.get(THEME_STORAGE_KEY)?.value
-  const theme = isThemeId(stored) ? stored : defaultThemeId
-
+  // The palette is scroll-driven now (ChapterPalette morphs [data-theme] per
+  // chapter) — no cookie read, so pages render fully static again.
   return (
     <html
       lang={locale}
-      data-theme={theme}
+      data-theme={defaultThemeId}
       className={fontVariables}
       suppressHydrationWarning
     >
@@ -70,14 +64,12 @@ export default async function LocaleLayout({
         >
           {dict.common.skipToContent}
         </a>
-        <ThemeProvider>
-          <SmoothScroll />
-          <Cursor />
-          <Navbar locale={locale} dict={dict} />
-          {children}
-          <Footer locale={locale} dict={dict} />
-          <ThemeSwitcher label={dict.common.theme} />
-        </ThemeProvider>
+        <Preloader />
+        <SmoothScroll />
+        <Cursor />
+        <Navbar locale={locale} dict={dict} />
+        {children}
+        <Footer locale={locale} dict={dict} />
       </body>
     </html>
   )

@@ -12,10 +12,13 @@ export function Reveal({
   children,
   className,
   delay = 0,
+  dir = 'up',
 }: {
   children: ReactNode
   className?: string
   delay?: number
+  /** Entrance direction — varies the choreography so sections don't all move alike. */
+  dir?: 'up' | 'left' | 'right' | 'scale'
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
@@ -42,6 +45,7 @@ export function Reveal({
     <div
       ref={ref}
       data-reveal
+      data-reveal-dir={dir === 'up' ? undefined : dir}
       className={cn(visible && 'is-visible', className)}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >

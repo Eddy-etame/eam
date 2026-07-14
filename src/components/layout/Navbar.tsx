@@ -33,6 +33,16 @@ export function Navbar({ locale, dict }: { locale: Locale; dict: Dictionary }) {
     }
   }, [open])
 
+  // Close the mobile menu on Escape.
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open])
+
   const links = [
     { href: localizedPath(locale, 'work'), label: dict.nav.work },
     { href: localizedPath(locale, 'about'), label: dict.nav.studio },
@@ -93,6 +103,7 @@ export function Navbar({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
+          aria-controls="mobile-menu"
           aria-label={open ? dict.common.closeMenu : dict.common.openMenu}
           className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
         >
@@ -113,6 +124,8 @@ export function Navbar({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
       {/* Mobile menu */}
       <div
+        id="mobile-menu"
+        inert={!open}
         className={cn(
           'grid overflow-hidden border-line bg-deep/95 backdrop-blur-md transition-[grid-template-rows] duration-500 md:hidden',
           open ? 'grid-rows-[1fr] border-t' : 'grid-rows-[0fr]',

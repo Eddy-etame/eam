@@ -26,7 +26,7 @@ export function LanguageSwitcher({ locale, className }: { locale: Locale; classN
             hrefLang={l}
             aria-current={l === locale ? 'true' : undefined}
             className={cn(
-              'transition-colors',
+              '-my-1.5 inline-flex min-h-[24px] items-center px-2 py-1.5 transition-colors',
               l === locale ? 'text-ink' : 'text-muted hover:text-ink',
             )}
           >

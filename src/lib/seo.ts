@@ -58,18 +58,25 @@ export function buildMetadata({
       siteName: siteConfig.name,
       title,
       description,
-      images: (images ?? ['/og.png']).map((img) => ({
-        url: img,
-        width: 1200,
-        height: 630,
-        alt: siteConfig.name,
-      })),
+      // When no explicit image is passed, omit it so Next's file-based
+      // opengraph-image.tsx (per-locale, generated) is injected automatically.
+      ...(images
+        ? {
+            images: images.map((img) => ({
+              url: img,
+              width: 1200,
+              height: 630,
+              alt: siteConfig.name,
+            })),
+          }
+        : {}),
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: images ?? ['/og.png'],
+      // Twitter falls back to og:image (the generated card) when unset.
+      ...(images ? { images } : {}),
     },
     robots: {
       index: true,

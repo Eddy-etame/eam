@@ -66,12 +66,16 @@
   --c-surface-2:   #13243F;
   --c-ink:         #F5F0E8;
   --c-muted:       #8892A4;
-  --c-faint:       #4A5568;
+  --c-faint:       #6B7688; /* ≥4.5:1 on --c-deep (WCAG AA) */
   --c-gold:        #C9A96E;
   --c-gold-dim:    #8C6F3E;
   --c-gold-bright: #F3DCA6;
   --c-line:        rgb(201 169 110 / 0.16);
   --c-line-strong: rgb(201 169 110 / 0.42);
+  /* Foil stops — themes with inverted luminance (editorial) override these */
+  --foil-a: var(--c-gold-dim);
+  --foil-b: var(--c-gold-bright);
+  --foil-c: var(--c-gold);
 }
 
 /* 2 · Precision Atelier — cooler steel, sharper, blueprint (stub) */
@@ -83,7 +87,7 @@
   --c-surface-2:   #122231;
   --c-ink:         #E9EEF3;
   --c-muted:       #7E8C9A;
-  --c-faint:       #3C4856;
+  --c-faint:       #66788C; /* ≥4.5:1 on --c-deep (WCAG AA) */
   --c-gold:        #A9B7C4;
   --c-gold-dim:    #5C6B79;
   --c-gold-bright: #D6E0E9;
@@ -100,12 +104,16 @@
   --c-surface-2:   #FFFFFF;
   --c-ink:         #16110A;
   --c-muted:       #5C5346;
-  --c-faint:       #9A8E78;
+  --c-faint:       #756A54; /* ≥4.5:1 on the paper ground (WCAG AA) */
   --c-gold:        #8C6F3E;
   --c-gold-dim:    #B79B6A;
   --c-gold-bright: #5E4A22;
   --c-line:        rgb(22 17 10 / 0.12);
   --c-line-strong: rgb(22 17 10 / 0.32);
+  /* Dark metal on paper — the default stops would smear on a light ground */
+  --foil-a: #8A6A33;
+  --foil-b: #4F3D1C;
+  --foil-c: #6D5426;
 }
 
 /* 4 · Bold Grotesk — stark black/white, single gold accent (stub) */
@@ -117,7 +125,7 @@
   --c-surface-2:   #1E1E1E;
   --c-ink:         #FAFAF7;
   --c-muted:       #9A9A95;
-  --c-faint:       #565652;
+  --c-faint:       #83837D; /* ≥4.5:1 on near-black (WCAG AA) */
   --c-gold:        #C9A96E;
   --c-gold-dim:    #8C6F3E;
   --c-gold-bright: #E4CE9C;
@@ -140,18 +148,51 @@
     scroll-behavior: auto;
   }
 
+  /* Lock scroll while the heraldic preloader curtain is on screen */
+  html.is-loading,
+  html.is-loading body {
+    overflow: clip;
+  }
+
   body {
     background-color: var(--c-deep);
-    background-image:
-      radial-gradient(ellipse 90% 55% at 50% -8%, color-mix(in srgb, var(--c-navy) 78%, transparent), transparent 72%),
-      radial-gradient(ellipse 55% 45% at 92% 3%, color-mix(in srgb, var(--c-gold) 8%, transparent), transparent 60%);
-    background-attachment: fixed;
     color: var(--c-ink);
     font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
     font-feature-settings: 'ss01', 'cv01';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+  }
+
+  /* Chapter palette morph — when ChapterPalette swaps [data-theme] mid-scroll,
+     backgrounds and static text tween instead of snapping. Interactive elements
+     keep their own faster transition-colors utilities (they win the cascade). */
+  body,
+  header,
+  footer,
+  main section,
+  .bg-deep,
+  .bg-surface,
+  .bg-surface-2 {
+    transition:
+      background-color 0.9s var(--ease-silk),
+      border-color 0.9s var(--ease-silk);
+  }
+  main h1, main h2, main h3, main h4, main p, main li, main blockquote {
+    transition: color 0.9s var(--ease-silk);
+  }
+
+  /* Ambient gradients on a composited fixed layer — NOT background-attachment:
+     fixed, which forces a full-viewport repaint on every scroll frame. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(ellipse 90% 55% at 50% -8%, color-mix(in srgb, var(--c-navy) 78%, transparent), transparent 72%),
+      radial-gradient(ellipse 55% 45% at 92% 3%, color-mix(in srgb, var(--c-gold) 8%, transparent), transparent 60%);
   }
 
   h1, h2, h3, h4, h5 {
@@ -198,15 +239,15 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* Gold-foil text */
+  /* Gold-foil text — stops are per-theme tokens so the metal survives paper */
   .foil {
     background: linear-gradient(
       100deg,
-      var(--c-gold-dim) 0%,
-      var(--c-gold-bright) 38%,
-      var(--c-gold) 55%,
-      var(--c-gold-bright) 72%,
-      var(--c-gold-dim) 100%
+      var(--foil-a) 0%,
+      var(--foil-b) 38%,
+      var(--foil-c) 55%,
+      var(--foil-b) 72%,
+      var(--foil-a) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -227,15 +268,22 @@
     text-transform: uppercase;
   }
 
-  /* Scroll-reveal primitive (toggled by IntersectionObserver → .is-visible) */
+  /* Scroll-reveal primitive (toggled by IntersectionObserver → .is-visible).
+     Directional variants vary the choreography; will-change only while hidden
+     so revealed blocks don't hold GPU layers for the life of the page. */
   [data-reveal] {
     opacity: 0;
     transform: translateY(1.6rem);
     transition:
       opacity 0.9s var(--ease-reveal),
       transform 0.9s var(--ease-reveal);
+  }
+  [data-reveal]:not(.is-visible) {
     will-change: opacity, transform;
   }
+  [data-reveal][data-reveal-dir='left']  { transform: translateX(-2.4rem); }
+  [data-reveal][data-reveal-dir='right'] { transform: translateX(2.4rem); }
+  [data-reveal][data-reveal-dir='scale'] { transform: scale(0.955); }
   [data-reveal].is-visible {
     opacity: 1;
     transform: none;
@@ -262,6 +310,45 @@
     background-size: 200% 100%;
     animation: foil-shimmer 7s var(--ease-silk) infinite;
   }
+
+  /* Services card — the gold top edge draws itself on reveal; hover ignites a
+     quiet aura. The section that sells the craft must demonstrate it. */
+  .svc-card { position: relative; }
+  .svc-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--c-gold), transparent 85%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.1s var(--ease-gold) 0.2s;
+  }
+  .svc-card.is-visible::before { transform: scaleX(1); }
+  .svc-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    background: radial-gradient(62% 52% at 50% 0%, color-mix(in srgb, var(--c-gold) 10%, transparent), transparent 72%);
+    transition: opacity 0.5s var(--ease-silk);
+  }
+  .svc-card:hover::after,
+  .svc-card:focus-within::after { opacity: 1; }
+
+  /* FAQ — the open item glows quietly and its answer arrives, not appears */
+  .faq-item { border-radius: var(--radius-sm); transition: background-color 0.4s var(--ease-silk); }
+  .faq-item[open] {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--c-gold) 5%, transparent), transparent 80%);
+  }
+  .faq-item[open] .faq-answer { animation: faq-in 0.5s var(--ease-reveal) both; }
+  @keyframes faq-in {
+    from { opacity: 0; transform: translateY(0.5rem); }
+    to   { opacity: 1; transform: none; }
+  }
   @keyframes foil-shimmer {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -282,4 +369,175 @@
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+/*── CLIENT MARQUEE ─────────────────────────────────────────────────────────*/
+@keyframes eam-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.eam-marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: eam-marquee 42s linear infinite;
+  will-change: transform;
+}
+.eam-marquee:hover .eam-marquee-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .eam-marquee-track {
+    animation: none !important;
+    transform: none !important;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+  }
+  .eam-client-repeat { display: none; }
+}
+
+/*═══════════════════════════════════════════════════════════════════════════
+  TEAM · GRAIN-SILHOUETTE STAGE  (Lusion-inspired "craftsmen in the mist")
+  Portraits are transparent cutouts recolored by an SVG duotone filter that
+  the color-mode toggle swaps via [data-team-mode]. Path B (WebGL) layers over
+  this; everything here is the always-on, mobile + reduced-motion baseline.
+═══════════════════════════════════════════════════════════════════════════*/
+.team-stage { position: relative; }
+
+/* Duotone recolor — mono is the default; the toggle selects the rest. */
+.team-figure { filter: url(#eam-duo-mono); }
+[data-team-mode='gold'] .team-figure        { filter: url(#eam-duo-gold); }
+[data-team-mode='iridescent'] .team-figure  { filter: url(#eam-duo-iri); }
+[data-team-mode='paper'] .team-figure       { filter: url(#eam-duo-paper); }
+
+.team-portrait { position: relative; isolation: isolate; perspective: 1200px; }
+/* 3D-tilt wrapper — holds figure + grain + rim so they lean together */
+.team-tilt {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.team-figure,
+.team-iri {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.team-figure {
+  transition: transform 0.7s var(--ease-silk);
+  will-change: transform;
+}
+
+/* Volumetric fog glow behind each figure */
+.team-fog {
+  position: absolute;
+  inset: -16% 0 -4%; /* no horizontal bleed → never overflows the viewport on mobile */
+  z-index: -1;
+  background:
+    radial-gradient(42% 50% at 50% 44%, color-mix(in srgb, var(--c-ink) 16%, transparent), transparent 64%),
+    radial-gradient(66% 66% at 50% 50%, color-mix(in srgb, var(--c-gold) 15%, transparent), transparent 74%);
+  animation: team-fog-drift 15s var(--ease-silk) infinite alternate;
+  pointer-events: none;
+}
+@keyframes team-fog-drift {
+  from { transform: translate3d(-1.5%, 0, 0) scale(1.02); opacity: 0.8; }
+  to   { transform: translate3d(1.5%, -2%, 0) scale(1.08); opacity: 1; }
+}
+
+/* Ground contact shadow (chromatic in prism mode) */
+.team-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -2%;
+  width: 62%;
+  height: 7%;
+  transform: translateX(-50%);
+  background: radial-gradient(50% 50% at 50% 50%, rgb(0 0 0 / 0.55), transparent 72%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Iridescent chromatic rim — masked to the figure, only in prism mode */
+.team-iri {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  mix-blend-mode: screen;
+  background: conic-gradient(from 0deg,
+    #ff004c, #ff8a00, #ffe600, #14ff72, #00e0ff, #4c6bff, #b400ff, #ff004c);
+  -webkit-mask-image: var(--cutout);
+  mask-image: var(--cutout);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: bottom;
+  mask-position: bottom;
+  animation: team-iri-spin 12s linear infinite;
+  pointer-events: none;
+  transition: opacity 0.6s var(--ease-silk);
+}
+
+/* Static film grain, masked to the figure — the "grain silhouette" texture.
+   Path B (WebGL) upgrades this to per-frame animated blue noise on desktop. */
+.team-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.42;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  -webkit-mask-image: var(--cutout);
+  mask-image: var(--cutout);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: bottom;
+  mask-position: bottom;
+  pointer-events: none;
+  animation: team-grain-shift 0.8s steps(5) infinite;
+}
+@keyframes team-grain-shift {
+  0%   { background-position: 0 0; }
+  20%  { background-position: -18px 12px; }
+  40%  { background-position: 14px -20px; }
+  60%  { background-position: -22px -8px; }
+  80%  { background-position: 10px 16px; }
+  100% { background-position: 0 0; }
+}
+[data-team-mode='iridescent'] .team-iri { opacity: 0.5; }
+[data-team-mode='iridescent'] .team-shadow {
+  background: radial-gradient(50% 50% at 50% 50%, rgb(120 0 255 / 0.4), rgb(0 200 255 / 0.26), transparent 72%);
+}
+@keyframes team-iri-spin { to { filter: hue-rotate(360deg); } }
+
+/* Hover: the craftsman steps forward and warms */
+@media (hover: hover) {
+  .team-portrait { transition: filter 0.6s var(--ease-silk); }
+  [data-band]:hover .team-figure { transform: scale(1.03); }
+  [data-band]:hover .team-portrait { filter: brightness(1.1) contrast(1.04); }
+  [data-band]:hover .team-shadow { width: 68%; }
+}
+
+/* Pending-portrait placeholder (third founder) — a veiled slot, not a box */
+.team-figure--pending {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border-radius: 999px 999px 0 0;
+  background:
+    radial-gradient(46% 52% at 50% 38%, color-mix(in srgb, var(--c-gold) 12%, transparent), transparent 66%),
+    radial-gradient(60% 70% at 50% 60%, color-mix(in srgb, var(--c-ink) 8%, transparent), transparent 78%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-fog, .team-iri, .team-grain { animation: none !important; }
+  .team-figure { transition: none !important; }
 }

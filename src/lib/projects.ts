@@ -21,6 +21,7 @@ export type ProjectCategory =
   | 'Tech & SaaS'
   | 'Culture & Associatif'
   | 'Agence Créative'
+  | 'Sport & Bien-être'
   | 'Outil Interne'
 
 export interface Project {
@@ -33,8 +34,8 @@ export interface Project {
   tags: string[]
   /** '#' for internal/NDA projects (never a live link). */
   liveUrl: string
-  /** Path under /public/logos or an external URL. */
-  logoUrl?: string
+  /** Real site screenshot under /public/thumbs/<slug>.jpg (set only when captured). */
+  thumb?: string
   /** Brand colour used as the card accent. */
   color: string
   year: number
@@ -45,10 +46,134 @@ export interface Project {
     problem: Localized
     solution: Localized
     outcome: Localized
+    /** Client-verified results only — when true, the provisional note is dropped. */
+    outcomeVerified?: boolean
+    /** Stat band. Craft-level or self-reported figures only — never invented client data. */
+    metrics?: { value: string; label: Localized }[]
+    /** Screenshot sequence under /public (rendered as a scroll gallery when present). */
+    gallery?: string[]
+    testimonial?: { quote: Localized; author: string; role?: Localized }
   }
 }
 
 export const projects: Project[] = [
+  // ── SPORT & BIEN-ÊTRE ─────────────────────────────────────────────────────
+  // Boxing Center maquettes are IN PRODUCTION (not yet deployed) — liveUrl '#'
+  // hides the "visit" link. boxingcenter.fr is the legacy WordPress site EAM is
+  // REPLACING, not our build. No client metrics invented. Confirm with Eddy:
+  // deployed URLs, umbrella-vs-per-salle, and whether to show all 5 salles.
+  {
+    slug: 'boxing-center',
+    name: 'Boxing Center',
+    client: 'Boxing Center Toulouse',
+    tagline: {
+      fr: 'Cinq salles, cinq identités. Une seule obsession.',
+      en: 'Five gyms, five identities. One obsession.',
+    },
+    description: {
+      fr: "Refonte digitale du réseau Boxing Center (Portet, États-Unis, Minimes, St-Cyprien, Ramonville) — un site immersif WebGL par salle, chacun forgé à partir du logo maison (marine + cuivre), jamais dupliqué.",
+      en: 'A digital rebuild of the Boxing Center network (Portet, États-Unis, Minimes, St-Cyprien, Ramonville) — one immersive WebGL site per gym, each forged from the house logo (navy + copper), never duplicated.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['Sport de combat', 'Boxe', 'WebGL / 3D', 'Three.js', 'Réseau', 'Toulouse'],
+    liveUrl: '#',
+    color: '#1E2044',
+    year: 2026,
+    isFeatured: true,
+    isInternal: false,
+    techStack: ['Next.js', 'TypeScript', 'Three.js / WebGL', 'GSAP', 'Lenis', 'Tailwind CSS'],
+    caseStudy: {
+      problem: {
+        fr: "Un réseau de salles réputé sur un site vieillissant et uniforme — aucune salle ne se distingue, aucune immersion à la hauteur de l'énergie du club.",
+        en: 'A respected gym network on an ageing, uniform site — no gym stands out, no immersion worthy of the club’s energy.',
+      },
+      solution: {
+        fr: "Une maquette immersive par salle : monolithe d'acier en 3D temps réel, survol scroll-piloté des zones, double palette commutable, typographie et métal propres à chaque lieu — copie toujours dans le DOM (SEO/a11y), la 3D en enrichissement progressif avec repli sans-WebGL.",
+        en: 'One immersive maquette per gym: a real-time 3D steel monolith, a scroll-driven flythrough of the zones, a switchable dual palette, and per-venue type and metal — all copy stays in the DOM (SEO/a11y), 3D as progressive enhancement with a no-WebGL fallback.',
+      },
+      outcome: {
+        fr: 'En cours de production — maquettes livrées, portage Astro/Next en cours. Aucun indicateur publié tant que les sites ne sont pas en ligne.',
+        en: 'In production — maquettes delivered, Astro/Next port under way. No metrics published until the sites are live.',
+      },
+      // Craft facts from the delivered maquettes — not client outcomes.
+      metrics: [
+        { value: '5', label: { fr: 'salles, une identité chacune', en: 'gyms, one identity each' } },
+        { value: '3D', label: { fr: 'monolithe temps réel (Three.js)', en: 'real-time monolith (Three.js)' } },
+        { value: '100%', label: { fr: 'de la copie dans le DOM — SEO intact', en: 'of the copy in the DOM — SEO intact' } },
+      ],
+    },
+  },
+  {
+    slug: 'boxing-center-portet',
+    name: 'Boxing Center — Portet',
+    client: 'Boxing Center Toulouse',
+    tagline: {
+      fr: "L'arène, forgée pour le web",
+      en: 'The arena, forged for the web',
+    },
+    description: {
+      fr: "Vitrine immersive pour la salle amirale du réseau — 900 m² de boxe et de cross training à Portet-sur-Garonne. Ring poli en noir profond, argent et rouge de combat, scroll cinématique et arène 3D discrète.",
+      en: 'An immersive showcase for the flagship of the network — 900 m² of boxing and cross training in Portet-sur-Garonne. A polished ring in deep black, silver and fight-red, cinematic scroll and a quiet 3D arena.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['Boxe', 'Sport de combat', 'WebGL / 3D', 'Immersif', 'Toulouse'],
+    liveUrl: '#',
+    color: '#E8001C',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Next.js', 'TypeScript', 'Three.js / WebGL', 'GSAP', 'Lenis', 'Tailwind CSS'],
+    caseStudy: {
+      problem: {
+        fr: "Une salle phare — ring olympique, tatami, panneaux MMA, 24 sacs, 500 m² de boxe et 400 m² de cross training — enfermée dans un site générique qui ne transmettait ni la puissance du lieu ni l'accès illimité 7 j/7.",
+        en: 'A flagship room — Olympic ring, tatami, MMA panels, 24 heavy bags, 500 m² of boxing and 400 m² of cross training — trapped in a generic site that conveyed neither the power of the place nor its unlimited 7-day-a-week concept.',
+      },
+      solution: {
+        fr: "Une vitrine « arène polie » : noir mat, argent et rouge de combat, défilement lissé par Lenis, chorégraphie GSAP et décor d'arène en Three.js en surcouche discrète, avec repli sans-WebGL. Toute la copie reste dans le DOM ; la 3D n'est qu'atmosphère. Légibilité WCAG AA verrouillée.",
+        en: 'A “polished-arena” showcase: matte black, silver and fight-red, Lenis-smoothed scroll, GSAP choreography and a quiet Three.js arena overlay, with a no-WebGL fallback. Every line of copy stays in the DOM; the 3D is atmosphere only. WCAG-AA legibility locked.',
+      },
+      outcome: {
+        fr: "Provisoire — à confirmer par EAM : une expérience immersive de niveau agence primée, pensée pour un portage Astro/Next. Repli sans-WebGL et copie DOM garantissent performance, SEO local et accessibilité.",
+        en: 'Provisional — to be confirmed by EAM: an award-tier immersive experience engineered for an Astro/Next hand-off. A no-WebGL fallback and DOM copy guarantee performance, local SEO and accessibility.',
+      },
+    },
+  },
+  {
+    slug: 'boxing-center-le-colosse',
+    name: 'Boxing Center — Le Colosse',
+    client: 'Boxing Center Toulouse',
+    tagline: {
+      fr: 'Un monument que l’on approche',
+      en: 'A monument you approach',
+    },
+    description: {
+      fr: "Salle États-Unis — présentée par le club comme la plus grande salle de sports de combat de France. DA « monument » : marine et bronze, capitales gravées à la Cinzel, et un véritable monolithe d'acier en Three.js que l'on traverse.",
+      en: 'The États-Unis room — billed by the club as the largest combat-sports gym in France. A “monument” art direction: navy and bronze, Cinzel engraved caps, and a real Three.js steel monolith you walk through.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['Boxe', 'Sport de combat', 'WebGL / 3D', 'Three.js', 'Toulouse'],
+    liveUrl: '#',
+    color: '#7A3D16',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Next.js', 'TypeScript', 'Three.js / WebGL', 'GSAP', 'Lenis', 'Tailwind CSS'],
+    caseStudy: {
+      problem: {
+        fr: "La salle amirale méritait mieux qu'une fiche : il fallait faire ressentir l'échelle du bâtiment et distinguer ce lieu sans dupliquer ni contenu ni look.",
+        en: 'The flagship room deserved more than a listing: the sheer scale of the building had to be felt, and the venue set apart without duplicating content or look.',
+      },
+      solution: {
+        fr: "Un hero monolithe acier/bronze révélé au curseur, puis un survol scroll-piloté de trois salles-zones (I/II/III), fondu par la distance caméra. Bascule de palette bronze/acier persistée (sans flash). Repli vidéo + scroll photo quand le WebGL manque.",
+        en: 'A steel/bronze monolith hero revealed by the cursor, then a scroll-driven flythrough of three zone-rooms (I/II/III), cross-dissolved by camera distance. A persisted bronze/steel palette toggle (no flash). Video + photo-scroll fallback when WebGL is unavailable.',
+      },
+      outcome: {
+        fr: "Provisoire — à confirmer par EAM : maquette v4 avec walkthrough Three.js réel et repli DOM ; feuille de route ouverte (reflets métal, easing caméra par salle, audio spatial par zone).",
+        en: 'Provisional — to be confirmed by EAM: a v4 maquette with a real Three.js walkthrough and DOM fallback; open roadmap (metal reflections, per-room camera easing, per-zone spatial audio).',
+      },
+    },
+  },
+
   // ── RESTAURATION & F&B ────────────────────────────────────────────────────
   {
     slug: 'beldi-fusion',
@@ -64,8 +189,7 @@ export const projects: Project[] = [
     },
     category: 'Restauration & F&B',
     tags: ['Restaurant', 'SEO Local', 'Branding', 'Toulouse'],
-    liveUrl: 'https://beldifusion-toulouse.fr/',
-    logoUrl: 'https://beldifusion-toulouse.fr/assets/logo-beldi.png',
+    liveUrl: 'https://beldi-fusion7.vercel.app/',
     color: '#1B1744',
     year: 2025,
     isFeatured: true,
@@ -103,7 +227,7 @@ export const projects: Project[] = [
     liveUrl: 'https://the911.fr',
     color: '#0b0b0b',
     year: 2025,
-    isFeatured: true,
+    isFeatured: false,
     isInternal: false,
     techStack: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
     caseStudy: {
@@ -135,8 +259,7 @@ export const projects: Project[] = [
     },
     category: 'Restauration & F&B',
     tags: ['Restaurant', 'Multi-établissements', 'Halal', 'Toulouse', 'Chaîne'],
-    liveUrl: 'https://mon-boum.vercel.app/',
-    logoUrl: 'https://mon-boum.vercel.app/assets/logos/Boums.png',
+    liveUrl: 'https://monboumv3.vercel.app/',
     color: '#111111',
     year: 2025,
     isFeatured: true,
@@ -172,7 +295,6 @@ export const projects: Project[] = [
     category: 'Restauration & F&B',
     tags: ['Restaurant', 'Branding', 'Colomiers', 'Halal'],
     liveUrl: 'https://www.chickenbens.fr/',
-    logoUrl: 'https://www.chickenbens.fr/images/logo.png',
     color: '#E63328',
     year: 2025,
     isFeatured: false,
@@ -208,7 +330,6 @@ export const projects: Project[] = [
     category: 'Restauration & F&B',
     tags: ['Commerce', 'Ethnique', 'Halal', 'Toulouse', 'Occitanie'],
     liveUrl: 'https://marchedemov2.vercel.app/',
-    logoUrl: 'https://marchedemov2.vercel.app/logos/logo-marchedemo-rond-contourgreen.png',
     color: '#1C6B35',
     year: 2025,
     isFeatured: false,
@@ -423,7 +544,6 @@ export const projects: Project[] = [
     category: 'Commerce & Services',
     tags: ['Services', 'BTP', 'Toulouse', 'Devis', 'Toiture'],
     liveUrl: 'https://c-chez-toi-2.vercel.app/',
-    logoUrl: 'https://c-chez-toi-2.vercel.app/assets/content/uploads/2025/08/logo-ccheztoit-blanc-scaled-1024x1024.png',
     color: '#EA559D',
     year: 2025,
     isFeatured: false,
@@ -496,7 +616,6 @@ export const projects: Project[] = [
     category: 'Corporate & Formation',
     tags: ['Corporate', 'Formation', 'Qualiopi', 'RNCP', 'Toulouse'],
     liveUrl: 'https://f2mconsulting.fr',
-    logoUrl: 'https://f2mconsulting.fr/images/logo-f2m.png',
     color: '#1a237e',
     year: 2025,
     isFeatured: true,
@@ -659,6 +778,12 @@ export const projects: Project[] = [
         fr: "1 000+ utilisateurs. 500+ serveurs actifs. 99,9% uptime. Cameroun, Côte d'Ivoire, Sénégal.",
         en: "1,000+ users. 500+ active servers. 99.9% uptime. Cameroon, Côte d'Ivoire, Senegal.",
       },
+      // Self-reported platform figures (EAM's own SaaS) — flip outcomeVerified once confirmed.
+      metrics: [
+        { value: '1 000+', label: { fr: 'utilisateurs', en: 'users' } },
+        { value: '500+', label: { fr: 'serveurs actifs', en: 'active servers' } },
+        { value: '99,9%', label: { fr: 'de disponibilité', en: 'uptime' } },
+      ],
     },
   },
 
@@ -842,6 +967,27 @@ export const projects: Project[] = [
   },
 ]
 
+// Wire real site screenshots (public/thumbs/<slug>.jpg) onto the projects that
+// captured cleanly. Add a slug here after capturing its screenshot; broken/dead
+// deployments (Vercel 404, onrender spin-up) and unreachable domains are omitted
+// on purpose so those cards keep the branded gradient fallback.
+// (boxing-center intentionally absent — no maquette deployed yet; keeps gradient)
+const THUMBED = new Set([
+  'kermhosting',
+  'la-brigade-mobile',
+  'f2m-consulting',
+  'mon-boum',
+  'beldi-fusion',
+  'chicken-bens',
+  'marche-de-mo',
+  'car-repair',
+  'decoshop-vitrine',
+  'drive-pneu',
+  'c-chez-toit',
+  'temps-dance',
+])
+for (const p of projects) if (THUMBED.has(p.slug)) p.thumb = `/thumbs/${p.slug}.jpg`
+
 // ── Localised category labels ──────────────────────────────────────────────
 export const categoryLabels: Record<ProjectCategory, Localized> = {
   'Restauration & F&B': { fr: 'Restauration & F&B', en: 'Restaurants & F&B' },
@@ -851,6 +997,7 @@ export const categoryLabels: Record<ProjectCategory, Localized> = {
   'Tech & SaaS': { fr: 'Tech & SaaS', en: 'Tech & SaaS' },
   'Culture & Associatif': { fr: 'Culture & Associatif', en: 'Culture & Nonprofit' },
   'Agence Créative': { fr: 'Agence Créative', en: 'Creative Agency' },
+  'Sport & Bien-être': { fr: 'Sport & Bien-être', en: 'Sport & Wellness' },
   'Outil Interne': { fr: 'Outil Interne', en: 'Internal Tool' },
 }
 
@@ -862,11 +1009,24 @@ export const categories: ProjectCategory[] = [
   'Tech & SaaS',
   'Culture & Associatif',
   'Agence Créative',
+  'Sport & Bien-être',
   'Outil Interne',
 ]
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
-export const featuredProjects = projects.filter((p) => p.isFeatured && !p.isInternal)
+// Curated featured order — lead with the most technically baffling work (SaaS
+// scale, WebGL, rebuilds) rather than declaration order, which over-indexed F&B.
+const FEATURED_RANK: Record<string, number> = {
+  kermhosting: 0,
+  'boxing-center': 1,
+  'la-brigade-mobile': 2,
+  'f2m-consulting': 3,
+  'mon-boum': 4,
+  'beldi-fusion': 5,
+}
+export const featuredProjects = projects
+  .filter((p) => p.isFeatured && !p.isInternal)
+  .sort((a, b) => (FEATURED_RANK[a.slug] ?? 99) - (FEATURED_RANK[b.slug] ?? 99))
 export const publicProjects = projects.filter((p) => !p.isInternal)
 export const internalProjects = projects.filter((p) => p.isInternal)
 export const getProject = (slug: string) => projects.find((p) => p.slug === slug)

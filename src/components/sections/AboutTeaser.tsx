@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Reveal } from '@/components/ui/Reveal'
+import { CountUp } from '@/components/ui/CountUp'
 import { localizedPath } from '@/lib/seo'
 import type { Locale } from '@/i18n/config'
 import type { Dictionary } from '@/i18n/dictionaries'
@@ -29,8 +30,10 @@ export function AboutTeaser({ locale, dict }: { locale: Locale; dict: Dictionary
 
           <div className="grid grid-cols-2 gap-px self-start overflow-hidden rounded-lg border border-line bg-line">
             {about.stats.map((stat, i) => (
-              <Reveal key={stat.label} delay={i * 70} className="bg-deep p-8">
-                <p className="foil font-display text-4xl leading-none">{stat.value}</p>
+              <Reveal key={stat.label} delay={i * 70} dir="right" className="bg-deep p-8">
+                <p className="foil foil-anim font-display text-4xl leading-none">
+                  <CountUp value={stat.value} />
+                </p>
                 <p className="mt-3 text-mono-label text-muted">{stat.label}</p>
               </Reveal>
             ))}

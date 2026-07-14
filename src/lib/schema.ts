@@ -1,5 +1,6 @@
 import { siteConfig } from '@/lib/site.config'
 import { absoluteUrl, localizedPath } from '@/lib/seo'
+import { team } from '@/lib/team'
 import type { Locale } from '@/i18n/config'
 import type { Project } from '@/lib/projects'
 
@@ -23,14 +24,21 @@ export function organizationSchema(locale: Locale, description: string): Json {
     '@type': 'Organization',
     '@id': ORG_ID,
     name: siteConfig.name,
-    alternateName: siteConfig.founders.join(' · '),
+    alternateName: siteConfig.founders.join(' '),
     url: absoluteUrl(localizedPath(locale)),
     email: siteConfig.email,
     logo: absoluteUrl('/logo-eam-square.png'),
     image: absoluteUrl('/logo-eam-navy.jpg'),
     description,
     foundingDate: String(siteConfig.founded),
-    founder: siteConfig.founders.map((name) => ({ '@type': 'Person', name })),
+    // Full founder Person nodes (embedded so they resolve on every page the Org appears).
+    founder: team.map((m) => ({
+      '@type': 'Person',
+      '@id': `${siteConfig.url}/#person-${m.id}`,
+      name: `${m.first} ${m.surname}`.trim(),
+      jobTitle: m.role[locale],
+      ...(m.image ? { image: absoluteUrl(m.image) } : {}),
+    })),
     knowsAbout: [
       'Web design',
       'Web development',
@@ -41,8 +49,25 @@ export function organizationSchema(locale: Locale, description: string): Json {
       'E-commerce',
       'Progressive Web Apps',
     ],
-    areaServed: siteConfig.location.areaServed,
+    areaServed: siteConfig.location.areaServed.map((name) => ({ '@type': 'Place', name })),
     ...(links.length ? { sameAs: links } : {}),
+  }
+}
+
+/** Service catalogue — a machine-readable list of exactly what the agency offers. */
+export function serviceSchema(items: { title: string; description: string }[]): Json {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'OfferCatalog',
+    name: siteConfig.name,
+    itemListElement: items.map((s) => ({
+      '@type': 'Service',
+      name: s.title,
+      description: s.description,
+      serviceType: s.title,
+      provider: { '@id': ORG_ID },
+      areaServed: siteConfig.location.areaServed.map((name) => ({ '@type': 'Place', name })),
+    })),
   }
 }
 
@@ -87,20 +112,25 @@ export function breadcrumbSchema(items: { name: string; url: string }[]): Json {
 
 /** CreativeWork per case study. Internal projects point at the portfolio page. */
 export function creativeWorkSchema(project: Project, locale: Locale): Json {
-  const url = project.isInternal
-    ? absoluteUrl(localizedPath(locale, `work/${project.slug}`))
-    : project.liveUrl
+  // The CreativeWork lives ON its case-study page — url/@id must be that page,
+  // never liveUrl (which is '#' for in-production work). The live site, when
+  // real, is exposed separately as sameAs.
+  const pageUrl = absoluteUrl(localizedPath(locale, `work/${project.slug}`))
+  const hasLive = !project.isInternal && project.liveUrl !== '#'
   return {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
+    '@id': `${pageUrl}#work`,
     name: project.name,
     headline: project.tagline[locale],
     description: project.description[locale],
-    url,
+    url: pageUrl,
     inLanguage: inLanguage(locale),
     dateCreated: String(project.year),
     keywords: project.tags.join(', '),
     about: project.category,
     creator: { '@id': ORG_ID },
+    ...(project.thumb ? { image: absoluteUrl(project.thumb) } : {}),
+    ...(hasLive ? { sameAs: project.liveUrl } : {}),
   }
 }

@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { isLocale, locales } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
 import { buildMetadata, absoluteUrl, localizedPath } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { breadcrumbSchema, creativeWorkSchema } from '@/lib/schema'
+import { breadcrumbSchema, creativeWorkSchema, organizationSchema } from '@/lib/schema'
 import { getProject, publicProjects, categoryLabels } from '@/lib/projects'
+import { CaseCover } from '@/components/work/CaseCover'
 
 export const revalidate = 86400
 export const dynamicParams = false
@@ -58,13 +60,19 @@ export default async function CaseStudyPage({
   const blocks = [
     { label: dict.caseStudy.problemLabel, text: cs.problem[locale] },
     { label: dict.caseStudy.solutionLabel, text: cs.solution[locale] },
-    { label: dict.caseStudy.outcomeLabel, text: cs.outcome[locale], note: dict.caseStudy.draftNote },
+    {
+      label: dict.caseStudy.outcomeLabel,
+      text: cs.outcome[locale],
+      // The provisional note only shows while the outcome awaits client sign-off.
+      note: cs.outcomeVerified ? undefined : dict.caseStudy.draftNote,
+    },
   ]
 
   return (
     <main id="content" className="pt-28 md:pt-32">
       <JsonLd
         data={[
+          organizationSchema(locale, dict.meta.studio.description),
           creativeWorkSchema(project, locale),
           breadcrumbSchema([
             { name: dict.nav.home, url: absoluteUrl(localizedPath(locale)) },
@@ -113,16 +121,40 @@ export default async function CaseStudyPage({
 
       <div className="mt-12 px-6 md:px-12 lg:px-20">
         <div className="mx-auto max-w-[1640px]">
-          <div
-            className="relative grid aspect-[16/7] place-items-center overflow-hidden rounded-xl border border-line grain"
-            style={{ background: `linear-gradient(135deg, ${project.color}, var(--c-navy) 82%)` }}
-          >
-            <span aria-hidden className="font-display text-[clamp(4rem,18vw,12rem)] text-white/10">
-              {initials}
-            </span>
-          </div>
+          <CaseCover color={project.color}>
+            {project.thumb ? (
+              <Image
+                src={project.thumb}
+                alt={project.name}
+                fill
+                sizes="(max-width: 1640px) 100vw, 1640px"
+                priority
+                className="object-cover object-top"
+              />
+            ) : (
+              <span aria-hidden className="font-display text-[clamp(4rem,18vw,12rem)] text-white/10">
+                {initials}
+              </span>
+            )}
+          </CaseCover>
         </div>
       </div>
+
+      {/* Stat band — craft-level / self-reported figures only, in living foil */}
+      {cs.metrics && (
+        <div className="mt-10 px-6 md:px-12 lg:px-20">
+          <div className="mx-auto max-w-[1640px]">
+            <div className="grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
+              {cs.metrics.map((m) => (
+                <div key={m.label[locale]} className="bg-deep p-8 text-center">
+                  <p className="foil foil-anim font-display text-3xl leading-none">{m.value}</p>
+                  <p className="text-mono-label mt-3 text-muted">{m.label[locale]}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="px-6 py-20 md:px-12 md:py-28 lg:px-20">
         <div className="mx-auto grid max-w-[1640px] gap-16 lg:grid-cols-[0.9fr_1.1fr]">
@@ -149,9 +181,45 @@ export default async function CaseStudyPage({
                 {block.note && <p className="mt-2 text-xs italic text-faint">{block.note}</p>}
               </div>
             ))}
+
+            {cs.testimonial && (
+              <figure className="border-t border-gold/30 pt-6">
+                <blockquote className="font-display text-2xl leading-snug text-ink">
+                  <span className="text-gold/60">“</span>
+                  {cs.testimonial.quote[locale]}
+                  <span className="text-gold/60">”</span>
+                </blockquote>
+                <figcaption className="text-mono-label mt-4 text-muted">
+                  {cs.testimonial.author}
+                  {cs.testimonial.role ? ` — ${cs.testimonial.role[locale]}` : ''}
+                </figcaption>
+              </figure>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Screenshot gallery — renders as soon as gallery assets exist */}
+      {cs.gallery?.length ? (
+        <div className="px-6 pb-24 md:px-12 lg:px-20">
+          <div className="mx-auto grid max-w-[1640px] gap-6 md:grid-cols-2">
+            {cs.gallery.map((src) => (
+              <div
+                key={src}
+                className="relative aspect-[16/10] overflow-hidden rounded-lg border border-line"
+              >
+                <Image
+                  src={src}
+                  alt={project.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover object-top"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
 
       <div className="border-t border-line px-6 py-16 md:px-12 lg:px-20">
         <div className="mx-auto max-w-[1640px]">

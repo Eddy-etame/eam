@@ -1,0 +1,36 @@
+{
+  "ok": [
+    "kermhosting",
+    "la-brigade-mobile",
+    "f2m-consulting",
+    "mon-boum",
+    "chicken-bens",
+    "marche-de-mo",
+    "car-repair",
+    "pieces-auto-colomiers",
+    "drive-pneu",
+    "c-chez-toit",
+    "decoshop-vitrine",
+    "jcboyang-conseil",
+    "un-rire-pour-un-enfant",
+    "temps-dance"
+  ],
+  "fail": [
+    [
+      "beldi-fusion",
+      "Error: page.goto: net::ERR_NAME_NOT_RESOLVED at https://beldifusion-toulouse.fr/"
+    ],
+    [
+      "the-911",
+      "Error: page.goto: net::ERR_NAME_NOT_RESOLVED at https://the911.fr/"
+    ],
+    [
+      "nyc-cookies",
+      "Error: page.goto: net::ERR_NAME_NOT_RESOLVED at https://nyc-cookies.ma/"
+    ],
+    [
+      "id-skillz",
+      "Error: page.goto: net::ERR_NAME_NOT_RESOLVED at https://id-skillz.com/"
+    ]
+  ]
+}

@@ -18,19 +18,23 @@ export function FAQ({ dict }: { dict: Dictionary }) {
 
         <div className="border-t border-line">
           {faq.items.map((item, i) => (
-            <details key={item.q} open={i === 0} className="group border-b border-line py-5">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6">
-                <h3 className="font-display text-xl text-ink transition-colors group-hover:text-gold">
+            <details
+              key={item.q}
+              open={i === 0}
+              className="faq-item group -mx-4 border-b border-line px-4 py-5"
+            >
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">
+                <h3 className="font-display text-xl text-ink transition-colors group-hover:text-gold group-open:text-gold">
                   {item.q}
                 </h3>
                 <span
                   aria-hidden
-                  className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line-strong text-gold transition-transform duration-300 group-open:rotate-45"
+                  className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line-strong text-gold transition-all duration-300 group-open:rotate-45 group-open:border-gold/60 group-open:bg-gold/10"
                 >
                   +
                 </span>
               </summary>
-              <p className="mt-4 max-w-2xl leading-relaxed text-muted">{item.a}</p>
+              <p className="faq-answer mt-4 max-w-2xl leading-relaxed text-muted">{item.a}</p>
             </details>
           ))}
         </div>

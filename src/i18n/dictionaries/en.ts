@@ -42,6 +42,10 @@ export const en = {
     subtitle: 'A selection of digital presences we designed, coded and carried all the way to the ranking.',
     cta: 'Explore all work',
   },
+  clients: {
+    eyebrow: 'Trusted by',
+    title: 'Brands that chose us.',
+  },
   services: {
     eyebrow: 'Craft',
     title: 'What the atelier forges',
@@ -94,6 +98,18 @@ export const en = {
       { value: '2024', label: 'founded' },
     ],
   },
+  team: {
+    eyebrow: 'The craftsmen',
+    title: 'The hands behind the crest.',
+    intro:
+      'Three. On purpose. The people who design and code your project are the same three you speak to.',
+    pending: 'Portrait forthcoming',
+    toggle: {
+      label: 'Preview',
+      aria: 'Portrait colour preview',
+      modes: { mono: 'Mono', gold: 'Gold', iridescent: 'Prism', paper: 'Paper' },
+    },
+  },
   faq: {
     eyebrow: 'Frequently asked',
     title: 'Everything about EAM',
@@ -137,6 +153,9 @@ export const en = {
     title: 'A project to forge?',
     lead: 'Tell us about your brand, your goals and your timeline. We get back to you within 24–48 hours with a first direction.',
     emailLabel: 'Write to us',
+    responseChip: 'Reply within 24–48h',
+    whoAnswers: 'Who answers you',
+    copied: 'Copied ✓',
     form: {
       name: 'Name',
       email: 'Email',
@@ -144,6 +163,8 @@ export const en = {
       message: 'Your project',
       submit: 'Send message',
       sending: 'Sending…',
+      success: 'Received. We get back to you within 24–48h.',
+      error: 'Sending failed — try again, or write to us directly.',
       namePlaceholder: 'Your name',
       emailPlaceholder: 'you@example.com',
       messagePlaceholder: 'Your project, in a few words…',
@@ -179,6 +200,11 @@ export const en = {
     title: 'Page not found',
     text: "This page wandered off the crest. Let's head back to familiar ground.",
     cta: 'Back home',
+  },
+  errorPage: {
+    title: 'A mishap at the atelier.',
+    text: 'Something broke mid-forge. Try again — or head back to familiar ground.',
+    retry: 'Try again',
   },
   meta: {
     home: {

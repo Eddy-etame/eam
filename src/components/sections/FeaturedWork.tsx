@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Reveal } from '@/components/ui/Reveal'
 import { ProjectCard } from '@/components/work/ProjectCard'
+import { FeaturedRail } from '@/components/work/FeaturedRail'
 import { featuredProjects } from '@/lib/projects'
 import { localizedPath } from '@/lib/seo'
 import type { Locale } from '@/i18n/config'
@@ -24,13 +25,11 @@ export function FeaturedWork({ locale, dict }: { locale: Locale; dict: Dictionar
           </Link>
         </Reveal>
 
-        <div className="mt-14 grid gap-x-8 gap-y-14 md:grid-cols-2">
-          {featured.map((project, i) => (
-            <Reveal key={project.slug} delay={(i % 2) * 90}>
-              <ProjectCard project={project} locale={locale} />
-            </Reveal>
+        <FeaturedRail>
+          {featured.map((project) => (
+            <ProjectCard key={project.slug} project={project} locale={locale} />
           ))}
-        </div>
+        </FeaturedRail>
       </div>
     </section>
   )

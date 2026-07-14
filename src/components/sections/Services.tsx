@@ -14,10 +14,10 @@ export function Services({ dict }: { dict: Dictionary }) {
 
         <ul className="mt-16 grid gap-px overflow-hidden rounded-lg border border-line bg-line md:grid-cols-2 lg:grid-cols-3">
           {services.items.map((item, i) => (
-            <li key={item.title} className="bg-deep">
+            <li key={item.title} className="bg-surface">
               <Reveal
                 delay={(i % 3) * 80}
-                className="group h-full p-8 transition-colors duration-500 hover:bg-surface md:p-10"
+                className="svc-card group h-full p-8 transition-colors duration-500 hover:bg-surface-2 md:p-10"
               >
                 <span className="text-mono-label text-faint transition-colors group-hover:text-gold">
                   {String(i + 1).padStart(2, '0')}

@@ -46,6 +46,10 @@ export const fr = {
       "Une sélection de présences digitales que nous avons conçues, codées et menées jusqu'au classement.",
     cta: 'Explorer toutes les réalisations',
   },
+  clients: {
+    eyebrow: 'Ils nous font confiance',
+    title: 'Des marques qui nous ont choisis.',
+  },
   services: {
     eyebrow: 'Savoir-faire',
     title: "Ce que l'atelier forge",
@@ -98,6 +102,18 @@ export const fr = {
       { value: '2024', label: 'fondée en' },
     ],
   },
+  team: {
+    eyebrow: 'Les artisans',
+    title: 'Les mains derrière le blason.',
+    intro:
+      'Trois. Volontairement. Ceux qui conçoivent et codent votre projet sont les trois à qui vous parlez.',
+    pending: 'Portrait à venir',
+    toggle: {
+      label: 'Aperçu',
+      aria: 'Aperçu couleur des portraits',
+      modes: { mono: 'Mono', gold: 'Or', iridescent: 'Prisme', paper: 'Papier' },
+    },
+  },
   faq: {
     eyebrow: 'Questions fréquentes',
     title: 'Tout savoir sur EAM',
@@ -141,6 +157,9 @@ export const fr = {
     title: 'Un projet à forger ?',
     lead: "Parlez-nous de votre marque, de vos objectifs et de vos délais. Nous revenons vers vous sous 24 à 48 heures avec une première piste.",
     emailLabel: 'Écrivez-nous',
+    responseChip: 'Réponse sous 24–48 h',
+    whoAnswers: 'Ceux qui vous répondent',
+    copied: 'Copié ✓',
     form: {
       name: 'Nom',
       email: 'E-mail',
@@ -148,6 +167,8 @@ export const fr = {
       message: 'Votre projet',
       submit: 'Envoyer le message',
       sending: 'Envoi…',
+      success: 'Bien reçu. Nous revenons vers vous sous 24 à 48 h.',
+      error: "L'envoi a échoué — réessayez, ou écrivez-nous directement.",
       namePlaceholder: 'Votre nom',
       emailPlaceholder: 'vous@exemple.com',
       messagePlaceholder: 'En quelques mots, votre projet…',
@@ -183,6 +204,11 @@ export const fr = {
     title: 'Page introuvable',
     text: "Cette page s'est égarée hors du blason. Revenons en terrain connu.",
     cta: "Retour à l'accueil",
+  },
+  errorPage: {
+    title: "Un incident à l'atelier.",
+    text: "Quelque chose s'est brisé en cours de forge. Réessayez — ou revenez en terrain connu.",
+    retry: 'Réessayer',
   },
   meta: {
     home: {

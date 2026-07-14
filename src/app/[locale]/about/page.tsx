@@ -6,9 +6,10 @@ import { buildMetadata, absoluteUrl, localizedPath } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { organizationSchema, breadcrumbSchema, faqSchema } from '@/lib/schema'
 import { Reveal } from '@/components/ui/Reveal'
+import { CountUp } from '@/components/ui/CountUp'
 import { FAQ } from '@/components/sections/FAQ'
 import { ContactCTA } from '@/components/sections/ContactCTA'
-import { siteConfig } from '@/lib/site.config'
+import { TeamSection } from '@/components/sections/TeamSection'
 
 export async function generateMetadata({
   params,
@@ -31,7 +32,6 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   if (!isLocale(locale)) notFound()
   const dict = getDictionary(locale)
   const { about } = dict
-  const role = locale === 'fr' ? 'Cofondateur' : 'Co-founder'
 
   return (
     <main id="content">
@@ -46,6 +46,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         ]}
       />
 
+      <div data-chapter="heraldic">
       <section className="px-6 pt-36 md:px-12 md:pt-44 lg:px-20">
         <div className="mx-auto max-w-[1640px]">
           <p className="text-mono-label text-gold/85">{about.eyebrow}</p>
@@ -61,31 +62,18 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      <section className="px-6 py-24 md:px-12 md:py-32 lg:px-20">
-        <div className="mx-auto max-w-[1640px]">
-          <div className="hairline mb-12" />
-          <ul className="grid gap-px overflow-hidden rounded-lg border border-line bg-line md:grid-cols-3">
-            {siteConfig.founders.map((name, i) => (
-              <li key={name} className="bg-deep">
-                <Reveal delay={i * 80} className="flex h-full flex-col items-start p-10">
-                  <span aria-hidden className="font-display text-6xl text-gold">
-                    {name[0]}
-                  </span>
-                  <span className="mt-6 font-display text-2xl text-ink">{name}</span>
-                  <span className="text-mono-label mt-1 text-faint">{role}</span>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <TeamSection locale={locale} dict={dict} />
+      </div>
 
+      <div data-chapter="editorial">
       <section className="border-t border-line px-6 py-24 md:px-12 md:py-32 lg:px-20">
         <div className="mx-auto max-w-[1640px]">
           <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line md:grid-cols-4">
             {about.stats.map((stat, i) => (
               <Reveal key={stat.label} delay={i * 60} className="bg-deep p-8 text-center">
-                <p className="foil font-display text-4xl leading-none">{stat.value}</p>
+                <p className="foil foil-anim font-display text-4xl leading-none">
+                  <CountUp value={stat.value} />
+                </p>
                 <p className="text-mono-label mt-3 text-muted">{stat.label}</p>
               </Reveal>
             ))}
@@ -106,7 +94,11 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       </section>
 
       <FAQ dict={dict} />
-      <ContactCTA locale={locale} dict={dict} />
+      </div>
+
+      <div data-chapter="heraldic">
+        <ContactCTA locale={locale} dict={dict} />
+      </div>
     </main>
   )
 }
