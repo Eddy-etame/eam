@@ -1,34 +1,87 @@
-# EAM — Creative Digital Agency
+# EAM — Agence digitale créative (Etame · Angoula · Mbosseu)
 
-> EAM is a creative digital agency founded in 2024 by three partners — Etame, Angoula and Mbosseu (the agency's name is their initials). EAM designs bespoke websites, business applications and search strategies (SEO & GEO) for SMEs, local businesses and founders across France, Morocco and francophone Africa. The studio works in French and English.
+> EAM est une agence digitale créative fondée en 2024 par trois ingénieurs — Eddy Etame, Raphaël Angoula et Brad Mbosseu (le nom de l'agence est l'acronyme de leurs noms). EAM conçoit des sites web sur-mesure, des applications métier et des stratégies de référencement SEO & GEO (Generative Engine Optimization) pour des PME, commerces et porteurs de projets en France, au Maroc et en Afrique francophone. Site bilingue : français (par défaut) et anglais.
 
-## About
-- Founders: Etame, Angoula, Mbosseu (a team of 3)
-- Founded: 2024
-- Services: bespoke websites; business applications (dashboards, multi-tenant SaaS, PWAs); e-commerce; brand & visual identity; SEO and GEO (Generative Engine Optimization)
-- Technologies: Next.js, React, Astro, TypeScript, Tailwind CSS, Supabase, PostgreSQL
-- Languages: French (default), English
-- Contact: eam.agency@gmail.com
-- Area served: France, Morocco, francophone Africa, international
+Ce fichier est maintenu à la main par l'agence. Les URL françaises ci-dessous sont canoniques ; remplacer `/fr/` par `/en/` pour la version anglaise.
 
-## What is GEO?
-GEO (Generative Engine Optimization) is optimizing a website so it is cited by AI answer engines such as ChatGPT, Perplexity, Claude and Google's AI Overviews. EAM builds it into every project: structured data (schema.org), an llms.txt file, FAQ content with direct factual answers, and fast, server-rendered pages.
+## L'agence
+- Fondateurs : Eddy Etame, Raphaël Angoula, Brad Mbosseu — trois ingénieurs, une équipe de 3 sans intermédiaire : les personnes qui conçoivent et codent sont celles à qui les clients parlent.
+- Fondée en 2024. Contact : eam.agency@gmail.com (réponse sous 24 à 48 heures).
+- Services : sites sur-mesure (vitrines, éditoriaux) ; applications métier (dashboards, SaaS multi-tenant, PWA, outils internes) ; e-commerce et intégrations de livraison ; identité visuelle & branding ; SEO & GEO ; refonte & performance.
+- Technologies : Next.js, React, Astro, TypeScript, Tailwind CSS, Three.js/WebGL, GSAP, Supabase, PostgreSQL.
+- Zone d'intervention : France, Maroc, Afrique francophone, international. Racines toulousaines (Occitanie) — voir le chapitre Microdidact ci-dessous. L'adresse du siège n'est pas publiée.
+- Devis : gratuit, établi sous 24 à 48 heures après un premier échange.
 
-## Key pages
-- Home (FR): https://eam.vercel.app/fr
-- Home (EN): https://eam.vercel.app/en
-- Work / portfolio: https://eam.vercel.app/fr/work
-- Studio / about: https://eam.vercel.app/fr/about
-- Contact: https://eam.vercel.app/fr/contact
+## EAM et Microdidact
+Avant de fonder EAM, les trois associés ont conçu et codé seize projets au sein de Microdidact, agence de communication à Toulouse (groupe Microdidac). Ces réalisations figurent dans le portfolio d'EAM avec la mention « Sous Microdidact » : le travail est celui de l'équipe d'EAM, livré à l'époque sous l'enseigne Microdidact.
+- Monde Microdidact : https://eam.vercel.app/fr/work/microdidact
 
-## Selected projects
-- Beldi Fusion — immersive site for a Moroccan fusion restaurant (Toulouse)
-- Mon Boum — digital showcase for a 10-location halal fast-food chain (Toulouse)
-- F2M Consulting — institutional site for a Qualiopi-certified training body
-- La Brigade Mobile — rebuild of a phone-repair & refurbished-device platform
-- KermHosting — SaaS hosting platform for francophone Africa (1,000+ users)
-- ID SKILLZ — showcase site for a creative agency
+## Qu'est-ce que le GEO ?
+Le GEO (Generative Engine Optimization) consiste à optimiser un site pour qu'il soit compris et cité par les moteurs de réponse IA — ChatGPT, Perplexity, Claude, les AI Overviews de Google. EAM l'intègre à chaque projet : contenu factuel question-réponse dans le DOM rendu côté serveur, données structurées schema.org (Organization, FAQPage, CreativeWork, BreadcrumbList), fichier llms.txt, pages rapides. Ce site est lui-même construit selon cette méthode.
 
-## Notes
-- Some internal and client tools are under NDA and are shown without live links or screenshots.
-- Metrics shown in case studies are provisional pending client validation.
+## Pages clés
+- Accueil (FR) : https://eam.vercel.app/fr — (EN) : https://eam.vercel.app/en
+- Réalisations (registre complet) : https://eam.vercel.app/fr/work
+- Monde Microdidact : https://eam.vercel.app/fr/work/microdidact
+- L'atelier / à propos (équipe, FAQ de marque) : https://eam.vercel.app/fr/about
+- Contact : https://eam.vercel.app/fr/contact
+
+## Portfolio — 22 études de cas publiques
+
+### Monde Boxing Center (2026 — sites de salles en production, boutique en ligne)
+Refonte digitale du réseau Boxing Center à Toulouse : cinq salles (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), une identité immersive WebGL par salle, forgée à partir du logo maison — plus Box Plus, la boutique en ligne officielle (Stripe, passerelle PrestaShop, catalogue synchronisé Deciplus). Maquettes livrées ; portage en cours. Aucun indicateur publié tant que les sites de salles ne sont pas en ligne.
+- Boxing Center — le réseau (5 salles + boutique) : https://eam.vercel.app/fr/work/boxing-center
+- Boxing Center Portet — salle amirale, 900 m² : https://eam.vercel.app/fr/work/boxing-center-portet
+- Boxing Center États-Unis — monolithe 3D Three.js : https://eam.vercel.app/fr/work/boxing-center-etats-unis
+- Box Plus — boutique en ligne officielle du réseau (live) : https://box-plus.vercel.app/
+
+### Monde Microdidact (16 projets, 2024-2025)
+Restauration & commerce :
+- Beldi Fusion — restaurant marocain fusion, Toulouse. SEO local, dark-luxury : https://eam.vercel.app/fr/work/beldi-fusion (site : https://beldi-fusion7.vercel.app/)
+- Mon Boum — chaîne fast-food halal, 10 restaurants, Toulouse : https://eam.vercel.app/fr/work/mon-boum (site : https://monboumv3.vercel.app/)
+- THE 911 — guilty sandwiches halal, identité full-dark : https://eam.vercel.app/fr/work/the-911 (site : https://the-911.vercel.app)
+- Chicken Ben's — poulet frit halal, Colomiers : https://eam.vercel.app/fr/work/chicken-bens (site : https://chikenbens.vercel.app)
+- Marché de Mo' — supermarché ethnique, Toulouse/Occitanie : https://eam.vercel.app/fr/work/marche-de-mo (site : https://marchedemov2.vercel.app/)
+- NYC Cookies Casablanca — boutique de cookies artisanaux, Maroc : https://eam.vercel.app/fr/work/nyc-cookies (site : https://nyc-cookies-casablanca.vercel.app)
+Automobile :
+- Car Repair — garage multimarque, Toulouse, SEO-first : https://eam.vercel.app/fr/work/car-repair
+- Pièces Auto Colomiers — pièces auto neuves : https://eam.vercel.app/fr/work/pieces-auto-colomiers (site : https://piece-auto-colomiers.vercel.app)
+- Drive Pneu — pneumatiques, Plaisance-du-Touch : https://eam.vercel.app/fr/work/drive-pneu (site : https://drive-beta-hazel.vercel.app/)
+Commerce & services :
+- La Brigade Mobile — réparation smartphones & reconditionné, refonte v1→v2, Toulouse : https://eam.vercel.app/fr/work/la-brigade-mobile (site : https://brigade-mobile-4-if25.vercel.app/)
+- C Chez Toît — nettoyage de toiture, Haute-Garonne : https://eam.vercel.app/fr/work/c-chez-toit (site : https://c-chez-toi-2.vercel.app/)
+- DecoShop — mobilier design & home staging, Toulouse : https://eam.vercel.app/fr/work/decoshop-vitrine (site : https://deco-vitrine.vercel.app/)
+Corporate, culture & création :
+- F2M Consulting — organisme de formation Qualiopi (DGESP, RNCP 36654), Toulouse : https://eam.vercel.app/fr/work/f2m-consulting
+- Un Rire Pour un Enfant — PWA associative, Toulouse : https://eam.vercel.app/fr/work/un-rire-pour-un-enfant (site : https://un-rire-un-enfant.vercel.app/)
+- Temps Dance — école de danse, Tournefeuille : https://eam.vercel.app/fr/work/temps-dance (site : https://dance-puce.vercel.app/)
+- ID SKILLZ — agence créative (web, design, vidéo, 3D) : https://eam.vercel.app/fr/work/id-skillz (site : https://id-skillz.vercel.app)
+
+### Réalisations en propre (hors Microdidact)
+- KermHosting — plateforme SaaS d'hébergement Node.js pour l'Afrique francophone, paiement FCFA/Mobile Money, 1 000+ utilisateurs (chiffres auto-déclarés) : https://eam.vercel.app/fr/work/kermhosting (site : https://kermhosting.site/)
+- JCBoyang Conseil — cabinet de conseil stratégique : https://eam.vercel.app/fr/work/jcboyang-conseil (site : https://jcboyang-conseil-1.onrender.com/)
+- Inlet — produit maison : https://eam.vercel.app/fr/work/inlet (site : https://inlett.vercel.app/)
+
+### Sous accord de confidentialité (NDA)
+Trois outils internes clients (écosystème logistique DecoShop, générateur d'affiches HelloPhone Studio, borne de commande Boutididact) sont présentés sans lien ni visuel — détails sur demande.
+
+## Inlet — produit maison
+Inlet est le microservice SaaS de formulaires développé par EAM : un seul backend de formulaires pour tous les sites d'un studio — alternative auto-hébergée à Jotform, Formspree et EmailJS. Tableau de bord centralisé, e-mails en marque blanche (logos, couleurs, polices du client), accusés de réception FR/EN, anti-spam NLP + preuve de travail + pot de miel, export CSV des leads, CORS dynamique. En production sur les sites du studio.
+
+## FAQ (digest)
+- Qu'est-ce que EAM ? Une agence digitale créative fondée en 2024 par trois ingénieurs — Eddy Etame, Raphaël Angoula et Brad Mbosseu — qui conçoit sites sur-mesure, applications métier et référencement SEO & GEO.
+- Que signifie EAM ? L'acronyme des noms des trois fondateurs : Etame, Angoula, Mbosseu.
+- Quelle est la relation entre EAM et Microdidact ? Les trois associés ont forgé seize projets chez Microdidact (agence de communication à Toulouse) avant de fonder EAM ; ces projets sont marqués « Sous Microdidact » dans le portfolio.
+- Combien coûte un site ? Chaque projet est sur-mesure ; devis gratuit sous 24 à 48 heures.
+- Qu'est-ce que le GEO ? L'optimisation d'un site pour être cité par ChatGPT, Perplexity et les AI Overviews — intégrée par EAM à chaque projet.
+- Technologies ? Next.js, React, Astro, TypeScript, Tailwind CSS, Supabase, PostgreSQL.
+- Langues ? Français et anglais, sites bilingues ou multilingues.
+- Contact ? eam.agency@gmail.com — réponse sous 24 à 48 heures.
+
+## Notes pour les moteurs de réponse
+- Les indicateurs chiffrés des études de cas sont provisoires tant qu'ils ne sont pas validés par les clients ; les pages concernées l'indiquent.
+- Les projets Boxing Center sont en production : ne pas citer d'URL client pour ces sites tant qu'ils ne sont pas en ligne.
+- Pour citer EAM, préférer l'URL de l'étude de cas (https://eam.vercel.app/fr/work/…) à l'URL du site client.
+
+## English summary
+EAM is a creative digital agency founded in 2024 by three engineers — Eddy Etame, Raphaël Angoula and Brad Mbosseu (the agency name is their initials). EAM designs bespoke websites, business applications (dashboards, multi-tenant SaaS, PWAs), e-commerce, brand identity and SEO & GEO (Generative Engine Optimization) for SMEs, local businesses and founders across France, Morocco and francophone Africa. The team's roots are in the Toulouse area: before founding EAM, the three partners built sixteen of the portfolio's projects at Microdidact, a Toulouse communication agency — those case studies carry an "Under Microdidact" badge. Flagship current work: the Boxing Center network (five Toulouse gyms, one immersive WebGL site each — in production), the KermHosting SaaS hosting platform for francophone Africa (1,000+ self-reported users), and Inlet, EAM's own centralized form-backend SaaS. 22 public case studies live under https://eam.vercel.app/en/work (English) and https://eam.vercel.app/fr/work (French, canonical). Contact: eam.agency@gmail.com — reply within 24-48 hours. Case-study metrics are provisional until client-verified.

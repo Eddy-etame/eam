@@ -4,8 +4,10 @@ import { isLocale } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
 import { buildMetadata, absoluteUrl, localizedPath } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { breadcrumbSchema } from '@/lib/schema'
+import { breadcrumbSchema, collectionPageSchema, organizationSchema } from '@/lib/schema'
 import { ProjectGallery } from '@/components/work/ProjectGallery'
+import { WorkOverture } from '@/components/work/WorkOverture'
+import { publicProjects } from '@/lib/projects'
 
 export async function generateMetadata({
   params,
@@ -28,20 +30,30 @@ export default async function WorkPage({ params }: { params: Promise<{ locale: s
   if (!isLocale(locale)) notFound()
   const dict = getDictionary(locale)
 
-  const breadcrumb = breadcrumbSchema([
-    { name: dict.nav.home, url: absoluteUrl(localizedPath(locale)) },
-    { name: dict.nav.work, url: absoluteUrl(localizedPath(locale, 'work')) },
-  ])
+  const schemas = [
+    organizationSchema(locale, dict.meta.work.description),
+    collectionPageSchema(locale, {
+      name: dict.meta.work.title,
+      description: dict.meta.work.description,
+      path: 'work',
+      slugs: publicProjects.map((p) => p.slug),
+    }),
+    breadcrumbSchema([
+      { name: dict.nav.home, url: absoluteUrl(localizedPath(locale)) },
+      { name: dict.nav.work, url: absoluteUrl(localizedPath(locale, 'work')) },
+    ]),
+  ]
 
   return (
     <main id="content" className="px-6 pb-28 pt-36 md:px-12 md:pt-44 lg:px-20">
-      <JsonLd data={breadcrumb} />
+      <JsonLd data={schemas} />
       <div className="mx-auto max-w-[1640px]">
-        <header className="max-w-3xl">
-          <p className="text-mono-label text-gold/85">{dict.work.eyebrow}</p>
-          <h1 className="mt-5 text-4xl">{dict.work.title}</h1>
-          <p className="mt-6 text-lg text-muted">{dict.work.subtitle}</p>
-        </header>
+        <WorkOverture
+          eyebrow={dict.work.eyebrow}
+          title={dict.work.title}
+          subtitle={dict.work.subtitle}
+          count={publicProjects.length}
+        />
         <div className="mt-16">
           <ProjectGallery locale={locale} dict={dict} />
         </div>

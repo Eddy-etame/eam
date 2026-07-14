@@ -9,6 +9,7 @@ import type { Dictionary } from '@/i18n/dictionaries'
 import { TeamDuotoneDefs } from '@/components/three/TeamDuotoneDefs'
 
 const TeamCanvas = dynamic(() => import('@/components/three/TeamCanvas'), { ssr: false })
+const TeamFigure3D = dynamic(() => import('@/components/three/TeamFigure3D'), { ssr: false })
 
 export function TeamSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const root = useRef<HTMLElement>(null)
@@ -164,11 +165,20 @@ export function TeamSection({ locale, dict }: { locale: Locale; dict: Dictionary
                           width: '100%',
                           objectFit: 'contain',
                           objectPosition: 'bottom',
+                          // The shader plane replaces the pixels when WebGL is on;
+                          // the img keeps layout, SEO and the no-WebGL fallback.
+                          opacity: enable3D ? 0 : undefined,
                           ...cutout,
                         }}
                       />
-                      <span className="team-grain" aria-hidden style={cutout} />
-                      <span className="team-iri" aria-hidden style={cutout} />
+                      {!enable3D && <span className="team-grain" aria-hidden style={cutout} />}
+                      {!enable3D && <span className="team-iri" aria-hidden style={cutout} />}
+                      {enable3D && (
+                        <TeamFigure3D
+                          image={m.image}
+                          depth={m.image.replace('.webp', '_depth.webp')}
+                        />
+                      )}
                     </div>
                   ) : (
                     <div className="team-figure--pending">

@@ -5,9 +5,28 @@ import type { Dictionary } from '@/i18n/dictionaries'
  * GEO-critical section: native <details> keeps every question and answer in the
  * server-rendered DOM (answer engines read it without JS), and the page emits a
  * matching FAQPage JSON-LD node.
+ *
+ * Defaults to the service FAQ (dict.faq); pass `items`/`title`/`eyebrow` to
+ * render another set (e.g. the brand FAQ on /about). Google allows one FAQPage
+ * instance per FAQ set — keep the JSON-LD emitted by the page in sync with the
+ * items rendered here.
  */
-export function FAQ({ dict }: { dict: Dictionary }) {
-  const { faq } = dict
+export function FAQ({
+  dict,
+  items,
+  title,
+  eyebrow,
+}: {
+  dict: Dictionary
+  items?: { q: string; a: string }[]
+  title?: string
+  eyebrow?: string
+}) {
+  const faq = {
+    eyebrow: eyebrow ?? dict.faq.eyebrow,
+    title: title ?? dict.faq.title,
+    items: items ?? dict.faq.items,
+  }
   return (
     <section id="faq" className="border-t border-line px-6 py-24 md:px-12 md:py-32 lg:px-20">
       <div className="mx-auto grid max-w-[1640px] gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">

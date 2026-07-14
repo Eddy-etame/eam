@@ -7,6 +7,18 @@ import type { Project } from '@/lib/projects'
 /** Stable @id anchors so nodes can reference each other across the graph. */
 const ORG_ID = `${siteConfig.url}/#organization`
 const WEBSITE_ID = `${siteConfig.url}/#website`
+const MICRODIDACT_ID = 'https://microdidact.com/#organization'
+
+/** Microdidact — the Toulouse agency where the founders built 16 of the
+ *  portfolio projects. Modeled as alumniOf/sourceOrganization ONLY (public
+ *  record); never as a parent/subsidiary of EAM. */
+const MICRODIDACT_ORG = {
+  '@type': 'Organization',
+  '@id': MICRODIDACT_ID,
+  name: 'Microdidact',
+  url: 'https://microdidact.com/',
+  address: { '@type': 'PostalAddress', addressLocality: 'Toulouse', addressCountry: 'FR' },
+} as const
 
 type Json = Record<string, unknown>
 
@@ -38,6 +50,7 @@ export function organizationSchema(locale: Locale, description: string): Json {
       name: `${m.first} ${m.surname}`.trim(),
       jobTitle: m.role[locale],
       ...(m.image ? { image: absoluteUrl(m.image) } : {}),
+      alumniOf: MICRODIDACT_ORG,
     })),
     knowsAbout: [
       'Web design',
@@ -97,6 +110,26 @@ export function faqSchema(items: { q: string; a: string }[]): Json {
   }
 }
 
+/** CollectionPage — binds a set of case studies to their index/world page. */
+export function collectionPageSchema(
+  locale: Locale,
+  opts: { name: string; description: string; path: string; slugs: string[] },
+): Json {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${absoluteUrl(localizedPath(locale, opts.path))}#collection`,
+    name: opts.name,
+    description: opts.description,
+    url: absoluteUrl(localizedPath(locale, opts.path)),
+    inLanguage: inLanguage(locale),
+    isPartOf: { '@id': WEBSITE_ID },
+    hasPart: opts.slugs.map((slug) => ({
+      '@id': `${absoluteUrl(localizedPath(locale, `work/${slug}`))}#work`,
+    })),
+  }
+}
+
 export function breadcrumbSchema(items: { name: string; url: string }[]): Json {
   return {
     '@context': 'https://schema.org',
@@ -117,9 +150,13 @@ export function creativeWorkSchema(project: Project, locale: Locale): Json {
   // real, is exposed separately as sameAs.
   const pageUrl = absoluteUrl(localizedPath(locale, `work/${project.slug}`))
   const hasLive = !project.isInternal && project.liveUrl !== '#'
+  // Inlet is a real SaaS product — dual-typed so engines see the application.
+  const isApp = project.slug === 'inlet'
   return {
     '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
+    '@type': isApp ? ['CreativeWork', 'SoftwareApplication'] : 'CreativeWork',
+    ...(isApp ? { applicationCategory: 'BusinessApplication', operatingSystem: 'Web' } : {}),
+    ...(project.underMicrodidact ? { sourceOrganization: MICRODIDACT_ORG } : {}),
     '@id': `${pageUrl}#work`,
     name: project.name,
     headline: project.tagline[locale],

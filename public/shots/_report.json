@@ -1,0 +1,74 @@
+[
+  [
+    "OK",
+    "kermhosting"
+  ],
+  [
+    "OK",
+    "inlet"
+  ],
+  [
+    "FAIL",
+    "jcboyang-conseil",
+    "TimeoutError: page.goto: Timeout 45000ms exceeded."
+  ],
+  [
+    "OK",
+    "la-brigade-mobile"
+  ],
+  [
+    "OK",
+    "mon-boum"
+  ],
+  [
+    "OK",
+    "beldi-fusion"
+  ],
+  [
+    "OK",
+    "the-911"
+  ],
+  [
+    "OK",
+    "chicken-bens"
+  ],
+  [
+    "OK",
+    "nyc-cookies"
+  ],
+  [
+    "FAIL",
+    "marche-de-mo",
+    "TimeoutError: page.goto: Timeout 45000ms exceeded."
+  ],
+  [
+    "OK",
+    "pieces-auto-colomiers"
+  ],
+  [
+    "OK",
+    "drive-pneu"
+  ],
+  [
+    "FAIL",
+    "c-chez-toit",
+    "TimeoutError: page.goto: Timeout 45000ms exceeded."
+  ],
+  [
+    "OK",
+    "decoshop-vitrine"
+  ],
+  [
+    "FAIL",
+    "temps-dance",
+    "TimeoutError: page.goto: Timeout 45000ms exceeded."
+  ],
+  [
+    "OK",
+    "un-rire-pour-un-enfant"
+  ],
+  [
+    "OK",
+    "id-skillz"
+  ]
+]

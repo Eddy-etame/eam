@@ -17,6 +17,7 @@ export interface Client {
 }
 
 export const clients: Client[] = [
+  { name: 'Boxing Center', logo: '/logos/boxing-center.png', slug: 'boxing-center' },
   { name: 'ID SKILLZ', logo: '/logos/id-skillz.png', slug: 'id-skillz' },
   { name: "Marché de Mo'", logo: '/logos/marche-de-mo.png', slug: 'marche-de-mo' },
   { name: 'Mon Boum', logo: '/logos/mon-boum.png', slug: 'mon-boum' },

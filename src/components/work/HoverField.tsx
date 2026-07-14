@@ -51,13 +51,13 @@ const fragmentShader = /* glsl */ `
     float aspect = uRes.x / uRes.y;
     vec2 p = vUv - uPos;
     p.x *= aspect;
-    vec2 half = uSize * 0.5;
-    half.x *= aspect;
+    vec2 halfSize = uSize * 0.5; // 'half' is a reserved word in GLSL ES — never use it
+    halfSize.x *= aspect;
 
     // displaced distance field of the hovered card
     vec2 flow = vec2(noise(vUv*4.0 + uTime*0.15), noise(vUv*4.0 - uTime*0.12)) - 0.5;
     p += flow * 0.06 * uHover;
-    vec2 d = abs(p) - half;
+    vec2 d = abs(p) - halfSize;
     float box = length(max(d, 0.0));
     float glow = smoothstep(0.34, 0.0, box) * uHover;
 

@@ -34,7 +34,8 @@ export default async function OpengraphImage({
     lang === 'fr'
       ? 'Sites web sur-mesure & applications métier.'
       : 'Bespoke websites & business applications.'
-  const foot = 'Toulouse · International'
+  // Truthful footprint only — HQ city is unconfirmed (site.config location.confirmed).
+  const foot = 'France · Maroc · International'
 
   return new ImageResponse(
     (

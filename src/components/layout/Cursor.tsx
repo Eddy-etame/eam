@@ -36,10 +36,11 @@ export function Cursor() {
       dotY(e.clientY)
     }
     const onOver = (e: MouseEvent) => {
-      const interactive = !!(e.target as HTMLElement).closest(
-        'a, button, input, textarea, label, summary, [data-cursor]',
-      )
-      document.documentElement.classList.toggle('is-cursor-active', interactive)
+      const target = e.target as HTMLElement
+      const interactive = !!target.closest('a, button, input, textarea, label, summary, [data-cursor]')
+      const voir = !!target.closest('[data-cursor="voir"]')
+      document.documentElement.classList.toggle('is-cursor-active', interactive && !voir)
+      document.documentElement.classList.toggle('is-cursor-voir', voir)
     }
 
     window.addEventListener('mousemove', onMove, { passive: true })
@@ -47,7 +48,7 @@ export function Cursor() {
     return () => {
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseover', onOver)
-      document.documentElement.classList.remove('is-cursor-active')
+      document.documentElement.classList.remove('is-cursor-active', 'is-cursor-voir')
     }
   }, [enabled])
 
@@ -57,9 +58,16 @@ export function Cursor() {
     <div aria-hidden className="pointer-events-none fixed inset-0 z-[100] hidden lg:block">
       <div
         ref={ring}
-        className="absolute left-0 top-0 h-9 w-9 rounded-full border border-white/90 transition-[width,height] duration-300 ease-out [html.is-cursor-active_&]:h-14 [html.is-cursor-active_&]:w-14"
+        className="absolute left-0 top-0 flex h-9 w-9 items-center justify-center rounded-full border border-white/90 transition-[width,height,background-color] duration-300 ease-out [html.is-cursor-active_&]:h-14 [html.is-cursor-active_&]:w-14 [html.is-cursor-voir_&]:h-16 [html.is-cursor-voir_&]:w-28 [html.is-cursor-voir_&]:bg-white"
         style={{ translate: '-50% -50%', mixBlendMode: 'difference' }}
-      />
+      >
+        {/* «Voir →» pill label — appears when hovering a project card */}
+        <span className="text-mono-label select-none whitespace-nowrap text-black opacity-0 transition-opacity duration-200 [html.is-cursor-voir_&]:opacity-100">
+          {typeof document !== 'undefined' && document.documentElement.lang === 'en'
+            ? 'View →'
+            : 'Voir →'}
+        </span>
+      </div>
       <div
         ref={dot}
         className="absolute left-0 top-0 h-1.5 w-1.5 rounded-full bg-white [html.is-cursor-active_&]:opacity-0"

@@ -1,3 +1,5 @@
+import { publicProjects } from '@/lib/projects'
+
 /** English dictionary — must mirror fr.ts (parity enforced in index.ts). */
 export const en = {
   nav: {
@@ -119,10 +121,6 @@ export const en = {
         a: "EAM is a creative digital agency founded in 2024 by three partners — Etame, Angoula and Mbosseu, whose names form the agency's name. EAM builds bespoke websites, business applications and search strategies (SEO & GEO) for SMEs, local businesses and founders across France, Morocco and francophone Africa.",
       },
       {
-        q: 'What does the name EAM mean?',
-        a: "EAM is an acronym of its three founders' names: Etame, Angoula and Mbosseu.",
-      },
-      {
         q: 'What services does EAM offer?',
         a: 'EAM builds showcase and editorial websites, business applications (dashboards, SaaS, PWAs), e-commerce, visual identity and branding, plus SEO and GEO.',
       },
@@ -131,8 +129,24 @@ export const en = {
         a: "GEO is optimising a site to be cited by AI answer engines such as ChatGPT, Perplexity and Google's AI Overviews. EAM bakes it into every project: structured content, schema.org data, an llms.txt file and direct, factual answers.",
       },
       {
+        q: 'What is the difference between SEO and GEO?',
+        a: "SEO (Search Engine Optimization) targets a site's ranking in search results such as Google's. GEO (Generative Engine Optimization) targets its citation inside AI answers — ChatGPT, Perplexity, AI Overviews. Both rest on the same foundation: a fast, structured, factual site. EAM works both into every project.",
+      },
+      {
+        q: 'How can a website get cited by ChatGPT or Perplexity?',
+        a: "By making its content readable and verifiable by answer engines: direct factual answers, copy present in server-rendered HTML (readable without JavaScript), schema.org structured data, an llms.txt file and fast pages. That is the method EAM applies to every project — the decision to cite remains each engine's own.",
+      },
+      {
         q: 'How much does a website with EAM cost?',
         a: 'Every project is bespoke; the budget depends on scope and features. EAM provides a free quote within 24–48 hours of a first conversation.',
+      },
+      {
+        q: 'How long does it take to get a quote?',
+        a: 'EAM replies within 24–48 hours of a first conversation, with a free quote. Build timelines depend on the scope of each project and are laid out in that quote.',
+      },
+      {
+        q: 'Does EAM rebuild existing websites?',
+        a: 'Yes. Rebuilds are part of what EAM offers: taking an existing site and forging it anew — design, technical foundation, performance and search — with one goal: faster, cleaner, better ranked.',
       },
       {
         q: 'What technologies does EAM use?',
@@ -145,6 +159,28 @@ export const en = {
       {
         q: 'How do I contact EAM?',
         a: 'By email at eam.agency@gmail.com, or through the form on the Contact page. We reply within 24–48 hours.',
+      },
+    ],
+  },
+  brandFaq: {
+    eyebrow: 'Frequently asked',
+    title: 'The agency, spelled out',
+    items: [
+      {
+        q: 'What does the name EAM mean?',
+        a: "EAM is an acronym of its three founders' names: Etame, Angoula and Mbosseu.",
+      },
+      {
+        q: 'Who are the founders of EAM?',
+        a: 'EAM was founded in 2024 by three partners: Eddy Etame, Raphaël Angoula and Brad Mbosseu. All three are engineers — they are the ones who design and code every project the agency ships.',
+      },
+      {
+        q: 'What is the relationship between EAM and Microdidact?',
+        a: 'Before founding EAM, the three partners designed and coded sixteen projects within Microdidact, a Toulouse communication agency (Microdidac group). Those works carry the "Under Microdidact" badge in the portfolio. EAM is an independent agency — Microdidact is neither its parent company nor a subsidiary.',
+      },
+      {
+        q: 'Why is EAM only three people?',
+        a: 'By choice. At three, the people who design and code your project are exactly the ones you talk to: no middlemen, no information loss, direct accountability for the result.',
       },
     ],
   },
@@ -176,8 +212,11 @@ export const en = {
     title: 'The portfolio',
     subtitle: 'Sites, apps and tools forged for brands that wanted to truly exist online.',
     filterAll: 'All',
+    microdidactBadge: 'Under Microdidact',
+    microdidactNote: 'Built under Microdidact — a Toulouse communication agency (Microdidac group) where the team forged these projects.',
     internalSectionTitle: 'Internal & confidential tools',
     internalNote: 'Projects under NDA. Shown without visuals or links — details on request.',
+    enterWorld: 'Enter',
   },
   caseStudy: {
     overview: 'Overview',
@@ -187,6 +226,123 @@ export const en = {
     draftNote: 'Metrics pending client validation.',
     visitLabel: 'Visit the live site',
     nextLabel: 'Next project',
+  },
+  /** In-room labels for the immersive project rooms (consumed by the rooms surfaces; rundowns live in src/lib/rundowns.ts). */
+  rooms: {
+    projet: 'The project',
+    travail: 'Our work',
+    enter: 'Enter',
+    scrollHint: 'Scroll',
+    visit: 'Visit the live site',
+    next: 'Next project',
+    back: 'Back to the registry',
+  },
+  microdidact: {
+    meta: {
+      title: 'The Microdidact world',
+      description:
+        'Before the EAM crest: Microdidact, a Toulouse communication agency where the team forged sixteen projects — restaurants, garages, shops and business tools.',
+    },
+    eyebrow: 'Origin chapter',
+    title: 'The Microdidact world.',
+    lead: 'Before the crest, there was the workshop. At Microdidact, a Toulouse communication agency, the three craftsmen of EAM forged side by side the projects that sharpened their trade.',
+    logoAlt: 'Microdidact — communication agency, Toulouse',
+    scrollHint: 'Enter',
+    story: {
+      eyebrow: 'The genesis',
+      title: 'Where the hand was trained.',
+      paragraphs: [
+        'Microdidact is a communication agency based in Toulouse. Within its walls the EAM team learned to deliver: from restaurants to garages, neighbourhood shops to business tools, every commission treated as a one-off piece.',
+        'These works carry the mark of that era — and already the standard that defines EAM today: bespoke builds, performance, and sites engineered to be found.',
+      ],
+    },
+    stats: {
+      projects: 'projects forged',
+      sectors: 'sectors served',
+      city: 'home port',
+      cityValue: 'Toulouse',
+    },
+    constellation: {
+      eyebrow: 'The constellation',
+      title: 'The pieces of the registry.',
+      intro: 'Each project leads to its case study — the problem, the answer, the outcome.',
+    },
+    cta: {
+      title: 'The next chapter is written with you.',
+      text: 'The standard forged at Microdidact now lives under the EAM crest. Tell us about your project.',
+      button: 'Start a project',
+    },
+    back: 'Back to the registry',
+  },
+  bcWorld: {
+    meta: {
+      title: 'The Boxing Center world',
+      description:
+        'A direct EAM client: the Boxing Center network in Toulouse — five gyms, one immersive site per gym, plus the official Box Plus online store. Navy, red and sweat.',
+    },
+    eyebrow: 'Direct client · Toulouse',
+    title: 'The Boxing Center world.',
+    lead: 'A navy-and-red crest, five gyms, one discipline: combat. For this Toulouse network EAM forges one immersive site per gym — never cloned — plus its official online store.',
+    logoAlt: 'Boxing Center — combat-sports gym network, Toulouse',
+    scrollHint: 'Step into the arena',
+    salles: {
+      eyebrow: 'Chapter I — The five gyms',
+      title: 'Five gyms. Five sites. Zero duplication.',
+      intro:
+        'One immersive site per gym, never cloned. Each gym carries its neighbourhood name — each asserts its own matter, its metal, its type, its 3D — under the same navy-and-red crest.',
+      caseCta: 'Case study',
+      items: [
+        {
+          name: 'Portet',
+          place: 'Portet-sur-Garonne',
+          line: 'The flagship — 900 m² of boxing and cross training, a polished ring in deep black, silver and fight-red.',
+        },
+        {
+          name: 'États-Unis',
+          place: 'Toulouse — États-Unis district',
+          line: 'Billed as the largest combat-sports gym in France — a real-time 3D steel monolith you walk through.',
+        },
+        {
+          name: 'Minimes',
+          place: 'Toulouse — Les Minimes',
+          line: 'The school of the clean gesture — English boxing, beginners and lady boxing, where the club trains its first guards.',
+        },
+        {
+          name: 'St-Cyprien',
+          place: 'Toulouse — Saint-Cyprien',
+          line: 'The newest of the network — Muay Thai, grappling, hyrox: the laboratory of rising disciplines.',
+        },
+        {
+          name: 'Ramonville',
+          place: 'Ramonville-Saint-Agne',
+          line: 'The cage and the platform — MMA, strength training and fight camps on the south side of the city.',
+        },
+      ],
+    },
+    boutique: {
+      eyebrow: 'Chapter II — The official store',
+      name: 'Box Plus',
+      tag: 'Official Boxing Center store · Toulouse',
+      line: "The network's online store — memberships, trial sessions, coaching and gear. Stripe checkout, PrestaShop bridge, catalogue continuously synced with Deciplus.",
+      visit: 'Visit the store',
+    },
+    stats: {
+      eyebrow: 'The facts',
+      items: [
+        { value: '5 + 1', label: 'five gyms + the online store' },
+        { value: '3D', label: 'real time — Three.js' },
+        { value: 'Zero', label: 'duplication across the gyms' },
+        { value: '100%', label: 'of the copy in the DOM' },
+      ],
+    },
+    close: {
+      provenance:
+        'Boxing Center is a direct EAM client — one immersive site per gym plus the official online store, forged under our crest.',
+      title: 'Your brand deserves an arena.',
+      text: 'Five gyms, five sites, one store, zero duplication. Tell us about your project — we forge at this scale.',
+      button: 'Start a project',
+    },
+    back: 'Back to the registry',
   },
   footer: {
     tagline: 'We forge brands that reign.',
@@ -208,19 +364,20 @@ export const en = {
   },
   meta: {
     home: {
-      title: 'EAM — Creative Digital Agency',
-      description: 'Creative digital agency founded by three craftsmen. Bespoke sites, business apps, SEO & GEO. France, Morocco & francophone Africa.',
+      title: 'EAM — Bespoke Websites, Business Apps & SEO/GEO',
+      description: 'EAM designs bespoke websites, business applications and SEO & GEO strategies for SMEs and founders. France, Morocco, francophone Africa. Quote within 48h.',
     },
     work: {
-      title: 'Work',
-      description: "EAM's portfolio: websites, business applications and bespoke tools forged for brands across France, Morocco and Africa.",
+      title: 'Work — Bespoke Websites & Business Applications',
+      // Count interpolated from the data source — never stale.
+      description: `${publicProjects.length} public builds: showcase sites, e-commerce, SaaS and business tools — each case study covers the problem, the answer and the outcome.`,
     },
     studio: {
-      title: 'The studio',
-      description: 'EAM, a creative digital agency founded in 2024 by Etame, Angoula and Mbosseu. Three craftsmen, one obsession with detail and ranking.',
+      title: 'The Studio — Three Founders, One Digital Agency',
+      description: 'EAM = Etame, Angoula, Mbosseu. A digital agency founded in 2024: three engineers, one obsession — fast, findable, hand-built websites.',
     },
     contact: {
-      title: 'Contact',
+      title: 'Contact — Free Website Quote Within 24-48h',
       description: 'Start a project with EAM. Free quote within 24–48h. Email eam.agency@gmail.com.',
     },
   },

@@ -16,6 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPaths = [
     { path: '', priority: 1.0, changeFrequency: 'weekly' as const, lastModified: BUILD_DATE },
     { path: 'work', priority: 0.9, changeFrequency: 'weekly' as const, lastModified: BUILD_DATE },
+    { path: 'work/microdidact', priority: 0.8, changeFrequency: 'monthly' as const, lastModified: BUILD_DATE },
+    { path: 'work/boxing-center', priority: 0.8, changeFrequency: 'monthly' as const, lastModified: BUILD_DATE },
     { path: 'about', priority: 0.7, changeFrequency: 'monthly' as const, lastModified: BUILD_DATE },
     { path: 'contact', priority: 0.6, changeFrequency: 'monthly' as const, lastModified: BUILD_DATE },
   ]

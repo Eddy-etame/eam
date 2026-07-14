@@ -9,6 +9,8 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { breadcrumbSchema, creativeWorkSchema, organizationSchema } from '@/lib/schema'
 import { getProject, publicProjects, categoryLabels } from '@/lib/projects'
 import { CaseCover } from '@/components/work/CaseCover'
+import { CaseAside } from '@/components/work/CaseAside'
+import { Reveal } from '@/components/ui/Reveal'
 
 export const revalidate = 86400
 export const dynamicParams = false
@@ -26,9 +28,15 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {}
   const project = getProject(slug)
   if (!project || project.isInternal) return {}
+  // Clamp: name + tagline must stay within a ~60-char SERP title budget.
+  const base = project.name
+  const tagline = project.tagline[locale]
+  const room = 60 - base.length - 3
+  const title =
+    room > 12 ? `${base} — ${tagline.length > room ? `${tagline.slice(0, room - 1).trimEnd()}…` : tagline}` : base
   return buildMetadata({
     locale,
-    title: `${project.name} — ${project.tagline[locale]}`,
+    title,
     description: project.description[locale],
     path: `work/${slug}`,
   })
@@ -104,24 +112,37 @@ export default async function CaseStudyPage({
             <div>
               <p className="text-mono-label text-gold/85">
                 {categoryLabels[project.category][locale]} · {project.year}
+                {project.underMicrodidact && (
+                  <span className="ml-3 rounded border border-gold/30 px-2 py-0.5 text-gold-bright">
+                    {dict.work.microdidactBadge}
+                  </span>
+                )}
               </p>
               <h1 className="mt-4 text-4xl">{project.name}</h1>
               <p className="mt-5 max-w-xl text-xl text-muted">{project.tagline[locale]}</p>
             </div>
-            <ul className="flex flex-wrap gap-2 lg:justify-end">
-              {project.techStack.map((tech) => (
-                <li key={tech} className="rounded-full border border-line px-3 py-1.5 text-xs text-muted">
-                  {tech}
-                </li>
-              ))}
-            </ul>
+            <Reveal dir="right">
+              <ul className="flex flex-wrap gap-2 lg:justify-end">
+                {project.techStack.map((tech) => (
+                  <li key={tech} className="rounded-full border border-line px-3 py-1.5 text-xs text-muted">
+                    {tech}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
           </header>
+
+          {project.underMicrodidact && (
+            <p className="mt-6 max-w-2xl border-l-2 border-gold/40 pl-4 text-sm italic text-faint">
+              {dict.work.microdidactNote}
+            </p>
+          )}
         </div>
       </div>
 
       <div className="mt-12 px-6 md:px-12 lg:px-20">
-        <div className="mx-auto max-w-[1640px]">
-          <CaseCover color={project.color}>
+        <div data-case-cover className="mx-auto max-w-[1640px]">
+          <CaseCover color={project.color} url={project.liveUrl !== '#' ? project.liveUrl : undefined}>
             {project.thumb ? (
               <Image
                 src={project.thumb}
@@ -174,12 +195,14 @@ export default async function CaseStudyPage({
           </div>
 
           <div className="space-y-10">
-            {blocks.map((block) => (
-              <div key={block.label} className="border-t border-gold/30 pt-6">
-                <h3 className="font-display text-2xl text-ink">{block.label}</h3>
-                <p className="mt-3 leading-relaxed text-muted">{block.text}</p>
-                {block.note && <p className="mt-2 text-xs italic text-faint">{block.note}</p>}
-              </div>
+            {blocks.map((block, i) => (
+              <Reveal key={block.label} dir={i % 2 === 0 ? 'left' : 'right'} delay={i * 90}>
+                <div className="border-t border-gold/30 pt-6">
+                  <h3 className="font-display text-2xl text-ink">{block.label}</h3>
+                  <p className="mt-3 leading-relaxed text-muted">{block.text}</p>
+                  {block.note && <p className="mt-2 text-xs italic text-faint">{block.note}</p>}
+                </div>
+              </Reveal>
             ))}
 
             {cs.testimonial && (
@@ -239,6 +262,8 @@ export default async function CaseStudyPage({
           </Link>
         </div>
       </div>
+
+      <CaseAside liveUrl={project.liveUrl} label={dict.common.visitSite} />
     </main>
   )
 }

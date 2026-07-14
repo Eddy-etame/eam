@@ -8,8 +8,9 @@ export const fontDisplay = Fraunces({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-fraunces',
-  style: ['normal', 'italic'],
-  axes: ['opsz', 'SOFT'],
+  // Normal style + opsz only: the italic slice and SOFT axis were audited as
+  // unused — dropping them trims the critical font payload.
+  axes: ['opsz'],
   preload: true,
 })
 

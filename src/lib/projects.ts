@@ -36,6 +36,9 @@ export interface Project {
   liveUrl: string
   /** Real site screenshot under /public/thumbs/<slug>.jpg (set only when captured). */
   thumb?: string
+  /** Built under the Microdidact collective (Eddy 2026-07-14) — badges + the
+   *  Microdidact world on /work. Solo works: kermhosting, jcboyang-conseil. */
+  underMicrodidact?: boolean
   /** Brand colour used as the card accent. */
   color: string
   year: number
@@ -71,15 +74,15 @@ export const projects: Project[] = [
       en: 'Five gyms, five identities. One obsession.',
     },
     description: {
-      fr: "Refonte digitale du réseau Boxing Center (Portet, États-Unis, Minimes, St-Cyprien, Ramonville) — un site immersif WebGL par salle, chacun forgé à partir du logo maison (marine + cuivre), jamais dupliqué.",
-      en: 'A digital rebuild of the Boxing Center network (Portet, États-Unis, Minimes, St-Cyprien, Ramonville) — one immersive WebGL site per gym, each forged from the house logo (navy + copper), never duplicated.',
+      fr: "Refonte digitale du réseau Boxing Center (Portet, États-Unis, Minimes, St-Cyprien, Ramonville) — un site immersif WebGL par salle, chacun forgé à partir du logo maison (marine + rouge), jamais dupliqué — plus la boutique en ligne officielle Box Plus (Stripe, passerelle PrestaShop, sync Deciplus).",
+      en: 'A digital rebuild of the Boxing Center network (Portet, États-Unis, Minimes, St-Cyprien, Ramonville) — one immersive WebGL site per gym, each forged from the house logo (navy + red), never duplicated — plus the official Box Plus online store (Stripe, PrestaShop bridge, Deciplus sync).',
     },
     category: 'Sport & Bien-être',
     tags: ['Sport de combat', 'Boxe', 'WebGL / 3D', 'Three.js', 'Réseau', 'Toulouse'],
     liveUrl: '#',
     color: '#1E2044',
     year: 2026,
-    isFeatured: true,
+    isFeatured: false, // the umbrella lives as the world door on /work, not a rail card
     isInternal: false,
     techStack: ['Next.js', 'TypeScript', 'Three.js / WebGL', 'GSAP', 'Lenis', 'Tailwind CSS'],
     caseStudy: {
@@ -101,6 +104,15 @@ export const projects: Project[] = [
         { value: '3D', label: { fr: 'monolithe temps réel (Three.js)', en: 'real-time monolith (Three.js)' } },
         { value: '100%', label: { fr: 'de la copie dans le DOM — SEO intact', en: 'of the copy in the DOM — SEO intact' } },
       ],
+      // The five salles + the official boutique — captures of what EAM built.
+      gallery: [
+        '/thumbs/bc-portet.jpg',
+        '/thumbs/bc-etats-unis.jpg',
+        '/thumbs/bc-minimes.jpg',
+        '/thumbs/bc-ramonville.jpg',
+        '/thumbs/bc-st-cyprien.jpg',
+        '/thumbs/bc-box-plus.jpg',
+      ],
     },
   },
   {
@@ -120,7 +132,7 @@ export const projects: Project[] = [
     liveUrl: '#',
     color: '#E8001C',
     year: 2026,
-    isFeatured: false,
+    isFeatured: true,
     isInternal: false,
     techStack: ['Next.js', 'TypeScript', 'Three.js / WebGL', 'GSAP', 'Lenis', 'Tailwind CSS'],
     caseStudy: {
@@ -139,8 +151,8 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: 'boxing-center-le-colosse',
-    name: 'Boxing Center — Le Colosse',
+    slug: 'boxing-center-etats-unis',
+    name: 'Boxing Center — États-Unis',
     client: 'Boxing Center Toulouse',
     tagline: {
       fr: 'Un monument que l’on approche',
@@ -194,6 +206,7 @@ export const projects: Project[] = [
     year: 2025,
     isFeatured: true,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'SEO Local'],
     caseStudy: {
       problem: {
@@ -224,11 +237,12 @@ export const projects: Project[] = [
     },
     category: 'Restauration & F&B',
     tags: ['Restaurant', 'Dark Design', 'Halal', 'Toulouse'],
-    liveUrl: 'https://the911.fr',
+    liveUrl: 'https://the-911.vercel.app',
     color: '#0b0b0b',
     year: 2025,
     isFeatured: false,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
     caseStudy: {
       problem: {
@@ -264,6 +278,7 @@ export const projects: Project[] = [
     year: 2025,
     isFeatured: true,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Astro 5', 'TypeScript', 'Tailwind CSS', 'SEO multi-sites'],
     caseStudy: {
       problem: {
@@ -294,11 +309,12 @@ export const projects: Project[] = [
     },
     category: 'Restauration & F&B',
     tags: ['Restaurant', 'Branding', 'Colomiers', 'Halal'],
-    liveUrl: 'https://www.chickenbens.fr/',
+    liveUrl: 'https://chikenbens.vercel.app',
     color: '#E63328',
     year: 2025,
     isFeatured: false,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Astro 5', 'TypeScript', 'Tailwind CSS', 'SEO Local'],
     caseStudy: {
       problem: {
@@ -334,6 +350,7 @@ export const projects: Project[] = [
     year: 2025,
     isFeatured: false,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Astro 4', 'TypeScript', 'Tailwind CSS'],
     caseStudy: {
       problem: {
@@ -364,11 +381,12 @@ export const projects: Project[] = [
     },
     category: 'Restauration & F&B',
     tags: ['F&B', 'International', 'Casablanca', 'Maroc', 'Artisanal'],
-    liveUrl: 'https://nyc-cookies.ma',
+    liveUrl: 'https://nyc-cookies-casablanca.vercel.app',
     color: '#0a0a0a',
     year: 2024,
     isFeatured: false,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Next.js', 'TypeScript', 'Tailwind CSS'],
     caseStudy: {
       problem: {
@@ -401,11 +419,12 @@ export const projects: Project[] = [
     },
     category: 'Services Automobiles',
     tags: ['Garage', 'SEO Local', 'Toulouse', 'Services'],
-    liveUrl: 'https://www.car-repair-france.fr/',
+    liveUrl: '#', // ⚠️ car-repair-france.fr is NOT the EAM build (Eddy 2026-07-14) — set the real URL when provided
     color: '#0b0b0b',
     year: 2025,
     isFeatured: false,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Schema.org'],
     caseStudy: {
       problem: {
@@ -436,11 +455,12 @@ export const projects: Project[] = [
     },
     category: 'Services Automobiles',
     tags: ['Commerce', 'Automobile', 'Colomiers', 'Pièces'],
-    liveUrl: 'https://pieces-auto-colomiers.vercel.app/',
+    liveUrl: 'https://piece-auto-colomiers.vercel.app',
     color: '#0F2C5A',
     year: 2025,
     isFeatured: false,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Astro 5', 'TypeScript', 'Tailwind CSS'],
     caseStudy: {
       problem: {
@@ -476,6 +496,7 @@ export const projects: Project[] = [
     year: 2025,
     isFeatured: false,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Next.js', 'TypeScript', 'Tailwind CSS'],
     caseStudy: {
       problem: {
@@ -513,6 +534,7 @@ export const projects: Project[] = [
     year: 2025,
     isFeatured: true,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Supabase'],
     caseStudy: {
       problem: {
@@ -548,6 +570,7 @@ export const projects: Project[] = [
     year: 2025,
     isFeatured: false,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'CMS'],
     caseStudy: {
       problem: {
@@ -583,6 +606,7 @@ export const projects: Project[] = [
     year: 2024,
     isFeatured: false,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'SEO'],
     caseStudy: {
       problem: {
@@ -615,11 +639,12 @@ export const projects: Project[] = [
     },
     category: 'Corporate & Formation',
     tags: ['Corporate', 'Formation', 'Qualiopi', 'RNCP', 'Toulouse'],
-    liveUrl: 'https://f2mconsulting.fr',
+    liveUrl: '#', // ⚠️ f2mconsulting.fr is NOT the EAM build (Eddy 2026-07-14) — set the real URL when provided
     color: '#1a237e',
     year: 2025,
-    isFeatured: true,
+    isFeatured: false,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Schema.org', 'SEO'],
     caseStudy: {
       problem: {
@@ -641,16 +666,16 @@ export const projects: Project[] = [
     name: 'JCBoyang Conseil',
     client: 'JCBoyang Conseil',
     tagline: {
-      fr: 'Cabinet de conseil & accompagnement stratégique.',
-      en: 'Consulting firm & strategic advisory.',
+      fr: 'Croissance commerciale & transformation.',
+      en: 'Commercial growth & transformation.',
     },
     description: {
-      fr: "Site institutionnel pour un cabinet de conseil — accompagnement stratégique et conseil en organisation.",
-      en: 'An institutional site for a consulting firm — strategic guidance and organisational consulting.',
+      fr: "Site complet pour le cabinet de Jean-Christophe Boyang-Tsang — méthode Vendeur Attitude™ à trois niveaux de certification, séminaires Mindset, témoignages et prise de rendez-vous en ligne.",
+      en: "A full site for Jean-Christophe Boyang-Tsang's firm — the three-level Vendeur Attitude™ method, Mindset seminars, testimonials and online booking.",
     },
     category: 'Corporate & Formation',
     tags: ['Corporate', 'Conseil', 'Stratégie'],
-    liveUrl: 'https://jcboyang-conseil-1.onrender.com/',
+    liveUrl: 'https://www.jcbo-conseil.com/',
     color: '#1C2B3A',
     year: 2024,
     isFeatured: false,
@@ -692,6 +717,7 @@ export const projects: Project[] = [
     year: 2025,
     isFeatured: false,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['React', 'Lovable', 'Tailwind CSS', 'PWA'],
     caseStudy: {
       problem: {
@@ -725,8 +751,9 @@ export const projects: Project[] = [
     liveUrl: 'https://dance-puce.vercel.app/',
     color: '#8B1A4A',
     year: 2024,
-    isFeatured: false,
+    isFeatured: true,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Next.js', 'TypeScript', 'Tailwind CSS'],
     caseStudy: {
       problem: {
@@ -802,11 +829,12 @@ export const projects: Project[] = [
     },
     category: 'Agence Créative',
     tags: ['Agence', 'Créatif', 'Paris', 'Toulouse', '3D', 'Vidéo'],
-    liveUrl: 'https://id-skillz.com/',
+    liveUrl: 'https://id-skillz.vercel.app',
     color: '#B8A98C',
     year: 2025,
     isFeatured: false,
     isInternal: false,
+    underMicrodidact: true,
     techStack: ['Astro 6', 'TypeScript', 'Tailwind CSS'],
     caseStudy: {
       problem: {
@@ -861,38 +889,43 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: 'formforge',
-    name: 'FormForge',
-    client: 'Agence EAM (Interne — NDA)',
+    slug: 'inlet',
+    name: 'Inlet',
+    client: 'Agence EAM — produit maison',
     tagline: {
-      fr: 'Notre SaaS de formulaires multi-clients.',
-      en: 'Our multi-client forms SaaS.',
+      fr: 'Un seul backend de formulaires pour tous vos sites.',
+      en: 'One form backend for all your websites.',
     },
     description: {
-      fr: "SaaS propriétaire de création et gestion de formulaires multi-clients — analytics temps réel, soumissions, webhooks.",
-      en: 'A proprietary SaaS to build and manage multi-client forms — real-time analytics, submissions, webhooks.',
+      fr: "Microservice SaaS de formulaires centralisé — l'alternative auto-hébergée à Jotform, Formspree et EmailJS. Toutes les soumissions de tous les sites dans un tableau de bord unique, avec e-mails en marque blanche et anti-spam nouvelle génération.",
+      en: 'A centralised form-backend SaaS — the self-hosted alternative to Jotform, Formspree and EmailJS. Every submission from every site in one dashboard, with white-label emails and next-gen spam blocking.',
     },
-    category: 'Outil Interne',
-    tags: ['SaaS', 'Formulaires', 'Analytics', 'Multi-tenant', 'NDA'],
-    liveUrl: '#',
-    color: '#0F2C5A',
-    year: 2025,
+    category: 'Tech & SaaS',
+    tags: ['SaaS', 'Formulaires', 'Anti-spam', 'Multi-tenant', 'Produit'],
+    liveUrl: 'https://inlett.vercel.app/',
+    color: '#2563EB',
+    year: 2026,
     isFeatured: false,
-    isInternal: true,
-    techStack: ['Next.js 15', 'Supabase', 'TypeScript', 'PostgreSQL', 'Prisma'],
+    isInternal: false,
+    techStack: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'Resend / Brevo'],
     caseStudy: {
       problem: {
-        fr: "L'agence payait Typeform/JotForm pour ses clients — coût élevé, branding générique, données chez des tiers.",
-        en: 'The agency paid for Typeform/JotForm on behalf of clients — high cost, generic branding, third-party-hosted data.',
+        fr: "Chaque site client réclamait sa propre plomberie de formulaires : SMTP à configurer, spam à filtrer, accusés de réception à styliser — multiplié par vingt sites.",
+        en: 'Every client site demanded its own form plumbing: SMTP to configure, spam to filter, receipts to style — multiplied across twenty sites.',
       },
       solution: {
-        fr: 'SaaS propriétaire multi-tenant avec création drag-and-drop, analytics temps réel, export CSV, webhooks et panel client dédié.',
-        en: 'A proprietary multi-tenant SaaS with drag-and-drop building, real-time analytics, CSV export, webhooks and a dedicated client panel.',
+        fr: "Un microservice unique (V3) : panneau d'administration centralisé, e-mails dynamiques en marque blanche (logos, couleurs, polices du client), accusés stylisés FR/EN, anti-spam NLP + preuve de travail + pot de miel, logs d'échecs en direct, export CSV des leads et CORS dynamique.",
+        en: 'One microservice (V3): a centralised admin panel, dynamic white-label emails (client logos, colors, fonts), styled FR/EN receipts, NLP + proof-of-work + honeypot spam defense, live failure logs, CSV lead export and dynamic CORS.',
       },
       outcome: {
-        fr: 'Économie de 1 200 €/an en abonnements tiers. Déployé pour 5 clients actifs. Plateforme évolutive.',
-        en: 'Saves €1,200/year in third-party subscriptions. Deployed for 5 active clients. A scalable platform.',
+        fr: "En production sur les sites du studio — le formulaire de contact d'EAM lui-même peut s'y brancher. Zéro configuration SMTP par site.",
+        en: "In production across the studio's sites — EAM's own contact form can plug into it. Zero per-site SMTP setup.",
       },
+      metrics: [
+        { value: 'V3', label: { fr: 'moteur — logs en direct', en: 'engine — live logs' } },
+        { value: 'PoW', label: { fr: 'défis cryptographiques anti-bots', en: 'cryptographic bot challenges' } },
+        { value: 'CSV', label: { fr: 'export des leads en un clic', en: 'one-click lead export' } },
+      ],
     },
   },
   {
@@ -971,20 +1004,28 @@ export const projects: Project[] = [
 // captured cleanly. Add a slug here after capturing its screenshot; broken/dead
 // deployments (Vercel 404, onrender spin-up) and unreachable domains are omitted
 // on purpose so those cards keep the branded gradient fallback.
-// (boxing-center intentionally absent — no maquette deployed yet; keeps gradient)
+// NOTE: the umbrella 'boxing-center' entry carries NO thumb on purpose — every
+// capture we own belongs to ONE specific salle's site, and EAM did not build
+// boxingcenter.fr itself. Mislabeling a salle shot as "the network" is a lie.
 const THUMBED = new Set([
+  'boxing-center-portet', // the 3D ring entry
+  'boxing-center-etats-unis', // les-zones spread (the maquette's own "Colosse" DA)
   'kermhosting',
   'la-brigade-mobile',
-  'f2m-consulting',
   'mon-boum',
   'beldi-fusion',
   'chicken-bens',
+  'the-911',
+  'nyc-cookies',
+  'pieces-auto-colomiers',
+  'id-skillz',
   'marche-de-mo',
-  'car-repair',
   'decoshop-vitrine',
   'drive-pneu',
   'c-chez-toit',
   'temps-dance',
+  'inlet',
+  'jcboyang-conseil',
 ])
 for (const p of projects) if (THUMBED.has(p.slug)) p.thumb = `/thumbs/${p.slug}.jpg`
 
@@ -1016,11 +1057,13 @@ export const categories: ProjectCategory[] = [
 // ── Helpers ─────────────────────────────────────────────────────────────────
 // Curated featured order — lead with the most technically baffling work (SaaS
 // scale, WebGL, rebuilds) rather than declaration order, which over-indexed F&B.
+// Boxing Center is represented by Portet (the flagship, with its own real
+// capture) — the umbrella entry has no thumb and stays a world door on /work.
 const FEATURED_RANK: Record<string, number> = {
   kermhosting: 0,
-  'boxing-center': 1,
+  'boxing-center-portet': 1,
   'la-brigade-mobile': 2,
-  'f2m-consulting': 3,
+  'temps-dance': 3,
   'mon-boum': 4,
   'beldi-fusion': 5,
 }
@@ -1029,6 +1072,8 @@ export const featuredProjects = projects
   .sort((a, b) => (FEATURED_RANK[a.slug] ?? 99) - (FEATURED_RANK[b.slug] ?? 99))
 export const publicProjects = projects.filter((p) => !p.isInternal)
 export const internalProjects = projects.filter((p) => p.isInternal)
+export const microdidactProjects = publicProjects.filter((p) => p.underMicrodidact)
+export const soloProjects = publicProjects.filter((p) => !p.underMicrodidact)
 export const getProject = (slug: string) => projects.find((p) => p.slug === slug)
 export const getProjectsByCategory = (category: ProjectCategory) =>
   publicProjects.filter((p) => p.category === category)

@@ -42,7 +42,9 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             { name: dict.nav.home, url: absoluteUrl(localizedPath(locale)) },
             { name: dict.nav.studio, url: absoluteUrl(localizedPath(locale, 'about')) },
           ]),
-          faqSchema(dict.faq.items),
+          // Brand FAQ only — the service FAQPage instance lives on the home
+          // page (Google: one FAQPage per FAQ set, never duplicated).
+          faqSchema(dict.brandFaq.items),
         ]}
       />
 
@@ -93,7 +95,12 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      <FAQ dict={dict} />
+      <FAQ
+        dict={dict}
+        eyebrow={dict.brandFaq.eyebrow}
+        title={dict.brandFaq.title}
+        items={dict.brandFaq.items}
+      />
       </div>
 
       <div data-chapter="heraldic">
