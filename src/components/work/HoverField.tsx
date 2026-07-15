@@ -1,8 +1,11 @@
 'use client'
 
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+import { canRunHeavyGL } from '@/lib/quality'
+import { GlBoundary } from '@/components/three/GlBoundary'
+import { FrameloopGate } from '@/components/three/FrameloopGate'
 
 /**
  * Shared pointer state written by the gallery (one object, no React re-renders
@@ -119,15 +122,25 @@ function FieldMesh({ state }: { state: React.MutableRefObject<HoverState> }) {
 
 /** Single full-bleed canvas overlaying the grid. One WebGL context, decorative. */
 export default function HoverField({ state }: { state: React.MutableRefObject<HoverState> }) {
+  // Own quality gate — decorative only, so low-end devices simply get nothing.
+  const [enabled, setEnabled] = useState(false)
+  useEffect(() => {
+    setEnabled(canRunHeavyGL())
+  }, [])
+  if (!enabled) return null
+
   return (
-    <Canvas
-      gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
-      dpr={[1, 1.6]}
-      orthographic
-      camera={{ position: [0, 0, 1] }}
-      style={{ position: 'absolute', inset: 0 }}
-    >
-      <FieldMesh state={state} />
-    </Canvas>
+    <GlBoundary>
+      <Canvas
+        gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
+        dpr={[1, 1.6]}
+        orthographic
+        camera={{ position: [0, 0, 1] }}
+        style={{ position: 'absolute', inset: 0 }}
+      >
+        <FieldMesh state={state} />
+        <FrameloopGate />
+      </Canvas>
+    </GlBoundary>
   )
 }

@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { gsap, SplitText, useGSAP } from '@/lib/gsap'
 import { MicrodidactTraversee } from './MicrodidactTraversee'
 import { localizedPath } from '@/lib/seo'
+import { canRunHeavyGL } from '@/lib/quality'
 import type { Project } from '@/lib/projects'
 import type { Locale } from '@/i18n/config'
 import type { Dictionary } from '@/i18n/dictionaries'
@@ -41,11 +42,12 @@ export function MicrodidactWorld({
 
   const sectorCount = new Set(projects.map((p) => p.category)).size
 
-  // Same gate as the team stage: WebGL only on desktop with motion allowed.
+  // Same gate as the team stage: WebGL only on desktop with motion allowed,
+  // on hardware that can afford it (quality gate + WebGL2 probe).
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const small = window.matchMedia('(max-width: 767px)').matches
-    if (!reduce && !small) setEnableFx(true)
+    if (!reduce && !small && canRunHeavyGL()) setEnableFx(true)
   }, [])
 
   useGSAP(

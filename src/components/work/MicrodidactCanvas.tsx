@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+import { GlBoundary } from '@/components/three/GlBoundary'
+import { FrameloopGate } from '@/components/three/FrameloopGate'
 
 /**
  * "Atelier Sparks" — the particle weather of the Microdidact world. Same cheap
@@ -159,13 +161,16 @@ function MicrodidactSparks() {
 
 export default function MicrodidactCanvas() {
   return (
-    <Canvas
-      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-      dpr={[1, 1.6]}
-      camera={{ position: [0, 0, 7], fov: 55 }}
-      style={{ position: 'absolute', inset: 0 }}
-    >
-      <MicrodidactSparks />
-    </Canvas>
+    <GlBoundary>
+      <Canvas
+        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+        dpr={[1, 1.6]}
+        camera={{ position: [0, 0, 7], fov: 55 }}
+        style={{ position: 'absolute', inset: 0 }}
+      >
+        <MicrodidactSparks />
+        <FrameloopGate />
+      </Canvas>
+    </GlBoundary>
   )
 }

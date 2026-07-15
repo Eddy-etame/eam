@@ -20,14 +20,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: 'work/boxing-center', priority: 0.8, changeFrequency: 'monthly' as const, lastModified: BUILD_DATE },
     { path: 'about', priority: 0.7, changeFrequency: 'monthly' as const, lastModified: BUILD_DATE },
     { path: 'contact', priority: 0.6, changeFrequency: 'monthly' as const, lastModified: BUILD_DATE },
+    { path: 'mentions-legales', priority: 0.3, changeFrequency: 'yearly' as const, lastModified: BUILD_DATE },
   ]
 
-  const projectPaths = publicProjects.map((project) => ({
-    path: `work/${project.slug}`,
-    priority: project.isFeatured ? 0.9 : 0.7,
-    changeFrequency: 'monthly' as const,
-    lastModified: new Date(project.year, 0, 1),
-  }))
+  // 'boxing-center' is owned by the literal world route listed above (the
+  // static segment shadows work/[slug]) — emitting it here would duplicate
+  // the URL with a conflicting priority/lastmod.
+  const projectPaths = publicProjects
+    .filter((project) => project.slug !== 'boxing-center')
+    .map((project) => ({
+      path: `work/${project.slug}`,
+      priority: project.isFeatured ? 0.9 : 0.7,
+      changeFrequency: 'monthly' as const,
+      lastModified: new Date(project.year, 0, 1),
+    }))
 
   return [...staticPaths, ...projectPaths].map((entry) => {
     const languages: Record<string, string> = {

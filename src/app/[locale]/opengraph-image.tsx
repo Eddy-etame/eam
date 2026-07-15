@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og'
 import { isLocale, locales, defaultLocale } from '@/i18n/config'
+import { siteConfig } from '@/lib/site.config'
 
 /**
  * Dynamic OG/social card (1200×630) generated at build time per locale via the
@@ -101,7 +102,7 @@ export default async function OpengraphImage({
           }}
         >
           <span>{foot}</span>
-          <span style={{ color: '#C9A96E' }}>eam.vercel.app</span>
+          <span style={{ color: '#C9A96E' }}>{new URL(siteConfig.url).host}</span>
         </div>
       </div>
     ),

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import dynamic from 'next/dynamic'
 import { gsap, useGSAP } from '@/lib/gsap'
 import { team } from '@/lib/team'
+import { canRunHeavyGL } from '@/lib/quality'
 import type { Locale } from '@/i18n/config'
 import type { Dictionary } from '@/i18n/dictionaries'
 import { TeamDuotoneDefs } from '@/components/three/TeamDuotoneDefs'
@@ -16,11 +17,12 @@ export function TeamSection({ locale, dict }: { locale: Locale; dict: Dictionary
   const { team: t } = dict
   const [enable3D, setEnable3D] = useState(false)
 
-  // WebGL mist only on desktop with motion allowed (same gate as the Hero).
+  // WebGL mist only on desktop with motion allowed (same gate as the Hero),
+  // and only on hardware that can afford it (quality gate + WebGL2 probe).
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const small = window.matchMedia('(max-width: 767px)').matches
-    if (!reduce && !small) setEnable3D(true)
+    if (!reduce && !small && canRunHeavyGL()) setEnable3D(true)
   }, [])
 
   useGSAP(

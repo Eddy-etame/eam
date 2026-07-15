@@ -2,6 +2,8 @@
 
 import { Canvas } from '@react-three/fiber'
 import { GoldField } from './GoldField'
+import { GlBoundary } from './GlBoundary'
+import { FrameloopGate } from './FrameloopGate'
 
 /**
  * Isolated WebGL layer for the hero. Loaded via next/dynamic (ssr:false) so it
@@ -10,13 +12,16 @@ import { GoldField } from './GoldField'
  */
 export default function HeroCanvas() {
   return (
-    <Canvas
-      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-      dpr={[1, 1.8]}
-      camera={{ position: [0, 1.5, 8.5], fov: 48 }}
-      style={{ position: 'absolute', inset: 0 }}
-    >
-      <GoldField />
-    </Canvas>
+    <GlBoundary>
+      <Canvas
+        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+        dpr={[1, 1.8]}
+        camera={{ position: [0, 1.5, 8.5], fov: 48 }}
+        style={{ position: 'absolute', inset: 0 }}
+      >
+        <GoldField />
+        <FrameloopGate />
+      </Canvas>
+    </GlBoundary>
   )
 }

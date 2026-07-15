@@ -383,17 +383,32 @@
   animation: eam-marquee 42s linear infinite;
   will-change: transform;
 }
-.eam-marquee:hover .eam-marquee-track { animation-play-state: paused; }
+.eam-marquee:hover .eam-marquee-track,
+.eam-marquee:focus-within .eam-marquee-track { animation-play-state: paused; }
+/* Reduced motion: the strip keeps drifting (a slow linear translate carries no
+   vestibular risk, and a frozen half-marquee reads as broken — caught on a
+   Windows laptop with OS animations off) but at half speed; hover/focus pause. */
 @media (prefers-reduced-motion: reduce) {
-  .eam-marquee-track {
-    animation: none !important;
-    transform: none !important;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.25rem;
-  }
-  .eam-client-repeat { display: none; }
+  .eam-marquee-track { animation-duration: 96s !important; }
+}
+
+/* Hero primary CTA — a slow light sweep so the commission is never missed. */
+@keyframes eam-cta-sweep {
+  0%, 62% { transform: translateX(-130%) skewX(-18deg); }
+  100%    { transform: translateX(230%) skewX(-18deg); }
+}
+.cta-shine::after {
+  content: '';
+  position: absolute;
+  inset: -2px auto -2px 0;
+  width: 38%;
+  background: linear-gradient(105deg, transparent 8%, rgba(255,255,255,0.42) 50%, transparent 92%);
+  transform: translateX(-130%) skewX(-18deg);
+  animation: eam-cta-sweep 4.6s ease-in-out infinite;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-shine::after { animation: none; }
 }
 
 /*═══════════════════════════════════════════════════════════════════════════

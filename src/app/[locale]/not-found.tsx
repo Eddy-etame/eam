@@ -2,19 +2,19 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { getDictionary } from '@/i18n/dictionaries'
+import { fallbackStrings } from '@/i18n/fallback-strings'
 import { isLocale, type Locale } from '@/i18n/config'
 
 /**
  * Branded 404. Client component: not-found receives no params, so the locale
- * is sniffed from the pathname (route-level code-splitting keeps the dict
- * import out of every other page's bundle).
+ * is sniffed from the pathname. Uses fallback-strings, NEVER getDictionary —
+ * this boundary rides in every route's shared client JS (see fallback-strings).
  */
 export default function NotFound() {
   const pathname = usePathname()
   const seg = pathname.split('/')[1]
   const locale: Locale = isLocale(seg) ? seg : 'fr'
-  const t = getDictionary(locale).notFound
+  const t = fallbackStrings[locale].notFound
 
   return (
     <main

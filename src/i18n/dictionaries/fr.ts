@@ -52,6 +52,23 @@ export const fr = {
     eyebrow: 'Ils nous font confiance',
     title: 'Des marques qui nous ont choisis.',
   },
+  homeWorlds: {
+    eyebrow: 'Deux mondes',
+    title: 'Des mondes entiers, pas des pages.',
+    enter: 'Entrer',
+    doors: {
+      microdidact: {
+        name: 'Microdidact',
+        count: '16',
+        line: "Seize projets forgés sous l'agence toulousaine — la traversée se fait au scroll.",
+      },
+      boxingCenter: {
+        name: 'Boxing Center',
+        count: '5+1',
+        line: "Cinq salles, un site immersif chacune — et la boutique officielle Box Plus.",
+      },
+    },
+  },
   services: {
     eyebrow: 'Savoir-faire',
     title: "Ce que l'atelier forge",
@@ -127,6 +144,10 @@ export const fr = {
       {
         q: 'Quels services propose EAM ?',
         a: "EAM réalise des sites vitrines et éditoriaux, des applications métier (dashboards, SaaS, PWA), du e-commerce, l'identité visuelle et le branding, ainsi que le référencement SEO et GEO.",
+      },
+      {
+        q: 'EAM est-elle une agence web à Toulouse ?',
+        a: "L'équipe d'EAM a ses racines dans la région toulousaine : les trois fondateurs y ont forgé seize projets sous Microdidact, et le réseau Boxing Center, client direct, est toulousain. EAM travaille à distance pour des clients en France, au Maroc, en Afrique francophone et à l'international ; l'adresse du siège n'est pas publiée.",
       },
       {
         q: "Qu'est-ce que le GEO (Generative Engine Optimization) ?",
@@ -355,6 +376,50 @@ export const fr = {
     navTitle: 'Navigation',
     contactTitle: 'Contact',
     sitemap: 'Plan du site',
+    legal: 'Mentions légales',
+  },
+  legal: {
+    eyebrow: 'Informations légales',
+    title: 'Mentions légales',
+    intro:
+      "Informations légales relatives au site EAM — éditeur, hébergement, propriété intellectuelle, données personnelles et cookies.",
+    sections: [
+      {
+        heading: 'Éditeur du site',
+        body: [
+          "Le site est édité par EAM, collectif de trois ingénieurs : Eddy Etame, Raphaël Angoula et Brad Mbosseu.",
+          'Contact : eam.agency@gmail.com.',
+          'Directeur de la publication : EAM.',
+        ],
+      },
+      {
+        heading: 'Hébergement',
+        body: [
+          'Le site est hébergé par Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com.',
+        ],
+      },
+      {
+        heading: 'Propriété intellectuelle',
+        body: [
+          "L'ensemble du contenu de ce site — textes, visuels, code et identité graphique — est la propriété d'EAM, sauf mention contraire. Toute reproduction sans autorisation préalable est interdite.",
+          'Les marques, logos et visuels des clients présentés appartiennent à leurs propriétaires respectifs ; ils figurent sur ce site à titre de références de portfolio.',
+        ],
+      },
+      {
+        heading: 'Données personnelles (RGPD)',
+        body: [
+          "Les informations transmises via le formulaire de contact (nom, e-mail, entreprise, message) sont acheminées par e-mail à EAM et utilisées uniquement pour répondre à votre demande. Elles n'alimentent aucune liste marketing et ne sont transmises à aucun tiers.",
+          "Ce site n'utilise ni traceur, ni outil d'analyse d'audience, ni cookie publicitaire.",
+          "Conformément au Règlement général sur la protection des données (RGPD), vous pouvez exercer vos droits d'accès, de rectification et de suppression en écrivant à eam.agency@gmail.com.",
+        ],
+      },
+      {
+        heading: 'Cookies',
+        body: [
+          "Ce site ne dépose aucun cookie au-delà de ce qui est strictement nécessaire à son fonctionnement technique.",
+        ],
+      },
+    ],
   },
   notFound: {
     title: 'Page introuvable',
@@ -383,6 +448,11 @@ export const fr = {
     contact: {
       title: 'Contact — devis site web gratuit sous 24-48 h',
       description: "Démarrez un projet avec EAM. Devis gratuit sous 24 à 48h. Écrivez à eam.agency@gmail.com.",
+    },
+    legal: {
+      title: 'Mentions légales',
+      description:
+        "Mentions légales du site EAM : éditeur, hébergement, propriété intellectuelle, données personnelles (RGPD) et cookies.",
     },
   },
 }

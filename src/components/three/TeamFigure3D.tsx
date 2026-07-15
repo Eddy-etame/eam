@@ -3,6 +3,8 @@
 import { Suspense, useEffect, useMemo, useRef } from 'react'
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
+import { GlBoundary } from './GlBoundary'
+import { FrameloopGate } from './FrameloopGate'
 
 /**
  * Depth-map 3D founder — Lusion's real trick. The portrait is a plane whose
@@ -131,16 +133,19 @@ export default function TeamFigure3D({ image, depth }: { image: string; depth: s
 
   return (
     <div ref={host} aria-hidden className="absolute inset-0">
-      <Canvas
-        gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
-        dpr={[1, 1.6]}
-        camera={{ position: [0, 0, 5], fov: 40 }}
-        style={{ position: 'absolute', inset: 0 }}
-      >
-        <Suspense fallback={null}>
-          <FigurePlane image={image} depth={depth} aim={aim} />
-        </Suspense>
-      </Canvas>
+      <GlBoundary>
+        <Canvas
+          gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
+          dpr={[1, 1.6]}
+          camera={{ position: [0, 0, 5], fov: 40 }}
+          style={{ position: 'absolute', inset: 0 }}
+        >
+          <Suspense fallback={null}>
+            <FigurePlane image={image} depth={depth} aim={aim} />
+          </Suspense>
+          <FrameloopGate />
+        </Canvas>
+      </GlBoundary>
     </div>
   )
 }

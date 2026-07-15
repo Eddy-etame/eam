@@ -43,12 +43,16 @@ export function Navbar({ locale, dict }: { locale: Locale; dict: Dictionary }) {
     return () => window.removeEventListener('keydown', onKey)
   }, [open])
 
+  const home = localizedPath(locale)
   const links = [
+    { href: home, label: dict.nav.home },
     { href: localizedPath(locale, 'work'), label: dict.nav.work },
     { href: localizedPath(locale, 'about'), label: dict.nav.studio },
     { href: localizedPath(locale, 'contact'), label: dict.nav.contact },
   ]
-  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`)
+  // Home must match exactly — every route starts with it.
+  const isActive = (href: string) =>
+    href === home ? pathname === href : pathname === href || pathname.startsWith(`${href}/`)
 
   return (
     <header

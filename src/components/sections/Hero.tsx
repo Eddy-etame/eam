@@ -7,6 +7,7 @@ import { useGSAP } from '@gsap/react'
 import { gsap, SplitText } from '@/lib/gsap'
 import { Magnetic } from '@/components/ui/Magnetic'
 import { localizedPath } from '@/lib/seo'
+import { canRunHeavyGL } from '@/lib/quality'
 import type { Locale } from '@/i18n/config'
 import type { Dictionary } from '@/i18n/dictionaries'
 
@@ -20,7 +21,7 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const small = window.matchMedia('(max-width: 767px)').matches
-    if (!reduce && !small) setEnable3D(true)
+    if (!reduce && !small && canRunHeavyGL()) setEnable3D(true)
   }, [])
 
   useGSAP(
@@ -161,23 +162,28 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
         {hero.subtitle}
       </p>
 
+      {/* Hierarchy: the commission is the primary act — gold, lit, magnetic.
+          The registre is the supporting path. (Eddy: the old text link hid it.) */}
       <div className="mt-10 flex flex-wrap items-center gap-4">
         <Magnetic>
           <Link
             data-hero-cta
-            href={localizedPath(locale, 'work')}
-            className="shadow-gold inline-flex items-center gap-2 rounded-full border border-gold/40 px-7 py-3.5 text-mono-label text-ink transition-colors hover:bg-gold hover:text-deep"
+            href={localizedPath(locale, 'contact')}
+            className="cta-shine shadow-gold group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-gold px-8 py-4 font-medium text-deep transition-colors duration-300 hover:bg-gold-bright"
           >
-            {hero.ctaPrimary}
+            {hero.ctaSecondary}
+            <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1.5">
+              →
+            </span>
           </Link>
         </Magnetic>
         <Magnetic strength={0.22}>
           <Link
             data-hero-cta
-            href={localizedPath(locale, 'contact')}
-            className="inline-flex items-center gap-2 px-4 py-3.5 text-mono-label text-muted transition-colors hover:text-ink"
+            href={localizedPath(locale, 'work')}
+            className="inline-flex items-center gap-2 rounded-full border border-line-strong px-7 py-3.5 text-mono-label text-muted transition-colors duration-300 hover:border-gold/50 hover:text-ink"
           >
-            {hero.ctaSecondary} →
+            {hero.ctaPrimary}
           </Link>
         </Magnetic>
       </div>

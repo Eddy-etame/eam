@@ -4,6 +4,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { gsap } from '@/lib/gsap'
+import { canRunHeavyGL } from '@/lib/quality'
+import { GlBoundary } from '@/components/three/GlBoundary'
+import { FrameloopGate } from '@/components/three/FrameloopGate'
 
 /**
  * GalleryField — shared-canvas WebGL layer for the work gallery.
@@ -276,11 +279,12 @@ export default function GalleryField() {
     return id
   }
 
-  // Enhancement gate: no reduced-motion, hover-capable pointer only.
+  // Enhancement gate: no reduced-motion, hover-capable pointer, and a device
+  // that can actually afford the GL (memory/cores/save-data/WebGL2 probe).
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const hoverFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches
-    setEnabled(!reduced && hoverFine)
+    setEnabled(!reduced && hoverFine && canRunHeavyGL())
   }, [])
 
   // Node discovery + hover delegation on the closest positioned ancestor.
@@ -349,16 +353,19 @@ export default function GalleryField() {
   return (
     <div ref={wrapRef} aria-hidden className="pointer-events-none absolute inset-0">
       {enabled && nodes.length > 0 && (
-        <Canvas
-          orthographic
-          camera={{ position: [0, 0, 10], zoom: 1, near: 0.1, far: 100 }}
-          dpr={[1, 1.6]}
-          flat
-          gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
-          style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
-        >
-          <Scene nodes={nodes} hoveredRef={hoveredRef} keyFor={keyFor} />
-        </Canvas>
+        <GlBoundary>
+          <Canvas
+            orthographic
+            camera={{ position: [0, 0, 10], zoom: 1, near: 0.1, far: 100 }}
+            dpr={[1, 1.6]}
+            flat
+            gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
+            style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
+          >
+            <Scene nodes={nodes} hoveredRef={hoveredRef} keyFor={keyFor} />
+            <FrameloopGate />
+          </Canvas>
+        </GlBoundary>
       )}
     </div>
   )

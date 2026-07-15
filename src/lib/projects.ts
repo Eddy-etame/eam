@@ -1,4 +1,5 @@
-import type { Locale } from '@/i18n/config'
+import { categoryLabels, categories } from '@/lib/taxonomy'
+import type { Localized, ProjectCategory } from '@/lib/taxonomy'
 
 /**
  * EAM — Project portfolio data. Source of truth for every Work surface.
@@ -9,20 +10,14 @@ import type { Locale } from '@/i18n/config'
  *
  * Internal/NDA projects (isInternal: true) MUST never expose a live URL or a
  * real screenshot. They render via InternalCard with a confidential badge.
+ *
+ * Taxonomy (categories + labels) lives in lib/taxonomy.ts — CLIENT components
+ * import it from there so this registry never enters a client JS chunk.
+ * Server code may use the re-exports below.
  */
 
-export type Localized<T = string> = Record<Locale, T>
-
-export type ProjectCategory =
-  | 'Restauration & F&B'
-  | 'Services Automobiles'
-  | 'Commerce & Services'
-  | 'Corporate & Formation'
-  | 'Tech & SaaS'
-  | 'Culture & Associatif'
-  | 'Agence Créative'
-  | 'Sport & Bien-être'
-  | 'Outil Interne'
+export { categoryLabels, categories }
+export type { Localized, ProjectCategory }
 
 export interface Project {
   slug: string
@@ -240,7 +235,7 @@ export const projects: Project[] = [
     liveUrl: 'https://the-911.vercel.app',
     color: '#0b0b0b',
     year: 2025,
-    isFeatured: false,
+    isFeatured: true, // team 2026-07-15: "911 pèse aussi" — front-page weight
     isInternal: false,
     underMicrodidact: true,
     techStack: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
@@ -678,7 +673,8 @@ export const projects: Project[] = [
     liveUrl: 'https://www.jcbo-conseil.com/',
     color: '#1C2B3A',
     year: 2024,
-    isFeatured: false,
+    isFeatured: true, // team 2026-07-15: JCBO = "notre site qui pèse le plus" — leads the rail
+
     isInternal: false,
     techStack: ['Node.js', 'Express', 'HTML/CSS'],
     caseStudy: {
@@ -1029,43 +1025,22 @@ const THUMBED = new Set([
 ])
 for (const p of projects) if (THUMBED.has(p.slug)) p.thumb = `/thumbs/${p.slug}.jpg`
 
-// ── Localised category labels ──────────────────────────────────────────────
-export const categoryLabels: Record<ProjectCategory, Localized> = {
-  'Restauration & F&B': { fr: 'Restauration & F&B', en: 'Restaurants & F&B' },
-  'Services Automobiles': { fr: 'Services Automobiles', en: 'Automotive Services' },
-  'Commerce & Services': { fr: 'Commerce & Services', en: 'Retail & Services' },
-  'Corporate & Formation': { fr: 'Corporate & Formation', en: 'Corporate & Training' },
-  'Tech & SaaS': { fr: 'Tech & SaaS', en: 'Tech & SaaS' },
-  'Culture & Associatif': { fr: 'Culture & Associatif', en: 'Culture & Nonprofit' },
-  'Agence Créative': { fr: 'Agence Créative', en: 'Creative Agency' },
-  'Sport & Bien-être': { fr: 'Sport & Bien-être', en: 'Sport & Wellness' },
-  'Outil Interne': { fr: 'Outil Interne', en: 'Internal Tool' },
-}
-
-export const categories: ProjectCategory[] = [
-  'Restauration & F&B',
-  'Services Automobiles',
-  'Commerce & Services',
-  'Corporate & Formation',
-  'Tech & SaaS',
-  'Culture & Associatif',
-  'Agence Créative',
-  'Sport & Bien-être',
-  'Outil Interne',
-]
-
 // ── Helpers ─────────────────────────────────────────────────────────────────
 // Curated featured order — lead with the most technically baffling work (SaaS
 // scale, WebGL, rebuilds) rather than declaration order, which over-indexed F&B.
 // Boxing Center is represented by Portet (the flagship, with its own real
 // capture) — the umbrella entry has no thumb and stays a world door on /work.
+// Team ruling 2026-07-15: JCBO leads ("notre site qui pèse le plus"), The 911
+// close behind — both live client properties that will backlink « fait par EAM ».
 const FEATURED_RANK: Record<string, number> = {
-  kermhosting: 0,
-  'boxing-center-portet': 1,
-  'la-brigade-mobile': 2,
-  'temps-dance': 3,
-  'mon-boum': 4,
-  'beldi-fusion': 5,
+  'jcboyang-conseil': 0,
+  kermhosting: 1,
+  'the-911': 2,
+  'boxing-center-portet': 3,
+  'la-brigade-mobile': 4,
+  'temps-dance': 5,
+  'mon-boum': 6,
+  'beldi-fusion': 7,
 }
 export const featuredProjects = projects
   .filter((p) => p.isFeatured && !p.isInternal)

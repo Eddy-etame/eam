@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { getDictionary } from '@/i18n/dictionaries'
+import { fallbackStrings } from '@/i18n/fallback-strings'
 import { isLocale, type Locale } from '@/i18n/config'
 
 /**
@@ -19,8 +19,8 @@ export default function ErrorBoundary({
   const pathname = usePathname()
   const seg = pathname.split('/')[1]
   const locale: Locale = isLocale(seg) ? seg : 'fr'
-  const dict = getDictionary(locale)
-  const t = dict.errorPage
+  const strings = fallbackStrings[locale]
+  const t = strings.errorPage
 
   return (
     <main
@@ -55,7 +55,7 @@ export default function ErrorBoundary({
           href={`/${locale}`}
           className="text-mono-label text-muted transition-colors hover:text-ink"
         >
-          {dict.notFound.cta} →
+          {strings.notFound.cta} →
         </Link>
       </div>
     </main>

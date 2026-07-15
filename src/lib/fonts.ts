@@ -22,12 +22,13 @@ export const fontBody = Plus_Jakarta_Sans({
   preload: true,
 })
 
-/** MONO — JetBrains Mono. Tags, labels, indices, "engraved" data. */
+/** MONO — JetBrains Mono. Tags, labels, indices, "engraved" data. Preloaded:
+ * the hero eyebrow and nav labels render it above the fold on every page. */
 export const fontMono = JetBrains_Mono({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-jetbrains',
-  preload: false,
+  preload: true,
 })
 
 export const fontVariables = `${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable}`

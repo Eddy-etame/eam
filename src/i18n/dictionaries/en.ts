@@ -48,6 +48,23 @@ export const en = {
     eyebrow: 'Trusted by',
     title: 'Brands that chose us.',
   },
+  homeWorlds: {
+    eyebrow: 'Two worlds',
+    title: 'Entire worlds, not pages.',
+    enter: 'Enter',
+    doors: {
+      microdidact: {
+        name: 'Microdidact',
+        count: '16',
+        line: 'Sixteen projects forged under the Toulouse agency — the crossing happens on scroll.',
+      },
+      boxingCenter: {
+        name: 'Boxing Center',
+        count: '5+1',
+        line: 'Five gyms, one immersive site each — plus the official Box Plus store.',
+      },
+    },
+  },
   services: {
     eyebrow: 'Craft',
     title: 'What the atelier forges',
@@ -123,6 +140,10 @@ export const en = {
       {
         q: 'What services does EAM offer?',
         a: 'EAM builds showcase and editorial websites, business applications (dashboards, SaaS, PWAs), e-commerce, visual identity and branding, plus SEO and GEO.',
+      },
+      {
+        q: 'Is EAM a web agency in Toulouse?',
+        a: "EAM's team has its roots in the Toulouse area: the three founders forged sixteen projects there under Microdidact, and the Boxing Center network, a direct client, is based in Toulouse. EAM works remotely for clients in France, Morocco, francophone Africa and internationally; the head-office address is not published.",
       },
       {
         q: 'What is GEO (Generative Engine Optimization)?',
@@ -351,6 +372,50 @@ export const en = {
     navTitle: 'Navigation',
     contactTitle: 'Contact',
     sitemap: 'Sitemap',
+    legal: 'Legal notice',
+  },
+  legal: {
+    eyebrow: 'Legal information',
+    title: 'Legal notice',
+    intro:
+      'Legal information about the EAM website — publisher, hosting, intellectual property, personal data and cookies.',
+    sections: [
+      {
+        heading: 'Site publisher',
+        body: [
+          'This site is published by EAM, a collective of three engineers: Eddy Etame, Raphaël Angoula and Brad Mbosseu.',
+          'Contact: eam.agency@gmail.com.',
+          'Publication director: EAM.',
+        ],
+      },
+      {
+        heading: 'Hosting',
+        body: [
+          'The site is hosted by Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA — vercel.com.',
+        ],
+      },
+      {
+        heading: 'Intellectual property',
+        body: [
+          'All content on this site — copy, visuals, code and visual identity — is the property of EAM unless stated otherwise. Any reproduction without prior authorisation is prohibited.',
+          'Client trademarks, logos and visuals shown here belong to their respective owners; they appear on this site as portfolio references.',
+        ],
+      },
+      {
+        heading: 'Personal data (GDPR)',
+        body: [
+          'Information submitted through the contact form (name, email, company, message) is delivered to EAM by email and used solely to answer your request. It feeds no marketing list and is shared with no third party.',
+          'This site uses no trackers, no audience analytics and no advertising cookies.',
+          'Under the General Data Protection Regulation (GDPR), you can exercise your rights of access, rectification and erasure by writing to eam.agency@gmail.com.',
+        ],
+      },
+      {
+        heading: 'Cookies',
+        body: [
+          'This site sets no cookies beyond what is strictly necessary for its technical operation.',
+        ],
+      },
+    ],
   },
   notFound: {
     title: 'Page not found',
@@ -379,6 +444,11 @@ export const en = {
     contact: {
       title: 'Contact — Free Website Quote Within 24-48h',
       description: 'Start a project with EAM. Free quote within 24–48h. Email eam.agency@gmail.com.',
+    },
+    legal: {
+      title: 'Legal Notice',
+      description:
+        'Legal notice for the EAM website: publisher, hosting, intellectual property, personal data (GDPR) and cookies.',
     },
   },
 }

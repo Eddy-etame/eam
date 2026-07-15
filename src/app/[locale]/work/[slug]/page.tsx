@@ -152,6 +152,46 @@ export default async function CaseStudyPage({
                 priority
                 className="object-cover object-top"
               />
+            ) : slug === 'boxing-center' ? (
+              /* The network umbrella carries NO salle screenshot on purpose —
+                 every capture belongs to ONE salle's site. Brand stage instead. */
+              <span aria-hidden className="absolute inset-0 overflow-hidden">
+                <span
+                  className="absolute inset-0"
+                  style={{
+                    background: `linear-gradient(165deg, ${project.color} 0%, #131630 52%, var(--c-deep) 100%)`,
+                  }}
+                />
+                <span
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      'radial-gradient(ellipse 62% 46% at 50% 68%, #E8001C2E 0%, transparent 70%)',
+                  }}
+                />
+                <span className="absolute left-1/2 top-1/2 w-[70%] -translate-x-1/2 -translate-y-1/2 opacity-[0.08]">
+                  <Image
+                    src="/logos/boxing-center.png"
+                    alt=""
+                    width={1200}
+                    height={556}
+                    sizes="70vw"
+                    className="h-auto w-full"
+                    style={{ filter: 'brightness(0) invert(1)' }}
+                  />
+                </span>
+                <span className="absolute inset-0 grid place-items-center">
+                  <Image
+                    src="/logos/boxing-center.png"
+                    alt="Boxing Center"
+                    width={380}
+                    height={176}
+                    sizes="380px"
+                    className="h-auto w-[min(48vw,380px)]"
+                    style={{ filter: 'brightness(0) invert(1)', opacity: 0.94 }}
+                  />
+                </span>
+              </span>
             ) : (
               <span aria-hidden className="font-display text-[clamp(4rem,18vw,12rem)] text-white/10">
                 {initials}

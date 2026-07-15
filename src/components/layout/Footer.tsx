@@ -56,7 +56,13 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
         <div className="flex flex-col gap-3 text-sm text-faint md:flex-row md:items-center md:justify-between">
           <p>
-            © {year} {siteConfig.name}. {dict.footer.rights}
+            © {year} {siteConfig.name}. {dict.footer.rights} ·{' '}
+            <Link
+              href={localizedPath(locale, 'mentions-legales')}
+              className="underline-offset-4 transition-colors hover:text-ink hover:underline"
+            >
+              {dict.footer.legal}
+            </Link>
           </p>
           <p>{dict.footer.madeBy}</p>
         </div>

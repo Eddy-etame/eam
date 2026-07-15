@@ -23,19 +23,22 @@ Le GEO (Generative Engine Optimization) consiste à optimiser un site pour qu'il
 - Accueil (FR) : https://eam.vercel.app/fr — (EN) : https://eam.vercel.app/en
 - Réalisations (registre complet) : https://eam.vercel.app/fr/work
 - Monde Microdidact : https://eam.vercel.app/fr/work/microdidact
+- Monde Boxing Center : https://eam.vercel.app/fr/work/boxing-center
 - L'atelier / à propos (équipe, FAQ de marque) : https://eam.vercel.app/fr/about
 - Contact : https://eam.vercel.app/fr/contact
+- Mentions légales : https://eam.vercel.app/fr/mentions-legales
 
 ## Portfolio — 22 études de cas publiques
 
 ### Monde Boxing Center (2026 — sites de salles en production, boutique en ligne)
-Refonte digitale du réseau Boxing Center à Toulouse : cinq salles (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), une identité immersive WebGL par salle, forgée à partir du logo maison — plus Box Plus, la boutique en ligne officielle (Stripe, passerelle PrestaShop, catalogue synchronisé Deciplus). Maquettes livrées ; portage en cours. Aucun indicateur publié tant que les sites de salles ne sont pas en ligne.
+Refonte digitale du réseau Boxing Center à Toulouse : cinq salles (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), une identité immersive WebGL par salle, forgée à partir du logo maison — plus Box Plus, la boutique en ligne officielle (Stripe, passerelle PrestaShop, catalogue synchronisé Deciplus), déjà en ligne sur box-plus.vercel.app. Sur le portfolio, la page Monde Boxing Center présente les cinq salles nommées et la boutique en un parcours cinématique. Maquettes de salles livrées ; portage en cours. Aucun indicateur publié tant que les sites de salles ne sont pas en ligne.
 - Boxing Center — le réseau (5 salles + boutique) : https://eam.vercel.app/fr/work/boxing-center
 - Boxing Center Portet — salle amirale, 900 m² : https://eam.vercel.app/fr/work/boxing-center-portet
 - Boxing Center États-Unis — monolithe 3D Three.js : https://eam.vercel.app/fr/work/boxing-center-etats-unis
 - Box Plus — boutique en ligne officielle du réseau (live) : https://box-plus.vercel.app/
 
 ### Monde Microdidact (16 projets, 2024-2025)
+La page Monde Microdidact se parcourt comme une traversée : un seul scroll conduit à travers les seize projets, chaque pièce s'ouvre en plein écran (résumé, captures) puis mène à son étude de cas — tout le contenu reste dans le DOM rendu côté serveur.
 Restauration & commerce :
 - Beldi Fusion — restaurant marocain fusion, Toulouse. SEO local, dark-luxury : https://eam.vercel.app/fr/work/beldi-fusion (site : https://beldi-fusion7.vercel.app/)
 - Mon Boum — chaîne fast-food halal, 10 restaurants, Toulouse : https://eam.vercel.app/fr/work/mon-boum (site : https://monboumv3.vercel.app/)
