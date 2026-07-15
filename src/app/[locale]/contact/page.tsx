@@ -44,7 +44,9 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
       />
       <div className="mx-auto max-w-[1640px]">
         <div className="grid gap-16 lg:grid-cols-2">
-          <div>
+          {/* min-w-0 on both columns: grid items default to min-width auto, so one
+              long unbreakable token (e.g. the email) would force both columns wide */}
+          <div className="min-w-0">
             <p className="text-mono-label text-gold/85">{dict.contact.eyebrow}</p>
             <h1 className="mt-5 text-4xl">{dict.contact.title}</h1>
             <p className="mt-6 max-w-md text-lg text-muted">{dict.contact.lead}</p>
@@ -93,7 +95,9 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               {siteConfig.location.areaServed.join(' · ')}
             </p>
           </div>
-          <ContactForm dict={dict} />
+          <div className="min-w-0">
+            <ContactForm dict={dict} />
+          </div>
         </div>
       </div>
     </main>

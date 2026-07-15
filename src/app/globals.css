@@ -284,6 +284,17 @@
   [data-reveal][data-reveal-dir='left']  { transform: translateX(-2.4rem); }
   [data-reveal][data-reveal-dir='right'] { transform: translateX(2.4rem); }
   [data-reveal][data-reveal-dir='scale'] { transform: scale(0.955); }
+  /* RESPONSIVE: on phones the horizontal offsets push not-yet-revealed cards
+     past the page padding and widen the layout viewport (~+14px sideways pan
+     on Android/iOS). Fall back to the vertical entrance below md; desktop
+     choreography unchanged. Must stay ABOVE .is-visible so the revealed state
+     still wins the cascade. */
+  @media (max-width: 767px) {
+    [data-reveal][data-reveal-dir='left'],
+    [data-reveal][data-reveal-dir='right'] {
+      transform: translateY(1.6rem);
+    }
+  }
   [data-reveal].is-visible {
     opacity: 1;
     transform: none;

@@ -237,11 +237,29 @@ export const fr = {
     title: 'Le portfolio',
     subtitle: "Sites, applications et outils forgés pour des marques qui voulaient exister — vraiment — en ligne.",
     filterAll: 'Tout',
+    doorsHeading: 'Les deux mondes',
+    solosHeading: 'Réalisations en propre',
     microdidactBadge: 'Sous Microdidact',
     microdidactNote: "Réalisé sous Microdidact — agence de communication à Toulouse (groupe Microdidac), où l'équipe a forgé ces projets.",
     internalSectionTitle: 'Outils internes & confidentiels',
     internalNote: "Projets sous accord de confidentialité. Présentés sans visuel ni lien — détails sur demande.",
     enterWorld: 'Entrer',
+  },
+  /** Category filter chips — short labels sized for the chip rows. */
+  filters: {
+    eyebrow: 'Explorer par métier',
+    all: 'Tous',
+    labels: {
+      'Restauration & F&B': 'Restauration',
+      'Services Automobiles': 'Automobile',
+      'Commerce & Services': 'Commerce & Services',
+      'Corporate & Formation': 'Corporate',
+      'Tech & SaaS': 'SaaS',
+      'Culture & Associatif': 'Culture',
+      'Agence Créative': 'Création',
+      'Sport & Bien-être': 'Sport',
+      'Outil Interne': 'Outil interne',
+    },
   },
   caseStudy: {
     overview: 'Aperçu',
@@ -251,6 +269,27 @@ export const fr = {
     draftNote: 'Indicateurs en cours de validation client.',
     visitLabel: 'Voir le site en ligne',
     nextLabel: 'Projet suivant',
+  },
+  /** Conversion bands — the single ask of each surface (consumed by ConversionBand & the room CTA rows). */
+  conversion: {
+    button: 'Démarrer un projet',
+    secondary: "Voir l'atelier",
+    roomAsk: 'Un projet comme celui-ci ?',
+    case: {
+      eyebrow: 'À votre tour',
+      title: 'Vous imaginez déjà le vôtre ?',
+      text: "Ce niveau d'exigence, appliqué à votre marque. Parlons-en.",
+    },
+    world: {
+      eyebrow: 'Et le prochain ?',
+      title: 'Votre secteur mérite le même soin.',
+      text: 'Restaurants, garages, commerces, outils métier — chaque pièce de ce monde fut taillée sur-mesure. La vôtre reste à forger.',
+    },
+    registre: {
+      eyebrow: 'La suite du registre',
+      title: 'Chaque projet ici a commencé par un message.',
+      text: "Le vôtre peut partir aujourd'hui — réponse sous 24 à 48 heures.",
+    },
   },
   /** In-room labels for the immersive project rooms (consumed by the rooms surfaces; rundowns live in src/lib/rundowns.ts). */
   rooms: {

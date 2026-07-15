@@ -32,7 +32,11 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             <ul className="space-y-3">
               {links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-muted transition-colors hover:text-ink">
+                  {/* py + negative my: ~40px touch target, unchanged visual rhythm */}
+                  <Link
+                    href={l.href}
+                    className="-my-2 inline-block py-2 text-muted transition-colors hover:text-ink"
+                  >
                     {l.label}
                   </Link>
                 </li>
@@ -44,7 +48,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             <h2 className="text-mono-label mb-5 text-faint">{dict.footer.contactTitle}</h2>
             <a
               href={`mailto:${siteConfig.email}`}
-              className="text-muted transition-colors hover:text-gold"
+              className="-my-2 inline-block py-2 text-muted transition-colors hover:text-gold"
             >
               {siteConfig.email}
             </a>
@@ -59,7 +63,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             © {year} {siteConfig.name}. {dict.footer.rights} ·{' '}
             <Link
               href={localizedPath(locale, 'mentions-legales')}
-              className="underline-offset-4 transition-colors hover:text-ink hover:underline"
+              className="-my-3 inline-block py-3 underline-offset-4 transition-colors hover:text-ink hover:underline"
             >
               {dict.footer.legal}
             </Link>

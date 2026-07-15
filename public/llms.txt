@@ -35,7 +35,7 @@ Refonte digitale du réseau Boxing Center à Toulouse : cinq salles (Portet, Ét
 - Boxing Center — le réseau (5 salles + boutique) : https://eam.vercel.app/fr/work/boxing-center
 - Boxing Center Portet — salle amirale, 900 m² : https://eam.vercel.app/fr/work/boxing-center-portet
 - Boxing Center États-Unis — monolithe 3D Three.js : https://eam.vercel.app/fr/work/boxing-center-etats-unis
-- Box Plus — boutique en ligne officielle du réseau (live) : https://box-plus.vercel.app/
+- Box Plus — boutique en ligne officielle du réseau (live) : https://eam.vercel.app/fr/work/box-plus (site : https://box-plus.vercel.app/)
 
 ### Monde Microdidact (16 projets, 2024-2025)
 La page Monde Microdidact se parcourt comme une traversée : un seul scroll conduit à travers les seize projets, chaque pièce s'ouvre en plein écran (résumé, captures) puis mène à son étude de cas — tout le contenu reste dans le DOM rendu côté serveur.

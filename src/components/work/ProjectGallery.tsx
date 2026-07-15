@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ProjectCard } from './ProjectCard'
 import { InternalCard } from './InternalCard'
+import { ConversionBand } from '@/components/ui/ConversionBand'
 import {
   publicProjects,
   soloProjects,
@@ -196,6 +197,8 @@ export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Diction
 
       <div className="relative mt-12">
         {/* ── THE TWO DOORS — monumental thresholds into the worlds ───────── */}
+        {/* Heading order (audit P2): the door/card h3s need an h2 ancestor. */}
+        <h2 className="sr-only">{dict.work.doorsHeading}</h2>
         <div className="grid gap-8 lg:grid-cols-2">
           {/* Door N°01 — MICRODIDACT. A navy stage: aura, ghost numeral,
               inverted wordmark. Hover = the door opens. */}
@@ -292,15 +295,17 @@ export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Diction
                           'radial-gradient(ellipse 62% 46% at 50% 68%, #E8001C2E 0%, transparent 70%)',
                       }}
                     />
-                    <span className="absolute left-1/2 top-1/2 w-[110%] -translate-x-1/2 -translate-y-1/2 opacity-[0.07]">
+                    {/* Curated, not stuffy: the crest breathes in negative space
+                        like the Microdidact door's wordmark (Eddy 2026-07-15) */}
+                    <span className="absolute left-1/2 top-[42%] w-[min(46%,300px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.85]">
                       <Image
                         src="/logos/boxing-center.png"
                         alt=""
-                        width={1200}
-                        height={556}
-                        sizes="(max-width: 1024px) 110vw, 55vw"
+                        width={640}
+                        height={299}
+                        sizes="(max-width: 1024px) 46vw, 300px"
                         className="h-auto w-full"
-                        style={{ filter: 'brightness(0) invert(1)' }}
+                        style={{ filter: 'brightness(0) invert(1)', opacity: 0.92 }}
                       />
                     </span>
                   </div>
@@ -313,15 +318,6 @@ export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Diction
                     />
                     {doorFrame}
                     {doorSweep}
-                    <span className="absolute left-5 top-5 sm:left-7 sm:top-7">
-                      <Image
-                        src="/logos/boxing-center.png"
-                        alt=""
-                        width={96}
-                        height={96}
-                        className="h-10 w-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)] sm:h-12"
-                      />
-                    </span>
                     <span
                       aria-hidden
                       className="text-mono-label absolute right-5 top-5 tabular-nums text-white/70 sm:right-7 sm:top-7"
@@ -359,6 +355,7 @@ export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Diction
 
         {/* ── LES SOLOS — asymmetric woven band, not a uniform grid ─────────
             First solo spans wide (16/10); the others stack offset at 5/12. */}
+        {solos.length > 0 && <h2 className="sr-only">{dict.work.solosHeading}</h2>}
         {solos.length > 0 && (
           <div className="mt-20 grid gap-x-8 gap-y-14 md:grid-cols-12">
             <div className="md:col-span-7" {...paletteProps(solos[0].color)}>
@@ -388,6 +385,11 @@ export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Diction
             <GalleryField />
           </div>
         )}
+      </div>
+
+      {/* ── The registre's one ask — after the works, before the vault ────── */}
+      <div className="mt-24">
+        <ConversionBand locale={locale} dict={dict} variant="registre" />
       </div>
 
       {/* ── LE COFFRE — internal & confidential tools (unchanged) ─────────── */}

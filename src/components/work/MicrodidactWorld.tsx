@@ -6,8 +6,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { gsap, SplitText, useGSAP } from '@/lib/gsap'
 import { MicrodidactTraversee } from './MicrodidactTraversee'
+import { CategoryChips } from './CategoryChips'
+import { ConversionBand } from '@/components/ui/ConversionBand'
 import { localizedPath } from '@/lib/seo'
 import { canRunHeavyGL } from '@/lib/quality'
+import { categorySlugs } from '@/lib/taxonomy'
+import type { ProjectCategory } from '@/lib/taxonomy'
 import type { Project } from '@/lib/projects'
 import type { Locale } from '@/i18n/config'
 import type { Dictionary } from '@/i18n/dictionaries'
@@ -31,16 +35,30 @@ export function MicrodidactWorld({
   locale,
   dict,
   projects,
+  allCategories,
+  totalProjects,
+  activeCat = null,
 }: {
   locale: Locale
   dict: Dictionary
+  /** The projects crossed by the traversée — MAY be a `?cat=` filtered subset. */
   projects: Project[]
+  /** Categories present among the FULL sixteen — the chip row (subset-independent). */
+  allCategories?: ProjectCategory[]
+  /** Full-world project count — the story stats stay factual under a filter. */
+  totalProjects?: number
+  /** Category the traversée is currently filtered to (null = all). */
+  activeCat?: ProjectCategory | null
 }) {
   const root = useRef<HTMLElement>(null)
   const [enableFx, setEnableFx] = useState(false)
   const d = dict.microdidact
 
-  const sectorCount = new Set(projects.map((p) => p.category)).size
+  const chipCategories =
+    allCategories ?? [...new Set(projects.map((p) => p.category))]
+  const sectorCount = chipCategories.length
+  const worldCount = totalProjects ?? projects.length
+  const worldPath = localizedPath(locale, 'work/microdidact')
 
   // Same gate as the team stage: WebGL only on desktop with motion allowed,
   // on hardware that can afford it (quality gate + WebGL2 probe).
@@ -189,12 +207,14 @@ export function MicrodidactWorld({
               <h2 className="mt-5 text-3xl">
                 <span className="foil">{d.story.title}</span>
               </h2>
-              <dl className="mt-12 grid grid-cols-3 gap-6 border-t border-line pt-8">
+              {/* flex-wrap (not a rigid 3-col grid): 'Toulouse' at display size is
+                  wider than a phone-width column and would blow the layout viewport */}
+              <dl className="mt-12 flex flex-wrap gap-x-10 gap-y-6 border-t border-line pt-8">
                 {/* DOM order dt→dd (valid HTML); col-reverse paints the value on top */}
                 <div className="flex flex-col-reverse gap-2">
                   <dt className="text-mono-label text-muted">{d.stats.projects}</dt>
                   <dd className="font-display text-4xl text-gold [font-variant-numeric:tabular-nums]">
-                    {projects.length}
+                    {worldCount}
                   </dd>
                 </div>
                 <div className="flex flex-col-reverse gap-2">
@@ -230,7 +250,7 @@ export function MicrodidactWorld({
         <section className="border-t border-line">
           <header
             data-mw-reveal
-            className="mx-auto max-w-[1640px] px-6 pt-24 pb-16 md:px-12 md:pt-28 lg:px-20"
+            className="mx-auto max-w-[1640px] px-6 pt-24 pb-10 md:px-12 md:pt-28 lg:px-20"
           >
             <div className="max-w-3xl">
               <p className="text-mono-label text-gold/85">{d.constellation.eyebrow}</p>
@@ -238,39 +258,37 @@ export function MicrodidactWorld({
               <p className="mt-6 text-lg text-muted">{d.constellation.intro}</p>
             </div>
           </header>
+
+          {/* Filter chips — plain links (?cat=<slug>), so a visitor narrows the
+              traversée BEFORE scrolling in. Dark stage → fixed hex (tone). */}
+          <div data-mw-reveal className="mx-auto max-w-[1640px] px-6 pb-14 md:px-12 lg:px-20">
+            <CategoryChips
+              dict={dict}
+              categories={chipCategories}
+              hrefFor={(category) => `${worldPath}?cat=${categorySlugs[category]}`}
+              activeSlug={activeCat ? categorySlugs[activeCat] : null}
+              allHref={worldPath}
+              tone="stage"
+            />
+          </div>
+
           <MicrodidactTraversee locale={locale} dict={dict} projects={projects} />
         </section>
 
-        {/* ── FINAL CTA BAND ─────────────────────────────────────────────── */}
-        <section className="border-t border-line px-6 py-24 text-center md:px-12 md:py-32">
-          <div data-mw-reveal className="mx-auto max-w-2xl">
-            <h2 className="text-3xl">
-              <span className="foil">{d.cta.title}</span>
-            </h2>
-            <p className="mt-6 text-lg leading-relaxed text-muted">{d.cta.text}</p>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-5">
-              <Link
-                href={localizedPath(locale, 'contact')}
-                className="shadow-gold rounded-full bg-gold px-8 py-4 font-medium text-deep transition-colors duration-300 hover:bg-gold-bright"
-              >
-                {d.cta.button}
-              </Link>
-              <Link
-                href={localizedPath(locale, 'work')}
-                className="text-mono-label text-muted transition-colors duration-300 hover:text-ink"
-              >
-                {dict.common.backToWork} →
-              </Link>
-            </div>
+        {/* ── THE WORLD'S ONE ASK — after the traversée and its index ────── */}
+        <section className="border-t border-line px-6 py-24 md:px-12 md:py-28 lg:px-20">
+          <div data-mw-reveal className="mx-auto max-w-[1640px]">
+            <ConversionBand locale={locale} dict={dict} variant="world" />
           </div>
         </section>
       </div>
 
-      {/* Persistent way back to the registre */}
+      {/* Persistent way back to the registre — hidden on phones (it sat on top
+          of body copy); mobile relies on the in-flow exits instead */}
       <Link
         data-mw-back
         href={localizedPath(locale, 'work')}
-        className="text-mono-label fixed bottom-6 left-6 z-40 rounded-full border border-line bg-surface/80 px-5 py-3 text-muted backdrop-blur-md transition-colors duration-300 hover:border-gold/50 hover:text-ink"
+        className="text-mono-label fixed bottom-6 left-6 z-40 hidden rounded-full border border-line bg-surface/80 px-5 py-3 text-muted backdrop-blur-md transition-colors duration-300 hover:border-gold/50 hover:text-ink sm:inline-flex"
       >
         ← {d.back}
       </Link>

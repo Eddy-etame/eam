@@ -20,9 +20,10 @@ export function AboutTeaser({ locale, dict }: { locale: Locale; dict: Dictionary
                 {paragraph}
               </p>
             ))}
+            {/* mt-5 + py-3 = same visual position as mt-8, with a ~44px tap box */}
             <Link
               href={localizedPath(locale, 'about')}
-              className="mt-8 inline-flex items-center gap-2 text-mono-label text-gold transition-colors hover:text-gold-bright"
+              className="mt-5 inline-flex items-center gap-2 py-3 -mb-3 text-mono-label text-gold transition-colors hover:text-gold-bright"
             >
               {nav.studio} →
             </Link>

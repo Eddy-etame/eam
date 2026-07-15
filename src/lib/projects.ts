@@ -65,8 +65,8 @@ export const projects: Project[] = [
     name: 'Boxing Center',
     client: 'Boxing Center Toulouse',
     tagline: {
-      fr: 'Cinq salles, cinq identités. Une seule obsession.',
-      en: 'Five gyms, five identities. One obsession.',
+      fr: 'Cinq salles, une boutique. Une seule obsession.',
+      en: 'Five gyms, one store. One obsession.',
     },
     description: {
       fr: "Refonte digitale du réseau Boxing Center (Portet, États-Unis, Minimes, St-Cyprien, Ramonville) — un site immersif WebGL par salle, chacun forgé à partir du logo maison (marine + rouge), jamais dupliqué — plus la boutique en ligne officielle Box Plus (Stripe, passerelle PrestaShop, sync Deciplus).",
@@ -178,6 +178,45 @@ export const projects: Project[] = [
         fr: "Provisoire — à confirmer par EAM : maquette v4 avec walkthrough Three.js réel et repli DOM ; feuille de route ouverte (reflets métal, easing caméra par salle, audio spatial par zone).",
         en: 'Provisional — to be confirmed by EAM: a v4 maquette with a real Three.js walkthrough and DOM fallback; open roadmap (metal reflections, per-room camera easing, per-zone spatial audio).',
       },
+    },
+  },
+  {
+    // The official e-boutique of the network — LIVE (facts from its README +
+    // rendered hero: Stripe checkout, PrestaShop bridge, Deciplus catalogue
+    // sync bot; memberships, trial sessions, coaching, gear).
+    slug: 'box-plus',
+    name: 'Box Plus',
+    client: 'Boxing Center Toulouse',
+    tagline: {
+      fr: 'La boutique officielle, en ligne',
+      en: 'The official store, online',
+    },
+    description: {
+      fr: "Refonte de la boutique en ligne officielle du réseau Boxing Center — abonnements, séances d'essai, coachings et matériel dans un seul tunnel : paiement Stripe, passerelle PrestaShop et catalogue synchronisé en continu avec Deciplus.",
+      en: "A rebuild of the Boxing Center network's official online store — memberships, trial sessions, coaching and gear in one funnel: Stripe checkout, a PrestaShop bridge and a catalogue continuously synced with Deciplus.",
+    },
+    category: 'Commerce & Services',
+    tags: ['E-commerce', 'Stripe', 'PrestaShop', 'Automatisation', 'Sport', 'Toulouse'],
+    liveUrl: 'https://box-plus.vercel.app/',
+    color: '#B3001B',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Next.js', 'TypeScript', 'Stripe', 'PrestaShop', 'Node.js', 'Playwright'],
+    caseStudy: {
+      problem: {
+        fr: "La boutique historique du réseau vivait à l'écart de son système de gestion Deciplus : catalogue maintenu à la main, offres dispersées entre les salles, aucun tunnel unique pour vendre abonnements, séances d'essai et matériel.",
+        en: "The network's legacy store lived apart from its Deciplus management system: a hand-maintained catalogue, offers scattered across gyms, no single funnel to sell memberships, trial sessions and gear.",
+      },
+      solution: {
+        fr: "Une boutique repensée sous le blason maison : paiement Stripe, passerelle PrestaShop pour l'existant, et un bot de synchronisation qui republie le catalogue Deciplus en continu — le tout déployé sur Vercel avec webhooks de commande.",
+        en: 'A store rebuilt under the house crest: Stripe checkout, a PrestaShop bridge for the legacy stack, and a sync bot that continuously republishes the Deciplus catalogue — deployed on Vercel with order webhooks.',
+      },
+      outcome: {
+        fr: "En ligne — la boutique officielle du réseau tourne sur cette refonte. Aucun indicateur commercial publié sans l'accord du client.",
+        en: "Live — the network's official store runs on this rebuild. No commercial metrics published without the client's sign-off.",
+      },
+      gallery: ['/thumbs/bc-box-plus.jpg'],
     },
   },
 
@@ -1006,6 +1045,7 @@ export const projects: Project[] = [
 const THUMBED = new Set([
   'boxing-center-portet', // the 3D ring entry
   'boxing-center-etats-unis', // les-zones spread (the maquette's own "Colosse" DA)
+  'box-plus', // the live boutique hero (image-complete gated capture)
   'kermhosting',
   'la-brigade-mobile',
   'mon-boum',

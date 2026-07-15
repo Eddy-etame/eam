@@ -10,6 +10,7 @@ import { breadcrumbSchema, creativeWorkSchema, organizationSchema } from '@/lib/
 import { getProject, publicProjects, categoryLabels } from '@/lib/projects'
 import { CaseCover } from '@/components/work/CaseCover'
 import { CaseAside } from '@/components/work/CaseAside'
+import { ConversionBand } from '@/components/ui/ConversionBand'
 import { Reveal } from '@/components/ui/Reveal'
 
 export const revalidate = 86400
@@ -31,7 +32,9 @@ export async function generateMetadata({
   // Clamp: name + tagline must stay within a ~60-char SERP title budget.
   const base = project.name
   const tagline = project.tagline[locale]
-  const room = 60 - base.length - 3
+  // 54-char budget: the layout template appends ' · EAM' (6 chars) to every
+  // title — the old 60 budget produced 65-66 char SERP titles (audit P2).
+  const room = 54 - base.length - 3
   const title =
     room > 12 ? `${base} — ${tagline.length > room ? `${tagline.slice(0, room - 1).trimEnd()}…` : tagline}` : base
   return buildMetadata({
@@ -283,6 +286,13 @@ export default async function CaseStudyPage({
           </div>
         </div>
       ) : null}
+
+      {/* The one ask of the page — after the proof, before the next piece */}
+      <div className="px-6 pb-20 md:px-12 lg:px-20">
+        <div className="mx-auto max-w-[1640px]">
+          <ConversionBand locale={locale} dict={dict} variant="case" />
+        </div>
+      </div>
 
       <div className="border-t border-line px-6 py-16 md:px-12 lg:px-20">
         <div className="mx-auto max-w-[1640px]">

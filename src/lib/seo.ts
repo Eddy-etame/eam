@@ -29,6 +29,19 @@ interface BuildMetadataArgs {
 }
 
 /**
+ * Meta descriptions get truncated mid-sentence in SERPs past ~160 chars (the
+ * audit found case pages up to 249). Clamp at a sentence boundary when one
+ * lands in budget, else at a word boundary with an ellipsis.
+ */
+function clampDescription(text: string, max = 158): string {
+  if (text.length <= max) return text
+  const slice = text.slice(0, max)
+  const sentence = slice.lastIndexOf('. ')
+  if (sentence > max * 0.55) return slice.slice(0, sentence + 1)
+  return `${slice.slice(0, slice.lastIndexOf(' ')).trimEnd()}…`
+}
+
+/**
  * Per-page metadata with canonical + full hreflang alternates. The title
  * template ('%s · EAM') is set once in the root [locale] layout; pages pass a
  * plain title string and inherit it.
@@ -36,10 +49,11 @@ interface BuildMetadataArgs {
 export function buildMetadata({
   locale,
   title,
-  description,
+  description: rawDescription,
   path = '',
   images,
 }: BuildMetadataArgs): Metadata {
+  const description = clampDescription(rawDescription)
   const url = absoluteUrl(localizedPath(locale, path))
 
   // The file-based opengraph-image.tsx only applies to its OWN segment — it

@@ -37,8 +37,9 @@ export const clients: Client[] = [
   { name: 'Temps Dance', logo: '/logos/temps-dance.png', slug: 'temps-dance' },
   { name: 'NYC Cookies Casablanca', logo: '/logos/nyc-cookies.png', slug: 'nyc-cookies' },
   { name: 'Un Rire Pour un Enfant', logo: '/logos/un-rire-pour-un-enfant.png', slug: 'un-rire-pour-un-enfant' },
-  { name: 'Inlet', logo: '/logos/inlet.svg', slug: 'inlet', vector: true },
-  { name: 'Microdidact', logo: '/logos/microdidact.png', slug: 'microdidact' },
+  // Microdidact (provenance, not a client — and its multicolor wordmark loses
+  // its white letters on white plaques) and Inlet (house product, no one
+  // "chose us" there) are deliberately NOT in this strip: it is client trust.
   { name: 'Pièces Auto Colomiers', logo: '/logos/pieces-auto-colomiers.png', slug: 'pieces-auto-colomiers' },
   { name: 'DecoShop', logo: '/logos/decoshop.svg', slug: 'decoshop-vitrine', vector: true },
 ]

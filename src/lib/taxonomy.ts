@@ -43,3 +43,24 @@ export const categories: ProjectCategory[] = [
   'Sport & Bien-être',
   'Outil Interne',
 ]
+
+/** URL-safe slugs for the category filter chips (`?cat=<slug>`). */
+export const categorySlugs: Record<ProjectCategory, string> = {
+  'Restauration & F&B': 'restauration',
+  'Services Automobiles': 'automobile',
+  'Commerce & Services': 'commerce-services',
+  'Corporate & Formation': 'corporate-formation',
+  'Tech & SaaS': 'tech-saas',
+  'Culture & Associatif': 'culture-associatif',
+  'Agence Créative': 'agence-creative',
+  'Sport & Bien-être': 'sport-bien-etre',
+  'Outil Interne': 'outil-interne',
+}
+
+/** Reverse lookup — resolves a `?cat=` slug back to its category (null if unknown). */
+export function categoryFromSlug(slug: string): ProjectCategory | null {
+  const match = (Object.keys(categorySlugs) as ProjectCategory[]).find(
+    (category) => categorySlugs[category] === slug,
+  )
+  return match ?? null
+}

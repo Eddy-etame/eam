@@ -233,11 +233,29 @@ export const en = {
     title: 'The portfolio',
     subtitle: 'Sites, apps and tools forged for brands that wanted to truly exist online.',
     filterAll: 'All',
+    doorsHeading: 'The two worlds',
+    solosHeading: 'Independent builds',
     microdidactBadge: 'Under Microdidact',
     microdidactNote: 'Built under Microdidact — a Toulouse communication agency (Microdidac group) where the team forged these projects.',
     internalSectionTitle: 'Internal & confidential tools',
     internalNote: 'Projects under NDA. Shown without visuals or links — details on request.',
     enterWorld: 'Enter',
+  },
+  /** Category filter chips — short labels sized for the chip rows. */
+  filters: {
+    eyebrow: 'Explore by trade',
+    all: 'All',
+    labels: {
+      'Restauration & F&B': 'Restaurants',
+      'Services Automobiles': 'Automotive',
+      'Commerce & Services': 'Retail & Services',
+      'Corporate & Formation': 'Corporate',
+      'Tech & SaaS': 'SaaS',
+      'Culture & Associatif': 'Culture',
+      'Agence Créative': 'Creative',
+      'Sport & Bien-être': 'Sport',
+      'Outil Interne': 'Internal tool',
+    },
   },
   caseStudy: {
     overview: 'Overview',
@@ -247,6 +265,27 @@ export const en = {
     draftNote: 'Metrics pending client validation.',
     visitLabel: 'Visit the live site',
     nextLabel: 'Next project',
+  },
+  /** Conversion bands — the single ask of each surface (consumed by ConversionBand & the room CTA rows). */
+  conversion: {
+    button: 'Start a project',
+    secondary: 'Visit the studio',
+    roomAsk: 'A project like this one?',
+    case: {
+      eyebrow: 'Your turn',
+      title: 'Already picturing yours?',
+      text: "This level of craft, applied to your brand. Let's talk.",
+    },
+    world: {
+      eyebrow: 'And the next one?',
+      title: 'Your sector deserves the same care.',
+      text: 'Restaurants, garages, shops, business tools — every piece of this world was cut to measure. Yours is still to be forged.',
+    },
+    registre: {
+      eyebrow: 'The registry, continued',
+      title: 'Every project here began with a message.',
+      text: 'Yours can set off today — we reply within 24 to 48 hours.',
+    },
   },
   /** In-room labels for the immersive project rooms (consumed by the rooms surfaces; rundowns live in src/lib/rundowns.ts). */
   rooms: {

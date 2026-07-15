@@ -248,11 +248,12 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
             const right = i % 2 === 1
             const inner = (
               <>
-                {/* Oversized inner frame — the parallax travel never shows edges */}
-                <div data-bc-band-img aria-hidden className="absolute -inset-y-[9%] inset-x-0">
+                {/* Oversized inner frame — the parallax travel never shows edges.
+                    These captures ARE content (the sites EAM built) — real alts. */}
+                <div data-bc-band-img className="absolute -inset-y-[9%] inset-x-0">
                   <Image
                     src={meta.img}
-                    alt=""
+                    alt={`Boxing Center ${salle.name} — capture du site conçu par EAM`}
                     fill
                     sizes="100vw"
                     className="object-cover object-top"
@@ -350,7 +351,7 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
                   />
                 </div>
               </BrowserFrame>
-              <div className="mt-8">
+              <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
                 <a
                   href={BOUTIQUE_URL}
                   target="_blank"
@@ -362,6 +363,12 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
                 >
                   {d.boutique.visit} <span aria-hidden>↗</span>
                 </a>
+                <Link
+                  href={localizedPath(locale, 'work/box-plus')}
+                  className="text-mono-label inline-flex items-center gap-2 py-3 text-muted transition-colors duration-300 hover:text-ink"
+                >
+                  {d.salles.caseCta} <span aria-hidden>→</span>
+                </Link>
               </div>
             </div>
           </div>
@@ -418,11 +425,12 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
         </section>
       </div>
 
-      {/* Persistent way back to the registre */}
+      {/* Persistent way back to the registre — hidden on phones (it sat on top
+          of body copy); mobile relies on the in-flow exits instead */}
       <Link
         data-bc-back
         href={localizedPath(locale, 'work')}
-        className="text-mono-label fixed bottom-6 left-6 z-40 rounded-full border border-line bg-surface/80 px-5 py-3 text-muted backdrop-blur-md transition-colors duration-300 hover:border-gold/50 hover:text-ink"
+        className="text-mono-label fixed bottom-6 left-6 z-40 hidden rounded-full border border-line bg-surface/80 px-5 py-3 text-muted backdrop-blur-md transition-colors duration-300 hover:border-gold/50 hover:text-ink sm:inline-flex"
       >
         ← {d.back}
       </Link>

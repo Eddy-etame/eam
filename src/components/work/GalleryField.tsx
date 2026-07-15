@@ -45,7 +45,6 @@ const vertexShader = /* glsl */ `
 `
 
 const fragmentShader = /* glsl */ `
-  precision mediump float;
   varying vec2 vUv;
   uniform sampler2D uMap;
   uniform vec2 uUvScale;
@@ -287,7 +286,10 @@ export default function GalleryField() {
     setEnabled(!reduced && hoverFine && canRunHeavyGL())
   }, [])
 
-  // Node discovery + hover delegation on the closest positioned ancestor.
+  // Node discovery + hover delegation on the nearest ancestor that actually
+  // CONTAINS the [data-gl-thumb] nodes. (The old "closest positioned
+  // ancestor" walk stopped at this component's own absolute overlay — which
+  // holds zero thumbs — so the Canvas never mounted on /work.)
   useEffect(() => {
     if (!enabled) return
     const wrap = wrapRef.current
@@ -297,7 +299,7 @@ export default function GalleryField() {
     while (
       ancestor &&
       ancestor !== document.body &&
-      getComputedStyle(ancestor).position === 'static'
+      !ancestor.querySelector('[data-gl-thumb]')
     ) {
       ancestor = ancestor.parentElement
     }

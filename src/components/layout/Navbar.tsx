@@ -75,8 +75,9 @@ export function Navbar({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           <Logo className="h-9 md:h-10" />
         </Link>
 
-        {/* Desktop */}
-        <div className="hidden items-center gap-9 md:flex">
+        {/* Desktop — engages at lg: at 768px the logo + 4 links + FR/EN + CTA
+            pill don't fit and the pill wraps; tablets get the hamburger menu */}
+        <div className="hidden items-center gap-9 lg:flex">
           <ul className="flex items-center gap-9">
             {links.map((l) => (
               <li key={l.href}>
@@ -109,7 +110,7 @@ export function Navbar({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? dict.common.closeMenu : dict.common.openMenu}
-          className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
+          className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 lg:hidden"
         >
           <span
             className={cn(
@@ -131,7 +132,7 @@ export function Navbar({ locale, dict }: { locale: Locale; dict: Dictionary }) {
         id="mobile-menu"
         inert={!open}
         className={cn(
-          'grid overflow-hidden border-line bg-deep/95 backdrop-blur-md transition-[grid-template-rows] duration-500 md:hidden',
+          'grid overflow-hidden border-line bg-deep/95 backdrop-blur-md transition-[grid-template-rows] duration-500 lg:hidden',
           open ? 'grid-rows-[1fr] border-t' : 'grid-rows-[0fr]',
         )}
       >

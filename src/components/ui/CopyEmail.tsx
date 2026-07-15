@@ -21,7 +21,7 @@ export function CopyEmail({ email, copiedLabel }: { email: string; copiedLabel: 
       type="button"
       onClick={copy}
       aria-live="polite"
-      className="group/copy mt-2 inline-flex items-baseline gap-3 font-display text-2xl text-ink transition-colors hover:text-gold"
+      className="group/copy mt-2 inline-flex flex-wrap items-baseline gap-3 font-display text-xl [overflow-wrap:anywhere] text-ink transition-colors hover:text-gold sm:text-2xl"
     >
       {email}
       <span className="text-mono-label text-faint transition-colors group-hover/copy:text-gold">

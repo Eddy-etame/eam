@@ -65,6 +65,7 @@ function markSeen(slug: string) {
 /** Slugs with retina multi-shots at public/shots/<slug>/{hero,s2,s3}.webp. */
 const SHOT_SLUGS = new Set([
   'beldi-fusion',
+  'c-chez-toit',
   'chicken-bens',
   'decoshop-vitrine',
   'drive-pneu',
@@ -457,6 +458,10 @@ export function MicrodidactTraversee({
             aria-hidden
             className="pointer-events-none absolute bottom-8 right-6 z-40 flex w-[min(38vw,460px)] items-center gap-5 md:right-12"
           >
+            {/* The arrows work — tell people (fixed hex: rides over the rooms) */}
+            <span className="text-mono-label hidden lg:inline" style={{ color: '#8892A466' }}>
+              ← →
+            </span>
             <span className="hairline relative flex-1">
               <span
                 ref={progressRef}
@@ -726,9 +731,15 @@ function Room({
         {/* 1 — the image you entered through, now the whole world */}
         <div className="relative h-svh overflow-hidden">
           <div data-room-hero-media className="absolute inset-0">{bleed(false)}</div>
+          {/* Double scrim: page-wide falloff + a hard local band under the plate
+              so the room name never fights the capture's own hero copy. */}
           <span
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10"
+            className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/10"
+          />
+          <span
+            aria-hidden
+            className="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-black/80 to-transparent"
           />
           <div className="absolute inset-x-0 bottom-0 p-8 md:p-14">
             <p className="text-mono-label text-white/75">
@@ -776,6 +787,13 @@ function Room({
                 className="text-mono-label text-white/60 transition-colors duration-300 hover:text-white"
               >
                 {dict.common.viewCase} →
+              </Link>
+              {/* Dark stage → fixed hex, never theme tokens (legibility law) */}
+              <Link
+                href={localizedPath(locale, 'contact')}
+                className="text-mono-label text-[#E8C987] transition-colors duration-300 hover:text-white"
+              >
+                {dict.conversion.roomAsk} →
               </Link>
             </div>
           </div>
@@ -905,22 +923,29 @@ function RoomDigest({
         </div>
       )}
 
+      {/* py + negative my: ~44px touch targets, unchanged visual rhythm */}
       <div className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3">
         {project.liveUrl !== '#' && (
           <a
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-mono-label inline-flex items-center gap-2 text-gold transition-colors duration-300 hover:text-gold-bright"
+            className="text-mono-label -my-3 inline-flex items-center gap-2 py-3 text-gold transition-colors duration-300 hover:text-gold-bright"
           >
             {dict.rooms.visit} <span aria-hidden>↗</span>
           </a>
         )}
         <Link
           href={localizedPath(locale, `work/${project.slug}`)}
-          className="text-mono-label text-muted transition-colors duration-300 hover:text-ink"
+          className="text-mono-label -my-3 inline-flex items-center py-3 text-muted transition-colors duration-300 hover:text-ink"
         >
           {dict.common.viewCase} →
+        </Link>
+        <Link
+          href={localizedPath(locale, 'contact')}
+          className="text-mono-label -my-3 inline-flex items-center py-3 text-gold transition-colors duration-300 hover:text-gold-bright"
+        >
+          {dict.conversion.roomAsk} →
         </Link>
       </div>
     </div>

@@ -7,6 +7,7 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { breadcrumbSchema, collectionPageSchema, organizationSchema } from '@/lib/schema'
 import { MicrodidactWorld } from '@/components/work/MicrodidactWorld'
 import { microdidactProjects } from '@/lib/projects'
+import { categories, categoryFromSlug } from '@/lib/taxonomy'
 
 export async function generateMetadata({
   params,
@@ -46,12 +47,30 @@ export async function generateMetadata({
  */
 export default async function MicrodidactPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>
+  searchParams: Promise<{ cat?: string }>
 }) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
   const dict = getDictionary(locale)
+
+  // ?cat=<slug> pre-filters the traversée. Unknown slug, or a category with no
+  // project in this world → the full sixteen (the world never renders empty).
+  const { cat } = await searchParams
+  const requested = typeof cat === 'string' ? categoryFromSlug(cat) : null
+  const filtered = requested
+    ? microdidactProjects.filter((p) => p.category === requested)
+    : microdidactProjects
+  const activeCat = requested && filtered.length > 0 ? requested : null
+  const shownProjects = activeCat ? filtered : microdidactProjects
+
+  // Chip row = the categories actually present among the sixteen, in
+  // canonical taxonomy order — derived from data, never hardcoded.
+  const worldCategories = categories.filter((c) =>
+    microdidactProjects.some((p) => p.category === c),
+  )
 
   // Organization + CollectionPage bind the sixteen case studies to EAM for
   // answer engines (llms.txt cites this page as the canonical Microdidact URL).
@@ -73,7 +92,14 @@ export default async function MicrodidactPage({
   return (
     <>
       <JsonLd data={schemas} />
-      <MicrodidactWorld locale={locale} dict={dict} projects={microdidactProjects} />
+      <MicrodidactWorld
+        locale={locale}
+        dict={dict}
+        projects={shownProjects}
+        allCategories={worldCategories}
+        totalProjects={microdidactProjects.length}
+        activeCat={activeCat}
+      />
     </>
   )
 }
