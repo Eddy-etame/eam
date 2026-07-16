@@ -113,7 +113,7 @@ export const en = {
     stats: [
       { value: '22+', label: 'projects' },
       { value: '3', label: 'craftsmen' },
-      { value: '7', label: 'industries' },
+      { value: '8', label: 'industries' },
       { value: '2024', label: 'founded' },
     ],
   },
@@ -233,6 +233,7 @@ export const en = {
     title: 'The portfolio',
     subtitle: 'Sites, apps and tools forged for brands that wanted to truly exist online.',
     filterAll: 'All',
+    countLabel: 'projects shipped',
     doorsHeading: 'The two worlds',
     solosHeading: 'Independent builds',
     microdidactBadge: 'Under Microdidact',

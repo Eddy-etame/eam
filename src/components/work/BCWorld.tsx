@@ -13,13 +13,15 @@ import type { Dictionary } from '@/i18n/dictionaries'
 const BC_NAVY = '#1E2044'
 const BC_RED = '#E8001C'
 
-/** The five salles — captures of the delivered maquettes. Order = the tour. */
-const SALLES: { img: string; href?: string; numeral: string }[] = [
-  { img: '/thumbs/bc-portet.jpg', href: 'work/boxing-center-portet', numeral: 'I' },
-  { img: '/thumbs/bc-etats-unis.jpg', href: 'work/boxing-center-etats-unis', numeral: 'II' },
-  { img: '/thumbs/bc-minimes.jpg', numeral: 'III' },
-  { img: '/thumbs/bc-st-cyprien.jpg', numeral: 'IV' },
-  { img: '/thumbs/bc-ramonville.jpg', numeral: 'V' },
+/** The five salles — captures of the delivered maquettes. Order = the tour.
+ *  imgM = the phone-shaped capture, shown below `sm` so the bands never squish
+ *  a desktop screenshot on mobile. */
+const SALLES: { img: string; imgM: string; href?: string; numeral: string }[] = [
+  { img: '/thumbs/bc-portet.jpg', imgM: '/thumbs/bc-portet-m.jpg', href: 'work/boxing-center-portet', numeral: 'I' },
+  { img: '/thumbs/bc-etats-unis.jpg', imgM: '/thumbs/bc-etats-unis-m.jpg', href: 'work/boxing-center-etats-unis', numeral: 'II' },
+  { img: '/thumbs/bc-minimes.jpg', imgM: '/thumbs/bc-minimes-m.jpg', numeral: 'III' },
+  { img: '/thumbs/bc-st-cyprien.jpg', imgM: '/thumbs/bc-st-cyprien-m.jpg', numeral: 'IV' },
+  { img: '/thumbs/bc-ramonville.jpg', imgM: '/thumbs/bc-ramonville-m.jpg', numeral: 'V' },
 ]
 
 /** The official e-boutique — live, EAM-built (Stripe + PrestaShop bridge + Deciplus sync). */
@@ -249,22 +251,41 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
             const inner = (
               <>
                 {/* Oversized inner frame — the parallax travel never shows edges.
-                    These captures ARE content (the sites EAM built) — real alts. */}
+                    These captures ARE content (the sites EAM built) — real alts.
+                    Phone-shaped capture below sm; desktop capture at sm+. */}
                 <div data-bc-band-img className="absolute -inset-y-[9%] inset-x-0">
+                  <Image
+                    src={meta.imgM}
+                    alt={`Boxing Center ${salle.name} — capture du site conçu par EAM`}
+                    fill
+                    sizes="100vw"
+                    className="object-cover object-top sm:hidden"
+                  />
                   <Image
                     src={meta.img}
                     alt={`Boxing Center ${salle.name} — capture du site conçu par EAM`}
                     fill
                     sizes="100vw"
-                    className="object-cover object-top"
+                    className="hidden object-cover object-top sm:block"
                   />
                 </div>
-                {/* Legibility scrim, anchored to the copy side */}
+                {/* Legibility scrim, anchored to the copy side (desktop). */}
                 <div
                   aria-hidden
-                  className="absolute inset-0"
+                  className="absolute inset-0 hidden sm:block"
                   style={{
                     background: `linear-gradient(${right ? '270deg' : '90deg'}, ${BC_NAVY}E6 0%, rgba(7,13,24,0.55) 46%, transparent 78%), linear-gradient(0deg, rgba(7,13,24,0.72) 0%, transparent 38%)`,
+                  }}
+                />
+                {/* Mobile: a bottom-weighted scrim — the phone capture reads up
+                    top (the striking visual), the caption sits on darkness so it
+                    never fights the capture's own hero text. */}
+                <div
+                  aria-hidden
+                  className="absolute inset-0 sm:hidden"
+                  style={{
+                    background:
+                      'linear-gradient(0deg, rgba(7,13,24,0.94) 4%, rgba(7,13,24,0.62) 42%, transparent 80%)',
                   }}
                 />
                 {/* Ghost numeral — Fraunces, drifting against the scroll */}
@@ -291,7 +312,11 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
                   <p className="font-display text-3xl leading-none text-ink md:text-[clamp(2.75rem,5.5vw,4.5rem)]">
                     {salle.name}
                   </p>
-                  <p className="text-base leading-relaxed text-ink/80 md:text-lg">{salle.line}</p>
+                  {/* The long line stays compact off-screen on mobile — the phone
+                      capture is the hero there, the caption is a compact label. */}
+                  <p className="hidden text-base leading-relaxed text-ink/80 sm:block md:text-lg">
+                    {salle.line}
+                  </p>
                   {meta.href && (
                     <span className="text-mono-label mt-2 inline-flex items-center gap-2 text-gold transition-colors duration-300 group-hover:text-gold-bright">
                       {d.salles.caseCta} <span aria-hidden>→</span>
@@ -341,7 +366,18 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
 
             <div data-bc-reveal className="mt-12">
               <BrowserFrame url={BOUTIQUE_URL}>
-                <div className="relative aspect-[16/10] w-full">
+                {/* Phone-shaped store capture on mobile (taller frame), the
+                    desktop capture at sm+ (16/10). */}
+                <div className="relative aspect-[3/4] w-full sm:hidden">
+                  <Image
+                    src="/thumbs/box-plus-m.jpg"
+                    alt={`Box Plus — ${d.boutique.tag}`}
+                    fill
+                    sizes="100vw"
+                    className="object-cover object-top"
+                  />
+                </div>
+                <div className="relative hidden aspect-[16/10] w-full sm:block">
                   <Image
                     src="/thumbs/bc-box-plus.jpg"
                     alt={`Box Plus — ${d.boutique.tag}`}

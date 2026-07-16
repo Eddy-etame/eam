@@ -68,6 +68,7 @@ export default async function WorkPage({ params }: { params: Promise<{ locale: s
           title={dict.work.title}
           subtitle={dict.work.subtitle}
           count={publicProjects.length}
+          countLabel={dict.work.countLabel}
         />
         {/* Filter chips — each one enters the owning world already filtered */}
         <div className="mt-12 flex flex-col gap-4 md:flex-row md:items-baseline md:gap-8">

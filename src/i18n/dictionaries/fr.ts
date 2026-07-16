@@ -117,7 +117,7 @@ export const fr = {
     stats: [
       { value: '22+', label: 'réalisations' },
       { value: '3', label: 'artisans' },
-      { value: '7', label: 'secteurs' },
+      { value: '8', label: 'secteurs' },
       { value: '2024', label: 'fondée en' },
     ],
   },
@@ -237,6 +237,7 @@ export const fr = {
     title: 'Le portfolio',
     subtitle: "Sites, applications et outils forgés pour des marques qui voulaient exister — vraiment — en ligne.",
     filterAll: 'Tout',
+    countLabel: 'projets livrés',
     doorsHeading: 'Les deux mondes',
     solosHeading: 'Réalisations en propre',
     microdidactBadge: 'Sous Microdidact',

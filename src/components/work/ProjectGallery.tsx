@@ -79,9 +79,11 @@ export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Diction
 
   const bc = publicProjects.find((p) => p.slug === 'boxing-center')
 
-  // Solo works only — the Boxing Center entries are doors/world content now.
+  // Solo works only — everything that belongs to a WORLD (the Boxing Center
+  // salle pages AND its Box Plus boutique) lives inside that world, never as a
+  // registre solo. Genuine solos: kermhosting, inlet, jcboyang-conseil.
   const solos = soloProjects
-    .filter((p) => !p.slug.startsWith('boxing-center'))
+    .filter((p) => !p.slug.startsWith('boxing-center') && p.slug !== 'box-plus')
     .sort((a, b) => (SOLO_RANK[a.slug] ?? 99) - (SOLO_RANK[b.slug] ?? 99))
 
   // Registre inventory: 2 world doors + the solos, numbered in visible order.
@@ -278,7 +280,10 @@ export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Diction
                 className="group block"
               >
                 <article className="relative min-h-[48vh] overflow-hidden rounded-lg border border-line bg-deep lg:min-h-[60vh]">
-                  {/* Stage — house navy, low red glow, oversized ghost crest. */}
+                  {/* Stage — house navy, low red glow, and the WORDMARK as the
+                      name (dead-centre, like the Microdidact door). No serif
+                      title: the logo already says BOXING CENTER — a second
+                      "Boxing Center" on top of it collided and read cheap. */}
                   <div className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]">
                     <span
                       aria-hidden
@@ -292,25 +297,29 @@ export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Diction
                       className="absolute inset-0 opacity-80 transition-opacity duration-700 group-hover:opacity-100"
                       style={{
                         background:
-                          'radial-gradient(ellipse 62% 46% at 50% 68%, #E8001C2E 0%, transparent 70%)',
+                          'radial-gradient(ellipse 62% 46% at 50% 70%, #E8001C2E 0%, transparent 70%)',
                       }}
                     />
-                    {/* Curated, not stuffy: the crest breathes in negative space
-                        like the Microdidact door's wordmark (Eddy 2026-07-15) */}
-                    <span className="absolute left-1/2 top-[42%] w-[min(46%,300px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.85]">
+                    {/* Ghost numeral behind, faint — mirrors Microdidact's "16" */}
+                    <span
+                      aria-hidden
+                      className="absolute -bottom-[0.14em] -right-3 select-none font-display text-[clamp(11rem,22vw,20rem)] leading-none text-white/[0.05]"
+                    >
+                      5
+                    </span>
+                    <span className="absolute inset-0 grid place-items-center px-10">
                       <Image
                         src="/logos/boxing-center.png"
-                        alt=""
+                        alt="Boxing Center"
                         width={640}
                         height={299}
-                        sizes="(max-width: 1024px) 46vw, 300px"
-                        className="h-auto w-full"
-                        style={{ filter: 'brightness(0) invert(1)', opacity: 0.92 }}
+                        sizes="(max-width: 1024px) 42vw, 300px"
+                        className="w-[42%] max-w-[300px] opacity-90 [filter:brightness(0)_invert(1)]"
                       />
                     </span>
                   </div>
 
-                  {/* Chrome — gradient + copy live ABOVE the GL plane. */}
+                  {/* Chrome — only small copy; the logo carries the name. */}
                   <div className="pointer-events-none absolute inset-0 z-20">
                     <span
                       aria-hidden
@@ -318,29 +327,20 @@ export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Diction
                     />
                     {doorFrame}
                     {doorSweep}
+                    <span className="text-mono-label absolute left-5 top-5 rounded bg-black/40 px-2 py-1 text-gold-bright backdrop-blur-sm sm:left-7 sm:top-7">
+                      {locale === 'fr' ? 'Client direct' : 'Direct client'}
+                    </span>
                     <span
                       aria-hidden
                       className="text-mono-label absolute right-5 top-5 tabular-nums text-white/70 sm:right-7 sm:top-7"
                     >
                       N°02
                     </span>
-                    <span
-                      aria-hidden
-                      className="absolute -bottom-[0.14em] -right-2 select-none font-display text-[clamp(9rem,16vw,15rem)] leading-none text-white/[0.06]"
-                    >
-                      05
-                    </span>
                     <div className="absolute bottom-5 left-5 right-24 sm:bottom-7 sm:left-7">
-                      <span
-                        aria-hidden
-                        className="text-mono-label tabular-nums text-gold-bright"
-                      >
+                      <span aria-hidden className="text-mono-label tabular-nums text-gold-bright">
                         5 salles + boutique · Toulouse — {bc.year}
                       </span>
-                      <h3 className="mt-2 font-display text-3xl text-white sm:text-4xl">
-                        {bc.name}
-                      </h3>
-                      <p className="mt-2 max-w-md text-sm text-white/75">
+                      <p className="mt-2 max-w-md text-sm leading-relaxed text-white/75">
                         {bc.tagline[locale]}
                       </p>
                     </div>

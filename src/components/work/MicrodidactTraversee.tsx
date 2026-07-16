@@ -89,6 +89,27 @@ const heroOf = (p: Project): string | null =>
 const stripOf = (p: Project): string[] =>
   SHOT_SLUGS.has(p.slug) ? [`/shots/${p.slug}/s2.webp`, `/shots/${p.slug}/s3.webp`] : []
 
+/** Slugs with a PHONE-SHAPED capture at /thumbs/<slug>-m.jpg — served on small
+ *  screens so the journey bands never show a squished desktop screenshot. */
+const MOBILE_SHOTS = new Set([
+  'beldi-fusion',
+  'c-chez-toit',
+  'chicken-bens',
+  'decoshop-vitrine',
+  'drive-pneu',
+  'id-skillz',
+  'la-brigade-mobile',
+  'marche-de-mo',
+  'mon-boum',
+  'nyc-cookies',
+  'pieces-auto-colomiers',
+  'temps-dance',
+  'the-911',
+  'un-rire-pour-un-enfant',
+])
+const mobileThumbOf = (p: Project): string | null =>
+  MOBILE_SHOTS.has(p.slug) ? `/thumbs/${p.slug}-m.jpg` : null
+
 function initials(name: string): string {
   return name
     .replace(/[^A-Za-z0-9 ]/g, '')
@@ -538,6 +559,7 @@ function Stage({
   numeralAttr,
   sizes,
   seen,
+  mobileThumb,
 }: {
   project: Project
   locale: Locale
@@ -546,17 +568,38 @@ function Stage({
   numeralAttr?: string
   sizes: string
   seen: boolean
+  /** Phone-shaped capture; when set, shown below `sm` and the desktop thumb above. */
+  mobileThumb?: string | null
 }) {
   const left = i % 2 === 0
   const mediaProps = { [mediaAttr]: '' }
   const numeralProps = numeralAttr ? { [numeralAttr]: '' } : {}
+  const alt = `${project.name} — ${categoryLabels[project.category][locale]}`
   return (
     <>
       <div {...mediaProps} className="absolute -inset-[7%]">
-        {project.thumb ? (
+        {project.thumb && mobileThumb ? (
+          <>
+            {/* Phone screenshot below sm, desktop capture at sm+ (art direction) */}
+            <Image
+              src={mobileThumb}
+              alt={alt}
+              fill
+              sizes={sizes}
+              className="object-cover object-top sm:hidden"
+            />
+            <Image
+              src={project.thumb}
+              alt={alt}
+              fill
+              sizes={sizes}
+              className="hidden object-cover object-top sm:block"
+            />
+          </>
+        ) : project.thumb ? (
           <Image
             src={project.thumb}
-            alt={`${project.name} — ${categoryLabels[project.category][locale]}`}
+            alt={alt}
             fill
             sizes={sizes}
             className="object-cover object-top"
@@ -861,6 +904,7 @@ function Band({
           mediaAttr="data-tv-media"
           sizes="100vw"
           seen={seen}
+          mobileThumb={mobileThumbOf(project)}
         />
         <div className={`absolute inset-x-0 bottom-0 p-6 sm:p-9 ${i % 2 === 0 ? '' : 'text-right'}`}>
           <p className="text-mono-label text-white/75">

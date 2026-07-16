@@ -14,11 +14,13 @@ export function WorkOverture({
   title,
   subtitle,
   count,
+  countLabel,
 }: {
   eyebrow: string
   title: string
   subtitle: string
   count: number
+  countLabel: string
 }) {
   const root = useRef<HTMLElement>(null)
 
@@ -65,10 +67,12 @@ export function WorkOverture({
       <p data-overture-sub className="mt-6 text-lg text-muted">
         {subtitle}
       </p>
+      {/* Portfolio-depth stat — NOT a "N°01 —" range (that read as a 23-tile
+          sequence and collided with the registre's own N°01–N°05 index). */}
       <div className="mt-8 flex items-center gap-5">
         <span className="text-mono-label text-gold [font-variant-numeric:tabular-nums]">
-          N°01 — N°
-          <CountUp value={String(count).padStart(2, '0')} />
+          <CountUp value={String(count)} />
+          <span className="ml-2 text-muted">{countLabel}</span>
         </span>
         <span data-overture-rule className="hairline flex-1" />
       </div>

@@ -116,6 +116,11 @@ export function Preloader() {
       data-preloader
       data-theme="heraldic"
       aria-hidden
+      // The inline NO_FLASH_JS script mutates this node's style (display:none)
+      // during HTML parse on repeat visits — before React hydrates. That is an
+      // intentional pre-hydration mutation, so tell React not to flag the
+      // resulting style mismatch on this element.
+      suppressHydrationWarning
       className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-deep text-ink"
     >
       {/* Pre-paint gate for repeat visits — must be the FIRST child. */}
