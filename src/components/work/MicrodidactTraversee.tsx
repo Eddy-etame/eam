@@ -359,6 +359,7 @@ export function MicrodidactTraversee({
 
       let lastActive = -1
       let lastInRoom = false
+      let urlWriteTimer: ReturnType<typeof setTimeout> | undefined
       const st = ScrollTrigger.create({
         animation: tl,
         trigger: wrap,
@@ -377,23 +378,28 @@ export function MicrodidactTraversee({
             lastActive = active
             setIdx(active + 1)
           }
-          // The URL follows the walk — replaceState only on state change.
-          if (
-            inRoom !== lastInRoom ||
-            (inRoom && !location.hash.endsWith(projects[active].slug))
-          ) {
+          // The URL follows the walk — DEBOUNCED. Writing synchronously inside
+          // onUpdate raced the app router: during a <Link> transition one last
+          // scroll frame still read "in room", re-wrote the hash and dragged
+          // the OLD query string back with it — silently reverting the
+          // navigation (caught: the «Tous» filter chip did nothing). Writing
+          // only after 250ms of scroll calm means a pending navigation always
+          // commits first, and the calm-time write reads the NEW location.
+          if (inRoom !== lastInRoom || (inRoom && !location.hash.endsWith(projects[active].slug))) {
             lastInRoom = inRoom
-            try {
-              history.replaceState(
-                null,
-                '',
-                inRoom
-                  ? `#salle-${projects[active].slug}`
-                  : location.pathname + location.search,
-              )
-            } catch {
-              /* some browsers rate-limit replaceState — cosmetic only */
-            }
+            const targetHash = inRoom ? `#salle-${projects[active].slug}` : null
+            clearTimeout(urlWriteTimer)
+            urlWriteTimer = setTimeout(() => {
+              try {
+                history.replaceState(
+                  null,
+                  '',
+                  targetHash ?? location.pathname + location.search,
+                )
+              } catch {
+                /* some browsers rate-limit replaceState — cosmetic only */
+              }
+            }, 250)
           }
           if (progressTo) progressTo(self.progress)
           skewTo(gsap.utils.clamp(-3.5, 3.5, -self.getVelocity() / 350))
@@ -426,6 +432,7 @@ export function MicrodidactTraversee({
       window.addEventListener('keydown', onKey)
 
       return () => {
+        clearTimeout(urlWriteTimer)
         window.removeEventListener('hashchange', jumpToHash)
         window.removeEventListener('keydown', onKey)
         splits.forEach((s) => s.revert())

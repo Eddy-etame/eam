@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { gsap, SplitText, useGSAP } from '@/lib/gsap'
 import { MicrodidactTraversee } from './MicrodidactTraversee'
 import { CategoryChips } from './CategoryChips'
@@ -31,27 +32,39 @@ const MicrodidactCanvas = dynamic(() => import('./MicrodidactCanvas'), { ssr: fa
  * readable; the canvas mounts only on desktops that allow motion. The whole
  * world sits in the "atelier" chapter, so the root palette snaps to steel.
  */
+/**
+ * Reads `?cat=` on the CLIENT and reports it up. Isolating useSearchParams in
+ * this empty leaf (behind Suspense) keeps the page fully static: the server
+ * prerenders the complete sixteen-project world (SEO), and filtering applies
+ * after hydration. Reading searchParams in the page itself had silently turned
+ * the flagship route dynamic — which also broke the hash-locked CSP.
+ */
+function SearchParamsBridge({ onCat }: { onCat: (slug: string | null) => void }) {
+  const searchParams = useSearchParams()
+  const cat = searchParams.get('cat')
+  useEffect(() => onCat(cat), [cat, onCat])
+  return null
+}
+
 export function MicrodidactWorld({
   locale,
   dict,
   projects,
   allCategories,
   totalProjects,
-  activeCat = null,
 }: {
   locale: Locale
   dict: Dictionary
-  /** The projects crossed by the traversée — MAY be a `?cat=` filtered subset. */
+  /** The FULL sixteen — filtering happens client-side (SSR always complete). */
   projects: Project[]
   /** Categories present among the FULL sixteen — the chip row (subset-independent). */
   allCategories?: ProjectCategory[]
   /** Full-world project count — the story stats stay factual under a filter. */
   totalProjects?: number
-  /** Category the traversée is currently filtered to (null = all). */
-  activeCat?: ProjectCategory | null
 }) {
   const root = useRef<HTMLElement>(null)
   const [enableFx, setEnableFx] = useState(false)
+  const [catSlug, setCatSlug] = useState<string | null>(null)
   const d = dict.microdidact
 
   const chipCategories =
@@ -59,6 +72,13 @@ export function MicrodidactWorld({
   const sectorCount = chipCategories.length
   const worldCount = totalProjects ?? projects.length
   const worldPath = localizedPath(locale, 'work/microdidact')
+
+  // `?cat=` filter, resolved client-side. Unknown slug or an empty subset →
+  // the full sixteen (the world never renders empty).
+  const activeCat =
+    chipCategories.find((category) => categorySlugs[category] === catSlug) ?? null
+  const filtered = activeCat ? projects.filter((p) => p.category === activeCat) : projects
+  const shownProjects = activeCat && filtered.length > 0 ? filtered : projects
 
   // Same gate as the team stage: WebGL only on desktop with motion allowed,
   // on hardware that can afford it (quality gate + WebGL2 probe).
@@ -262,17 +282,50 @@ export function MicrodidactWorld({
           {/* Filter chips — plain links (?cat=<slug>), so a visitor narrows the
               traversée BEFORE scrolling in. Dark stage → fixed hex (tone). */}
           <div data-mw-reveal className="mx-auto max-w-[1640px] px-6 pb-14 md:px-12 lg:px-20">
-            <CategoryChips
-              dict={dict}
-              categories={chipCategories}
-              hrefFor={(category) => `${worldPath}?cat=${categorySlugs[category]}`}
-              activeSlug={activeCat ? categorySlugs[activeCat] : null}
-              allHref={worldPath}
-              tone="stage"
-            />
+            {/* Query-only <Link> navs are silently no-op'd by the router on
+                this static route (verified: URL never changes for a frame) —
+                so chip clicks are intercepted and pushed through native
+                history.pushState, which Next syncs into useSearchParams → the
+                bridge fires → the traversée remounts filtered. The hrefs stay
+                real <a> targets (crawlable, open-in-new-tab, JS-off safe). */}
+            <div
+              onClickCapture={(e) => {
+                const link = (e.target as HTMLElement).closest('a')
+                if (!link) return
+                const href = link.getAttribute('href') ?? ''
+                if (href !== worldPath && !href.startsWith(`${worldPath}?cat=`)) return
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+                e.preventDefault()
+                e.stopPropagation()
+                try {
+                  history.pushState(null, '', href)
+                } catch {
+                  location.assign(href)
+                }
+              }}
+            >
+              <CategoryChips
+                dict={dict}
+                categories={chipCategories}
+                hrefFor={(category) => `${worldPath}?cat=${categorySlugs[category]}`}
+                activeSlug={activeCat ? categorySlugs[activeCat] : null}
+                allHref={worldPath}
+                tone="stage"
+              />
+            </div>
           </div>
 
-          <MicrodidactTraversee locale={locale} dict={dict} projects={projects} />
+          {/* The bridge reads ?cat= post-hydration; keying the traversée on the
+              active filter gives it a clean remount (fresh timeline measure). */}
+          <Suspense fallback={null}>
+            <SearchParamsBridge onCat={setCatSlug} />
+          </Suspense>
+          <MicrodidactTraversee
+            key={activeCat ?? 'all'}
+            locale={locale}
+            dict={dict}
+            projects={shownProjects}
+          />
         </section>
 
         {/* ── THE WORLD'S ONE ASK — after the traversée and its index ────── */}

@@ -19,8 +19,11 @@ export const siteConfig = {
   /** The acronym is the founders' names. */
   founders: ['Etame', 'Angoula', 'Mbosseu'] as const,
   /** Canonical origin. Override with NEXT_PUBLIC_SITE_URL when the branded
-   *  domain goes live — metadata, schema, sitemap and OG all read from here. */
-  url: process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://eam.vercel.app',
+   *  domain goes live — metadata, schema, sitemap and OG all read from here.
+   *  Fallback = the REAL Vercel deployment (confirmed live 2026-07-16);
+   *  eam.vercel.app was never ours. Keep public/llms.txt's hardcoded URLs in
+   *  sync whenever this changes. */
+  url: process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://eam-agency.vercel.app',
   email: 'eam.agency@gmail.com',
 
   /** ⚠️ PLACEHOLDER — confirm a public phone number (leave empty to hide). */

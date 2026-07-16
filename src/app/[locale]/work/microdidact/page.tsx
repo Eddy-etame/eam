@@ -7,7 +7,7 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { breadcrumbSchema, collectionPageSchema, organizationSchema } from '@/lib/schema'
 import { MicrodidactWorld } from '@/components/work/MicrodidactWorld'
 import { microdidactProjects } from '@/lib/projects'
-import { categories, categoryFromSlug } from '@/lib/taxonomy'
+import { categories } from '@/lib/taxonomy'
 
 export async function generateMetadata({
   params,
@@ -47,24 +47,17 @@ export async function generateMetadata({
  */
 export default async function MicrodidactPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string }>
-  searchParams: Promise<{ cat?: string }>
 }) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
   const dict = getDictionary(locale)
 
-  // ?cat=<slug> pre-filters the traversée. Unknown slug, or a category with no
-  // project in this world → the full sixteen (the world never renders empty).
-  const { cat } = await searchParams
-  const requested = typeof cat === 'string' ? categoryFromSlug(cat) : null
-  const filtered = requested
-    ? microdidactProjects.filter((p) => p.category === requested)
-    : microdidactProjects
-  const activeCat = requested && filtered.length > 0 ? requested : null
-  const shownProjects = activeCat ? filtered : microdidactProjects
+  // ?cat= filtering is CLIENT-side (MicrodidactWorld's SearchParamsBridge):
+  // reading searchParams here had silently turned this flagship route DYNAMIC
+  // — losing SSG and breaking the hash-locked CSP. The page prerenders the
+  // complete sixteen (SEO stays whole); the filter applies after hydration.
 
   // Chip row = the categories actually present among the sixteen, in
   // canonical taxonomy order — derived from data, never hardcoded.
@@ -95,10 +88,9 @@ export default async function MicrodidactPage({
       <MicrodidactWorld
         locale={locale}
         dict={dict}
-        projects={shownProjects}
+        projects={microdidactProjects}
         allCategories={worldCategories}
         totalProjects={microdidactProjects.length}
-        activeCat={activeCat}
       />
     </>
   )
