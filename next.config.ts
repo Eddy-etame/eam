@@ -43,6 +43,16 @@ const securityHeaders = [
     value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()',
   },
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains' },
+  // "Upcoming" pair from the scanner — everything on this site is same-origin
+  // by design, so both are free hardening (CORP doubles as anti-hotlinking).
+  { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
+  { key: 'Cross-Origin-Resource-Policy', value: 'same-origin' },
+  // Vercel's platform layer stamps a wildcard ACAO on prerendered responses
+  // (flagged "very lax CORS" by scanners) — pin it to the canonical origin.
+  {
+    key: 'Access-Control-Allow-Origin',
+    value: process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://eam-agency.vercel.app',
+  },
 ]
 
 const nextConfig: NextConfig = {
