@@ -9,6 +9,7 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { breadcrumbSchema, faqSchema, organizationSchema } from '@/lib/schema'
 import { servicePages, getServicePage } from '@/lib/services-pages'
 import { getProject } from '@/lib/projects'
+import { testimonialFor } from '@/lib/testimonials'
 import { siteConfig } from '@/lib/site.config'
 import { Reveal } from '@/components/ui/Reveal'
 import { Magnetic } from '@/components/ui/Magnetic'
@@ -206,6 +207,25 @@ export default async function ServicePage({
               </Reveal>
             ))}
           </div>
+          {(() => {
+            const t = testimonialFor(page.sujet)
+            if (!t) return null
+            return (
+              <Reveal>
+                <figure className="mt-12 max-w-3xl border-l-2 border-gold/50 pl-6">
+                  <blockquote className="font-display text-xl leading-relaxed text-ink">
+                    {'« '}
+                    {t.quote[locale]}
+                    {' »'}
+                  </blockquote>
+                  <figcaption className="mt-3 flex flex-wrap items-baseline gap-x-4">
+                    <span className="text-mono-label text-gold">{t.org}</span>
+                    <span className="text-sm text-muted">{t.who[locale]}</span>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            )
+          })()}
         </section>
 
         {/* ── The free X-ray — the lead magnet ────────────────────────────── */}

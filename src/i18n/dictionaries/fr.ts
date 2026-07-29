@@ -68,6 +68,11 @@ export const fr = {
       { value: '24-48 h', label: 'de réponse', link: 'contact' },
     ],
   },
+  testimonials: {
+    eyebrow: 'Ils en parlent',
+    title: 'La parole aux clients.',
+    note: 'Chaque citation est signée — et renvoie à son étude de cas.',
+  },
   homeWorlds: {
     eyebrow: 'Deux mondes',
     title: 'Des mondes entiers, pas des pages.',

@@ -64,6 +64,11 @@ export const en = {
       { value: '24-48h', label: 'response time', link: 'contact' },
     ],
   },
+  testimonials: {
+    eyebrow: 'In their words',
+    title: 'Clients speak.',
+    note: 'Every quote is signed — and links to its case study.',
+  },
   homeWorlds: {
     eyebrow: 'Two worlds',
     title: 'Entire worlds, not pages.',

@@ -8,6 +8,7 @@ import { MarqueeStrip } from '@/components/sections/MarqueeStrip'
 import { Clients } from '@/components/sections/Clients'
 import { Services } from '@/components/sections/Services'
 import { AboutTeaser } from '@/components/sections/AboutTeaser'
+import { Testimonials } from '@/components/sections/Testimonials'
 import { FAQ } from '@/components/sections/FAQ'
 import { ContactCTA } from '@/components/sections/ContactCTA'
 import { JsonLd } from '@/components/seo/JsonLd'
@@ -84,6 +85,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <Services locale={locale} dict={dict} />
       </div>
       <div data-chapter="editorial">
+        {/* Human proof — client-approved quotes, each linking to its case */}
+        <Testimonials locale={locale} dict={dict} />
         <AboutTeaser locale={locale} dict={dict} />
         <FAQ dict={dict} />
       </div>
