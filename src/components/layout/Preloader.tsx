@@ -21,7 +21,7 @@ const SESSION_KEY = 'eam:intro-shown'
 /** Runs during HTML parse: repeat visits never paint the overlay at all. */
 const NO_FLASH_JS = `try{if(sessionStorage.getItem('${SESSION_KEY}')){var s=document.currentScript;if(s&&s.parentElement)s.parentElement.style.display='none'}}catch(e){}`
 
-export function Preloader() {
+export function Preloader({ locale = 'fr' }: { locale?: string }) {
   const root = useRef<HTMLDivElement>(null)
   const countRef = useRef<HTMLSpanElement>(null)
 
@@ -98,10 +98,13 @@ export function Preloader() {
         .to('[data-preloader-inner]', { autoAlpha: 0, y: -14, duration: 0.3, ease: 'eam-reveal' }, 1.62)
         .to(el, { yPercent: -100, duration: 0.6, ease: 'eam-reveal' }, 1.72)
 
-      // Impatience is allowed: any click/keypress fast-forwards the ceremony.
+      // Impatience is allowed: any click/keypress fast-forwards the ceremony,
+      // and a visible « passer » affordance surfaces once the draw is underway.
       const skip = () => tl.timeScale(4)
       window.addEventListener('pointerdown', skip, { once: true })
       window.addEventListener('keydown', skip, { once: true })
+      gsap.to('[data-preloader-skip]', { autoAlpha: 1, duration: 0.35, delay: 0.7 })
+      el.querySelector('[data-preloader-skip]')?.addEventListener('click', () => tl.timeScale(8))
       return () => {
         window.removeEventListener('pointerdown', skip)
         window.removeEventListener('keydown', skip)
@@ -169,6 +172,17 @@ export function Preloader() {
           <span className="text-muted">%</span>
         </div>
       </div>
+
+      {/* Redundant affordance only — pointer/key already skip, and the overlay
+          is aria-hidden, so keep it out of the tab order. */}
+      <button
+        type="button"
+        data-preloader-skip
+        tabIndex={-1}
+        className="absolute bottom-8 right-8 font-mono text-[0.65rem] uppercase tracking-[0.25em] text-muted opacity-0 transition-colors hover:text-gold"
+      >
+        {locale === 'en' ? 'Skip' : 'Passer'} <span aria-hidden>→</span>
+      </button>
     </div>
   )
 }

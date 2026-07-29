@@ -26,6 +26,8 @@ export async function generateMetadata({
     title: dict.bcWorld.meta.title,
     description: dict.bcWorld.meta.description,
     path: 'work/boxing-center',
+    // Explicit segment card — same reason as the Microdidact world page.
+    images: [absoluteUrl(`/${locale}/work/boxing-center/opengraph-image`)],
   })
   // Share-card copy, distinct from the <title>/meta description: the five
   // named salles plus the official Box Plus boutique.

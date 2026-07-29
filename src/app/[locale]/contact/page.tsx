@@ -6,6 +6,7 @@ import { buildMetadata, absoluteUrl, localizedPath } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { organizationSchema, breadcrumbSchema } from '@/lib/schema'
 import { ContactForm } from '@/components/sections/ContactForm'
+import { PricingBands } from '@/components/sections/PricingBands'
 import { CopyEmail } from '@/components/ui/CopyEmail'
 import { siteConfig } from '@/lib/site.config'
 import { team } from '@/lib/team'
@@ -61,6 +62,19 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               <CopyEmail email={siteConfig.email} copiedLabel={dict.contact.copied} />
             </div>
 
+            {/* WhatsApp — the channel SMB owners actually use (FR/MA/Africa) */}
+            <a
+              href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(
+                locale === 'fr' ? 'Bonjour EAM — je vous contacte au sujet de mon projet.' : "Hello EAM — I'm reaching out about my project.",
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-mono-label mt-6 inline-flex items-center gap-2.5 rounded-full border border-gold/35 px-5 py-3 text-ink transition-colors duration-300 hover:bg-gold hover:text-deep"
+            >
+              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-gold" />
+              {dict.servicesPage.whatsappCta} <span aria-hidden>↗</span>
+            </a>
+
             {/* Who answers — you write to the three craftsmen, not a mailbox. */}
             <div className="mt-10">
               <p className="text-mono-label text-faint">{dict.contact.whoAnswers}</p>
@@ -92,13 +106,15 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
             </div>
 
             <p className="text-mono-label mt-10 text-faint">
-              {siteConfig.location.areaServed.join(' · ')}
+              {siteConfig.location.areaServed[locale].join(' · ')}
             </p>
           </div>
           <div className="min-w-0">
             <ContactForm dict={dict} />
           </div>
         </div>
+
+        <PricingBands dict={dict} />
       </div>
     </main>
   )

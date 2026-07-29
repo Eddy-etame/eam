@@ -1,4 +1,11 @@
-import { publicProjects } from '@/lib/projects'
+import { publicProjects, microdidactProjects } from '@/lib/projects'
+
+// Derived counts — the registry is the single source of truth; hardcoding
+// these numbers desynchronized six surfaces at once when a deployment died.
+const PROJECT_COUNT = publicProjects.length
+const LIVE_COUNT = publicProjects.filter((p) => p.liveUrl !== '#').length
+const MICRODIDACT_COUNT = microdidactProjects.length
+const SECTOR_COUNT = new Set(publicProjects.map((p) => p.category)).size
 
 /**
  * French dictionary — the canonical shape. `en.ts` must mirror it (enforced in
@@ -8,7 +15,8 @@ export const fr = {
   nav: {
     home: 'Accueil',
     work: 'Réalisations',
-    studio: "L'atelier",
+    services: 'Services',
+    studio: "L’atelier",
     contact: 'Contact',
     startProject: 'Démarrer un projet',
   },
@@ -32,25 +40,33 @@ export const fr = {
     loading: 'Chargement',
   },
   hero: {
-    eyebrow: 'Atelier digital · depuis 2024',
+    eyebrow: "Studio d’ingénierie web · depuis 2024",
     titleLines: ['Nous forgeons', 'des marques', 'qui règnent.'],
-    subtitle:
-      "Trois artisans du web. Sites sur-mesure, applications métier et référencement qui placent nos clients en première page — et dans les réponses des IA.",
+    subtitle: `Trois ingénieurs. ${PROJECT_COUNT} projets livrés — sites, applications métier et SEO/GEO mesurés, de Toulouse à Casablanca.`,
     ctaPrimary: 'Voir nos réalisations',
     ctaSecondary: 'Démarrer un projet',
+    riskNote: 'Devis gratuit sous 24-48 h · sans engagement',
     scrollHint: 'Défiler',
   },
-  marquee: ['Sur-mesure', 'Performance', 'SEO senior', 'GEO', 'Identité', 'Sans compromis'],
+  marquee: ['Sur-mesure', 'Sécurité A+', 'SEO & GEO', 'Schema.org', 'llms.txt', 'Réponse 24-48 h'],
   featured: {
     eyebrow: 'Réalisations choisies',
-    title: 'Le travail parle. Nous écoutons.',
-    subtitle:
-      "Une sélection de présences digitales que nous avons conçues, codées et menées jusqu'au classement.",
+    title: 'Le travail parle.',
+    subtitle: `${PROJECT_COUNT} projets livrés, ${LIVE_COUNT} sites en ligne — conçus, codés et menés jusqu’au classement.`,
     cta: 'Explorer toutes les réalisations',
   },
   clients: {
     eyebrow: 'Ils nous font confiance',
     title: 'Des marques qui nous ont choisis.',
+  },
+  proofs: {
+    aria: 'Preuves vérifiables',
+    items: [
+      { value: 'A+', label: 'sécurité — en-têtes vérifiés', link: 'scan' },
+      { value: `${PROJECT_COUNT}`, label: 'projets livrés', link: 'work' },
+      { value: `${LIVE_COUNT}`, label: 'sites en ligne', link: 'work' },
+      { value: '24-48 h', label: 'de réponse', link: 'contact' },
+    ],
   },
   homeWorlds: {
     eyebrow: 'Deux mondes',
@@ -59,8 +75,8 @@ export const fr = {
     doors: {
       microdidact: {
         name: 'Microdidact',
-        count: '16',
-        line: "Seize projets forgés sous l'agence toulousaine — la traversée se fait au scroll.",
+        count: `${MICRODIDACT_COUNT}`,
+        line: "Seize projets forgés sous l’agence toulousaine — la traversée se fait au scroll.",
       },
       boxingCenter: {
         name: 'Boxing Center',
@@ -71,8 +87,8 @@ export const fr = {
   },
   services: {
     eyebrow: 'Savoir-faire',
-    title: "Ce que l'atelier forge",
-    intro: "De la première ligne de code au dernier pixel — et jusqu'à la première position sur Google.",
+    title: "Ce que l’atelier forge",
+    intro: 'Conception, code, référencement — livrés avec preuves : performance, données structurées, visibilité IA.',
     items: [
       {
         title: 'Sites sur-mesure',
@@ -96,34 +112,34 @@ export const fr = {
       },
       {
         title: 'Refonte & performance',
-        description: "On reprend l'existant et on le forge à neuf : plus rapide, plus propre, mieux classé.",
+        description: "On reprend l’existant et on le forge à neuf : plus rapide, plus propre, mieux classé.",
       },
     ],
   },
   about: {
-    eyebrow: "L'atelier",
-    title: 'Trois artisans, une obsession.',
-    lead: "EAM est une agence digitale créative fondée en 2024. Le nom est celui de ses trois associés : Etame, Angoula et Mbosseu.",
+    eyebrow: "L’atelier",
+    title: 'Trois ingénieurs. Un standard.',
+    lead: "EAM est une agence digitale créative fondée en 2024. Le nom est celui de ses trois associés : Etame, Angoula et Mbosseu.",
     body: [
-      "Nous ne livrons pas des templates. Nous forgeons des présences digitales sur-mesure — chaque ligne de code, chaque courbe, chaque balise pensée pour servir une marque et son classement.",
-      "Petite équipe, exigence démesurée. Vous parlez directement aux personnes qui conçoivent et qui codent. Pas d'intermédiaire, pas de jargon — des résultats mesurables.",
+      "Nous ne livrons pas des templates. Chaque ligne de code, chaque courbe, chaque balise est pensée pour servir une marque et son classement.",
+      `${PROJECT_COUNT} projets livrés depuis 2024 — et vous parlez directement aux trois personnes qui les conçoivent et les codent. Pas d’intermédiaire, pas de jargon.`,
     ],
     valuesTitle: 'Nos principes',
     values: [
-      { title: 'Puissant', text: "Des sites qui marquent et qui performent — pas de décoration sans intention." },
-      { title: 'Précis', text: 'Le détail est notre métier : du SEO technique au kerning des titres.' },
-      { title: 'Premium', text: "Le soin d'une maison, l'efficacité d'un studio moderne." },
+      { title: 'Mesurable', text: "Sécurité A+, données structurées sur chaque page, copie 100% dans le DOM — vérifiable, pas déclaratif." },
+      { title: 'Précis', text: 'Le détail est notre métier : du SEO technique au kerning des titres.' },
+      { title: 'Direct', text: 'Vous parlez aux trois personnes qui conçoivent et codent — personne d’autre.' },
     ],
     stats: [
-      { value: '22+', label: 'réalisations' },
-      { value: '3', label: 'artisans' },
-      { value: '8', label: 'secteurs' },
+      { value: `${PROJECT_COUNT}`, label: 'réalisations' },
+      { value: '3', label: 'ingénieurs' },
+      { value: `${SECTOR_COUNT}`, label: 'secteurs' },
       { value: '2024', label: 'fondée en' },
     ],
   },
   team: {
-    eyebrow: 'Les artisans',
-    title: 'Les mains derrière le blason.',
+    eyebrow: "L’équipe",
+    title: 'Les trois qui répondent.',
     intro:
       'Trois. Volontairement. Ceux qui conçoivent et codent votre projet sont les trois à qui vous parlez.',
     pending: 'Portrait à venir',
@@ -138,83 +154,83 @@ export const fr = {
     title: 'Tout savoir sur EAM',
     items: [
       {
-        q: "Qu'est-ce que EAM ?",
-        a: "EAM est une agence digitale créative fondée en 2024 par trois associés — Etame, Angoula et Mbosseu, dont l'agence tire son nom. EAM conçoit des sites web sur-mesure, des applications métier et des stratégies de référencement (SEO & GEO) pour des PME, des commerces et des porteurs de projets en France, au Maroc et en Afrique francophone.",
+        q: "Qu’est-ce que EAM ?",
+        a: "EAM est une agence digitale créative fondée en 2024 par trois associés — Etame, Angoula et Mbosseu, dont l’agence tire son nom. EAM conçoit des sites web sur-mesure, des applications métier et des stratégies de référencement (SEO & GEO) pour des PME, des commerces et des porteurs de projets en France, au Maroc et en Afrique francophone.",
       },
       {
-        q: 'Quels services propose EAM ?',
-        a: "EAM réalise des sites vitrines et éditoriaux, des applications métier (dashboards, SaaS, PWA), du e-commerce, l'identité visuelle et le branding, ainsi que le référencement SEO et GEO.",
+        q: 'Quels services propose EAM ?',
+        a: "EAM réalise des sites vitrines et éditoriaux, des applications métier (dashboards, SaaS, PWA), du e-commerce, l’identité visuelle et le branding, ainsi que le référencement SEO et GEO.",
       },
       {
-        q: 'EAM est-elle une agence web à Toulouse ?',
-        a: "L'équipe d'EAM a ses racines dans la région toulousaine : les trois fondateurs y ont forgé seize projets sous Microdidact, et le réseau Boxing Center, client direct, est toulousain. EAM travaille à distance pour des clients en France, au Maroc, en Afrique francophone et à l'international ; l'adresse du siège n'est pas publiée.",
+        q: 'EAM est-elle une agence web à Toulouse ?',
+        a: "L’équipe d’EAM a ses racines dans la région toulousaine : les trois fondateurs y ont forgé seize projets sous Microdidact, et le réseau Boxing Center, client direct, est toulousain. EAM travaille à distance pour des clients en France, au Maroc, en Afrique francophone et à l’international ; l’adresse du siège n’est pas publiée.",
       },
       {
-        q: "Qu'est-ce que le GEO (Generative Engine Optimization) ?",
-        a: "Le GEO consiste à optimiser un site pour qu'il soit cité par les moteurs de réponse IA comme ChatGPT, Perplexity et les AI Overviews de Google. EAM l'intègre à chaque projet : contenu structuré, données structurées schema.org, fichier llms.txt et réponses factuelles directes.",
+        q: "Qu’est-ce que le GEO (Generative Engine Optimization) ?",
+        a: "Le GEO consiste à optimiser un site pour qu’il soit cité par les moteurs de réponse IA comme ChatGPT, Perplexity et les AI Overviews de Google. EAM l’intègre à chaque projet : contenu structuré, données structurées schema.org, fichier llms.txt et réponses factuelles directes.",
       },
       {
-        q: 'Quelle est la différence entre le SEO et le GEO ?',
-        a: "Le SEO (Search Engine Optimization) vise le classement d'un site dans les résultats des moteurs de recherche comme Google. Le GEO (Generative Engine Optimization) vise sa citation dans les réponses des moteurs IA — ChatGPT, Perplexity, AI Overviews. Les deux reposent sur le même socle : un site rapide, structuré et factuel. EAM travaille les deux sur chaque projet.",
+        q: 'Quelle est la différence entre le SEO et le GEO ?',
+        a: "Le SEO (Search Engine Optimization) vise le classement d’un site dans les résultats des moteurs de recherche comme Google. Le GEO (Generative Engine Optimization) vise sa citation dans les réponses des moteurs IA — ChatGPT, Perplexity, AI Overviews. Les deux reposent sur le même socle : un site rapide, structuré et factuel. EAM travaille les deux sur chaque projet.",
       },
       {
-        q: 'Comment un site peut-il être cité par ChatGPT ou Perplexity ?',
-        a: "En rendant son contenu lisible et vérifiable par les moteurs de réponse : réponses factuelles directes, textes présents dans le HTML rendu côté serveur (lisibles sans JavaScript), données structurées schema.org, fichier llms.txt et pages rapides. C'est la méthode qu'EAM applique à chaque projet — la décision de citer restant, elle, propre à chaque moteur.",
+        q: 'Comment un site peut-il être cité par ChatGPT ou Perplexity ?',
+        a: "En rendant son contenu lisible et vérifiable par les moteurs de réponse : réponses factuelles directes, textes présents dans le HTML rendu côté serveur (lisibles sans JavaScript), données structurées schema.org, fichier llms.txt et pages rapides. C’est la méthode qu’EAM applique à chaque projet — la décision de citer restant, elle, propre à chaque moteur.",
       },
       {
-        q: 'Combien coûte un site web avec EAM ?',
-        a: "Chaque projet est sur-mesure ; le budget dépend du périmètre et des fonctionnalités. EAM établit un devis gratuit sous 24 à 48 heures après un premier échange.",
+        q: 'Combien coûte un site web avec EAM ?',
+        a: "Un site vitrine sur-mesure démarre à 2 000 € HT, un site immersif avec identité complète à 4 000 € HT, un e-commerce à 3 000 € HT, et l’accompagnement SEO & GEO à 300 € HT par mois. Ces planchers sont un point de départ : chaque projet reçoit un devis précis et gratuit sous 24 à 48 heures.",
       },
       {
-        q: 'Quels sont les délais pour obtenir un devis ?',
+        q: 'Quels sont les délais pour obtenir un devis ?',
         a: "EAM répond sous 24 à 48 heures après un premier échange, avec un devis gratuit. Les délais de réalisation dépendent du périmètre de chaque projet et sont précisés dans ce devis.",
       },
       {
-        q: 'EAM reprend-il des sites existants (refonte) ?',
-        a: "Oui. La refonte fait partie des services d'EAM : reprise d'un site existant pour le reforger — design, base technique, performance et référencement — avec pour objectif un site plus rapide, plus propre et mieux classé.",
+        q: 'EAM reprend-il des sites existants (refonte) ?',
+        a: "Oui. La refonte fait partie des services d’EAM : reprise d’un site existant pour le reforger — design, base technique, performance et référencement — avec pour objectif un site plus rapide, plus propre et mieux classé.",
       },
       {
-        q: 'Avec quelles technologies travaille EAM ?',
+        q: 'Avec quelles technologies travaille EAM ?',
         a: 'EAM travaille principalement avec Next.js, React, Astro, TypeScript, Tailwind CSS, Supabase et PostgreSQL.',
       },
       {
-        q: 'EAM travaille-t-il en français et en anglais ?',
+        q: 'EAM travaille-t-il en français et en anglais ?',
         a: "Oui. EAM conçoit des sites bilingues ou multilingues et accompagne des clients francophones comme internationaux.",
       },
       {
-        q: 'Comment contacter EAM ?',
+        q: 'Comment contacter EAM ?',
         a: "Par e-mail à eam.agency@gmail.com, ou via le formulaire de la page Contact. Réponse sous 24 à 48 heures.",
       },
     ],
   },
   brandFaq: {
     eyebrow: 'Questions fréquentes',
-    title: "L'agence, en toutes lettres",
+    title: "L’agence, en toutes lettres",
     items: [
       {
-        q: 'Que signifie le nom EAM ?',
-        a: "EAM est l'acronyme des noms de ses trois fondateurs : Etame, Angoula et Mbosseu.",
+        q: 'Que signifie le nom EAM ?',
+        a: "EAM est l’acronyme des noms de ses trois fondateurs : Etame, Angoula et Mbosseu.",
       },
       {
-        q: "Qui sont les fondateurs d'EAM ?",
-        a: "EAM a été fondée en 2024 par trois associés : Eddy Etame, Raphaël Angoula et Brad Mbosseu. Tous trois sont ingénieurs — ce sont eux qui conçoivent et codent chaque projet de l'agence.",
+        q: "Qui sont les fondateurs d’EAM ?",
+        a: "EAM a été fondée en 2024 par trois associés : Eddy Etame, Raphaël Angoula et Brad Mbosseu. Tous trois sont ingénieurs — ce sont eux qui conçoivent et codent chaque projet de l’agence.",
       },
       {
-        q: 'Quel est le lien entre EAM et Microdidact ?',
-        a: "Avant de fonder EAM, les trois associés ont conçu et codé seize projets au sein de Microdidact, une agence de communication toulousaine (groupe Microdidac). Ces réalisations portent le badge « Sous Microdidact » dans le portfolio. EAM est une agence indépendante — Microdidact n'en est ni la maison mère ni une filiale.",
+        q: 'Quel est le lien entre EAM et Microdidact ?',
+        a: "Avant de fonder EAM, les trois associés ont conçu et codé seize projets au sein de Microdidact, une agence de communication toulousaine (groupe Microdidac). Ces réalisations portent le badge « Sous Microdidact » dans le portfolio. EAM est une agence indépendante — Microdidact n’en est ni la maison mère ni une filiale.",
       },
       {
-        q: "Pourquoi EAM ne compte-t-elle que trois personnes ?",
-        a: "Par choix. À trois, les personnes qui conçoivent et codent votre projet sont exactement celles à qui vous parlez : pas d'intermédiaire, pas de perte d'information, une responsabilité directe sur le résultat.",
+        q: "Pourquoi EAM ne compte-t-elle que trois personnes ?",
+        a: "Par choix. À trois, les personnes qui conçoivent et codent votre projet sont exactement celles à qui vous parlez : pas d’intermédiaire, pas de perte d’information, une responsabilité directe sur le résultat.",
       },
     ],
   },
   contact: {
     eyebrow: 'Contact',
-    title: 'Un projet à forger ?',
+    title: 'Un projet à forger ?',
     lead: "Parlez-nous de votre marque, de vos objectifs et de vos délais. Nous revenons vers vous sous 24 à 48 heures avec une première piste.",
     emailLabel: 'Écrivez-nous',
-    responseChip: 'Réponse sous 24–48 h',
+    responseChip: 'Réponse sous 24-48 h',
     whoAnswers: 'Ceux qui vous répondent',
     copied: 'Copié ✓',
     form: {
@@ -225,11 +241,11 @@ export const fr = {
       submit: 'Envoyer le message',
       sending: 'Envoi…',
       success: 'Bien reçu. Nous revenons vers vous sous 24 à 48 h.',
-      error: "L'envoi a échoué — réessayez, ou écrivez-nous directement.",
+      error: "L’envoi a échoué — réessayez, ou écrivez-nous directement.",
       namePlaceholder: 'Votre nom',
       emailPlaceholder: 'vous@exemple.com',
       messagePlaceholder: 'En quelques mots, votre projet…',
-      note: "En envoyant ce message, votre logiciel e-mail s'ouvrira avec les informations pré-remplies.",
+      note: "En envoyant ce message, votre logiciel e-mail s’ouvrira avec les informations pré-remplies.",
     },
   },
   work: {
@@ -241,7 +257,7 @@ export const fr = {
     doorsHeading: 'Les deux mondes',
     solosHeading: 'Réalisations en propre',
     microdidactBadge: 'Sous Microdidact',
-    microdidactNote: "Réalisé sous Microdidact — agence de communication à Toulouse (groupe Microdidac), où l'équipe a forgé ces projets.",
+    microdidactNote: "Réalisé sous Microdidact — agence de communication à Toulouse (groupe Microdidac), où l’équipe a forgé ces projets.",
     internalSectionTitle: 'Outils internes & confidentiels',
     internalNote: "Projets sous accord de confidentialité. Présentés sans visuel ni lien — détails sur demande.",
     enterWorld: 'Entrer',
@@ -274,22 +290,22 @@ export const fr = {
   /** Conversion bands — the single ask of each surface (consumed by ConversionBand & the room CTA rows). */
   conversion: {
     button: 'Démarrer un projet',
-    secondary: "Voir l'atelier",
-    roomAsk: 'Un projet comme celui-ci ?',
+    secondary: "Voir l’atelier",
+    roomAsk: 'Un projet comme celui-ci ?',
     case: {
       eyebrow: 'À votre tour',
-      title: 'Vous imaginez déjà le vôtre ?',
-      text: "Ce niveau d'exigence, appliqué à votre marque. Parlons-en.",
+      title: 'Vous imaginez déjà le vôtre ?',
+      text: "Ce niveau d’exigence, appliqué à votre marque. Parlons-en.",
     },
     world: {
-      eyebrow: 'Et le prochain ?',
+      eyebrow: 'Et le prochain ?',
       title: 'Votre secteur mérite le même soin.',
       text: 'Restaurants, garages, commerces, outils métier — chaque pièce de ce monde fut taillée sur-mesure. La vôtre reste à forger.',
     },
     registre: {
       eyebrow: 'La suite du registre',
       title: 'Chaque projet ici a commencé par un message.',
-      text: "Le vôtre peut partir aujourd'hui — réponse sous 24 à 48 heures.",
+      text: "Le vôtre peut partir aujourd’hui — réponse sous 24 à 48 heures.",
     },
   },
   /** In-room labels for the immersive project rooms (consumed by the rooms surfaces; rundowns live in src/lib/rundowns.ts). */
@@ -306,25 +322,25 @@ export const fr = {
     meta: {
       title: 'Le monde Microdidact',
       description:
-        "Avant le blason EAM : Microdidact, agence de communication à Toulouse, où l'équipe a forgé seize projets — restaurants, garages, commerces et outils métier.",
+        "Avant le blason EAM : Microdidact, agence de communication à Toulouse, où l’équipe a forgé seize projets — restaurants, garages, commerces et outils métier.",
     },
-    eyebrow: "Chapitre d'origine",
+    eyebrow: "Chapitre d’origine",
     title: 'Le monde Microdidact.',
-    lead: "Avant le blason, il y a eu l'atelier. Chez Microdidact, agence de communication toulousaine, les trois artisans d'EAM ont forgé côte à côte les projets qui ont aiguisé leur métier.",
+    lead: "Avant le blason, il y a eu l’atelier. Chez Microdidact, agence de communication toulousaine, les trois artisans d’EAM ont forgé côte à côte les projets qui ont aiguisé leur métier.",
     logoAlt: 'Microdidact — agence de communication, Toulouse',
     scrollHint: 'Entrer',
     story: {
       eyebrow: 'La genèse',
-      title: "Là où la main s'est faite.",
+      title: "Là où la main s’est faite.",
       paragraphs: [
-        "Microdidact est une agence de communication installée à Toulouse. C'est entre ses murs que l'équipe d'EAM a appris à livrer : des restaurants aux garages, des commerces de quartier aux outils métier, chaque commande traitée comme une pièce unique.",
-        "Ces réalisations portent la marque de cette époque — et déjà l'exigence qui définit EAM aujourd'hui : du sur-mesure, de la performance, et des sites pensés pour être trouvés.",
+        "Microdidact est une agence de communication installée à Toulouse. C’est entre ses murs que l’équipe d’EAM a appris à livrer : des restaurants aux garages, des commerces de quartier aux outils métier, chaque commande traitée comme une pièce unique.",
+        "Ces réalisations portent la marque de cette époque — et déjà l’exigence qui définit EAM aujourd’hui : du sur-mesure, de la performance, et des sites pensés pour être trouvés.",
       ],
     },
     stats: {
       projects: 'projets forgés',
-      sectors: "secteurs d'activité",
-      city: "port d'attache",
+      sectors: "secteurs d’activité",
+      city: "port d’attache",
       cityValue: 'Toulouse',
     },
     constellation: {
@@ -333,8 +349,8 @@ export const fr = {
       intro: 'Chaque projet mène à son étude de cas — le problème, la réponse, le résultat.',
     },
     cta: {
-      title: "Le prochain chapitre s'écrit avec vous.",
-      text: "L'exigence forgée chez Microdidact vit désormais sous le blason EAM. Parlez-nous de votre projet.",
+      title: "Le prochain chapitre s’écrit avec vous.",
+      text: "L’exigence forgée chez Microdidact vit désormais sous le blason EAM. Parlez-nous de votre projet.",
       button: 'Démarrer un projet',
     },
     back: 'Retour au registre',
@@ -343,13 +359,13 @@ export const fr = {
     meta: {
       title: 'Le monde Boxing Center',
       description:
-        "Client direct d'EAM : le réseau Boxing Center à Toulouse — cinq salles, un site immersif par salle et la boutique en ligne officielle Box Plus. Marine, rouge et sueur.",
+        "Client direct d’EAM : le réseau Boxing Center à Toulouse — cinq salles, un site immersif par salle et la boutique en ligne officielle Box Plus. Marine, rouge et sueur.",
     },
     eyebrow: 'Client direct · Toulouse',
     title: 'Le monde Boxing Center.',
-    lead: "Un blason marine et rouge, cinq salles, une seule discipline : le combat. Pour ce réseau toulousain, EAM forge un site immersif par salle — jamais clonés — et sa boutique en ligne officielle.",
+    lead: "Un blason marine et rouge, cinq salles, une seule discipline : le combat. Pour ce réseau toulousain, EAM forge un site immersif par salle — jamais clonés — et sa boutique en ligne officielle.",
     logoAlt: 'Boxing Center — réseau de salles de sports de combat, Toulouse',
-    scrollHint: "Entrer dans l'arène",
+    scrollHint: "Entrer dans l’arène",
     salles: {
       eyebrow: 'Chapitre I — Les cinq salles',
       title: 'Cinq salles. Cinq sites. Zéro duplication.',
@@ -365,22 +381,22 @@ export const fr = {
         {
           name: 'États-Unis',
           place: 'Toulouse — quartier des États-Unis',
-          line: "Présentée comme la plus grande salle de sports de combat de France — un monolithe d'acier en 3D temps réel que l'on traverse.",
+          line: "Présentée comme la plus grande salle de sports de combat de France — un monolithe d’acier en 3D temps réel que l’on traverse.",
         },
         {
           name: 'Minimes',
           place: 'Toulouse — Les Minimes',
-          line: "L'école du geste juste — anglaise, éducative et lady boxing, là où le club forme ses premières gardes.",
+          line: "L’école du geste juste — anglaise, éducative et lady boxing, là où le club forme ses premières gardes.",
         },
         {
           name: 'St-Cyprien',
           place: 'Toulouse — Saint-Cyprien',
-          line: "La dernière-née du réseau — thaï, grappling, hyrox : le laboratoire des disciplines qui montent.",
+          line: "La dernière-née du réseau — thaï, grappling, hyrox : le laboratoire des disciplines qui montent.",
         },
         {
           name: 'Ramonville',
           place: 'Ramonville-Saint-Agne',
-          line: "La cage et le plateau — MMA, préparation physique et camps d'entraînement au sud de la ville.",
+          line: "La cage et le plateau — MMA, préparation physique et camps d’entraînement au sud de la ville.",
         },
       ],
     },
@@ -388,7 +404,7 @@ export const fr = {
       eyebrow: 'Chapitre II — La boutique officielle',
       name: 'Box Plus',
       tag: 'Boutique officielle Boxing Center · Toulouse',
-      line: "La boutique en ligne du réseau — abonnements, séances d'essai, coachings et matériel. Paiement Stripe, passerelle PrestaShop, catalogue synchronisé en continu avec Deciplus.",
+      line: "La boutique en ligne du réseau — abonnements, séances d’essai, coachings et matériel. Paiement Stripe, passerelle PrestaShop, catalogue synchronisé en continu avec Deciplus.",
       visit: 'Visiter la boutique',
     },
     stats: {
@@ -402,7 +418,7 @@ export const fr = {
     },
     close: {
       provenance:
-        "Boxing Center est un client direct d'EAM — un site immersif par salle et la boutique en ligne officielle, forgés sous notre blason.",
+        "Boxing Center est un client direct d’EAM — un site immersif par salle et la boutique en ligne officielle, forgés sous notre blason.",
       title: 'Votre marque mérite une arène.',
       text: "Cinq salles, cinq sites, une boutique, zéro duplication. Parlez-nous de votre projet — nous forgeons à cette échelle.",
       button: 'Démarrer un projet',
@@ -427,9 +443,9 @@ export const fr = {
       {
         heading: 'Éditeur du site',
         body: [
-          "Le site est édité par EAM, collectif de trois ingénieurs : Eddy Etame, Raphaël Angoula et Brad Mbosseu.",
-          'Contact : eam.agency@gmail.com.',
-          'Directeur de la publication : EAM.',
+          "Le site est édité par EAM, collectif de trois ingénieurs : Eddy Etame, Raphaël Angoula et Brad Mbosseu.",
+          'Contact : eam.agency@gmail.com.',
+          'Directeur de la publication : EAM.',
         ],
       },
       {
@@ -441,16 +457,16 @@ export const fr = {
       {
         heading: 'Propriété intellectuelle',
         body: [
-          "L'ensemble du contenu de ce site — textes, visuels, code et identité graphique — est la propriété d'EAM, sauf mention contraire. Toute reproduction sans autorisation préalable est interdite.",
-          'Les marques, logos et visuels des clients présentés appartiennent à leurs propriétaires respectifs ; ils figurent sur ce site à titre de références de portfolio.',
+          "L’ensemble du contenu de ce site — textes, visuels, code et identité graphique — est la propriété d’EAM, sauf mention contraire. Toute reproduction sans autorisation préalable est interdite.",
+          'Les marques, logos et visuels des clients présentés appartiennent à leurs propriétaires respectifs ; ils figurent sur ce site à titre de références de portfolio.',
         ],
       },
       {
         heading: 'Données personnelles (RGPD)',
         body: [
-          "Les informations transmises via le formulaire de contact (nom, e-mail, entreprise, message) sont acheminées par e-mail à EAM et utilisées uniquement pour répondre à votre demande. Elles n'alimentent aucune liste marketing et ne sont transmises à aucun tiers.",
-          "Ce site n'utilise ni traceur, ni outil d'analyse d'audience, ni cookie publicitaire.",
-          "Conformément au Règlement général sur la protection des données (RGPD), vous pouvez exercer vos droits d'accès, de rectification et de suppression en écrivant à eam.agency@gmail.com.",
+          "Les informations transmises via le formulaire de contact (nom, e-mail, entreprise, message) sont acheminées par e-mail à EAM et utilisées uniquement pour répondre à votre demande. Elles n’alimentent aucune liste marketing et ne sont transmises à aucun tiers.",
+          "Ce site n’utilise ni traceur, ni outil d’analyse d’audience, ni cookie publicitaire.",
+          "Conformément au Règlement général sur la protection des données (RGPD), vous pouvez exercer vos droits d’accès, de rectification et de suppression en écrivant à eam.agency@gmail.com.",
         ],
       },
       {
@@ -461,38 +477,143 @@ export const fr = {
       },
     ],
   },
+  servicesPage: {
+    hub: {
+      eyebrow: 'Services',
+      title: 'Quatre façons de travailler ensemble.',
+      lead: "Chaque service est livré avec preuves — performance, données structurées, visibilité IA — par les trois ingénieurs que vous rencontrez.",
+      metaTitle: 'Services — création de site, e-commerce, SEO & GEO, refonte',
+      metaDescription:
+        "Sites sur-mesure dès 2 000 €, e-commerce, SEO & GEO, refonte — devis gratuit sous 24-48 h, vous parlez directement aux ingénieurs.",
+    },
+    quoteCta: 'Obtenir mon devis gratuit',
+    quoteNote: 'Réponse sous 24-48 h · sans engagement',
+    whatsappCta: 'Discuter sur WhatsApp',
+    deliverablesTitle: 'Ce que vous obtenez',
+    floorLabel: 'à partir de',
+    floorNote: 'HT — devis précis et gratuit sous 24-48 h',
+    proofsCta: 'Voir l’étude de cas',
+    receiptsCta: 'Voir nos mesures publiées — réussites et absences',
+    faqTitle: 'Questions fréquentes',
+    radio: {
+      eyebrow: 'Offert',
+      title: 'La radiographie gratuite de votre site.',
+      text: "Envoyez-nous l’adresse de votre site actuel : nous vous renvoyons un audit lisible — vitesse, référencement, visibilité dans les IA, sécurité — que vous soyez client ou non.",
+      cta: 'Demander ma radiographie',
+    },
+  },
+  preuves: {
+    meta: {
+      title: 'Preuves — nos mesures de visibilité IA, publiées',
+      description:
+        "EAM mesure si ses clients (et EAM même) sont cités par ChatGPT, Bing, Google et Perplexity — et publie tout : réussites, absences, captures à l’appui.",
+    },
+    eyebrow: 'Preuves',
+    title: 'Nous mesurons. Nous publions. Même les absences.',
+    lead: "Tout le monde promet la visibilité dans les IA. Nous la mesurons — requête par requête, moteur par moteur — et nous publions les résultats ici, captures d’écran à l’appui. Y compris quand la réponse est « pas encore ».",
+    method: {
+      title: 'La méthode',
+      steps: [
+        "Des requêtes réelles que tapent de vrais prospects — pour EAM et pour nos clients.",
+        'Chaque requête est posée à ChatGPT, Bing, Google et Perplexity — sans compte, sans historique.',
+        "Chaque résultat est enregistré avec sa capture d’écran — cité ou non.",
+        'La mesure est relancée chaque mois. Rien n’est retiré, rien n’est embelli.',
+      ],
+    },
+    table: {
+      query: 'Requête',
+      target: 'Pour',
+      cited: 'Cité',
+      notCited: 'Pas encore',
+      blocked: 'Non mesurable',
+      evidence: 'Capture',
+      targetEam: 'EAM',
+    },
+    lastRun: 'Dernière mesure',
+    footnote:
+      "« — » : moteur inaccessible lors de cette mesure (mur anti-robot ou connexion requise) — nous publions la capture du blocage plutôt qu’un résultat invérifiable.",
+    empty:
+      "Première mesure en cours — les résultats apparaîtront ici, réussites comme absences. C’est le principe.",
+    cta: 'Faire mesurer votre visibilité',
+  },
+  pricing: {
+    eyebrow: 'Tarifs',
+    title: 'Des planchers clairs. Le reste se discute.',
+    intro:
+      "Ces planchers sont un point de départ, pas une grille rigide — chaque projet reçoit un devis précis et gratuit sous 24 à 48 heures.",
+    from: 'à partir de',
+    note: 'Tarifs HT. Application métier, SaaS ou projet hors cadre : sur devis.',
+    bands: [
+      {
+        name: 'Site vitrine sur-mesure',
+        price: '2 000 €',
+        includes: [
+          'Design sur-mesure — jamais de template',
+          'SEO technique + données structurées',
+          'Performance et accessibilité soignées',
+        ],
+      },
+      {
+        name: 'Site immersif & identité',
+        price: '4 000 €',
+        includes: [
+          'Direction artistique complète',
+          'Motion, 3D temps réel si le projet le mérite',
+          "Identité déclinée du logo au pixel",
+        ],
+      },
+      {
+        name: 'E-commerce',
+        price: '3 000 €',
+        includes: [
+          'Tunnel de commande sans friction',
+          'Paiement Stripe ou solution existante',
+          'Synchronisation catalogue possible',
+        ],
+      },
+      {
+        name: 'SEO & GEO mensuel',
+        price: '300 € / mois',
+        includes: [
+          'Optimisation continue — Google et moteurs IA',
+          'Données structurées et llms.txt entretenus',
+          'Rapport mensuel',
+        ],
+      },
+    ],
+  },
   notFound: {
     title: 'Page introuvable',
-    text: "Cette page s'est égarée hors du blason. Revenons en terrain connu.",
-    cta: "Retour à l'accueil",
+    text: "Cette page s’est égarée hors du blason. Revenons en terrain connu.",
+    cta: "Retour à l’accueil",
   },
   errorPage: {
-    title: "Un incident à l'atelier.",
-    text: "Quelque chose s'est brisé en cours de forge. Réessayez — ou revenez en terrain connu.",
+    title: "Un incident à l’atelier.",
+    text: "Quelque chose s’est brisé en cours de forge. Réessayez — ou revenez en terrain connu.",
     retry: 'Réessayer',
   },
   meta: {
     home: {
       title: 'EAM — Sites web sur-mesure, apps métier & SEO/GEO',
-      description: "EAM conçoit sites web sur-mesure, applications métier et stratégies SEO & GEO pour PME et fondateurs. France, Maroc, Afrique francophone. Devis sous 48 h.",
+      description: "EAM conçoit sites web sur-mesure, applications métier et stratégies SEO & GEO pour PME et fondateurs. France, Maroc, Afrique francophone. Devis sous 24-48 h.",
     },
     work: {
       title: 'Réalisations — sites web & applications sur-mesure',
       // Count interpolated from the data source — never stale.
-      description: `${publicProjects.length} réalisations : sites vitrines, e-commerce, SaaS et outils métier — chaque étude de cas expose le problème, la réponse et le résultat.`,
+      description: `${publicProjects.length} réalisations : sites vitrines, e-commerce, SaaS et outils métier — chaque étude de cas expose le problème, la réponse et le résultat.`,
     },
     studio: {
-      title: "L'atelier — trois fondateurs, une agence digitale",
-      description: "EAM = Etame, Angoula, Mbosseu. Agence digitale fondée en 2024 : trois ingénieurs, une obsession — des sites rapides, trouvables et taillés sur-mesure.",
+      title: "L’atelier — trois fondateurs, une agence digitale",
+      description: "EAM = Etame, Angoula, Mbosseu. Agence digitale fondée en 2024 : trois ingénieurs, une obsession — des sites rapides, trouvables et taillés sur-mesure.",
     },
     contact: {
-      title: 'Contact — devis site web gratuit sous 24-48 h',
-      description: "Démarrez un projet avec EAM. Devis gratuit sous 24 à 48h. Écrivez à eam.agency@gmail.com.",
+      title: 'Contact — devis site web gratuit sous 24-48 h',
+      description: "Démarrez un projet avec EAM : décrivez votre besoin, les trois ingénieurs qui concevront votre site vous répondent sous 24-48 h avec un devis gratuit. WhatsApp ou email.",
     },
     legal: {
       title: 'Mentions légales',
       description:
-        "Mentions légales du site EAM : éditeur, hébergement, propriété intellectuelle, données personnelles (RGPD) et cookies.",
+        "Mentions légales du site EAM : éditeur, hébergement, propriété intellectuelle, données personnelles (RGPD) et cookies.",
     },
   },
 }

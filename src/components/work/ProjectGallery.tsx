@@ -7,12 +7,7 @@ import Link from 'next/link'
 import { ProjectCard } from './ProjectCard'
 import { InternalCard } from './InternalCard'
 import { ConversionBand } from '@/components/ui/ConversionBand'
-import {
-  publicProjects,
-  soloProjects,
-  microdidactProjects,
-  internalProjects,
-} from '@/lib/projects'
+import type { Project } from '@/lib/projects'
 import { localizedPath } from '@/lib/seo'
 import { gsap } from '@/lib/gsap'
 import type { Locale } from '@/i18n/config'
@@ -63,28 +58,37 @@ const MICRODIDACT_NAVY = '#1B2559'
 const SOLO_RANK: Record<string, number> = { kermhosting: 0, inlet: 1, 'jcboyang-conseil': 2 }
 
 /**
- * MAIN REGISTRE v2 — no leak. The 16 Microdidact projects and the Boxing
- * Center salle pages live inside their worlds; the registre shows exactly:
- * two monumental world doors, the solo works, and the Coffre.
+ * MAIN REGISTRE v2 — no leak, in both senses: world projects stay inside their
+ * worlds, and the 56 KB project registry stays OUT of this client chunk. The
+ * server page selects what the gallery renders and passes it as props
+ * (the taxonomy.ts doctrine — client code never value-imports the registry).
  */
-export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+export interface GalleryData {
+  /** The Boxing Center umbrella entry (world door), if present. */
+  bc?: Project
+  /** Genuine solos, pre-filtered server-side (no world members). */
+  solos: Project[]
+  /** Confidential entries for the Coffre. */
+  internals: Project[]
+  /** Number of projects inside the Microdidact world (door counter). */
+  microdidactCount: number
+}
+
+export function ProjectGallery({
+  locale,
+  dict,
+  data,
+}: {
+  locale: Locale
+  dict: Dictionary
+  data: GalleryData
+}) {
   const [enableFx, setEnableFx] = useState(false)
   const [enablePalette, setEnablePalette] = useState(false)
 
-  // CONTRACT (Agent B): dict.work.enterWorld — fr «Entrer» / en “Enter”.
-  // Tolerant read so this file typechecks whichever change lands first.
-  const enterWorld =
-    (dict.work as typeof dict.work & { enterWorld?: string }).enterWorld ??
-    (locale === 'fr' ? 'Entrer' : 'Enter')
-
-  const bc = publicProjects.find((p) => p.slug === 'boxing-center')
-
-  // Solo works only — everything that belongs to a WORLD (the Boxing Center
-  // salle pages AND its Box Plus boutique) lives inside that world, never as a
-  // registre solo. Genuine solos: kermhosting, inlet, jcboyang-conseil.
-  const solos = soloProjects
-    .filter((p) => !p.slug.startsWith('boxing-center') && p.slug !== 'box-plus')
-    .sort((a, b) => (SOLO_RANK[a.slug] ?? 99) - (SOLO_RANK[b.slug] ?? 99))
+  const enterWorld = dict.work.enterWorld
+  const { bc, internals, microdidactCount } = data
+  const solos = [...data.solos].sort((a, b) => (SOLO_RANK[a.slug] ?? 99) - (SOLO_RANK[b.slug] ?? 99))
 
   // Registre inventory: 2 world doors + the solos, numbered in visible order.
   const totalEntries = 2 + solos.length
@@ -225,7 +229,7 @@ export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Diction
                     aria-hidden
                     className="absolute -bottom-[0.14em] -right-3 select-none font-display text-[clamp(13rem,24vw,22rem)] leading-none text-ink/[0.05]"
                   >
-                    {microdidactProjects.length}
+                    {microdidactCount}
                   </span>
                   <span className="absolute inset-0 grid place-items-center px-10">
                     <Image
@@ -256,7 +260,7 @@ export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Diction
                       aria-hidden
                       className="block font-display text-[clamp(3.5rem,7vw,6rem)] leading-[0.9] text-ink transition-colors duration-500 group-hover:text-gold"
                     >
-                      {pad2(microdidactProjects.length)}
+                      {pad2(microdidactCount)}
                     </span>
                     <p className="mt-3 hidden max-w-md text-sm text-muted sm:block">
                       {dict.work.microdidactNote}
@@ -338,7 +342,7 @@ export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Diction
                     </span>
                     <div className="absolute bottom-5 left-5 right-24 sm:bottom-7 sm:left-7">
                       <span aria-hidden className="text-mono-label tabular-nums text-gold-bright">
-                        5 salles + boutique · Toulouse — {bc.year}
+                        {locale === 'fr' ? '5 salles + boutique' : '5 gyms + store'} · Toulouse — {bc.year}
                       </span>
                       <p className="mt-2 max-w-md text-sm leading-relaxed text-white/75">
                         {bc.tagline[locale]}
@@ -393,12 +397,12 @@ export function ProjectGallery({ locale, dict }: { locale: Locale; dict: Diction
       </div>
 
       {/* ── LE COFFRE — internal & confidential tools (unchanged) ─────────── */}
-      {internalProjects.length > 0 && (
+      {internals.length > 0 && (
         <section data-chapter="atelier" className="mt-28 border-t border-line pt-16">
           <h2 className="foil text-3xl">{dict.work.internalSectionTitle}</h2>
           <p className="mt-4 max-w-2xl text-muted">{dict.work.internalNote}</p>
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {internalProjects.map((project) => (
+            {internals.map((project) => (
               <InternalCard key={project.slug} project={project} locale={locale} dict={dict} />
             ))}
           </div>

@@ -1,0 +1,247 @@
+{
+ "comment": "Probe results appended by scripts/geo-probe.mjs — NEVER edited by hand except to add manual ChatGPT entries (engine:'chatgpt', method:'manual', screenshot required). The /preuves page renders this verbatim: hits AND misses.",
+ "runs": [
+  {
+   "runId": "2026-07-28",
+   "date": "2026-07-29T06:38:49.358Z",
+   "results": [
+    {
+     "queryId": "agence-web-toulouse",
+     "engine": "perplexity",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/perplexity-agence-web-toulouse.png"
+    },
+    {
+     "queryId": "agence-web-toulouse",
+     "engine": "google",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/google-agence-web-toulouse.png"
+    },
+    {
+     "queryId": "agence-web-toulouse",
+     "engine": "bing",
+     "method": "auto",
+     "status": "not_cited",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/bing-agence-web-toulouse.png"
+    },
+    {
+     "queryId": "agence-geo-france",
+     "engine": "perplexity",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/perplexity-agence-geo-france.png"
+    },
+    {
+     "queryId": "agence-geo-france",
+     "engine": "google",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/google-agence-geo-france.png"
+    },
+    {
+     "queryId": "agence-geo-france",
+     "engine": "bing",
+     "method": "auto",
+     "status": "not_cited",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/bing-agence-geo-france.png"
+    },
+    {
+     "queryId": "prix-site-sur-mesure",
+     "engine": "perplexity",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/perplexity-prix-site-sur-mesure.png"
+    },
+    {
+     "queryId": "prix-site-sur-mesure",
+     "engine": "google",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/google-prix-site-sur-mesure.png"
+    },
+    {
+     "queryId": "prix-site-sur-mesure",
+     "engine": "bing",
+     "method": "auto",
+     "status": "not_cited",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/bing-prix-site-sur-mesure.png"
+    },
+    {
+     "queryId": "kerm-hebergement-fcfa",
+     "engine": "perplexity",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/perplexity-kerm-hebergement-fcfa.png"
+    },
+    {
+     "queryId": "kerm-hebergement-fcfa",
+     "engine": "google",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/google-kerm-hebergement-fcfa.png"
+    },
+    {
+     "queryId": "kerm-hebergement-fcfa",
+     "engine": "bing",
+     "method": "auto",
+     "status": "cited",
+     "matchedTerms": [
+      "KermHosting",
+      "kermhosting.site"
+     ],
+     "screenshot": "/preuves/2026-07-28/bing-kerm-hebergement-fcfa.png"
+    },
+    {
+     "queryId": "boxe-toulouse",
+     "engine": "perplexity",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/perplexity-boxe-toulouse.png"
+    },
+    {
+     "queryId": "boxe-toulouse",
+     "engine": "google",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/google-boxe-toulouse.png"
+    },
+    {
+     "queryId": "boxe-toulouse",
+     "engine": "bing",
+     "method": "auto",
+     "status": "cited",
+     "matchedTerms": [
+      "Boxing Center"
+     ],
+     "screenshot": "/preuves/2026-07-28/bing-boxe-toulouse.png"
+    },
+    {
+     "queryId": "restaurant-marocain-toulouse",
+     "engine": "perplexity",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/perplexity-restaurant-marocain-toulouse.png"
+    },
+    {
+     "queryId": "restaurant-marocain-toulouse",
+     "engine": "google",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/google-restaurant-marocain-toulouse.png"
+    },
+    {
+     "queryId": "restaurant-marocain-toulouse",
+     "engine": "bing",
+     "method": "auto",
+     "status": "cited",
+     "matchedTerms": [
+      "Beldi"
+     ],
+     "screenshot": "/preuves/2026-07-28/bing-restaurant-marocain-toulouse.png"
+    },
+    {
+     "queryId": "agence-web-toulouse",
+     "engine": "chatgpt",
+     "method": "auto",
+     "status": "not_cited",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/chatgpt-agence-web-toulouse.png"
+    },
+    {
+     "queryId": "agence-geo-france",
+     "engine": "chatgpt",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/chatgpt-agence-geo-france.png"
+    },
+    {
+     "queryId": "prix-site-sur-mesure",
+     "engine": "chatgpt",
+     "method": "auto",
+     "status": "not_cited",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/chatgpt-prix-site-sur-mesure.png"
+    },
+    {
+     "queryId": "kerm-hebergement-fcfa",
+     "engine": "chatgpt",
+     "method": "auto",
+     "status": "not_cited",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/chatgpt-kerm-hebergement-fcfa.png"
+    },
+    {
+     "queryId": "boxe-toulouse",
+     "engine": "chatgpt",
+     "method": "auto",
+     "status": "cited",
+     "matchedTerms": [
+      "Boxing Center"
+     ],
+     "screenshot": "/preuves/2026-07-28/chatgpt-boxe-toulouse.png"
+    },
+    {
+     "queryId": "restaurant-marocain-toulouse",
+     "engine": "chatgpt",
+     "method": "auto",
+     "status": "cited",
+     "matchedTerms": [
+      "Beldi"
+     ],
+     "screenshot": "/preuves/2026-07-28/chatgpt-restaurant-marocain-toulouse.png"
+    },
+    {
+     "queryId": "conseil-commercial-jcbo",
+     "engine": "google",
+     "method": "auto",
+     "status": "blocked",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/google-conseil-commercial-jcbo.png"
+    },
+    {
+     "queryId": "conseil-commercial-jcbo",
+     "engine": "chatgpt",
+     "method": "auto",
+     "status": "not_cited",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/chatgpt-conseil-commercial-jcbo.png"
+    },
+    {
+     "queryId": "conseil-commercial-jcbo",
+     "engine": "bing",
+     "method": "auto",
+     "status": "not_cited",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-28/bing-conseil-commercial-jcbo.png"
+    },
+    {
+     "queryId": "conseil-commercial-jcbo",
+     "engine": "perplexity",
+     "method": "auto",
+     "status": "not_cited",
+     "matchedTerms": [],
+     "screenshot": "/preuves/2026-07-29/perplexity-conseil-commercial-jcbo.png"
+    }
+   ],
+   "note": "Mesure de fin juillet 2026, completee sur deux nuits (28-29). Google : reCAPTCHA sur toute la session (statuts blocked, captures conservees). Perplexity : mur de connexion sur la session du 28 ; la mesure JCBO du 29 a obtenu une vraie reponse (not_cited honnete). La requete JCBO a ete REFORMULEE le 28 pour retirer le nom de la marque (une requete contenant sa propre marque est une tautologie, pas une citation) puis re-mesuree sur les 4 moteurs. chatgpt/agence-geo-france : sonde invalidee (saisie manuelle dans la fenetre pendant la mesure ; la reponse citait un autre EAM, Eskimoz AI Marketing) — corrigee en blocked."
+  }
+ ]
+}

@@ -10,6 +10,8 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const links = [
     { href: localizedPath(locale), label: dict.nav.home },
     { href: localizedPath(locale, 'work'), label: dict.nav.work },
+    { href: localizedPath(locale, 'services'), label: dict.nav.services },
+    { href: localizedPath(locale, 'preuves'), label: dict.preuves.eyebrow },
     { href: localizedPath(locale, 'about'), label: dict.nav.studio },
     { href: localizedPath(locale, 'contact'), label: dict.nav.contact },
   ]
@@ -52,7 +54,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             >
               {siteConfig.email}
             </a>
-            <p className="mt-4 text-sm text-faint">{siteConfig.location.areaServed.join(' · ')}</p>
+            <p className="mt-4 text-sm text-faint">{siteConfig.location.areaServed[locale].join(' · ')}</p>
           </div>
         </div>
 

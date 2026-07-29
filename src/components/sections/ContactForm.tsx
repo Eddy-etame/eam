@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, type ChangeEvent, type FormEvent } from 'react'
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react'
 import { siteConfig } from '@/lib/site.config'
+import { sujetLabels } from '@/lib/sujets'
 import type { Dictionary } from '@/i18n/dictionaries'
 
 /**
@@ -16,6 +17,19 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
   const f = dict.contact.form
   const [data, setData] = useState({ name: '', email: '', company: '', message: '', website: '' })
   const [status, setStatus] = useState<Status>('idle')
+
+  // ?sujet= prefill — every service page, card and the Radiographie offer
+  // arrive here with context; the lead should never retype it. Seeds the
+  // message once, only while it is still empty (post-hydration, static-safe).
+  useEffect(() => {
+    const sujet = new URLSearchParams(window.location.search).get('sujet')
+    if (!sujet) return
+    const fr = dict.nav.home === 'Accueil'
+    const label = sujetLabels[sujet]?.[fr ? 'fr' : 'en']
+    if (!label) return
+    const seed = `${fr ? 'Sujet' : 'Subject'} : ${label}\n\n`
+    setData((prev) => (prev.message ? prev : { ...prev, message: seed }))
+  }, [dict])
 
   const set =
     (key: keyof typeof data) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>

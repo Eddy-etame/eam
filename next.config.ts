@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import { siteConfig } from './src/lib/site.config'
 
 // Pin the workspace root to this project dir — silences the multiple-lockfile
 // warning caused by a stray lockfile higher up the tree.
@@ -48,11 +49,9 @@ const securityHeaders = [
   { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
   { key: 'Cross-Origin-Resource-Policy', value: 'same-origin' },
   // Vercel's platform layer stamps a wildcard ACAO on prerendered responses
-  // (flagged "very lax CORS" by scanners) — pin it to the canonical origin.
-  {
-    key: 'Access-Control-Allow-Origin',
-    value: process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://eam-agency.vercel.app',
-  },
+  // (flagged "very lax CORS" by scanners) — pin it to the canonical origin,
+  // read from the single source of truth so the two can never diverge.
+  { key: 'Access-Control-Allow-Origin', value: siteConfig.url },
 ]
 
 const nextConfig: NextConfig = {
@@ -72,14 +71,7 @@ const nextConfig: NextConfig = {
     // no remotePatterns: every entry widens the image-optimizer trust surface.
   },
   experimental: {
-    optimizePackageImports: [
-      'gsap',
-      'three',
-      '@react-three/fiber',
-      '@react-three/drei',
-      'motion',
-      'lenis',
-    ],
+    optimizePackageImports: ['gsap', 'three', '@react-three/fiber', '@react-three/drei', 'lenis'],
   },
 }
 

@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.research/
+
+# Raw founder photos + local build logs — never ship these with the repo
+_source-photos/
+build-log.txt

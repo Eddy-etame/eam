@@ -64,7 +64,7 @@ export default async function LocaleLayout({
         >
           {dict.common.skipToContent}
         </a>
-        <Preloader />
+        <Preloader locale={locale} />
         <SmoothScroll />
         <Cursor />
         <Navbar locale={locale} dict={dict} />

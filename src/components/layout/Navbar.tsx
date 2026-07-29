@@ -47,6 +47,7 @@ export function Navbar({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const links = [
     { href: home, label: dict.nav.home },
     { href: localizedPath(locale, 'work'), label: dict.nav.work },
+    { href: localizedPath(locale, 'services'), label: dict.nav.services },
     { href: localizedPath(locale, 'about'), label: dict.nav.studio },
     { href: localizedPath(locale, 'contact'), label: dict.nav.contact },
   ]

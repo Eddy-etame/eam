@@ -1,10 +1,17 @@
-import { publicProjects } from '@/lib/projects'
+import { publicProjects, microdidactProjects } from '@/lib/projects'
+
+// Derived counts — mirror fr.ts (the registry is the single source of truth).
+const PROJECT_COUNT = publicProjects.length
+const LIVE_COUNT = publicProjects.filter((p) => p.liveUrl !== '#').length
+const MICRODIDACT_COUNT = microdidactProjects.length
+const SECTOR_COUNT = new Set(publicProjects.map((p) => p.category)).size
 
 /** English dictionary — must mirror fr.ts (parity enforced in index.ts). */
 export const en = {
   nav: {
     home: 'Home',
     work: 'Work',
+    services: 'Services',
     studio: 'The studio',
     contact: 'Contact',
     startProject: 'Start a project',
@@ -29,24 +36,33 @@ export const en = {
     loading: 'Loading',
   },
   hero: {
-    eyebrow: 'Digital atelier · since 2024',
+    eyebrow: 'Web engineering studio · since 2024',
     titleLines: ['We forge', 'brands', 'that reign.'],
-    subtitle:
-      'Three web craftsmen. Bespoke sites, business apps and SEO that put our clients on page one — and inside the answers AI gives.',
+    subtitle: `Three engineers. ${PROJECT_COUNT} projects shipped — sites, business applications and measured SEO/GEO, from Toulouse to Casablanca.`,
     ctaPrimary: 'See our work',
     ctaSecondary: 'Start a project',
+    riskNote: 'Free quote in 24-48h · no commitment',
     scrollHint: 'Scroll',
   },
-  marquee: ['Bespoke', 'Performance', 'Senior SEO', 'GEO', 'Identity', 'No compromise'],
+  marquee: ['Bespoke', 'A+ security', 'SEO & GEO', 'Schema.org', 'llms.txt', '24-48h response'],
   featured: {
     eyebrow: 'Selected work',
-    title: 'The work speaks. We listen.',
-    subtitle: 'A selection of digital presences we designed, coded and carried all the way to the ranking.',
+    title: 'The work speaks.',
+    subtitle: `${PROJECT_COUNT} projects shipped, ${LIVE_COUNT} sites live — designed, coded and carried all the way to the ranking.`,
     cta: 'Explore all work',
   },
   clients: {
     eyebrow: 'Trusted by',
     title: 'Brands that chose us.',
+  },
+  proofs: {
+    aria: 'Verifiable proof',
+    items: [
+      { value: 'A+', label: 'security — verified headers', link: 'scan' },
+      { value: `${PROJECT_COUNT}`, label: 'projects shipped', link: 'work' },
+      { value: `${LIVE_COUNT}`, label: 'sites live', link: 'work' },
+      { value: '24-48h', label: 'response time', link: 'contact' },
+    ],
   },
   homeWorlds: {
     eyebrow: 'Two worlds',
@@ -55,7 +71,7 @@ export const en = {
     doors: {
       microdidact: {
         name: 'Microdidact',
-        count: '16',
+        count: `${MICRODIDACT_COUNT}`,
         line: 'Sixteen projects forged under the Toulouse agency — the crossing happens on scroll.',
       },
       boxingCenter: {
@@ -68,7 +84,7 @@ export const en = {
   services: {
     eyebrow: 'Craft',
     title: 'What the atelier forges',
-    intro: 'From the first line of code to the last pixel — and all the way to page one.',
+    intro: 'Design, code, search — delivered with receipts: performance, structured data, AI visibility.',
     items: [
       {
         title: 'Bespoke websites',
@@ -98,28 +114,28 @@ export const en = {
   },
   about: {
     eyebrow: 'The studio',
-    title: 'Three craftsmen, one obsession.',
+    title: 'Three engineers. One standard.',
     lead: 'EAM is a creative digital agency founded in 2024. The name belongs to its three partners: Etame, Angoula and Mbosseu.',
     body: [
-      "We don't ship templates. We forge bespoke digital presences — every line of code, every curve, every tag built to serve a brand and its ranking.",
-      'Small team, outsized standards. You speak directly to the people who design and code. No middlemen, no jargon — measurable results.',
+      "We don’t ship templates. Every line of code, every curve, every tag is built to serve a brand and its ranking.",
+      `${PROJECT_COUNT} projects shipped since 2024 — and you speak directly to the three people who design and code them. No middlemen, no jargon.`,
     ],
     valuesTitle: 'Our principles',
     values: [
-      { title: 'Powerful', text: 'Sites that land and perform — no decoration without intent.' },
+      { title: 'Measurable', text: 'A+ security, structured data on every page, copy 100% in the DOM — verifiable, not declarative.' },
       { title: 'Precise', text: 'Detail is the craft: from technical SEO to the kerning of a headline.' },
-      { title: 'Premium', text: 'The care of a maison, the speed of a modern studio.' },
+      { title: 'Direct', text: 'You speak to the three people who design and code — no one else.' },
     ],
     stats: [
-      { value: '22+', label: 'projects' },
-      { value: '3', label: 'craftsmen' },
-      { value: '8', label: 'industries' },
+      { value: `${PROJECT_COUNT}`, label: 'projects' },
+      { value: '3', label: 'engineers' },
+      { value: `${SECTOR_COUNT}`, label: 'industries' },
       { value: '2024', label: 'founded' },
     ],
   },
   team: {
-    eyebrow: 'The craftsmen',
-    title: 'The hands behind the crest.',
+    eyebrow: 'The team',
+    title: 'The three who answer.',
     intro:
       'Three. On purpose. The people who design and code your project are the same three you speak to.',
     pending: 'Portrait forthcoming',
@@ -135,7 +151,7 @@ export const en = {
     items: [
       {
         q: 'What is EAM?',
-        a: "EAM is a creative digital agency founded in 2024 by three partners — Etame, Angoula and Mbosseu, whose names form the agency's name. EAM builds bespoke websites, business applications and search strategies (SEO & GEO) for SMEs, local businesses and founders across France, Morocco and francophone Africa.",
+        a: "EAM is a creative digital agency founded in 2024 by three partners — Etame, Angoula and Mbosseu, whose names form the agency’s name. EAM builds bespoke websites, business applications and search strategies (SEO & GEO) for SMEs, local businesses and founders across France, Morocco and francophone Africa.",
       },
       {
         q: 'What services does EAM offer?',
@@ -143,23 +159,23 @@ export const en = {
       },
       {
         q: 'Is EAM a web agency in Toulouse?',
-        a: "EAM's team has its roots in the Toulouse area: the three founders forged sixteen projects there under Microdidact, and the Boxing Center network, a direct client, is based in Toulouse. EAM works remotely for clients in France, Morocco, francophone Africa and internationally; the head-office address is not published.",
+        a: "EAM’s team has its roots in the Toulouse area: the three founders forged sixteen projects there under Microdidact, and the Boxing Center network, a direct client, is based in Toulouse. EAM works remotely for clients in France, Morocco, francophone Africa and internationally; the head-office address is not published.",
       },
       {
         q: 'What is GEO (Generative Engine Optimization)?',
-        a: "GEO is optimising a site to be cited by AI answer engines such as ChatGPT, Perplexity and Google's AI Overviews. EAM bakes it into every project: structured content, schema.org data, an llms.txt file and direct, factual answers.",
+        a: "GEO is optimising a site to be cited by AI answer engines such as ChatGPT, Perplexity and Google’s AI Overviews. EAM bakes it into every project: structured content, schema.org data, an llms.txt file and direct, factual answers.",
       },
       {
         q: 'What is the difference between SEO and GEO?',
-        a: "SEO (Search Engine Optimization) targets a site's ranking in search results such as Google's. GEO (Generative Engine Optimization) targets its citation inside AI answers — ChatGPT, Perplexity, AI Overviews. Both rest on the same foundation: a fast, structured, factual site. EAM works both into every project.",
+        a: "SEO (Search Engine Optimization) targets a site’s ranking in search results such as Google’s. GEO (Generative Engine Optimization) targets its citation inside AI answers — ChatGPT, Perplexity, AI Overviews. Both rest on the same foundation: a fast, structured, factual site. EAM works both into every project.",
       },
       {
         q: 'How can a website get cited by ChatGPT or Perplexity?',
-        a: "By making its content readable and verifiable by answer engines: direct factual answers, copy present in server-rendered HTML (readable without JavaScript), schema.org structured data, an llms.txt file and fast pages. That is the method EAM applies to every project — the decision to cite remains each engine's own.",
+        a: "By making its content readable and verifiable by answer engines: direct factual answers, copy present in server-rendered HTML (readable without JavaScript), schema.org structured data, an llms.txt file and fast pages. That is the method EAM applies to every project — the decision to cite remains each engine’s own.",
       },
       {
         q: 'How much does a website with EAM cost?',
-        a: 'Every project is bespoke; the budget depends on scope and features. EAM provides a free quote within 24–48 hours of a first conversation.',
+        a: 'A bespoke showcase site starts at €2,000 (excl. VAT), an immersive site with full identity at €4,000, e-commerce at €3,000, and monthly SEO & GEO support at €300. These floors are a starting point: every project gets a precise, free quote within 24–48 hours.',
       },
       {
         q: 'How long does it take to get a quote?',
@@ -275,7 +291,7 @@ export const en = {
     case: {
       eyebrow: 'Your turn',
       title: 'Already picturing yours?',
-      text: "This level of craft, applied to your brand. Let's talk.",
+      text: "This level of craft, applied to your brand. Let’s talk.",
     },
     world: {
       eyebrow: 'And the next one?',
@@ -384,7 +400,7 @@ export const en = {
       eyebrow: 'Chapter II — The official store',
       name: 'Box Plus',
       tag: 'Official Boxing Center store · Toulouse',
-      line: "The network's online store — memberships, trial sessions, coaching and gear. Stripe checkout, PrestaShop bridge, catalogue continuously synced with Deciplus.",
+      line: "The network’s online store — memberships, trial sessions, coaching and gear. Stripe checkout, PrestaShop bridge, catalogue continuously synced with Deciplus.",
       visit: 'Visit the store',
     },
     stats: {
@@ -457,9 +473,114 @@ export const en = {
       },
     ],
   },
+  servicesPage: {
+    hub: {
+      eyebrow: 'Services',
+      title: 'Four ways to work together.',
+      lead: 'Every service ships with receipts — performance, structured data, AI visibility — from the three engineers you actually meet.',
+      metaTitle: 'Services — website creation, e-commerce, SEO & GEO, rebuilds',
+      metaDescription:
+        'Bespoke websites from €2,000, e-commerce, SEO & GEO, rebuilds. Free quote within 24-48h — you speak directly to the engineers.',
+    },
+    quoteCta: 'Get my free quote',
+    quoteNote: '24-48h response · no commitment',
+    whatsappCta: 'Chat on WhatsApp',
+    deliverablesTitle: 'What you get',
+    floorLabel: 'from',
+    floorNote: 'excl. VAT — precise, free quote within 24-48h',
+    proofsCta: 'View the case study',
+    receiptsCta: 'See our published measurements — hits and misses',
+    faqTitle: 'Frequently asked',
+    radio: {
+      eyebrow: 'Free',
+      title: 'The free X-ray of your website.',
+      text: 'Send us your current site address: we return a readable audit — speed, search, AI visibility, security — whether you become a client or not.',
+      cta: 'Request my X-ray',
+    },
+  },
+  preuves: {
+    meta: {
+      title: 'Proof — our AI-visibility measurements, published',
+      description:
+        'EAM measures whether its clients (and EAM itself) are cited by ChatGPT, Bing, Google and Perplexity — and publishes it all: hits, misses, screenshots.',
+    },
+    eyebrow: 'Proof',
+    title: 'We measure. We publish. Even the misses.',
+    lead: 'Everyone promises AI visibility. We measure it — query by query, engine by engine — and publish the results here with screenshots. Including when the answer is "not yet".',
+    method: {
+      title: 'The method',
+      steps: [
+        'Real queries that real prospects type — for EAM and for our clients.',
+        'Each query is asked of ChatGPT, Bing, Google and Perplexity — no account, no history.',
+        'Every result is logged with its screenshot — cited or not.',
+        'The measurement re-runs monthly. Nothing is removed, nothing is polished.',
+      ],
+    },
+    table: {
+      query: 'Query',
+      target: 'For',
+      cited: 'Cited',
+      notCited: 'Not yet',
+      blocked: 'Not measurable',
+      evidence: 'Screenshot',
+      targetEam: 'EAM',
+    },
+    lastRun: 'Last measured',
+    footnote:
+      '"—": engine unreachable during this measurement (bot-wall or login required) — we publish the screenshot of the block rather than an unverifiable result.',
+    empty:
+      'First measurement in progress — results will appear here, hits and misses alike. That is the point.',
+    cta: 'Measure your visibility',
+  },
+  pricing: {
+    eyebrow: 'Pricing',
+    title: 'Clear floors. The rest is a conversation.',
+    intro:
+      'These floors are a starting point, not a rigid grid — every project gets a precise, free quote within 24–48 hours.',
+    from: 'from',
+    note: 'Prices excl. VAT. Business applications, SaaS or out-of-scope projects: custom quote.',
+    bands: [
+      {
+        name: 'Bespoke showcase site',
+        price: '€2,000',
+        includes: [
+          'Bespoke design — never a template',
+          'Technical SEO + structured data',
+          'Careful performance and accessibility',
+        ],
+      },
+      {
+        name: 'Immersive site & identity',
+        price: '€4,000',
+        includes: [
+          'Full art direction',
+          'Motion, real-time 3D when the project deserves it',
+          'Identity carried from logo to pixel',
+        ],
+      },
+      {
+        name: 'E-commerce',
+        price: '€3,000',
+        includes: [
+          'Frictionless checkout funnel',
+          'Stripe or your existing payment stack',
+          'Catalogue sync where needed',
+        ],
+      },
+      {
+        name: 'Monthly SEO & GEO',
+        price: '€300 / mo',
+        includes: [
+          'Continuous optimisation — Google and AI engines',
+          'Structured data and llms.txt maintained',
+          'Monthly report',
+        ],
+      },
+    ],
+  },
   notFound: {
     title: 'Page not found',
-    text: "This page wandered off the crest. Let's head back to familiar ground.",
+    text: "This page wandered off the crest. Let’s head back to familiar ground.",
     cta: 'Back home',
   },
   errorPage: {
@@ -483,7 +604,7 @@ export const en = {
     },
     contact: {
       title: 'Contact — Free Website Quote Within 24-48h',
-      description: 'Start a project with EAM. Free quote within 24–48h. Email eam.agency@gmail.com.',
+      description: 'Start a project with EAM: describe what you need and the three engineers who will build your site reply within 24-48h with a free quote. WhatsApp or email.',
     },
     legal: {
       title: 'Legal Notice',

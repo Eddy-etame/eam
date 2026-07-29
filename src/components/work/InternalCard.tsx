@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { Logo } from '@/components/ui/Logo'
 import { localizedPath } from '@/lib/seo'
-import { categoryLabels, type Project } from '@/lib/projects'
+import { categoryLabels } from '@/lib/taxonomy'
+import type { Project } from '@/lib/projects'
 import type { Locale } from '@/i18n/config'
 import type { Dictionary } from '@/i18n/dictionaries'
 

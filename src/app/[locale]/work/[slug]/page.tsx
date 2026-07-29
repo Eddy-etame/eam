@@ -35,8 +35,14 @@ export async function generateMetadata({
   // 54-char budget: the layout template appends ' · EAM' (6 chars) to every
   // title — the old 60 budget produced 65-66 char SERP titles (audit P2).
   const room = 54 - base.length - 3
-  const title =
-    room > 12 ? `${base} — ${tagline.length > room ? `${tagline.slice(0, room - 1).trimEnd()}…` : tagline}` : base
+  // Truncate at a word boundary (never mid-word: "Built for Afri…"), and strip
+  // trailing punctuation so the ellipsis never follows a dash or comma.
+  const clampTagline = (t: string) => {
+    const slice = t.slice(0, room - 1)
+    const cut = slice.includes(' ') ? slice.slice(0, slice.lastIndexOf(' ')) : slice
+    return `${cut.trimEnd().replace(/[—–\-,:;·.]+$/, '').trimEnd()}…`
+  }
+  const title = room > 12 ? `${base} — ${tagline.length > room ? clampTagline(tagline) : tagline}` : base
   return buildMetadata({
     locale,
     title,

@@ -6,7 +6,7 @@ import type { Locale } from '@/i18n/config'
  * ┌── CONFIRMED (2026-06-07) ────────────────────────────────────────────────┐
  * │ • EAM = Etame · Angoula · Mbosseu — a team of 3 founders.                 │
  * │ • Email:  eam.agency@gmail.com  (temporary)                              │
- * │ • Domain: https://eam.vercel.app                                        │
+ * │ • Domain: https://eam-agency.vercel.app (branded domain coming)          │
  * │ • Languages: FR (default) + EN                                          │
  * └──────────────────────────────────────────────────────────────────────────┘
  *
@@ -25,6 +25,9 @@ export const siteConfig = {
    *  sync whenever this changes. */
   url: process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://eam-agency.vercel.app',
   email: 'eam.agency@gmail.com',
+  /** WhatsApp Business — the #1 channel for SMB owners in FR/MA/francophone
+   *  Africa (Eddy, 2026-07-16). International format, no '+' for wa.me. */
+  whatsapp: '33774865543',
 
   /** ⚠️ PLACEHOLDER — confirm a public phone number (leave empty to hide). */
   phone: '',
@@ -39,7 +42,11 @@ export const siteConfig = {
     city: 'Toulouse',
     region: 'Occitanie',
     country: 'FR',
-    areaServed: ['France', 'Maroc', 'Afrique francophone', 'International'],
+    // Localized — pick by locale wherever this renders (contact page, schema).
+    areaServed: {
+      fr: ['France', 'Maroc', 'Afrique francophone', 'International'],
+      en: ['France', 'Morocco', 'Francophone Africa', 'International'],
+    } as Record<Locale, readonly string[]>,
   },
 
   /** ⚠️ PLACEHOLDER — no social profiles confirmed yet (empty = hidden). */

@@ -187,6 +187,10 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           </Link>
         </Magnetic>
       </div>
+      {/* Risk-reducer — the check-writer's hesitation, answered at the button */}
+      <p data-hero-cta className="text-mono-label mt-4 text-faint">
+        {hero.riskNote}
+      </p>
       </div>
 
       <div

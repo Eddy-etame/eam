@@ -38,7 +38,8 @@ function clampDescription(text: string, max = 158): string {
   const slice = text.slice(0, max)
   const sentence = slice.lastIndexOf('. ')
   if (sentence > max * 0.55) return slice.slice(0, sentence + 1)
-  return `${slice.slice(0, slice.lastIndexOf(' ')).trimEnd()}…`
+  // Word boundary, then strip trailing punctuation so we never emit "—…".
+  return `${slice.slice(0, slice.lastIndexOf(' ')).trimEnd().replace(/[—–\-,:;·]+$/, '').trimEnd()}…`
 }
 
 /**

@@ -8,7 +8,7 @@ import { breadcrumbSchema, collectionPageSchema, organizationSchema } from '@/li
 import { ProjectGallery } from '@/components/work/ProjectGallery'
 import { WorkOverture } from '@/components/work/WorkOverture'
 import { CategoryChips } from '@/components/work/CategoryChips'
-import { publicProjects, microdidactProjects } from '@/lib/projects'
+import { publicProjects, microdidactProjects, soloProjects, internalProjects } from '@/lib/projects'
 import { categories, categorySlugs } from '@/lib/taxonomy'
 import type { ProjectCategory } from '@/lib/taxonomy'
 
@@ -76,7 +76,20 @@ export default async function WorkPage({ params }: { params: Promise<{ locale: s
           <CategoryChips dict={dict} categories={worldCategories} hrefFor={hrefFor} />
         </div>
         <div className="mt-16">
-          <ProjectGallery locale={locale} dict={dict} />
+          <ProjectGallery
+            locale={locale}
+            dict={dict}
+            // Server-side selection keeps the 56 KB registry out of the client
+            // chunk — the gallery receives exactly what it renders.
+            data={{
+              bc: publicProjects.find((p) => p.slug === 'boxing-center'),
+              solos: soloProjects.filter(
+                (p) => !p.slug.startsWith('boxing-center') && p.slug !== 'box-plus',
+              ),
+              internals: internalProjects,
+              microdidactCount: microdidactProjects.length,
+            }}
+          />
         </div>
       </div>
     </main>

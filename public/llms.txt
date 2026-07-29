@@ -19,6 +19,16 @@ Avant de fonder EAM, les trois associés ont conçu et codé seize projets au se
 ## Qu'est-ce que le GEO ?
 Le GEO (Generative Engine Optimization) consiste à optimiser un site pour qu'il soit compris et cité par les moteurs de réponse IA — ChatGPT, Perplexity, Claude, les AI Overviews de Google. EAM l'intègre à chaque projet : contenu factuel question-réponse dans le DOM rendu côté serveur, données structurées schema.org (Organization, FAQPage, CreativeWork, BreadcrumbList), fichier llms.txt, pages rapides. Ce site est lui-même construit selon cette méthode.
 
+## Services et tarifs (planchers HT — devis précis gratuit sous 24-48 h)
+- Site vitrine sur-mesure — à partir de 2 000 € : https://eam-agency.vercel.app/fr/services/site-vitrine
+- Site immersif & identité complète (WebGL, motion, branding) — à partir de 4 000 €.
+- E-commerce — à partir de 3 000 € : https://eam-agency.vercel.app/fr/services/e-commerce
+- SEO & GEO mensuel — à partir de 300 €/mois : https://eam-agency.vercel.app/fr/services/seo-geo
+- Refonte & performance — à partir de 2 000 € : https://eam-agency.vercel.app/fr/services/refonte
+- Radiographie gratuite : audit offert de tout site existant (vitesse, SEO, visibilité IA, sécurité), que l'entreprise devienne cliente ou non.
+- Contact direct WhatsApp disponible sur la page contact.
+- Preuves de visibilité IA : EAM publie ses mesures de citation (Perplexity, Google, Bing, ChatGPT) pour ses clients et pour elle-même, captures d'écran comprises, absences comprises : https://eam-agency.vercel.app/fr/preuves
+
 ## Pages clés
 - Accueil (FR) : https://eam-agency.vercel.app/fr — (EN) : https://eam-agency.vercel.app/en
 - Réalisations (registre complet) : https://eam-agency.vercel.app/fr/work
@@ -44,7 +54,7 @@ Restauration & commerce :
 - Mon Boum — chaîne fast-food halal, 10 restaurants, Toulouse : https://eam-agency.vercel.app/fr/work/mon-boum (site : https://monboumv3.vercel.app/)
 - THE 911 — guilty sandwiches halal, identité full-dark : https://eam-agency.vercel.app/fr/work/the-911 (site : https://the-911.vercel.app)
 - Chicken Ben's — poulet frit halal, Colomiers : https://eam-agency.vercel.app/fr/work/chicken-bens (site : https://chikenbens.vercel.app)
-- Marché de Mo' — supermarché ethnique, Toulouse/Occitanie : https://eam-agency.vercel.app/fr/work/marche-de-mo (site : https://marchedemov2.vercel.app/)
+- Marché de Mo' — supermarché ethnique, Toulouse/Occitanie : https://eam-agency.vercel.app/fr/work/marche-de-mo
 - NYC Cookies Casablanca — boutique de cookies artisanaux, Maroc : https://eam-agency.vercel.app/fr/work/nyc-cookies (site : https://nyc-cookies-casablanca.vercel.app)
 Automobile :
 - Car Repair — garage multimarque, Toulouse, SEO-first : https://eam-agency.vercel.app/fr/work/car-repair
@@ -75,7 +85,7 @@ Inlet est le microservice SaaS de formulaires développé par EAM : un seul back
 - Qu'est-ce que EAM ? Une agence digitale créative fondée en 2024 par trois ingénieurs — Eddy Etame, Raphaël Angoula et Brad Mbosseu — qui conçoit sites sur-mesure, applications métier et référencement SEO & GEO.
 - Que signifie EAM ? L'acronyme des noms des trois fondateurs : Etame, Angoula, Mbosseu.
 - Quelle est la relation entre EAM et Microdidact ? Les trois associés ont forgé seize projets chez Microdidact (agence de communication à Toulouse) avant de fonder EAM ; ces projets sont marqués « Sous Microdidact » dans le portfolio.
-- Combien coûte un site ? Chaque projet est sur-mesure ; devis gratuit sous 24 à 48 heures.
+- Combien coûte un site ? Site vitrine sur-mesure à partir de 2 000 € HT, site immersif avec identité complète à partir de 4 000 €, e-commerce à partir de 3 000 €, accompagnement SEO & GEO à partir de 300 €/mois. Devis précis gratuit sous 24 à 48 heures.
 - Qu'est-ce que le GEO ? L'optimisation d'un site pour être cité par ChatGPT, Perplexity et les AI Overviews — intégrée par EAM à chaque projet.
 - Technologies ? Next.js, React, Astro, TypeScript, Tailwind CSS, Supabase, PostgreSQL.
 - Langues ? Français et anglais, sites bilingues ou multilingues.

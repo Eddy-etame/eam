@@ -62,13 +62,13 @@ export function organizationSchema(locale: Locale, description: string): Json {
       'E-commerce',
       'Progressive Web Apps',
     ],
-    areaServed: siteConfig.location.areaServed.map((name) => ({ '@type': 'Place', name })),
+    areaServed: siteConfig.location.areaServed[locale].map((name) => ({ '@type': 'Place', name })),
     ...(links.length ? { sameAs: links } : {}),
   }
 }
 
 /** Service catalogue — a machine-readable list of exactly what the agency offers. */
-export function serviceSchema(items: { title: string; description: string }[]): Json {
+export function serviceSchema(items: { title: string; description: string }[], locale: Locale = 'fr'): Json {
   return {
     '@context': 'https://schema.org',
     '@type': 'OfferCatalog',
@@ -79,7 +79,7 @@ export function serviceSchema(items: { title: string; description: string }[]): 
       description: s.description,
       serviceType: s.title,
       provider: { '@id': ORG_ID },
-      areaServed: siteConfig.location.areaServed.map((name) => ({ '@type': 'Place', name })),
+      areaServed: siteConfig.location.areaServed[locale].map((name) => ({ '@type': 'Place', name })),
     })),
   }
 }

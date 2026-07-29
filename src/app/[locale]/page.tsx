@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { isLocale } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
 import { Hero } from '@/components/sections/Hero'
+import { ProofStrip } from '@/components/sections/ProofStrip'
 import { FeaturedWork } from '@/components/sections/FeaturedWork'
 import { MarqueeStrip } from '@/components/sections/MarqueeStrip'
 import { Clients } from '@/components/sections/Clients'
@@ -57,7 +58,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         data={[
           organizationSchema(locale, dict.meta.home.description),
           websiteSchema(locale, dict.meta.home.description),
-          serviceSchema(dict.services.items),
+          serviceSchema(dict.services.items, locale),
           faqSchema(dict.faq.items),
           clientsListSchema,
         ]}
@@ -65,6 +66,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* Chapters — the unified identity: the palette morphs as they scroll by */}
       <div data-chapter="heraldic">
         <Hero locale={locale} dict={dict} />
+        {/* Receipts before theater — every figure links to its evidence */}
+        <ProofStrip locale={locale} dict={dict} />
         <Clients locale={locale} dict={dict} />
       </div>
       <div data-chapter="atelier">
@@ -78,7 +81,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <CategoryChips dict={dict} categories={worldCategories} hrefFor={hrefFor} />
           </div>
         </section>
-        <Services dict={dict} />
+        <Services locale={locale} dict={dict} />
       </div>
       <div data-chapter="editorial">
         <AboutTeaser locale={locale} dict={dict} />

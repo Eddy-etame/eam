@@ -22,6 +22,9 @@ export async function generateMetadata({
     title: dict.microdidact.meta.title,
     description: dict.microdidact.meta.description,
     path: 'work/microdidact',
+    // The segment's crafted opengraph-image.tsx does NOT override the explicit
+    // images buildMetadata injects (audit 2026-07-29) — pass it explicitly.
+    images: [absoluteUrl(`/${locale}/work/microdidact/opengraph-image`)],
   })
   // Share-card copy, distinct from the <title>/meta description: sell the
   // traversée itself — sixteen rooms crossed in one scroll.

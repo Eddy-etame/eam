@@ -11,8 +11,8 @@
  * │   — drop it in public/team/raphael.webp + set image + status:'live'.        │
  * │ • first↔surname pairing (Raphael→Angoula, Brad→Mbosseu) is by E·A·M order  │
  * │   — CONFIRM.                                                               │
- * │ • role + manifesto are house-voice PLACEHOLDER copy — replace with each    │
- * │   founder's real discipline + words.                                       │
+ * │ • role 'Ingénieur/Engineer' ×3 is INTENTIONAL (Eddy 2026-07-14: «everybody │
+ * │   is an engineer»); manifesto quotes rewritten same day. Not placeholders. │
  * └───────────────────────────────────────────────────────────────────────────┘
  */
 

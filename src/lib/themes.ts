@@ -1,8 +1,8 @@
 /**
  * Theme registry. Each theme is a palette defined in globals.css under a
- * matching [data-theme] block. "heraldic" is fully designed; the others are
- * alternate directions exposed through the floating ThemeSwitcher and refined
- * incrementally. Adding a theme = a new palette block + an entry here.
+ * matching [data-theme] block. "heraldic" is the default; the palette is
+ * scroll-driven via ChapterPalette (sections declare data-chapter) — the old
+ * floating switcher is retired. Adding a theme = a palette block + an entry.
  */
 
 export const THEME_IDS = ['heraldic', 'atelier', 'editorial', 'bold'] as const

@@ -379,7 +379,9 @@ export const projects: Project[] = [
     },
     category: 'Restauration & F&B',
     tags: ['Commerce', 'Ethnique', 'Halal', 'Toulouse', 'Occitanie'],
-    liveUrl: 'https://marchedemov2.vercel.app/',
+    // marchedemov2.vercel.app stopped responding (verified dead 2026-07-29,
+    // TLS ok then timeout) — restore the URL once the deployment is revived.
+    liveUrl: '#',
     color: '#1C6B35',
     year: 2025,
     isFeatured: false,
@@ -816,8 +818,8 @@ export const projects: Project[] = [
       en: 'Node.js hosting in FCFA. Built for Africa.',
     },
     description: {
-      fr: "Plateforme SaaS d'hébergement haute performance pour l'Afrique — paiement FCFA, PayPal et Minipay. 1 000+ utilisateurs.",
-      en: 'A high-performance SaaS hosting platform for Africa — FCFA, PayPal and Minipay payments. 1,000+ users.',
+      fr: "Plateforme SaaS d'hébergement Node.js haute performance pour l'Afrique — paiement en FCFA par mobile money, PayPal et Minipay. 1 000+ utilisateurs.",
+      en: 'A high-performance Node.js SaaS hosting platform for Africa — FCFA mobile-money, PayPal and Minipay payments. 1,000+ users served.',
     },
     category: 'Tech & SaaS',
     tags: ['SaaS', 'Hébergement', 'Afrique', 'International', 'Fintech'],

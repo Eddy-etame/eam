@@ -1,0 +1,63 @@
+{
+  "comment": "Tracked queries for the receipts engine. target: eam or client:<slug>. brandTerms: strings whose presence counts as a citation — NEVER put a brand term inside the query itself (tautology), and for EAM use only eam-agency (bare EAM collides with other entities, e.g. Eskimoz AI Marketing on ChatGPT, caught 2026-07-28). Add queries freely — npm run geo:probe iterates this list.",
+  "queries": [
+    {
+      "id": "agence-web-toulouse",
+      "q": "meilleure agence web à Toulouse pour un site sur-mesure",
+      "target": "eam",
+      "brandTerms": [
+        "eam-agency"
+      ]
+    },
+    {
+      "id": "agence-geo-france",
+      "q": "agence spécialisée GEO Generative Engine Optimization en France",
+      "target": "eam",
+      "brandTerms": [
+        "eam-agency"
+      ]
+    },
+    {
+      "id": "prix-site-sur-mesure",
+      "q": "combien coûte un site internet sur-mesure pour une PME",
+      "target": "eam",
+      "brandTerms": [
+        "eam-agency"
+      ]
+    },
+    {
+      "id": "kerm-hebergement-fcfa",
+      "q": "hébergement Node.js payable en FCFA mobile money Afrique",
+      "target": "client:kermhosting",
+      "brandTerms": [
+        "KermHosting",
+        "kermhosting.site"
+      ]
+    },
+    {
+      "id": "boxe-toulouse",
+      "q": "salle de boxe et sports de combat à Toulouse",
+      "target": "client:boxing-center",
+      "brandTerms": [
+        "Boxing Center"
+      ]
+    },
+    {
+      "id": "restaurant-marocain-toulouse",
+      "q": "restaurant marocain fusion à Toulouse",
+      "target": "client:beldi-fusion",
+      "brandTerms": [
+        "Beldi"
+      ]
+    },
+    {
+      "id": "conseil-commercial-jcbo",
+      "q": "cabinet de conseil en développement commercial pour PME à Toulouse",
+      "target": "client:jcboyang-conseil",
+      "brandTerms": [
+        "JCBO",
+        "jcbo-conseil"
+      ]
+    }
+  ]
+}
