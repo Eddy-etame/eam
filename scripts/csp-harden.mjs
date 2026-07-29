@@ -121,8 +121,30 @@ for (const route of routable.sort()) {
     ],
   })
 }
-manifest.headers = patched
-writeFileSync(MANIFEST, JSON.stringify(manifest))
+// Always emit the per-route CSP map — scripts/vercel-output-harden.mjs feeds
+// Vercel's edge config from it after `vercel build`.
+writeFileSync(
+  path.join(ROOT, '.next', 'csp-hashes.json'),
+  JSON.stringify(
+    {
+      baseline: baseCsp,
+      routes: Object.fromEntries(
+        routable.sort().map((r) => [r, withScriptSrc(baseCsp, perRoute.get(r))]),
+      ),
+    },
+    null,
+    1,
+  ),
+)
+
+// Patch the manifest ONLY off-Vercel (`next start` reads it) — @vercel/next's
+// output conversion chokes on the injected entries ("Unable to find lambda
+// for route", seen live 2026-07-29); on Vercel the edge config carries the
+// hashes instead, injected by vercel-output-harden.mjs from csp-hashes.json.
+if (!process.env.VERCEL) {
+  manifest.headers = patched
+  writeFileSync(MANIFEST, JSON.stringify(manifest))
+}
 
 // ── Verify — every emitted inline script must be allowlisted for its route ──
 let failures = 0

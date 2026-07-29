@@ -71,6 +71,9 @@ export function buildMetadata({
     metadataBase: new URL(BASE_URL),
     title,
     description,
+    // Google Search Console ownership (Eddy's property, added 2026-07-29).
+    // Keep even after verification succeeds — removing it un-verifies.
+    verification: { google: 'iwcaX-KKJ7ORp8DN2t2Vpz0uQ0y0Zulceh_yx1fhAI0' },
     alternates: { canonical: url, languages },
     openGraph: {
       type: 'website',

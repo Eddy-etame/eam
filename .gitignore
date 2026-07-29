@@ -44,3 +44,6 @@ next-env.d.ts
 # Raw founder photos + local build logs — never ship these with the repo
 _source-photos/
 build-log.txt
+
+.vercel
+.env*

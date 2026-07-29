@@ -1,0 +1,47 @@
+# git push → production, WITHOUT losing the A+.
+#
+# Vercel's own git auto-build is disabled (vercel.json git.deploymentEnabled:
+# false) because a server-side build drops the per-route hash-locked CSPs and
+# production falls back to grade A. This action reproduces the proven chain
+# on a Linux runner: build (csp-harden emits .next/csp-hashes.json), inject
+# the per-route CSPs into the prebuilt edge config, deploy --prebuilt so the
+# hashes match the exact artifacts shipped. Verified A+ 2026-07-29.
+#
+# One-time setup: repo Settings → Secrets and variables → Actions →
+# New repository secret: VERCEL_TOKEN (create at vercel.com/account/tokens).
+name: Deploy A+ (prebuilt)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+env:
+  VERCEL_ORG_ID: team_Ru6PxeXQHAlGp0PQY6asmJov
+  VERCEL_PROJECT_ID: prj_tcTi537y7SVMHbLdhh4ZLtBGuR7I
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - run: npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - run: node scripts/vercel-output-harden.mjs
+      - run: npx vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Verify hardened CSP is live
+        run: |
+          sleep 15
+          CSP=$(curl -s -D - -o /dev/null https://eam-agency.vercel.app/fr | grep -i content-security-policy | head -1)
+          echo "$CSP" | grep -q "sha256-" || { echo "FAIL: production CSP is not hash-locked"; exit 1; }
+          echo "$CSP" | grep -q "script-src 'self' 'sha256" && echo "OK: hash-locked CSP live"

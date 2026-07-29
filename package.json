@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "geo:probe": "node scripts/geo-probe.mjs",
-    "seo:indexnow": "node scripts/indexnow-ping.mjs"
+    "seo:indexnow": "node scripts/indexnow-ping.mjs",
+    "deploy:aplus": "wsl -e bash scripts/deploy-aplus.sh"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
