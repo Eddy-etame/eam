@@ -31,8 +31,11 @@ import type { Dictionary } from '@/i18n/dictionaries'
  * ←/→ jump straight to a room's open state. Visited rooms seal their panels
  * with a gold tick (localStorage).
  *
- * Touch / narrow / reduced-motion: a vertical journey — each full-bleed band
- * is followed by its room digest (rundown + shots) in normal document flow.
+ * Touch / narrow: the same idea rotated vertical, on NATURAL scroll (no pin,
+ * no Lenis) — each band clip-opens from its rounded rect to full bleed around
+ * viewport centre, reveals its copy, then seals shut as it exits; a fixed
+ * chip carries the 01/16 counter + gold hairline, and #salle-<slug> links
+ * land on the open band. Reduced-motion: the static vertical crossing.
  * Both modes keep every word and link in the server-rendered DOM (SEO), plus
  * the plain <ol> index at the end.
  */
@@ -192,26 +195,136 @@ export function MicrodidactTraversee({
       if (!root) return
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-      // ── Vertical crossing — gentle parallax only when motion is allowed ──
+      // ── Vertical traversée — the rooms open under the thumb ─────────────
+      // Natural touch scroll, zero pin: each band scrubs its OWN crossing —
+      // rounded rect → full bleed around viewport centre → sealed again on
+      // exit. clip-path + transforms only (PRM keeps the static CSS rect).
       if (!enhanced) {
         if (reduce) return
-        gsap.utils.toArray<HTMLElement>('[data-tv-media]', root).forEach((media) => {
-          gsap.fromTo(
-            media,
-            { yPercent: -5 },
-            {
-              yPercent: 5,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: media.parentElement,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: true,
+
+        const bands = gsap.utils.toArray<HTMLElement>('[data-tv-band]', root)
+        const seq = root.querySelector<HTMLElement>('[data-tv-seq]')
+        const chip = root.querySelector<HTMLElement>('[data-tv-chip]')
+        if (!bands.length || bands.length !== projects.length) return
+
+        // The closed rect mirrors the CSS default (16px / sm:24px gutters).
+        const gutter = window.matchMedia('(min-width: 640px)').matches ? 24 : 16
+        const CLOSED = `inset(0px ${gutter}px 0px ${gutter}px round 12px)`
+        const OPEN = 'inset(0px 0px 0px 0px round 0px)'
+
+        let active = -1
+        let urlTimer: ReturnType<typeof setTimeout> | undefined
+        // Same debounce contract as the pinned journey below: never write the
+        // URL mid-scroll — a pending <Link> navigation must commit first.
+        const writeUrl = (hash: string | null) => {
+          clearTimeout(urlTimer)
+          urlTimer = setTimeout(() => {
+            try {
+              history.replaceState(null, '', hash ?? location.pathname + location.search)
+            } catch {
+              /* some browsers rate-limit replaceState — cosmetic only */
+            }
+          }, 250)
+        }
+
+        bands.forEach((band, i) => {
+          const project = projects[i]
+          const media = band.querySelector<HTMLElement>('[data-tv-media]')
+          const ring = band.querySelector<HTMLElement>('[data-tv-ring]')
+          const reveals = band.querySelectorAll<HTMLElement>('[data-tv-reveal]')
+
+          // Progress 0.42–0.58 = fully open, which lands at viewport centre
+          // for a 70vh band under this start/end pair.
+          const tl = gsap.timeline({
+            defaults: { ease: 'none' },
+            scrollTrigger: {
+              trigger: band,
+              start: 'top 85%',
+              end: 'bottom 15%',
+              scrub: true,
+              // will-change only while this band actually animates
+              onToggle: (self) => {
+                gsap.set(band, { willChange: self.isActive ? 'clip-path' : 'auto' })
+                if (media) gsap.set(media, { willChange: self.isActive ? 'transform' : 'auto' })
+              },
+              onUpdate: (self) => {
+                if (self.progress > 0.3 && self.progress < 0.72 && active !== i) {
+                  active = i
+                  setIdx(i + 1)
+                  writeUrl(`#salle-${project.slug}`)
+                }
               },
             },
-          )
+          })
+
+          // [opening] rounded rect → full bleed; the media settles from a zoom
+          tl.fromTo(band, { clipPath: CLOSED }, { clipPath: OPEN, duration: 0.42, ease: 'eam-silk' }, 0)
+          if (media) {
+            tl.fromTo(
+              media,
+              { scale: 1.12, yPercent: -4 },
+              { scale: 1, yPercent: 0, duration: 0.45, ease: 'eam-silk' },
+              0,
+            )
+          }
+          if (ring) tl.to(ring, { autoAlpha: 0, duration: 0.24 }, 0.12)
+          if (reveals.length) {
+            tl.from(
+              reveals,
+              { autoAlpha: 0, y: 26, duration: 0.2, stagger: 0.055, ease: 'eam-reveal' },
+              0.16,
+            )
+          }
+          tl.call(() => markSeen(project.slug), [], 0.5)
+          // [closing] full bleed → sealed rect as the band leaves overhead
+          tl.to(band, { clipPath: CLOSED, duration: 0.42, ease: 'eam-silk' }, 0.58)
+          if (media) tl.to(media, { scale: 1.08, yPercent: 4, duration: 0.42, ease: 'eam-silk' }, 0.58)
+          if (ring) tl.to(ring, { autoAlpha: 1, duration: 0.24 }, 0.72)
         })
-        return
+
+        // Instrument chip — counter + gold hairline, alive only in-sequence.
+        if (seq && chip && progressRef.current) {
+          gsap.set(progressRef.current, { scaleX: 0, transformOrigin: 'left center' })
+          const progressTo = gsap.quickSetter(progressRef.current, 'scaleX')
+          ScrollTrigger.create({
+            trigger: seq,
+            start: 'top 60%',
+            end: 'bottom 60%',
+            onUpdate: (self) => progressTo(self.progress),
+            onToggle: (self) => {
+              gsap.to(chip, {
+                autoAlpha: self.isActive ? 1 : 0,
+                duration: 0.35,
+                ease: 'eam-snap',
+                overwrite: 'auto',
+              })
+              if (!self.isActive) {
+                active = -1
+                writeUrl(null)
+              }
+            },
+          })
+        }
+
+        // #salle-<slug> deep links land with the band centred (fully open).
+        const jumpToHash = () => {
+          const m = /^#salle-(.+)$/.exec(location.hash)
+          if (!m) return
+          const target = bands[projects.findIndex((p) => p.slug === m[1])]
+          if (!target) return
+          const r = target.getBoundingClientRect()
+          window.scrollTo({
+            top: window.scrollY + r.top - (window.innerHeight - r.height) / 2,
+            behavior: 'auto',
+          })
+        }
+        requestAnimationFrame(() => requestAnimationFrame(jumpToHash))
+        window.addEventListener('hashchange', jumpToHash)
+
+        return () => {
+          clearTimeout(urlTimer)
+          window.removeEventListener('hashchange', jumpToHash)
+        }
       }
 
       // ── THE JOURNEY — one pinned master timeline ─────────────────────────
@@ -504,9 +617,9 @@ export function MicrodidactTraversee({
         </div>
       ) : (
         /* ── Vertical journey — band + room digest per project ──────────── */
-        <div className="flex flex-col gap-16 px-0 py-4 sm:gap-24">
+        <div data-tv-seq className="flex flex-col gap-16 py-4 sm:gap-24">
           {projects.map((project, i) => (
-            <article key={project.slug} className="px-4 sm:px-6">
+            <article key={project.slug} id={`salle-${project.slug}`}>
               <Band
                 project={project}
                 locale={locale}
@@ -514,9 +627,33 @@ export function MicrodidactTraversee({
                 i={i}
                 seen={seen.has(project.slug)}
               />
-              <RoomDigest project={project} locale={locale} dict={dict} />
+              <div className="px-4 sm:px-6">
+                <RoomDigest project={project} locale={locale} dict={dict} />
+              </div>
             </article>
           ))}
+
+          {/* The crossing's instruments, phone edition — counter + hairline.
+              Hidden until the sequence trigger wakes it (PRM: never shows). */}
+          <div
+            data-tv-chip
+            aria-hidden
+            /* w-max: fixed-position shrink-to-fit under-measures this flex row
+               on mobile Chromium and wraps the counter — max-content is exact */
+            className="pointer-events-none fixed bottom-5 left-4 z-40 flex w-max items-center gap-4 rounded-full border border-line/60 bg-black/45 px-4 py-2.5 backdrop-blur-sm"
+            style={{ opacity: 0, visibility: 'hidden' }}
+          >
+            <span className="text-mono-label whitespace-nowrap text-gold [font-variant-numeric:tabular-nums]">
+              {pad(idx)} / {pad(projects.length)}
+            </span>
+            <span className="hairline relative w-14">
+              <span
+                ref={progressRef}
+                className="absolute inset-0 bg-gold"
+                style={{ transform: 'scaleX(0)', transformOrigin: 'left center' }}
+              />
+            </span>
+          </div>
         </div>
       )}
 
@@ -566,6 +703,7 @@ function Stage({
   numeralAttr,
   sizes,
   seen,
+  seenClass = 'right-4 top-4',
   mobileThumb,
 }: {
   project: Project
@@ -575,6 +713,8 @@ function Stage({
   numeralAttr?: string
   sizes: string
   seen: boolean
+  /** Tick position — Band pulls it inside its closed clip rect. */
+  seenClass?: string
   /** Phone-shaped capture; when set, shown below `sm` and the desktop thumb above. */
   mobileThumb?: string | null
 }) {
@@ -647,7 +787,7 @@ function Stage({
       {seen && (
         <span
           aria-hidden
-          className="absolute right-4 top-4 z-10 grid size-7 place-items-center rounded-full border border-gold/50 bg-black/45 text-xs text-gold backdrop-blur-sm"
+          className={`absolute ${seenClass} z-10 grid size-7 place-items-center rounded-full border border-gold/50 bg-black/45 text-xs text-gold backdrop-blur-sm`}
         >
           ✓
         </span>
@@ -903,7 +1043,12 @@ function Band({
       data-cursor="voir"
       className="group block"
     >
-      <div className="relative h-[70vh] overflow-hidden rounded-xl border border-line">
+      {/* The closed rect is CSS (matches the old px-4 card exactly), so PRM /
+          no-JS keep today's static look; the scrub opens it to full bleed. */}
+      <div
+        data-tv-band
+        className="relative h-[70vh] overflow-hidden [clip-path:inset(0px_16px_0px_16px_round_12px)] sm:[clip-path:inset(0px_24px_0px_24px_round_12px)]"
+      >
         <Stage
           project={project}
           locale={locale}
@@ -911,16 +1056,26 @@ function Band({
           mediaAttr="data-tv-media"
           sizes="100vw"
           seen={seen}
+          seenClass="right-8 top-4 sm:right-10"
           mobileThumb={mobileThumbOf(project)}
         />
-        <div className={`absolute inset-x-0 bottom-0 p-6 sm:p-9 ${i % 2 === 0 ? '' : 'text-right'}`}>
-          <p className="text-mono-label text-white/75">
+        {/* The frame — drawn on the closed rect, dissolves while open */}
+        <span
+          data-tv-ring
+          aria-hidden
+          className="pointer-events-none absolute inset-x-4 inset-y-0 z-10 rounded-xl border border-line sm:inset-x-6"
+        />
+        <div className={`absolute inset-x-4 bottom-0 p-6 sm:inset-x-6 sm:p-9 ${i % 2 === 0 ? '' : 'text-right'}`}>
+          <p data-tv-reveal className="text-mono-label text-white/75">
             {categoryLabels[project.category][locale]} · {project.year}
           </p>
-          <h3 className="mt-2.5 font-display text-[clamp(2rem,8vw,3.25rem)] leading-[1.08] text-white">
+          <h3
+            data-tv-reveal
+            className="mt-2.5 font-display text-[clamp(2rem,8vw,3.25rem)] leading-[1.08] text-white"
+          >
             {project.name}
           </h3>
-          <p className="text-mono-label mt-4 inline-flex items-center gap-2 text-gold-bright">
+          <p data-tv-reveal className="text-mono-label mt-4 inline-flex items-center gap-2 text-gold-bright">
             {dict.common.viewCase} <span aria-hidden>→</span>
           </p>
         </div>

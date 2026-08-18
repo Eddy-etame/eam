@@ -10,6 +10,7 @@ import { PricingBands } from '@/components/sections/PricingBands'
 import { CopyEmail } from '@/components/ui/CopyEmail'
 import { siteConfig } from '@/lib/site.config'
 import { team } from '@/lib/team'
+import { PageEntrance } from '@/components/ui/PageEntrance'
 
 export async function generateMetadata({
   params,
@@ -48,14 +49,16 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
           {/* min-w-0 on both columns: grid items default to min-width auto, so one
               long unbreakable token (e.g. the email) would force both columns wide */}
           <div className="min-w-0">
-            <p className="text-mono-label text-gold/85">{dict.contact.eyebrow}</p>
-            <h1 className="mt-5 text-4xl">{dict.contact.title}</h1>
-            <p className="mt-6 max-w-md text-lg text-muted">{dict.contact.lead}</p>
+            <PageEntrance>
+              <p data-pe="eyebrow" className="text-mono-label text-gold/85">{dict.contact.eyebrow}</p>
+              <h1 data-pe="title" className="mt-5 text-4xl">{dict.contact.title}</h1>
+              <p data-pe="lead" className="mt-6 max-w-md text-lg text-muted">{dict.contact.lead}</p>
 
-            <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-gold/35 px-4 py-2 text-mono-label text-gold">
-              <span aria-hidden className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold" />
-              {dict.contact.responseChip}
-            </p>
+              <p data-pe="cta" className="mt-6 inline-flex items-center gap-2 rounded-full border border-gold/35 px-4 py-2 text-mono-label text-gold">
+                <span aria-hidden className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold" />
+                {dict.contact.responseChip}
+              </p>
+            </PageEntrance>
 
             <div className="mt-10">
               <p className="text-mono-label text-faint">{dict.contact.emailLabel}</p>

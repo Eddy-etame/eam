@@ -11,6 +11,7 @@ import { Reveal } from '@/components/ui/Reveal'
 import { Magnetic } from '@/components/ui/Magnetic'
 import geoQueries from '@/data/geo-queries.json'
 import geoLog from '@/data/geo-log.json'
+import { PageEntrance } from '@/components/ui/PageEntrance'
 
 /**
  * /preuves — the receipts page (Vector B's blade). Renders the probe log
@@ -92,9 +93,11 @@ export default async function PreuvesPage({ params }: { params: Promise<{ locale
       />
       <div className="mx-auto max-w-[1640px]">
         <header className="max-w-3xl">
-          <p className="text-mono-label text-gold/85">{p.eyebrow}</p>
-          <h1 className="mt-5 text-4xl">{p.title}</h1>
-          <p className="mt-6 text-lg leading-relaxed text-muted">{p.lead}</p>
+          <PageEntrance>
+            <p data-pe="eyebrow" className="text-mono-label text-gold/85">{p.eyebrow}</p>
+            <h1 data-pe="title" className="mt-5 text-4xl">{p.title}</h1>
+            <p data-pe="lead" className="mt-6 text-lg leading-relaxed text-muted">{p.lead}</p>
+          </PageEntrance>
         </header>
 
         {/* ── The method — four honest steps ──────────────────────────────── */}

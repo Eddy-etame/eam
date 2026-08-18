@@ -42,9 +42,9 @@ export const fr = {
   hero: {
     eyebrow: "Studio d’ingénierie web · depuis 2024",
     titleLines: ['Nous forgeons', 'des marques', 'qui règnent.'],
-    subtitle: `Trois ingénieurs. ${PROJECT_COUNT} projets livrés — sites, applications métier et SEO/GEO mesurés, de Toulouse à Casablanca.`,
+    subtitle: `${PROJECT_COUNT} projets livrés, de Toulouse à Casablanca — par trois ingénieurs qui vous répondent eux-mêmes. La prochaine marque qui règne peut être la vôtre.`,
     ctaPrimary: 'Voir nos réalisations',
-    ctaSecondary: 'Démarrer un projet',
+    ctaSecondary: 'Obtenir mon devis gratuit',
     riskNote: 'Devis gratuit sous 24-48 h · sans engagement',
     scrollHint: 'Défiler',
   },
@@ -105,7 +105,7 @@ export const fr = {
       },
       {
         title: 'SEO & GEO',
-        description: 'Première page Google et citations dans ChatGPT, Perplexity et les AI Overviews.',
+        description: 'Visibilité travaillée sur Google et dans les réponses IA — et mesurée : nos relevés de citation sont publiés, réussites comme absences.',
       },
       {
         title: 'Identité & design',
@@ -294,7 +294,7 @@ export const fr = {
   },
   /** Conversion bands — the single ask of each surface (consumed by ConversionBand & the room CTA rows). */
   conversion: {
-    button: 'Démarrer un projet',
+    button: 'Obtenir mon devis gratuit',
     secondary: "Voir l’atelier",
     roomAsk: 'Un projet comme celui-ci ?',
     case: {
@@ -356,7 +356,7 @@ export const fr = {
     cta: {
       title: "Le prochain chapitre s’écrit avec vous.",
       text: "L’exigence forgée chez Microdidact vit désormais sous le blason EAM. Parlez-nous de votre projet.",
-      button: 'Démarrer un projet',
+      button: 'Obtenir mon devis gratuit',
     },
     back: 'Retour au registre',
   },
@@ -446,7 +446,7 @@ export const fr = {
         "Boxing Center est un client direct d’EAM — un site immersif par salle, la boutique officielle et les outils du réseau, forgés sous notre blason.",
       title: 'Votre marque mérite une arène.',
       text: "Cinq sites en ligne, une boutique, des outils métier — zéro duplication. Parlez-nous de votre projet : nous forgeons à cette échelle.",
-      button: 'Démarrer un projet',
+      button: 'Obtenir mon devis gratuit',
     },
     back: 'Retour au registre',
   },

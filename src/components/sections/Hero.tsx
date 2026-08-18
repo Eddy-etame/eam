@@ -17,11 +17,15 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const root = useRef<HTMLElement>(null)
   const { hero } = dict
   const [enable3D, setEnable3D] = useState(false)
+  const [goldDust, setGoldDust] = useState(false)
 
   useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const small = window.matchMedia('(max-width: 767px)').matches
-    if (!reduce && !small && canRunHeavyGL()) setEnable3D(true)
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    // Capability gate, not viewport gate — capable phones get the field too
+    // (GoldField self-selects a phone preset). Desktop path is unchanged.
+    if (canRunHeavyGL()) setEnable3D(true)
+    // Phones the gate refuses still deserve atmosphere: CSS gold dust, no GL.
+    else if (window.matchMedia('(max-width: 767px)').matches) setGoldDust(true)
   }, [])
 
   useGSAP(
@@ -117,9 +121,12 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
               'radial-gradient(ellipse 75% 55% at 50% -5%, rgb(13 31 60 / 0.75), transparent 70%)',
           }}
         />
+        {/* Mobile: top-right watermark so the crest parallax animates a visible
+            element (the section's overflow-hidden clips the right-edge bleed).
+            lg: values reproduce the previous desktop rendering exactly. */}
         <div
           data-hero-crest
-          className="absolute -right-[6%] top-1/2 hidden h-[150%] w-[55%] -translate-y-1/2 bg-gold/[0.05] lg:block"
+          className="absolute -right-[14%] -top-[2%] h-[80vw] w-[80vw] bg-gold/[0.04] lg:-right-[6%] lg:top-1/2 lg:h-[150%] lg:w-[55%] lg:-translate-y-1/2 lg:bg-gold/[0.05]"
           style={{
             WebkitMaskImage: 'url(/logo-eam.png)',
             maskImage: 'url(/logo-eam.png)',
@@ -137,6 +144,9 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <HeroCanvas />
         </div>
+      )}
+      {goldDust && (
+        <div aria-hidden className="hero-dust pointer-events-none absolute inset-0 -z-10" />
       )}
 
       <div data-hero-body>

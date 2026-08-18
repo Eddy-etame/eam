@@ -10,6 +10,7 @@ import { CountUp } from '@/components/ui/CountUp'
 import { FAQ } from '@/components/sections/FAQ'
 import { ContactCTA } from '@/components/sections/ContactCTA'
 import { TeamSection } from '@/components/sections/TeamSection'
+import { PageEntrance } from '@/components/ui/PageEntrance'
 
 export async function generateMetadata({
   params,
@@ -51,16 +52,18 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       <div data-chapter="heraldic">
       <section className="px-6 pt-36 md:px-12 md:pt-44 lg:px-20">
         <div className="mx-auto max-w-[1640px]">
-          <p className="text-mono-label text-gold/85">{about.eyebrow}</p>
-          <h1 className="mt-5 max-w-4xl text-4xl">{about.title}</h1>
-          <p className="mt-8 max-w-3xl text-2xl leading-relaxed text-ink">{about.lead}</p>
-          <div className="mt-6 max-w-2xl">
-            {about.body.map((paragraph) => (
-              <p key={paragraph} className="mt-4 leading-relaxed text-muted">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+          <PageEntrance>
+            <p data-pe="eyebrow" className="text-mono-label text-gold/85">{about.eyebrow}</p>
+            <h1 data-pe="title" className="mt-5 max-w-4xl text-4xl">{about.title}</h1>
+            <p data-pe="lead" className="mt-8 max-w-3xl text-2xl leading-relaxed text-ink">{about.lead}</p>
+            <div data-pe="lead" className="mt-6 max-w-2xl">
+              {about.body.map((paragraph) => (
+                <p key={paragraph} className="mt-4 leading-relaxed text-muted">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </PageEntrance>
         </div>
       </section>
 

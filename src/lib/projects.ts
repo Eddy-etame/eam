@@ -704,8 +704,8 @@ export const projects: Project[] = [
     name: 'JCBoyang Conseil',
     client: 'JCBoyang Conseil',
     tagline: {
-      fr: 'Croissance commerciale & transformation.',
-      en: 'Commercial growth & transformation.',
+      fr: 'La méthode Vendeur Attitude™, portée en ligne.',
+      en: 'The Vendeur Attitude™ method, carried online.',
     },
     description: {
       fr: "Site complet pour le cabinet de Jean-Christophe Boyang-Tsang — méthode Vendeur Attitude™ à trois niveaux de certification, séminaires Mindset, témoignages et prise de rendez-vous en ligne.",
@@ -726,12 +726,12 @@ export const projects: Project[] = [
         en: 'A firm with no web presence — client acquisition via network only.',
       },
       solution: {
-        fr: 'Site institutionnel sobre avec présentation des offres et formulaire de contact.',
-        en: 'A clean institutional site presenting the offer with a contact form.',
+        fr: "Le cabinet mis au niveau de sa méthode : les trois niveaux de certification Vendeur Attitude™ exposés clairement, séminaires Mindset, témoignages et prise de rendez-vous en ligne.",
+        en: 'The firm brought up to the level of its method: the three Vendeur Attitude™ certification levels laid out clearly, Mindset seminars, testimonials and online booking.',
       },
       outcome: {
-        fr: 'Première vitrine digitale du cabinet. Une base pour des campagnes LinkedIn.',
-        en: "The firm's first digital storefront. A base for LinkedIn campaigns.",
+        fr: "« Les demandes arrivent par le site » — les mots signés de son fondateur, M. Boyang.",
+        en: '“Enquiries now come through the site” — the signed words of its founder, M. Boyang.',
       },
     },
   },

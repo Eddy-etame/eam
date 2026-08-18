@@ -567,3 +567,71 @@
   .team-fog, .team-iri, .team-grain { animation: none !important; }
   .team-figure { transition: none !important; }
 }
+
+/*═══════════════════════════════════════════════════════════════════════════
+  MOBILE HERO ATMOSPHERE  (self-contained block — hero-mobile build)
+  Two pieces: (1) .hero-dust — zero-GL gold-dust stand-in for the GoldField on
+  phones that fail the canRunHeavyGL gate; (2) autonomous foil sweep for
+  (hover:none) devices, which have no cursor to drive the pointer sweep.
+  Nothing below alters desktop rendering.
+═══════════════════════════════════════════════════════════════════════════*/
+
+/* Gold dust — two tiled dot layers, oversized so the drift never exposes an
+   edge, drifting at different speeds/directions for the field's depth. Colors
+   are theme tokens so the dust survives paper/mono modes like the crest. */
+.hero-dust { overflow: hidden; }
+.hero-dust::before,
+.hero-dust::after {
+  content: '';
+  position: absolute;
+  inset: -14%;
+  background-repeat: repeat;
+  pointer-events: none;
+  will-change: transform;
+}
+.hero-dust::before {
+  /* far layer — small, dim, slow */
+  opacity: 0.3;
+  background-image:
+    radial-gradient(1px 1px at 13% 21%, var(--c-gold-dim) 40%, transparent 100%),
+    radial-gradient(1px 1px at 67% 9%, var(--c-gold) 40%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 41% 63%, var(--c-gold-dim) 40%, transparent 100%),
+    radial-gradient(1px 1px at 86% 47%, var(--c-gold) 40%, transparent 100%),
+    radial-gradient(1px 1px at 29% 88%, var(--c-gold-dim) 40%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 74% 76%, var(--c-gold) 40%, transparent 100%);
+  background-size: 230px 230px;
+  animation: eam-dust-far 90s linear infinite alternate;
+}
+.hero-dust::after {
+  /* near layer — fewer, brighter, faster, drifting the other way */
+  opacity: 0.42;
+  background-image:
+    radial-gradient(2px 2px at 22% 34%, var(--c-gold-bright) 40%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 58% 71%, var(--c-gold) 40%, transparent 100%),
+    radial-gradient(2px 2px at 81% 18%, var(--c-gold-bright) 40%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 9% 79%, var(--c-gold) 40%, transparent 100%);
+  background-size: 320px 320px;
+  animation: eam-dust-near 60s linear infinite alternate;
+}
+@keyframes eam-dust-far {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-3%, -4%, 0); }
+}
+@keyframes eam-dust-near {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(3%, -6%, 0) scale(1.06); }
+}
+/* Reduced motion keeps today's static hero (the JS gate never mounts .hero-dust
+   under reduce; this is the belt to that suspender). */
+@media (prefers-reduced-motion: reduce) {
+  .hero-dust { display: none; }
+}
+
+/* Foil headline words — on touch the gold breathes on its own (same
+   foil-shimmer keyframes the marquee foil uses); (hover:hover) devices keep
+   the pointer-driven sweep untouched. */
+@media (hover: none) {
+  [data-foil-word] {
+    animation: foil-shimmer 9s var(--ease-silk) infinite;
+  }
+}

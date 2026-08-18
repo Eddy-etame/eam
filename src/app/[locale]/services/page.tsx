@@ -10,6 +10,7 @@ import { servicePages } from '@/lib/services-pages'
 import { PricingBands } from '@/components/sections/PricingBands'
 import { ConversionBand } from '@/components/ui/ConversionBand'
 import { Reveal } from '@/components/ui/Reveal'
+import { PageEntrance } from '@/components/ui/PageEntrance'
 
 export async function generateMetadata({
   params,
@@ -51,9 +52,11 @@ export default async function ServicesHubPage({
       />
       <div className="mx-auto max-w-[1640px]">
         <header className="max-w-3xl">
-          <p className="text-mono-label text-gold/85">{hub.eyebrow}</p>
-          <h1 className="mt-5 text-4xl">{hub.title}</h1>
-          <p className="mt-6 text-lg leading-relaxed text-muted">{hub.lead}</p>
+          <PageEntrance>
+            <p data-pe="eyebrow" className="text-mono-label text-gold/85">{hub.eyebrow}</p>
+            <h1 data-pe="title" className="mt-5 text-4xl">{hub.title}</h1>
+            <p data-pe="lead" className="mt-6 text-lg leading-relaxed text-muted">{hub.lead}</p>
+          </PageEntrance>
         </header>
 
         <div className="mt-14 grid gap-8 md:grid-cols-2">

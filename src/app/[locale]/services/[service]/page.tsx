@@ -14,6 +14,7 @@ import { siteConfig } from '@/lib/site.config'
 import { Reveal } from '@/components/ui/Reveal'
 import { Magnetic } from '@/components/ui/Magnetic'
 import { ConversionBand } from '@/components/ui/ConversionBand'
+import { PageEntrance } from '@/components/ui/PageEntrance'
 
 export const dynamicParams = false
 
@@ -101,12 +102,12 @@ export default async function ServicePage({
         </nav>
 
         <header className="mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-end">
-          <div>
-            <p className="text-mono-label text-gold/85">{page.name[locale]}</p>
-            <h1 className="mt-4 max-w-3xl text-4xl md:text-5xl">{page.h1[locale]}</h1>
-            <p className="mt-6 max-w-2xl text-xl leading-relaxed text-muted">{page.lead[locale]}</p>
+          <PageEntrance>
+            <p data-pe="eyebrow" className="text-mono-label text-gold/85">{page.name[locale]}</p>
+            <h1 data-pe="title" className="mt-4 max-w-3xl text-4xl md:text-5xl">{page.h1[locale]}</h1>
+            <p data-pe="lead" className="mt-6 max-w-2xl text-xl leading-relaxed text-muted">{page.lead[locale]}</p>
 
-            <div className="mt-9 flex flex-wrap items-center gap-4">
+            <div data-pe="cta" className="mt-9 flex flex-wrap items-center gap-4">
               <Magnetic>
                 <Link
                   href={contactHref}
@@ -127,8 +128,8 @@ export default async function ServicePage({
                 {sp.whatsappCta} <span aria-hidden>↗</span>
               </a>
             </div>
-            <p className="text-mono-label mt-4 text-faint">{sp.quoteNote}</p>
-          </div>
+            <p data-pe="cta" className="text-mono-label mt-4 text-faint">{sp.quoteNote}</p>
+          </PageEntrance>
 
           {/* The floor — honest anchor, never a cage */}
           <Reveal dir="right">

@@ -38,9 +38,9 @@ export const en = {
   hero: {
     eyebrow: 'Web engineering studio · since 2024',
     titleLines: ['We forge', 'brands', 'that reign.'],
-    subtitle: `Three engineers. ${PROJECT_COUNT} projects shipped — sites, business applications and measured SEO/GEO, from Toulouse to Casablanca.`,
+    subtitle: `${PROJECT_COUNT} projects shipped, from Toulouse to Casablanca — by three engineers who answer you themselves. The next reigning brand could be yours.`,
     ctaPrimary: 'See our work',
-    ctaSecondary: 'Start a project',
+    ctaSecondary: 'Get my free quote',
     riskNote: 'Free quote in 24-48h · no commitment',
     scrollHint: 'Scroll',
   },
@@ -101,7 +101,7 @@ export const en = {
       },
       {
         title: 'SEO & GEO',
-        description: 'Page-one Google and citations in ChatGPT, Perplexity and AI Overviews.',
+        description: 'Visibility built on Google and inside AI answers — and measured: our citation logs are public, hits and misses alike.',
       },
       {
         title: 'Brand & design',
@@ -290,7 +290,7 @@ export const en = {
   },
   /** Conversion bands — the single ask of each surface (consumed by ConversionBand & the room CTA rows). */
   conversion: {
-    button: 'Start a project',
+    button: 'Get my free quote',
     secondary: 'Visit the studio',
     roomAsk: 'A project like this one?',
     case: {
@@ -352,7 +352,7 @@ export const en = {
     cta: {
       title: 'The next chapter is written with you.',
       text: 'The standard forged at Microdidact now lives under the EAM crest. Tell us about your project.',
-      button: 'Start a project',
+      button: 'Get my free quote',
     },
     back: 'Back to the registry',
   },
@@ -442,7 +442,7 @@ export const en = {
         'Boxing Center is a direct EAM client — one immersive site per gym, the official store and the network tools, forged under our crest.',
       title: 'Your brand deserves an arena.',
       text: 'Five sites live, one store, real business tools — zero duplication. Tell us about your project: we forge at this scale.',
-      button: 'Start a project',
+      button: 'Get my free quote',
     },
     back: 'Back to the registry',
   },

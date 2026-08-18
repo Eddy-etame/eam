@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 
 /**
@@ -12,6 +12,7 @@ import * as THREE from 'three'
  */
 
 const GRID = 140 // 140 x 140 ≈ 19.6k points, one buffer, one draw call
+const PHONE_GRID = 72 // 72 x 72 ≈ 5.2k points — same field, phone-affordable
 const EXTENT = 34 // world size of the field
 
 const vertexShader = /* glsl */ `
@@ -65,32 +66,49 @@ export function GoldField() {
   const points = useRef<THREE.Points>(null)
   const material = useRef<THREE.ShaderMaterial>(null)
   const mouse = useRef({ x: 0, y: 0 })
+  const setDpr = useThree((s) => s.setDpr)
+
+  // Phone preset — decided once per mount (client-only component; a viewport
+  // that crosses the breakpoint remounts the whole canvas anyway).
+  const phone = useMemo(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches,
+    [],
+  )
+  const grid = phone ? PHONE_GRID : GRID
 
   const { positions, seeds } = useMemo(() => {
-    const positions = new Float32Array(GRID * GRID * 3)
-    const seeds = new Float32Array(GRID * GRID)
+    const positions = new Float32Array(grid * grid * 3)
+    const seeds = new Float32Array(grid * grid)
     let i = 0
-    for (let x = 0; x < GRID; x++) {
-      for (let z = 0; z < GRID; z++) {
-        positions[i * 3] = (x / (GRID - 1) - 0.5) * EXTENT
+    for (let x = 0; x < grid; x++) {
+      for (let z = 0; z < grid; z++) {
+        positions[i * 3] = (x / (grid - 1) - 0.5) * EXTENT
         positions[i * 3 + 1] = 0
-        positions[i * 3 + 2] = (z / (GRID - 1) - 0.5) * EXTENT
+        positions[i * 3 + 2] = (z / (grid - 1) - 0.5) * EXTENT
         seeds[i] = Math.random()
         i++
       }
     }
     return { positions, seeds }
-  }, [])
+  }, [grid])
 
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uSize: { value: 52 },
+      // Smaller sprites on phones — gl_PointSize is device px, and the phone
+      // canvas is ~4x narrower, so desktop-size motes would read as blobs.
+      uSize: { value: phone ? 40 : 52 },
       uColorA: { value: new THREE.Color('#8C6F3E') },
       uColorB: { value: new THREE.Color('#F3DCA6') },
     }),
-    [],
+    [phone],
   )
+
+  useEffect(() => {
+    // Phone dpr cap [1, 1.25] — overrides the [1, 1.8] the parent Canvas ships
+    // for desktop. Fill-rate, not vertex count, is what melts phone GPUs.
+    if (phone) setDpr(Math.min(Math.max(window.devicePixelRatio, 1), 1.25))
+  }, [phone, setDpr])
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => {

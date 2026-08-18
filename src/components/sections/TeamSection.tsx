@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import dynamic from 'next/dynamic'
-import { gsap, useGSAP } from '@/lib/gsap'
+import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
 import { team } from '@/lib/team'
 import { canRunHeavyGL } from '@/lib/quality'
 import type { Locale } from '@/i18n/config'
@@ -94,6 +94,70 @@ export function TeamSection({ locale, dict }: { locale: Locale; dict: Dictionary
     })
     return () => cleanups.forEach((c) => c())
   }, [])
+
+  // Touch devices have no cursor to lean toward, so the visitor's scroll takes
+  // its place: each band's pass through the viewport drives the same targets
+  // the pointer handler feeds — tilt, fog, shadow — leaning in on approach and
+  // settling upright at center.
+  useGSAP(
+    () => {
+      if (!window.matchMedia('(hover: none)').matches) return
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+      gsap.utils.toArray<HTMLElement>('[data-band]').forEach((band, i) => {
+        const tilt = band.querySelector<HTMLElement>('[data-tilt]')
+        if (!tilt) return
+        const fog = band.querySelector<HTMLElement>('.team-fog')
+        const shadow = band.querySelector<HTMLElement>('.team-shadow')
+        // Alternate the lean with the band's left/right layout
+        const dir = i % 2 === 0 ? 1 : -1
+
+        let drift: gsap.core.Tween | null = null
+        if (fog) {
+          // The CSS drift keyframes own `transform`/`opacity` and would
+          // override GSAP's inline values — take the drift over so scroll
+          // can steer xPercent underneath it.
+          gsap.set(fog, { animation: 'none' })
+          drift = gsap.fromTo(
+            fog,
+            { yPercent: 0, scale: 1.02, opacity: 0.8 },
+            {
+              yPercent: -2,
+              scale: 1.08,
+              opacity: 1,
+              duration: 15,
+              ease: 'eam-silk',
+              repeat: -1,
+              yoyo: true,
+              paused: true,
+            },
+          )
+        }
+        // Normalize the CSS translateX(-50%) so scaleX breathing composes on top
+        if (shadow) gsap.set(shadow, { xPercent: -50, x: 0 })
+
+        const ry = gsap.quickTo(tilt, 'rotationY', { duration: 0.7, ease: 'power3' })
+        const rx = gsap.quickTo(tilt, 'rotationX', { duration: 0.7, ease: 'power3' })
+        const fx = fog ? gsap.quickTo(fog, 'xPercent', { duration: 0.9, ease: 'power3' }) : null
+        const sw = shadow ? gsap.quickTo(shadow, 'scaleX', { duration: 0.9, ease: 'power3' }) : null
+
+        ScrollTrigger.create({
+          trigger: band,
+          start: 'top bottom',
+          end: 'bottom top',
+          onToggle: (self) => drift?.[self.isActive ? 'play' : 'pause'](),
+          onUpdate: (self) => {
+            const lean = self.progress * 2 - 1 // -1 entering → 0 centered → 1 leaving
+            ry(lean * 5.5 * dir)
+            rx(lean * -3.5)
+            fx?.(lean * -6 * dir)
+            sw?.(1 + (1 - Math.abs(lean)) * 0.1) // widest underfoot at center
+          },
+        })
+      })
+    },
+    { scope: root },
+  )
 
   return (
     <section
