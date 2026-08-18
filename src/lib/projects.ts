@@ -56,10 +56,12 @@ export interface Project {
 
 export const projects: Project[] = [
   // ── SPORT & BIEN-ÊTRE ─────────────────────────────────────────────────────
-  // Boxing Center maquettes are IN PRODUCTION (not yet deployed) — liveUrl '#'
-  // hides the "visit" link. boxingcenter.fr is the legacy WordPress site EAM is
-  // REPLACING, not our build. No client metrics invented. Confirm with Eddy:
-  // deployed URLs, umbrella-vs-per-salle, and whether to show all 5 salles.
+  // Boxing Center ecosystem is LIVE (verified 2026-07-29): five salle sites on
+  // their own deployments + Box Plus boutique + the coach-planning app
+  // (planning-bc.vercel.app) + the «séance d'essai offerte» funnel
+  // (bc-seance-offerte.vercel.app). boxingcenter.fr remains the legacy
+  // WordPress site being replaced. The umbrella keeps liveUrl '#' — it IS the
+  // world door, each piece carries its own link. No client metrics invented.
   {
     slug: 'boxing-center',
     name: 'Boxing Center',
@@ -69,8 +71,8 @@ export const projects: Project[] = [
       en: 'Five gyms, one store. One obsession.',
     },
     description: {
-      fr: "Refonte digitale du réseau Boxing Center (Portet, États-Unis, Minimes, St-Cyprien, Ramonville) — un site immersif WebGL par salle, chacun forgé à partir du logo maison (marine + rouge), jamais dupliqué — plus la boutique en ligne officielle Box Plus (Stripe, passerelle PrestaShop, sync Deciplus).",
-      en: 'A digital rebuild of the Boxing Center network (Portet, États-Unis, Minimes, St-Cyprien, Ramonville) — one immersive WebGL site per gym, each forged from the house logo (navy + red), never duplicated — plus the official Box Plus online store (Stripe, PrestaShop bridge, Deciplus sync).',
+      fr: "Refonte digitale du réseau Boxing Center — cinq sites de salle immersifs en ligne (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), jamais dupliqués, la boutique officielle Box Plus (Stripe, passerelle PrestaShop, sync Deciplus), le planning des coachs et le tunnel « séance d'essai offerte ».",
+      en: 'A digital rebuild of the Boxing Center network — five immersive salle sites live (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), never duplicated, the official Box Plus store (Stripe, PrestaShop bridge, Deciplus sync), the coach-planning app and the free-trial funnel.',
     },
     category: 'Sport & Bien-être',
     tags: ['Sport de combat', 'Boxe', 'WebGL / 3D', 'Three.js', 'Réseau', 'Toulouse'],
@@ -90,14 +92,14 @@ export const projects: Project[] = [
         en: 'One immersive maquette per gym: a real-time 3D steel monolith, a scroll-driven flythrough of the zones, a switchable dual palette, and per-venue type and metal — all copy stays in the DOM (SEO/a11y), 3D as progressive enhancement with a no-WebGL fallback.',
       },
       outcome: {
-        fr: 'En cours de production — maquettes livrées, portage Astro/Next en cours. Aucun indicateur publié tant que les sites ne sont pas en ligne.',
-        en: 'In production — maquettes delivered, Astro/Next port under way. No metrics published until the sites are live.',
+        fr: "En ligne (2026) — les cinq sites de salle sont déployés, chacun sur sa propre plateforme, aux côtés de la boutique Box Plus, du planning des coachs et du tunnel « séance d'essai offerte ». Indicateurs clients publiés après mesure, jamais avant.",
+        en: 'Live (2026) — all five salle sites are deployed on their own platforms, alongside the Box Plus store, the coach-planning app and the free-trial funnel. Client metrics published after measurement, never before.',
       },
-      // Craft facts from the delivered maquettes — not client outcomes.
+      // Craft facts — not client outcomes.
       metrics: [
         { value: '5', label: { fr: 'salles, une identité chacune', en: 'gyms, one identity each' } },
+        { value: '8', label: { fr: 'pièces en ligne — salles, boutique, outils', en: 'live pieces — gyms, store, tools' } },
         { value: '3D', label: { fr: 'monolithe temps réel (Three.js)', en: 'real-time monolith (Three.js)' } },
-        { value: '100%', label: { fr: 'de la copie dans le DOM — SEO intact', en: 'of the copy in the DOM — SEO intact' } },
       ],
       // The five salles + the official boutique — captures of what EAM built.
       gallery: [
@@ -124,7 +126,7 @@ export const projects: Project[] = [
     },
     category: 'Sport & Bien-être',
     tags: ['Boxe', 'Sport de combat', 'WebGL / 3D', 'Immersif', 'Toulouse'],
-    liveUrl: '#',
+    liveUrl: 'https://boxing-center-portet.vercel.app',
     color: '#E8001C',
     year: 2026,
     isFeatured: true,
@@ -140,8 +142,8 @@ export const projects: Project[] = [
         en: 'A “polished-arena” showcase: matte black, silver and fight-red, Lenis-smoothed scroll, GSAP choreography and a quiet Three.js arena overlay, with a no-WebGL fallback. Every line of copy stays in the DOM; the 3D is atmosphere only. WCAG-AA legibility locked.',
       },
       outcome: {
-        fr: "Provisoire — à confirmer par EAM : une expérience immersive de niveau agence primée, pensée pour un portage Astro/Next. Repli sans-WebGL et copie DOM garantissent performance, SEO local et accessibilité.",
-        en: 'Provisional — to be confirmed by EAM: an award-tier immersive experience engineered for an Astro/Next hand-off. A no-WebGL fallback and DOM copy guarantee performance, local SEO and accessibility.',
+        fr: "En ligne (2026) sur sa propre plateforme — l'expérience « arène polie » complète, avec repli sans-WebGL et copie DOM pour la performance, le SEO local et l'accessibilité.",
+        en: 'Live (2026) on its own platform — the full “polished-arena” experience, with a no-WebGL fallback and DOM copy for performance, local SEO and accessibility.',
       },
     },
   },
@@ -159,7 +161,7 @@ export const projects: Project[] = [
     },
     category: 'Sport & Bien-être',
     tags: ['Boxe', 'Sport de combat', 'WebGL / 3D', 'Three.js', 'Toulouse'],
-    liveUrl: '#',
+    liveUrl: 'https://etas-unis.vercel.app',
     color: '#7A3D16',
     year: 2026,
     isFeatured: false,
@@ -175,8 +177,8 @@ export const projects: Project[] = [
         en: 'A steel/bronze monolith hero revealed by the cursor, then a scroll-driven flythrough of three zone-rooms (I/II/III), cross-dissolved by camera distance. A persisted bronze/steel palette toggle (no flash). Video + photo-scroll fallback when WebGL is unavailable.',
       },
       outcome: {
-        fr: "Provisoire — à confirmer par EAM : maquette v4 avec walkthrough Three.js réel et repli DOM ; feuille de route ouverte (reflets métal, easing caméra par salle, audio spatial par zone).",
-        en: 'Provisional — to be confirmed by EAM: a v4 maquette with a real Three.js walkthrough and DOM fallback; open roadmap (metal reflections, per-room camera easing, per-zone spatial audio).',
+        fr: "En ligne (2026) sur sa propre plateforme — le walkthrough Three.js réel avec repli DOM, au service de la plus grande salle de sports de combat de France.",
+        en: 'Live (2026) on its own platform — the real Three.js walkthrough with a DOM fallback, serving the largest combat-sports gym in France.',
       },
     },
   },

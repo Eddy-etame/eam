@@ -58,7 +58,7 @@ export const en = {
   proofs: {
     aria: 'Verifiable proof',
     items: [
-      { value: 'A+', label: 'security — verified headers', link: 'scan' },
+      { value: 'A+', label: 'security', link: 'scan' },
       { value: `${PROJECT_COUNT}`, label: 'projects shipped', link: 'work' },
       { value: `${LIVE_COUNT}`, label: 'sites live', link: 'work' },
       { value: '24-48h', label: 'response time', link: 'contact' },
@@ -81,8 +81,8 @@ export const en = {
       },
       boxingCenter: {
         name: 'Boxing Center',
-        count: '5+1',
-        line: 'Five gyms, one immersive site each — plus the official Box Plus store.',
+        count: '8',
+        line: 'Five gym sites live, the Box Plus store — and the tools that run the network.',
       },
     },
   },
@@ -360,44 +360,45 @@ export const en = {
     meta: {
       title: 'The Boxing Center world',
       description:
-        'A direct EAM client: the Boxing Center network in Toulouse — five gyms, one immersive site per gym, plus the official Box Plus online store. Navy, red and sweat.',
+        'A direct EAM client: the Boxing Center network in Toulouse — five immersive sites live, the official Box Plus store and the network tools. Navy, red and sweat.',
     },
     eyebrow: 'Direct client · Toulouse',
     title: 'The Boxing Center world.',
-    lead: 'A navy-and-red crest, five gyms, one discipline: combat. For this Toulouse network EAM forges one immersive site per gym — never cloned — plus its official online store.',
+    lead: 'A navy-and-red crest, five gyms, one discipline: combat. For this Toulouse network EAM forged one immersive site per gym — all five are live — plus the official store and the tools that run the network.',
     logoAlt: 'Boxing Center — combat-sports gym network, Toulouse',
     scrollHint: 'Step into the arena',
     salles: {
       eyebrow: 'Chapter I — The five gyms',
-      title: 'Five gyms. Five sites. Zero duplication.',
+      title: 'Five gyms. Five sites live. Zero duplication.',
       intro:
-        'One immersive site per gym, never cloned. Each gym carries its neighbourhood name — each asserts its own matter, its metal, its type, its 3D — under the same navy-and-red crest.',
+        'One immersive site per gym, never cloned — all five are live, each on its own platform. Each gym carries its neighbourhood name — each asserts its own matter, its metal, its type, its 3D — under the same navy-and-red crest.',
       caseCta: 'Case study',
+      visitCta: 'Visit the site',
       items: [
         {
           name: 'Portet',
           place: 'Portet-sur-Garonne',
-          line: 'The flagship — 900 m² of boxing and cross training, a polished ring in deep black, silver and fight-red.',
+          line: '“Here, we don’t do sport. We forge fighters.” — the flagship: 900 m² of boxing and cross training, deep black, silver and fight-red.',
         },
         {
           name: 'États-Unis',
-          place: 'Toulouse — États-Unis district',
-          line: 'Billed as the largest combat-sports gym in France — a real-time 3D steel monolith you walk through.',
+          place: 'Toulouse — avenue des États-Unis',
+          line: '“Le Colosse” — 1,200 m², the largest combat-sports gym in France: three zones under one roof, a real-time 3D monolith you walk through.',
         },
         {
           name: 'Minimes',
-          place: 'Toulouse — Les Minimes',
-          line: 'The school of the clean gesture — English boxing, beginners and lady boxing, where the club trains its first guards.',
+          place: 'Toulouse — Barrière de Paris',
+          line: 'Since 2016, the cradle of champions — English boxing, beginners and lady boxing: this is where you start.',
         },
         {
           name: 'St-Cyprien',
-          place: 'Toulouse — Saint-Cyprien',
-          line: 'The newest of the network — Muay Thai, grappling, hyrox: the laboratory of rising disciplines.',
+          place: 'Toulouse — Saint-Cyprien, left bank',
+          line: '“The new generation. That’s you.” — 1,200 m² on the left bank, 4 minutes from metro A, from Baby Boxing to the rising disciplines.',
         },
         {
           name: 'Ramonville',
           place: 'Ramonville-Saint-Agne',
-          line: 'The cage and the platform — MMA, strength training and fight camps on the south side of the city.',
+          line: '“The open-air octagon” — 300 m² outdoors, covered and heated, a 7-metre octagon at the end of metro line B.',
         },
       ],
     },
@@ -408,20 +409,39 @@ export const en = {
       line: "The network’s online store — memberships, trial sessions, coaching and gear. Stripe checkout, PrestaShop bridge, catalogue continuously synced with Deciplus.",
       visit: 'Visit the store',
     },
+    outils: {
+      eyebrow: 'Chapter III — Backstage',
+      title: 'The network also runs backstage.',
+      intro:
+        'Beyond the showcases: EAM builds the tools that run the network day to day — and the funnel that fills the gyms.',
+      items: [
+        {
+          name: 'Coach Planning',
+          line: 'The internal coach-scheduling app — five gyms of time slots, driven from a single screen.',
+          url: 'https://planning-bc.vercel.app',
+        },
+        {
+          name: 'Free trial session',
+          line: 'The network’s acquisition funnel — one page, one promise, one form: the trial session that fills the gyms.',
+          url: 'https://bc-seance-offerte.vercel.app',
+        },
+      ],
+      open: 'Open',
+    },
     stats: {
       eyebrow: 'The facts',
       items: [
-        { value: '5 + 1', label: 'five gyms + the online store' },
+        { value: '5', label: 'gym sites — live' },
+        { value: '8', label: 'live pieces in total' },
         { value: '3D', label: 'real time — Three.js' },
         { value: 'Zero', label: 'duplication across the gyms' },
-        { value: '100%', label: 'of the copy in the DOM' },
       ],
     },
     close: {
       provenance:
-        'Boxing Center is a direct EAM client — one immersive site per gym plus the official online store, forged under our crest.',
+        'Boxing Center is a direct EAM client — one immersive site per gym, the official store and the network tools, forged under our crest.',
       title: 'Your brand deserves an arena.',
-      text: 'Five gyms, five sites, one store, zero duplication. Tell us about your project — we forge at this scale.',
+      text: 'Five sites live, one store, real business tools — zero duplication. Tell us about your project: we forge at this scale.',
       button: 'Start a project',
     },
     back: 'Back to the registry',

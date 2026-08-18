@@ -62,7 +62,7 @@ export const fr = {
   proofs: {
     aria: 'Preuves vérifiables',
     items: [
-      { value: 'A+', label: 'sécurité — en-têtes vérifiés', link: 'scan' },
+      { value: 'A+', label: 'sécurité', link: 'scan' },
       { value: `${PROJECT_COUNT}`, label: 'projets livrés', link: 'work' },
       { value: `${LIVE_COUNT}`, label: 'sites en ligne', link: 'work' },
       { value: '24-48 h', label: 'de réponse', link: 'contact' },
@@ -85,8 +85,8 @@ export const fr = {
       },
       boxingCenter: {
         name: 'Boxing Center',
-        count: '5+1',
-        line: "Cinq salles, un site immersif chacune — et la boutique officielle Box Plus.",
+        count: '8',
+        line: "Cinq sites de salle en ligne, la boutique Box Plus — et les outils qui font tourner le réseau.",
       },
     },
   },
@@ -364,44 +364,45 @@ export const fr = {
     meta: {
       title: 'Le monde Boxing Center',
       description:
-        "Client direct d’EAM : le réseau Boxing Center à Toulouse — cinq salles, un site immersif par salle et la boutique en ligne officielle Box Plus. Marine, rouge et sueur.",
+        "Client direct d’EAM : le réseau Boxing Center à Toulouse — cinq sites immersifs en ligne, la boutique officielle Box Plus et les outils du réseau. Marine, rouge et sueur.",
     },
     eyebrow: 'Client direct · Toulouse',
     title: 'Le monde Boxing Center.',
-    lead: "Un blason marine et rouge, cinq salles, une seule discipline : le combat. Pour ce réseau toulousain, EAM forge un site immersif par salle — jamais clonés — et sa boutique en ligne officielle.",
+    lead: "Un blason marine et rouge, cinq salles, une seule discipline : le combat. Pour ce réseau toulousain, EAM a forgé un site immersif par salle — les cinq sont en ligne — plus la boutique officielle et les outils qui font tourner le réseau.",
     logoAlt: 'Boxing Center — réseau de salles de sports de combat, Toulouse',
     scrollHint: "Entrer dans l’arène",
     salles: {
       eyebrow: 'Chapitre I — Les cinq salles',
-      title: 'Cinq salles. Cinq sites. Zéro duplication.',
+      title: 'Cinq salles. Cinq sites en ligne. Zéro duplication.',
       intro:
-        "Un site immersif par salle, jamais cloné. Chaque salle du réseau porte son nom de quartier — chacune impose sa matière, son métal, sa typographie, sa 3D — sous le même blason marine et rouge.",
+        "Un site immersif par salle, jamais cloné — les cinq sont en ligne, chacun sur sa propre plateforme. Chaque salle du réseau porte son nom de quartier — chacune impose sa matière, son métal, sa typographie, sa 3D — sous le même blason marine et rouge.",
       caseCta: 'Étude de cas',
+      visitCta: 'Voir le site',
       items: [
         {
           name: 'Portet',
           place: 'Portet-sur-Garonne',
-          line: "La salle amirale — 900 m² de boxe et de cross training, un ring poli en noir profond, argent et rouge de combat.",
+          line: "« Ici, on ne fait pas du sport. On forge des combattants. » — la salle amirale : 900 m² de boxe et de cross training, noir profond, argent et rouge de combat.",
         },
         {
           name: 'États-Unis',
-          place: 'Toulouse — quartier des États-Unis',
-          line: "Présentée comme la plus grande salle de sports de combat de France — un monolithe d’acier en 3D temps réel que l’on traverse.",
+          place: 'Toulouse — avenue des États-Unis',
+          line: "« Le Colosse » — 1 200 m², la plus grande salle de France dédiée aux sports de combat : trois zones sous un seul toit, un monolithe 3D que l’on traverse.",
         },
         {
           name: 'Minimes',
-          place: 'Toulouse — Les Minimes',
-          line: "L’école du geste juste — anglaise, éducative et lady boxing, là où le club forme ses premières gardes.",
+          place: 'Toulouse — Barrière de Paris',
+          line: "Depuis 2016, le berceau des champions — anglaise, éducative et lady boxing : ici, on commence.",
         },
         {
           name: 'St-Cyprien',
-          place: 'Toulouse — Saint-Cyprien',
-          line: "La dernière-née du réseau — thaï, grappling, hyrox : le laboratoire des disciplines qui montent.",
+          place: 'Toulouse — Saint-Cyprien, rive gauche',
+          line: "« La nouvelle génération. C’est toi. » — 1 200 m² rive gauche à 4 minutes du métro A, du Baby Boxe aux disciplines qui montent.",
         },
         {
           name: 'Ramonville',
           place: 'Ramonville-Saint-Agne',
-          line: "La cage et le plateau — MMA, préparation physique et camps d’entraînement au sud de la ville.",
+          line: "« L’octogone à ciel ouvert » — 300 m² de plein air couverts et chauffés, un octogone de 7 mètres, au terminus du métro B.",
         },
       ],
     },
@@ -412,20 +413,39 @@ export const fr = {
       line: "La boutique en ligne du réseau — abonnements, séances d’essai, coachings et matériel. Paiement Stripe, passerelle PrestaShop, catalogue synchronisé en continu avec Deciplus.",
       visit: 'Visiter la boutique',
     },
+    outils: {
+      eyebrow: 'Chapitre III — Les coulisses',
+      title: 'Le réseau tourne aussi en coulisses.',
+      intro:
+        "Au-delà des vitrines : EAM construit les outils qui font tourner le réseau au quotidien — et le tunnel qui remplit les salles.",
+      items: [
+        {
+          name: 'Planning Coachs',
+          line: "L’application interne de planification des coachs — les créneaux des cinq salles, pilotés depuis un seul écran.",
+          url: 'https://planning-bc.vercel.app',
+        },
+        {
+          name: 'Séance d’essai offerte',
+          line: "Le tunnel d’acquisition du réseau — une page, une promesse, un formulaire : la séance d’essai qui remplit les salles.",
+          url: 'https://bc-seance-offerte.vercel.app',
+        },
+      ],
+      open: 'Ouvrir',
+    },
     stats: {
       eyebrow: 'Les faits',
       items: [
-        { value: '5 + 1', label: 'cinq salles + la boutique en ligne' },
+        { value: '5', label: 'sites de salle — en ligne' },
+        { value: '8', label: 'pièces en ligne au total' },
         { value: '3D', label: 'temps réel — Three.js' },
         { value: 'Zéro', label: 'duplication entre les salles' },
-        { value: '100%', label: 'de la copie dans le DOM' },
       ],
     },
     close: {
       provenance:
-        "Boxing Center est un client direct d’EAM — un site immersif par salle et la boutique en ligne officielle, forgés sous notre blason.",
+        "Boxing Center est un client direct d’EAM — un site immersif par salle, la boutique officielle et les outils du réseau, forgés sous notre blason.",
       title: 'Votre marque mérite une arène.',
-      text: "Cinq salles, cinq sites, une boutique, zéro duplication. Parlez-nous de votre projet — nous forgeons à cette échelle.",
+      text: "Cinq sites en ligne, une boutique, des outils métier — zéro duplication. Parlez-nous de votre projet : nous forgeons à cette échelle.",
       button: 'Démarrer un projet',
     },
     back: 'Retour au registre',

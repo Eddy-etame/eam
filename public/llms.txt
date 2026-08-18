@@ -40,12 +40,14 @@ Le GEO (Generative Engine Optimization) consiste à optimiser un site pour qu'il
 
 ## Portfolio — 23 études de cas publiques
 
-### Monde Boxing Center (2026 — sites de salles en production, boutique en ligne)
-Refonte digitale du réseau Boxing Center à Toulouse : cinq salles (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), une identité immersive WebGL par salle, forgée à partir du logo maison — plus Box Plus, la boutique en ligne officielle (Stripe, passerelle PrestaShop, catalogue synchronisé Deciplus), déjà en ligne sur box-plus.vercel.app. Sur le portfolio, la page Monde Boxing Center présente les cinq salles nommées et la boutique en un parcours cinématique. Maquettes de salles livrées ; portage en cours. Aucun indicateur publié tant que les sites de salles ne sont pas en ligne.
-- Boxing Center — le réseau (5 salles + boutique) : https://eam-agency.vercel.app/fr/work/boxing-center
-- Boxing Center Portet — salle amirale, 900 m² : https://eam-agency.vercel.app/fr/work/boxing-center-portet
-- Boxing Center États-Unis — monolithe 3D Three.js : https://eam-agency.vercel.app/fr/work/boxing-center-etats-unis
+### Monde Boxing Center (2026 — ÉCOSYSTÈME EN LIGNE : 5 sites de salle, boutique, outils)
+Refonte digitale du réseau Boxing Center à Toulouse : cinq salles (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), une identité immersive WebGL par salle, forgée à partir du logo maison — les CINQ sites sont en ligne, chacun sur sa propre plateforme — plus Box Plus, la boutique en ligne officielle (Stripe, passerelle PrestaShop, catalogue synchronisé Deciplus), l'application interne de planning des coachs et le tunnel d'acquisition « séance d'essai offerte ». Indicateurs clients publiés après mesure.
+- Boxing Center — le réseau (8 pièces en ligne) : https://eam-agency.vercel.app/fr/work/boxing-center
+- Boxing Center Portet — salle amirale, 900 m² : https://eam-agency.vercel.app/fr/work/boxing-center-portet (site : https://boxing-center-portet.vercel.app)
+- Boxing Center États-Unis — monolithe 3D Three.js, la plus grande salle de sports de combat de France : https://eam-agency.vercel.app/fr/work/boxing-center-etats-unis (site : https://etas-unis.vercel.app)
+- Boxing Center Minimes (site : https://bc-minimes.vercel.app) · Saint-Cyprien (site : https://bc-st-cyprien.vercel.app) · Ramonville (site : https://bc-ramonville.vercel.app)
 - Box Plus — boutique en ligne officielle du réseau (live) : https://eam-agency.vercel.app/fr/work/box-plus (site : https://box-plus.vercel.app/)
+- Outils du réseau : planning des coachs (https://planning-bc.vercel.app) et tunnel « séance d'essai offerte » (https://bc-seance-offerte.vercel.app).
 
 ### Monde Microdidact (16 projets, 2024-2025)
 La page Monde Microdidact se parcourt comme une traversée : un seul scroll conduit à travers les seize projets, chaque pièce s'ouvre en plein écran (résumé, captures) puis mène à son étude de cas — tout le contenu reste dans le DOM rendu côté serveur.

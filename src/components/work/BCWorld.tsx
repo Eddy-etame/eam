@@ -16,12 +16,14 @@ const BC_RED = '#E8001C'
 /** The five salles — captures of the delivered maquettes. Order = the tour.
  *  imgM = the phone-shaped capture, shown below `sm` so the bands never squish
  *  a desktop screenshot on mobile. */
-const SALLES: { img: string; imgM: string; href?: string; numeral: string }[] = [
-  { img: '/thumbs/bc-portet.jpg', imgM: '/thumbs/bc-portet-m.jpg', href: 'work/boxing-center-portet', numeral: 'I' },
-  { img: '/thumbs/bc-etats-unis.jpg', imgM: '/thumbs/bc-etats-unis-m.jpg', href: 'work/boxing-center-etats-unis', numeral: 'II' },
-  { img: '/thumbs/bc-minimes.jpg', imgM: '/thumbs/bc-minimes-m.jpg', numeral: 'III' },
-  { img: '/thumbs/bc-st-cyprien.jpg', imgM: '/thumbs/bc-st-cyprien-m.jpg', numeral: 'IV' },
-  { img: '/thumbs/bc-ramonville.jpg', imgM: '/thumbs/bc-ramonville-m.jpg', numeral: 'V' },
+// `site` = the LIVE deployment (all five verified live 2026-07-29). Salles
+// without a case page get the whole band as their external door.
+const SALLES: { img: string; imgM: string; href?: string; site: string; numeral: string }[] = [
+  { img: '/thumbs/bc-portet.jpg', imgM: '/thumbs/bc-portet-m.jpg', href: 'work/boxing-center-portet', site: 'https://boxing-center-portet.vercel.app', numeral: 'I' },
+  { img: '/thumbs/bc-etats-unis.jpg', imgM: '/thumbs/bc-etats-unis-m.jpg', href: 'work/boxing-center-etats-unis', site: 'https://etas-unis.vercel.app', numeral: 'II' },
+  { img: '/thumbs/bc-minimes.jpg', imgM: '/thumbs/bc-minimes-m.jpg', site: 'https://bc-minimes.vercel.app', numeral: 'III' },
+  { img: '/thumbs/bc-st-cyprien.jpg', imgM: '/thumbs/bc-st-cyprien-m.jpg', site: 'https://bc-st-cyprien.vercel.app', numeral: 'IV' },
+  { img: '/thumbs/bc-ramonville.jpg', imgM: '/thumbs/bc-ramonville-m.jpg', site: 'https://bc-ramonville.vercel.app', numeral: 'V' },
 ]
 
 /** The official e-boutique — live, EAM-built (Stripe + PrestaShop bridge + Deciplus sync). */
@@ -317,11 +319,17 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
                   <p className="hidden text-base leading-relaxed text-ink/80 sm:block md:text-lg">
                     {salle.line}
                   </p>
-                  {meta.href && (
-                    <span className="text-mono-label mt-2 inline-flex items-center gap-2 text-gold transition-colors duration-300 group-hover:text-gold-bright">
-                      {d.salles.caseCta} <span aria-hidden>→</span>
-                    </span>
-                  )}
+                  <span className="text-mono-label mt-2 inline-flex items-center gap-2 text-gold transition-colors duration-300 group-hover:text-gold-bright">
+                    {meta.href ? (
+                      <>
+                        {d.salles.caseCta} <span aria-hidden>→</span>
+                      </>
+                    ) : (
+                      <>
+                        {d.salles.visitCta} <span aria-hidden>↗</span>
+                      </>
+                    )}
+                  </span>
                 </div>
               </>
             )
@@ -330,20 +338,43 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
               'group relative block h-[80vh] min-h-[520px] w-full overflow-hidden border-t border-line'
 
             return meta.href ? (
-              <Link
+              // Case-backed salles: the band enters the case study; the LIVE
+              // site link floats as a sibling overlay (never a nested anchor),
+              // on the corner opposite the copy block.
+              <div key={salle.name} className="relative">
+                <Link
+                  data-bc-band
+                  data-cursor="voir"
+                  href={localizedPath(locale, meta.href)}
+                  className={bandClass}
+                  aria-label={`Boxing Center ${salle.name} — ${salle.place}`}
+                >
+                  {inner}
+                </Link>
+                <a
+                  href={meta.site}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`text-mono-label absolute bottom-6 z-20 hidden items-center gap-2 rounded-full border border-line-strong bg-deep/70 px-5 py-2.5 text-ink backdrop-blur-sm transition-colors duration-300 hover:border-gold/60 hover:text-gold sm:inline-flex md:bottom-10 ${right ? 'left-8 md:left-14' : 'right-8 md:right-14'}`}
+                >
+                  {d.salles.visitCta} <span aria-hidden>↗</span>
+                </a>
+              </div>
+            ) : (
+              // No case page: the LIVE site IS the destination — the whole
+              // band finally has a door.
+              <a
                 key={salle.name}
                 data-bc-band
                 data-cursor="voir"
-                href={localizedPath(locale, meta.href)}
+                href={meta.site}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={bandClass}
-                aria-label={`Boxing Center ${salle.name} — ${salle.place}`}
+                aria-label={`Boxing Center ${salle.name} — ${salle.place} (site en ligne)`}
               >
                 {inner}
-              </Link>
-            ) : (
-              <div key={salle.name} data-bc-band className={bandClass}>
-                {inner}
-              </div>
+              </a>
             )
           })}
         </section>
@@ -406,6 +437,40 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
                   {d.salles.caseCta} <span aria-hidden>→</span>
                 </Link>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── CHAPTER III — the backstage tools (live, 2026) ─────────────── */}
+        <section className="border-t border-line px-6 py-20 md:px-12 md:py-24 lg:px-20">
+          <div className="mx-auto max-w-[1640px]">
+            <header data-bc-reveal>
+              <p className="text-mono-label" style={{ color: BC_RED }}>
+                {d.outils.eyebrow}
+              </p>
+              <h2 className="mt-5 max-w-3xl text-3xl">{d.outils.title}</h2>
+              <p className="mt-6 max-w-2xl text-lg text-muted">{d.outils.intro}</p>
+            </header>
+            <div data-bc-reveal className="mt-10 grid gap-8 md:grid-cols-2">
+              {d.outils.items.map((tool) => (
+                <a
+                  key={tool.name}
+                  href={tool.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex h-full flex-col justify-between rounded-lg border border-line p-8 transition-colors duration-300 hover:border-gold/50 md:p-10"
+                >
+                  <div>
+                    <h3 className="font-display text-2xl text-ink transition-colors duration-300 group-hover:text-gold">
+                      {tool.name}
+                    </h3>
+                    <p className="mt-3 leading-relaxed text-muted">{tool.line}</p>
+                  </div>
+                  <span className="text-mono-label mt-6 inline-flex items-center gap-2 text-gold">
+                    {d.outils.open} <span aria-hidden>↗</span>
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
         </section>
