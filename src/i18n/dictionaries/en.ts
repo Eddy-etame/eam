@@ -446,6 +446,39 @@ export const en = {
     },
     back: 'Back to the registry',
   },
+  privacy: {
+    meta: {
+      title: 'Privacy policy',
+      description:
+        'What the EAM site collects (almost nothing), what it does with it, and your rights — no ad trackers, no data resale, no third-party cookies.',
+    },
+    eyebrow: 'Privacy',
+    title: 'Privacy policy',
+    intro:
+      'The policy is short because the collection is too: this site sets no advertising cookies, embeds no third-party trackers and sells nothing.',
+    sections: [
+      {
+        heading: 'What we collect',
+        body: [
+          'The contact form transmits only what you type into it: name, email address, company (optional) and your message. It reaches us by email and is used exclusively to reply to you.',
+          'Browsing itself is not profiled: no advertising cookies, no tracking pixels, no third-party behavioural analytics.',
+        ],
+      },
+      {
+        heading: 'Where the data goes',
+        body: [
+          'The site is hosted by Vercel Inc. (United States), which may produce the technical logs (IP addresses, timestamps) required to run and secure the service.',
+          'Your messages stay in our professional inbox for the duration of the business relationship, then are deleted. They are never shared, sold or used for anything else.',
+        ],
+      },
+      {
+        heading: 'Your rights',
+        body: [
+          'Under the GDPR you have the right to access, rectify and delete data concerning you. An email is enough: eam.agency@gmail.com — answered within 24-48 hours, like everything else.',
+        ],
+      },
+    ],
+  },
   footer: {
     tagline: 'We forge brands that reign.',
     madeBy: 'Forged by EAM — Etame · Angoula · Mbosseu',

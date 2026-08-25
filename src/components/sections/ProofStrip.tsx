@@ -16,7 +16,10 @@ export function ProofStrip({ locale, dict }: { locale: Locale; dict: Dictionary 
     link === 'work' ? localizedPath(locale, 'work') : localizedPath(locale, 'contact')
 
   return (
-    <section aria-label={dict.proofs.aria} className="border-y border-line">
+    <section className="border-y border-line">
+      {/* sr-only heading: keeps the document outline continuous for crawlers
+          and screen readers without touching the visual design. */}
+      <h2 className="sr-only">{dict.proofs.aria}</h2>
       <Reveal>
         <ul className="mx-auto flex max-w-[1640px] flex-wrap items-stretch justify-center gap-x-0 gap-y-0 px-6 md:px-12 lg:justify-between lg:px-20">
           {dict.proofs.items.map((item) => {

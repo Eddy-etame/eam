@@ -64,6 +64,13 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           <p>
             © {year} {siteConfig.name}. {dict.footer.rights} ·{' '}
             <Link
+              href={localizedPath(locale, 'confidentialite')}
+              className="-my-3 inline-block py-3 underline-offset-4 transition-colors hover:text-ink hover:underline"
+            >
+              {dict.privacy.eyebrow}
+            </Link>{' '}
+            ·{' '}
+            <Link
               href={localizedPath(locale, 'mentions-legales')}
               className="-my-3 inline-block py-3 underline-offset-4 transition-colors hover:text-ink hover:underline"
             >

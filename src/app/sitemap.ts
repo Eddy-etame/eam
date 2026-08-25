@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: 'about', priority: 0.7, changeFrequency: 'monthly' as const, lastModified: BUILD_DATE },
     { path: 'contact', priority: 0.6, changeFrequency: 'monthly' as const, lastModified: BUILD_DATE },
     { path: 'mentions-legales', priority: 0.3, changeFrequency: 'yearly' as const, lastModified: BUILD_DATE },
+    { path: 'confidentialite', priority: 0.3, changeFrequency: 'yearly' as const, lastModified: BUILD_DATE },
   ]
 
   // 'boxing-center' is owned by the literal world route listed above (the

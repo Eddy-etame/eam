@@ -39,6 +39,16 @@ export function organizationSchema(locale: Locale, description: string): Json {
     alternateName: siteConfig.founders.join(' '),
     url: absoluteUrl(localizedPath(locale)),
     email: siteConfig.email,
+    // contactPoint lets agents verify legitimacy and answer contact queries.
+    // No PostalAddress: the HQ address is deliberately unpublished (see
+    // site.config.ts) — never fabricate one for a richer schema.
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'sales',
+      email: siteConfig.email,
+      url: absoluteUrl(localizedPath(locale, 'contact')),
+      availableLanguage: ['French', 'English'],
+    },
     logo: absoluteUrl('/logo-eam-square.png'),
     image: absoluteUrl('/logo-eam-navy.jpg'),
     description,

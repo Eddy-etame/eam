@@ -20,17 +20,40 @@ function resolveLocale(request: NextRequest): string {
   return defaultLocale
 }
 
+/** acceptmarkdown.com: agents asking for text/markdown get the page's
+ *  markdown twin on the SAME URL (rewritten to /api/md, which sets
+ *  Vary: Accept). Browsers never send this Accept value. */
+function wantsMarkdown(request: NextRequest): boolean {
+  return (request.headers.get('accept') ?? '').includes('text/markdown')
+}
+
+function markdownRewrite(request: NextRequest, localePath: string) {
+  const url = request.nextUrl.clone()
+  url.pathname = '/api/md'
+  url.searchParams.set('path', localePath)
+  // Belt + braces: query params have proven lossy through rewrites in this
+  // runtime, so the path ALSO travels as a request header.
+  const headers = new Headers(request.headers)
+  headers.set('x-md-path', localePath)
+  return NextResponse.rewrite(url, { request: { headers } })
+}
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   const hasLocale = locales.some(
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
   )
-  if (hasLocale) return NextResponse.next()
+  if (hasLocale) {
+    if (wantsMarkdown(request)) return markdownRewrite(request, pathname)
+    return NextResponse.next()
+  }
 
   const locale = resolveLocale(request)
+  const localePath = pathname === '/' ? `/${locale}` : `/${locale}${pathname}`
+  if (wantsMarkdown(request)) return markdownRewrite(request, localePath)
   const url = request.nextUrl.clone()
-  url.pathname = pathname === '/' ? `/${locale}` : `/${locale}${pathname}`
+  url.pathname = localePath
   return NextResponse.redirect(url)
 }
 

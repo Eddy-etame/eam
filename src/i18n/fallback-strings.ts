@@ -14,7 +14,13 @@ import type { Locale } from '@/i18n/config'
 export const fallbackStrings: Record<
   Locale,
   {
-    notFound: { title: string; text: string; cta: string }
+    notFound: {
+      title: string
+      text: string
+      cta: string
+      mapTitle: string
+      links: { label: string; path: string }[]
+    }
     errorPage: { title: string; text: string; retry: string }
   }
 > = {
@@ -23,6 +29,13 @@ export const fallbackStrings: Record<
       title: 'Page introuvable',
       text: "Cette page s'est égarée hors du blason. Revenons en terrain connu.",
       cta: "Retour à l'accueil",
+      mapTitle: 'Points de reprise',
+      links: [
+        { label: 'Réalisations', path: '/work' },
+        { label: 'Services', path: '/services' },
+        { label: 'Preuves', path: '/preuves' },
+        { label: 'Contact', path: '/contact' },
+      ],
     },
     errorPage: {
       title: "Un incident à l'atelier.",
@@ -35,6 +48,13 @@ export const fallbackStrings: Record<
       title: 'Page not found',
       text: "This page wandered off the crest. Let's head back to familiar ground.",
       cta: 'Back home',
+      mapTitle: 'Recovery points',
+      links: [
+        { label: 'Work', path: '/work' },
+        { label: 'Services', path: '/services' },
+        { label: 'Proof', path: '/preuves' },
+        { label: 'Contact', path: '/contact' },
+      ],
     },
     errorPage: {
       title: 'A mishap at the atelier.',

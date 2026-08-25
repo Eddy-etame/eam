@@ -450,6 +450,39 @@ export const fr = {
     },
     back: 'Retour au registre',
   },
+  privacy: {
+    meta: {
+      title: 'Politique de confidentialité',
+      description:
+        "Ce que le site EAM collecte (presque rien), ce qu'il en fait, et vos droits — sans trackers publicitaires, sans revente de données, sans cookies tiers.",
+    },
+    eyebrow: 'Confidentialité',
+    title: 'Politique de confidentialité',
+    intro:
+      "La règle est courte parce que la collecte l'est aussi : ce site ne dépose aucun cookie publicitaire, n'embarque aucun tracker tiers et ne revend rien.",
+    sections: [
+      {
+        heading: 'Ce que nous collectons',
+        body: [
+          "Le formulaire de contact transmet uniquement ce que vous y écrivez : nom, adresse email, société (facultative) et votre message. Ces informations nous parviennent par email et servent exclusivement à vous répondre.",
+          "La navigation elle-même ne fait l'objet d'aucun profilage : pas de cookies publicitaires, pas de pixels de suivi, pas d'outils d'analyse comportementale tiers.",
+        ],
+      },
+      {
+        heading: 'Où vont ces données',
+        body: [
+          "Le site est hébergé par Vercel Inc. (États-Unis), qui peut produire des journaux techniques (adresses IP, horodatages) nécessaires au fonctionnement et à la sécurité du service.",
+          "Vos messages restent dans notre boîte email professionnelle le temps de la relation commerciale, puis sont supprimés. Ils ne sont jamais transmis, vendus ni utilisés à d'autres fins.",
+        ],
+      },
+      {
+        heading: 'Vos droits',
+        body: [
+          "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression des données vous concernant. Une demande par email suffit : eam.agency@gmail.com — réponse sous 24 à 48 heures, comme pour tout le reste.",
+        ],
+      },
+    ],
+  },
   footer: {
     tagline: 'Nous forgeons des marques qui règnent.',
     madeBy: 'Forgé par EAM — Etame · Angoula · Mbosseu',

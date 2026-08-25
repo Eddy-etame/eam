@@ -52,6 +52,9 @@ const securityHeaders = [
   // (flagged "very lax CORS" by scanners) — pin it to the canonical origin,
   // read from the single source of truth so the two can never diverge.
   { key: 'Access-Control-Allow-Origin', value: siteConfig.url },
+  // Pages exist in two representations (HTML + text/markdown via Accept
+  // negotiation in proxy.ts) — CDNs must key the cache on Accept.
+  { key: 'Vary', value: 'Accept' },
 ]
 
 const nextConfig: NextConfig = {
@@ -63,6 +66,14 @@ const nextConfig: NextConfig = {
         source: '/:path*',
         headers: securityHeaders,
       },
+    ]
+  },
+  async redirects() {
+    // Agents and humans both probe /privacy by convention.
+    return [
+      { source: '/privacy', destination: '/fr/confidentialite', permanent: true },
+      { source: '/fr/privacy', destination: '/fr/confidentialite', permanent: true },
+      { source: '/en/privacy', destination: '/en/confidentialite', permanent: true },
     ]
   },
   images: {
