@@ -43,9 +43,15 @@ if (routes.some((r) => r.headers?.['Content-Security-Policy']?.includes("'sha256
 }
 
 const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+// Vary must carry Accept (pages have a text/markdown twin via negotiation —
+// acceptmarkdown.com) but Vercel's edge normalizes Vary on prerendered HTML,
+// dropping the next.config value. Inject the full merged string here, keeping
+// the framework's RSC values intact.
+const VARY =
+  'rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept'
 const injected = entries.map(([route, csp]) => ({
   src: `^${escapeRegex(route)}/?$`,
-  headers: { 'Content-Security-Policy': csp },
+  headers: { 'Content-Security-Policy': csp, Vary: VARY },
   continue: true,
   important: true,
 }))
