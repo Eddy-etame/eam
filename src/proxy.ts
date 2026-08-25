@@ -46,7 +46,13 @@ export function proxy(request: NextRequest) {
   )
   if (hasLocale) {
     if (wantsMarkdown(request)) return markdownRewrite(request, pathname)
-    return NextResponse.next()
+    // Declare the markdown twin on the HTML variant too. Vercel's static layer
+    // normalizes Vary set via next.config/edge routes, but middleware response
+    // headers are applied pre-cache and survive. (Cross-serving is impossible
+    // regardless: the negotiation above runs before any cache lookup.)
+    const res = NextResponse.next()
+    res.headers.append('Vary', 'Accept')
+    return res
   }
 
   const locale = resolveLocale(request)
