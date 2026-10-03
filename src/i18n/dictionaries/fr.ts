@@ -1,9 +1,9 @@
-import { publicProjects, microdidactProjects } from '@/lib/projects'
+import { publicProjects, microdidactProjects, liveSiteCount } from '@/lib/projects'
 
 // Derived counts — the registry is the single source of truth; hardcoding
 // these numbers desynchronized six surfaces at once when a deployment died.
 const PROJECT_COUNT = publicProjects.length
-const LIVE_COUNT = publicProjects.filter((p) => p.liveUrl !== '#').length
+const LIVE_COUNT = liveSiteCount
 const MICRODIDACT_COUNT = microdidactProjects.length
 const SECTOR_COUNT = new Set(publicProjects.map((p) => p.category)).size
 
@@ -45,7 +45,7 @@ export const fr = {
     subtitle: `${PROJECT_COUNT} projets livrés, de Toulouse à Casablanca — par trois ingénieurs qui vous répondent eux-mêmes. La prochaine marque qui règne peut être la vôtre.`,
     ctaPrimary: 'Voir nos réalisations',
     ctaSecondary: 'Obtenir mon devis gratuit',
-    riskNote: 'Devis gratuit sous 24-48 h · sans engagement',
+    riskNote: 'Devis gratuit sous 24-48 h · sans engagement · 2 mois de maintenance offerts',
     scrollHint: 'Défiler',
   },
   marquee: ['Sur-mesure', 'Sécurité A+', 'SEO & GEO', 'Schema.org', 'llms.txt', 'Réponse 24-48 h'],
@@ -85,8 +85,8 @@ export const fr = {
       },
       boxingCenter: {
         name: 'Boxing Center',
-        count: '8',
-        line: "Cinq sites de salle en ligne, la boutique Box Plus — et les outils qui font tourner le réseau.",
+        count: '19',
+        line: "Cinq sites de salle, sept sites de proximité, trois boutiques — et les outils qui font tourner le réseau.",
       },
     },
   },
@@ -184,7 +184,7 @@ export const fr = {
       },
       {
         q: 'Combien coûte un site web avec EAM ?',
-        a: "Un site vitrine sur-mesure démarre à 2 000 € HT, un site immersif avec identité complète à 4 000 € HT, un e-commerce à 3 000 € HT, et l’accompagnement SEO & GEO à 300 € HT par mois. Ces planchers sont un point de départ : chaque projet reçoit un devis précis et gratuit sous 24 à 48 heures.",
+        a: "Chaque site est chiffré sur-mesure : le prix dépend du périmètre — nombre de pages, fonctionnalités, contenus à créer. Décrivez-nous votre projet : vous recevez un devis précis et gratuit sous 24 à 48 heures, sans engagement, et vous parlez directement aux ingénieurs qui le construiront. L’accompagnement SEO & GEO démarre à 300 € HT par mois.",
       },
       {
         q: 'Quels sont les délais pour obtenir un devis ?',
@@ -203,8 +203,12 @@ export const fr = {
         a: "Oui. EAM conçoit des sites bilingues ou multilingues et accompagne des clients francophones comme internationaux.",
       },
       {
+        q: 'La maintenance est-elle comprise ?',
+        a: "Les deux premiers mois de maintenance de votre site sont offerts — une valeur de 50 € par mois. EAM reste joignable en direct pendant et après cette période.",
+      },
+      {
         q: 'Comment contacter EAM ?',
-        a: "Par e-mail à eam.agency@gmail.com, ou via le formulaire de la page Contact. Réponse sous 24 à 48 heures.",
+        a: "Par le formulaire de la page Contact, ou sur WhatsApp. Vous recevez une réponse sous 24 à 48 heures, directement des trois ingénieurs.",
       },
     ],
   },
@@ -234,10 +238,8 @@ export const fr = {
     eyebrow: 'Contact',
     title: 'Un projet à forger ?',
     lead: "Parlez-nous de votre marque, de vos objectifs et de vos délais. Nous revenons vers vous sous 24 à 48 heures avec une première piste.",
-    emailLabel: 'Écrivez-nous',
     responseChip: 'Réponse sous 24-48 h',
     whoAnswers: 'Ceux qui vous répondent',
-    copied: 'Copié ✓',
     form: {
       name: 'Nom',
       email: 'E-mail',
@@ -246,11 +248,10 @@ export const fr = {
       submit: 'Envoyer le message',
       sending: 'Envoi…',
       success: 'Bien reçu. Nous revenons vers vous sous 24 à 48 h.',
-      error: "L’envoi a échoué — réessayez, ou écrivez-nous directement.",
+      error: "L’envoi a échoué — réessayez dans un instant, ou écrivez-nous sur",
       namePlaceholder: 'Votre nom',
       emailPlaceholder: 'vous@exemple.com',
       messagePlaceholder: 'En quelques mots, votre projet…',
-      note: "En envoyant ce message, votre logiciel e-mail s’ouvrira avec les informations pré-remplies.",
     },
   },
   work: {
@@ -364,57 +365,106 @@ export const fr = {
     meta: {
       title: 'Le monde Boxing Center',
       description:
-        "Client direct d’EAM : le réseau Boxing Center à Toulouse — cinq sites immersifs en ligne, la boutique officielle Box Plus et les outils du réseau. Marine, rouge et sueur.",
+        "Client direct d’EAM : le réseau Boxing Center à Toulouse — cinq sites de salle, deux clubs, sept sites de proximité et trois boutiques, chacun sur son domaine.",
     },
     eyebrow: 'Client direct · Toulouse',
     title: 'Le monde Boxing Center.',
-    lead: "Un blason marine et rouge, cinq salles, une seule discipline : le combat. Pour ce réseau toulousain, EAM a forgé un site immersif par salle — les cinq sont en ligne — plus la boutique officielle et les outils qui font tourner le réseau.",
+    lead: "Un blason marine et rouge, cinq salles, une seule discipline : le combat. Pour ce réseau toulousain, EAM a forgé dix-neuf pièces en ligne — un site par salle, deux clubs de boxe anglaise, sept sites de proximité, trois boutiques et les outils qui font tourner le réseau.",
     logoAlt: 'Boxing Center — réseau de salles de sports de combat, Toulouse',
     scrollHint: "Entrer dans l’arène",
+    caseCta: 'Étude de cas',
+    visitCta: 'Voir le site',
     salles: {
       eyebrow: 'Chapitre I — Les cinq salles',
       title: 'Cinq salles. Cinq sites en ligne. Zéro duplication.',
       intro:
-        "Un site immersif par salle, jamais cloné — les cinq sont en ligne, chacun sur sa propre plateforme. Chaque salle du réseau porte son nom de quartier — chacune impose sa matière, son métal, sa typographie, sa 3D — sous le même blason marine et rouge.",
-      caseCta: 'Étude de cas',
-      visitCta: 'Voir le site',
+        "Un site par salle, jamais cloné — chacun sur son propre nom de domaine. Chaque salle du réseau porte son nom de quartier et impose sa matière, son métal, sa typographie — sous le même blason marine et rouge.",
+      label: 'Salle',
       items: [
         {
           name: 'Portet',
           place: 'Portet-sur-Garonne',
-          line: "« Ici, on ne fait pas du sport. On forge des combattants. » — la salle amirale : 900 m² de boxe et de cross training, noir profond, argent et rouge de combat.",
+          line: "« Ici, le sport devient une passion. La passion devient un mode de vie. » — la salle phare : 600 m² dédiés aux sports de combat, un ring et une cage MMA. Le nom du club se forme en particules à l’ouverture.",
         },
         {
           name: 'États-Unis',
           place: 'Toulouse — avenue des États-Unis',
-          line: "« Le Colosse » — 1 200 m², la plus grande salle de France dédiée aux sports de combat : trois zones sous un seul toit, un monolithe 3D que l’on traverse.",
+          line: "La plus grande salle de sports de combat de France — 1 200 m², trois espaces de 400 m², deux rings et une cage. MMA, grappling, boxe et préparation physique sous un seul toit.",
         },
         {
           name: 'Minimes',
           place: 'Toulouse — Barrière de Paris',
-          line: "Depuis 2016, le berceau des champions — anglaise, éducative et lady boxing : ici, on commence.",
+          line: "« Le premier cours suffit à comprendre pourquoi on revient. » — boxe anglaise, éducative, Boxing Lady et pieds-poings ; la vidéo de la salle passe à travers le lettrage du club.",
         },
         {
           name: 'St-Cyprien',
           place: 'Toulouse — Saint-Cyprien, rive gauche',
-          line: "« La nouvelle génération. C’est toi. » — 1 200 m² rive gauche à 4 minutes du métro A, du Baby Boxe aux disciplines qui montent.",
+          line: "Débutants, loisir, compétition — boxe anglaise, K1, Muay Thaï et cross-training, à 4 minutes du métro A.",
         },
         {
           name: 'Ramonville',
           place: 'Ramonville-Saint-Agne',
-          line: "« L’octogone à ciel ouvert » — 300 m² de plein air couverts et chauffés, un octogone de 7 mètres, au terminus du métro B.",
+          line: "L’octogone tourne : huit côtés, huit disciplines — 300 m² d’entraînement dehors et à l’abri, un octogone de 7 mètres, au terminus du métro B.",
         },
       ],
     },
+    clubs: {
+      eyebrow: 'Chapitre II — Deux clubs de boxe anglaise',
+      title: 'Deux clubs. Deux identités.',
+      intro:
+        "Autour du réseau, deux clubs de boxe anglaise ont leur propre site : le TMBC aux Minimes, affilié FFBoxe, et le Club de Boxe Blagnac, membre du réseau Boxing Center.",
+      label: 'Club',
+      items: [
+        {
+          name: 'TMBC',
+          place: 'Toulouse — Les Minimes',
+          line: "Toulouse Minimes Boxing Club, depuis 2017 — boxe anglaise loisir et compétition, école de boxe dès 3 ans. Le blason du club, traité comme une affiche de gala.",
+        },
+        {
+          name: 'Blagnac',
+          place: 'Blagnac — 31700',
+          line: "Six cours, six jours sur sept, de l’éveil dès 3 ans au groupe compétition — un site éditorial de 23 pages, lisible aussi par les moteurs de réponse.",
+        },
+      ],
+    },
+    proximite: {
+      eyebrow: 'Chapitre III — Les sept sites de proximité',
+      title: 'Sept villes. Sept sites. Zéro copie.',
+      intro:
+        "Un site par commune autour de Toulouse, pour l’habitant qui cherche un club de boxe près de chez lui. Même mécanique, mais un texte, une couleur et un mouvement propres à chaque ville — 125 pages au total.",
+      // Each line is the town site's own H1, quoted as published.
+      items: [
+        { name: 'Colomiers', line: 'Boxing Center accueille les Columérins à Toulouse Minimes et à Portet.' },
+        { name: 'Muret', line: 'Ton club de boxe proche de Muret.' },
+        { name: 'Cugnaux', line: 'Des cours de boxe accessibles depuis Cugnaux.' },
+        { name: 'Tournefeuille', line: 'Ton club de MMA et de boxe thaï près de Tournefeuille.' },
+        { name: 'Labège', line: 'Sports de combat à proximité de Labège.' },
+        { name: 'L’Union', line: 'La plus grande salle de sports de combat, proche de L’Union.' },
+        { name: 'Castelginest', line: 'Boxe, MMA et sports de combat accessibles depuis Castelginest.' },
+      ],
+    },
     boutique: {
-      eyebrow: 'Chapitre II — La boutique officielle',
+      eyebrow: 'Chapitre IV — Les trois boutiques',
       name: 'Box Plus',
       tag: 'Boutique officielle Boxing Center · Toulouse',
       line: "La boutique en ligne du réseau — abonnements, séances d’essai, coachings et matériel. Paiement Stripe, passerelle PrestaShop, catalogue synchronisé en continu avec Deciplus.",
       visit: 'Visiter la boutique',
+      label: 'Boutique',
+      others: [
+        {
+          name: 'Boutique de Boxe',
+          place: 'France — catalogue national',
+          line: "Tout pour la boxe et le MMA : plus de mille modèles, des guides et une page « où boxer » par ville — 1 222 pages en ligne, ouverture des ventes prochaine.",
+        },
+        {
+          name: 'Matos de Boxe',
+          place: 'France — catalogue Metal Boxe',
+          line: "« Le matos des combattants » — gants, protections et textile Metal Boxe, chaque produit sur sa scène. Ouverture des ventes prochaine.",
+        },
+      ],
     },
     outils: {
-      eyebrow: 'Chapitre III — Les coulisses',
+      eyebrow: 'Chapitre V — Les coulisses',
       title: 'Le réseau tourne aussi en coulisses.',
       intro:
         "Au-delà des vitrines : EAM construit les outils qui font tourner le réseau au quotidien — et le tunnel qui remplit les salles.",
@@ -435,17 +485,17 @@ export const fr = {
     stats: {
       eyebrow: 'Les faits',
       items: [
-        { value: '5', label: 'sites de salle — en ligne' },
-        { value: '8', label: 'pièces en ligne au total' },
-        { value: '3D', label: 'temps réel — Three.js' },
-        { value: 'Zéro', label: 'duplication entre les salles' },
+        { value: '5', label: 'sites de salle' },
+        { value: '7', label: 'sites de proximité' },
+        { value: '3', label: 'boutiques en ligne' },
+        { value: '19', label: 'pièces en ligne au total' },
       ],
     },
     close: {
       provenance:
-        "Boxing Center est un client direct d’EAM — un site immersif par salle, la boutique officielle et les outils du réseau, forgés sous notre blason.",
+        "Boxing Center est un client direct d’EAM — sites de salle, sites de proximité, boutiques et outils du réseau, forgés sous notre blason.",
       title: 'Votre marque mérite une arène.',
-      text: "Cinq sites en ligne, une boutique, des outils métier — zéro duplication. Parlez-nous de votre projet : nous forgeons à cette échelle.",
+      text: "Dix-neuf pièces en ligne, chacune sur son nom de domaine — zéro duplication. Parlez-nous de votre projet : nous forgeons à cette échelle.",
       button: 'Obtenir mon devis gratuit',
     },
     back: 'Retour au registre',
@@ -464,7 +514,7 @@ export const fr = {
       {
         heading: 'Ce que nous collectons',
         body: [
-          "Le formulaire de contact transmet uniquement ce que vous y écrivez : nom, adresse email, société (facultative) et votre message. Ces informations nous parviennent par email et servent exclusivement à vous répondre.",
+          "Le formulaire de contact transmet uniquement ce que vous y écrivez : nom, adresse e-mail, société (facultative) et votre message. Ces informations passent par Inlet, le service de formulaires développé par EAM, et servent exclusivement à vous répondre.",
           "La navigation elle-même ne fait l'objet d'aucun profilage : pas de cookies publicitaires, pas de pixels de suivi, pas d'outils d'analyse comportementale tiers.",
         ],
       },
@@ -478,7 +528,7 @@ export const fr = {
       {
         heading: 'Vos droits',
         body: [
-          "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression des données vous concernant. Une demande par email suffit : eam.agency@gmail.com — réponse sous 24 à 48 heures, comme pour tout le reste.",
+          "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression des données vous concernant. Une demande par le formulaire de la page Contact suffit — réponse sous 24 à 48 heures, comme pour tout le reste.",
         ],
       },
     ],
@@ -502,7 +552,7 @@ export const fr = {
         heading: 'Éditeur du site',
         body: [
           "Le site est édité par EAM, collectif de trois ingénieurs : Eddy Etame, Raphaël Angoula et Brad Mbosseu.",
-          'Contact : eam.agency@gmail.com.',
+          'Contact : le formulaire de la page Contact.',
           'Directeur de la publication : EAM.',
         ],
       },
@@ -524,7 +574,7 @@ export const fr = {
         body: [
           "Les informations transmises via le formulaire de contact (nom, e-mail, entreprise, message) sont acheminées par e-mail à EAM et utilisées uniquement pour répondre à votre demande. Elles n’alimentent aucune liste marketing et ne sont transmises à aucun tiers.",
           "Ce site n’utilise ni traceur, ni outil d’analyse d’audience, ni cookie publicitaire.",
-          "Conformément au Règlement général sur la protection des données (RGPD), vous pouvez exercer vos droits d’accès, de rectification et de suppression en écrivant à eam.agency@gmail.com.",
+          "Conformément au Règlement général sur la protection des données (RGPD), vous pouvez exercer vos droits d’accès, de rectification et de suppression par le formulaire de la page Contact.",
         ],
       },
       {
@@ -542,7 +592,7 @@ export const fr = {
       lead: "Chaque service est livré avec preuves — performance, données structurées, visibilité IA — par les trois ingénieurs que vous rencontrez.",
       metaTitle: 'Services — création de site, e-commerce, SEO & GEO, refonte',
       metaDescription:
-        "Sites sur-mesure dès 2 000 €, e-commerce, SEO & GEO, refonte — devis gratuit sous 24-48 h, vous parlez directement aux ingénieurs.",
+        "Sites sur-mesure, e-commerce, SEO & GEO, refonte : chaque projet reçoit un devis gratuit sous 24-48 h — vous parlez directement aux ingénieurs.",
     },
     quoteCta: 'Obtenir mon devis gratuit',
     quoteNote: 'Réponse sous 24-48 h · sans engagement',
@@ -550,6 +600,17 @@ export const fr = {
     deliverablesTitle: 'Ce que vous obtenez',
     floorLabel: 'à partir de',
     floorNote: 'HT — devis précis et gratuit sous 24-48 h',
+    /** Shown where a service carries no public price: the quote IS the offer. */
+    hubQuote: 'Devis gratuit · 24-48 h',
+    metaQuote: 'devis gratuit sous 24-48 h',
+    steps: {
+      title: 'Comment ça se passe',
+      items: [
+        'Vous nous décrivez votre projet — formulaire, e-mail ou WhatsApp.',
+        'Vous recevez un devis précis et gratuit sous 24 à 48 heures.',
+        'Vous validez, nous construisons — vous parlez aux ingénieurs du début à la fin.',
+      ],
+    },
     proofsCta: 'Voir l’étude de cas',
     receiptsCta: 'Voir nos mesures publiées — réussites et absences',
     faqTitle: 'Questions fréquentes',
@@ -594,17 +655,26 @@ export const fr = {
       "Première mesure en cours — les résultats apparaîtront ici, réussites comme absences. C’est le principe.",
     cta: 'Faire mesurer votre visibilité',
   },
+  // Eddy's ruling 2026-10-03: website prices leave the site — the visitor is
+  // led to the conversation instead (each band opens the contact form with its
+  // subject). Only the monthly SEO & GEO retainer keeps a public figure.
   pricing: {
-    eyebrow: 'Tarifs',
-    title: 'Des planchers clairs. Le reste se discute.',
+    eyebrow: 'Votre devis',
+    title: 'Un devis à la mesure de votre projet.',
     intro:
-      "Ces planchers sont un point de départ, pas une grille rigide — chaque projet reçoit un devis précis et gratuit sous 24 à 48 heures.",
+      "Chaque projet a son périmètre, chaque entreprise son budget. Choisissez ce qui vous ressemble et décrivez-nous le vôtre : vous recevez une proposition précise et gratuite sous 24 à 48 heures, sans engagement.",
     from: 'à partir de',
-    note: 'Tarifs HT. Application métier, SaaS ou projet hors cadre : sur devis.',
+    cta: 'Parler de mon projet',
+    offer: {
+      label: 'Offert',
+      text: "Les deux premiers mois de maintenance de votre site — une valeur de 50 € par mois.",
+    },
+    note: 'Application métier, SaaS ou projet hors cadre : parlons-en, le devis est gratuit lui aussi.',
     bands: [
       {
+        sujet: 'site-vitrine',
         name: 'Site vitrine sur-mesure',
-        price: '2 000 €',
+        price: null as string | null,
         includes: [
           'Design sur-mesure — jamais de template',
           'SEO technique + données structurées',
@@ -612,8 +682,9 @@ export const fr = {
         ],
       },
       {
+        sujet: 'identite',
         name: 'Site immersif & identité',
-        price: '4 000 €',
+        price: null as string | null,
         includes: [
           'Direction artistique complète',
           'Motion, 3D temps réel si le projet le mérite',
@@ -621,8 +692,9 @@ export const fr = {
         ],
       },
       {
+        sujet: 'e-commerce',
         name: 'E-commerce',
-        price: '3 000 €',
+        price: null as string | null,
         includes: [
           'Tunnel de commande sans friction',
           'Paiement Stripe ou solution existante',
@@ -630,8 +702,9 @@ export const fr = {
         ],
       },
       {
+        sujet: 'seo-geo',
         name: 'SEO & GEO mensuel',
-        price: '300 € / mois',
+        price: '300 € / mois' as string | null,
         includes: [
           'Optimisation continue — Google et moteurs IA',
           'Données structurées et llms.txt entretenus',

@@ -55,10 +55,12 @@ export function ContactCTA({ locale, dict }: { locale: Locale; dict: Dictionary 
             </Link>
           </Magnetic>
           <a
-            href={`mailto:${siteConfig.email}`}
+            href={`https://wa.me/${siteConfig.whatsapp}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-mono-label text-muted transition-colors hover:text-ink"
           >
-            {siteConfig.email}
+            {dict.servicesPage.whatsappCta} ↗
           </a>
         </div>
       </Reveal>

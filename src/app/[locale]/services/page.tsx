@@ -28,7 +28,7 @@ export async function generateMetadata({
   })
 }
 
-/** Services hub — the commercial index: four doors, the floors, one ask. */
+/** Services hub — the commercial index: four doors, the offers, one ask. */
 export default async function ServicesHubPage({
   params,
 }: {
@@ -76,12 +76,16 @@ export default async function ServicesHubPage({
                     <p className="mt-4 leading-relaxed text-muted">{page.h1[locale]}</p>
                   </div>
                   <p className="mt-8 flex items-baseline justify-between gap-4">
-                    <span className="text-mono-label text-faint">
-                      {dict.servicesPage.floorLabel}{' '}
-                      <span className="foil ml-1 whitespace-nowrap font-display text-xl">
-                        {band.price}
+                    {band.price ? (
+                      <span className="text-mono-label text-faint">
+                        {dict.servicesPage.floorLabel}{' '}
+                        <span className="foil ml-1 whitespace-nowrap font-display text-xl">
+                          {band.price}
+                        </span>
                       </span>
-                    </span>
+                    ) : (
+                      <span className="text-mono-label whitespace-nowrap text-faint">{dict.servicesPage.hubQuote}</span>
+                    )}
                     <span
                       aria-hidden
                       className="text-gold transition-transform duration-300 group-hover:translate-x-1.5"
@@ -95,7 +99,7 @@ export default async function ServicesHubPage({
           })}
         </div>
 
-        <PricingBands dict={dict} />
+        <PricingBands locale={locale} dict={dict} />
 
         <div className="mt-20">
           <ConversionBand locale={locale} dict={dict} variant="registre" />

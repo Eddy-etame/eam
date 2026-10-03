@@ -304,12 +304,12 @@ export function ProjectGallery({
                           'radial-gradient(ellipse 62% 46% at 50% 70%, #E8001C2E 0%, transparent 70%)',
                       }}
                     />
-                    {/* Ghost numeral behind, faint — mirrors Microdidact's "16" */}
+                    {/* Ghost numeral behind, faint — the live-piece count, mirrors Microdidact's "16" */}
                     <span
                       aria-hidden
                       className="absolute -bottom-[0.14em] -right-3 select-none font-display text-[clamp(11rem,22vw,20rem)] leading-none text-white/[0.05]"
                     >
-                      5
+                      {dict.homeWorlds.doors.boxingCenter.count}
                     </span>
                     <span className="absolute inset-0 grid place-items-center px-10">
                       <Image
@@ -342,7 +342,8 @@ export function ProjectGallery({
                     </span>
                     <div className="absolute bottom-5 left-5 right-24 sm:bottom-7 sm:left-7">
                       <span aria-hidden className="text-mono-label tabular-nums text-gold-bright">
-                        {locale === 'fr' ? '5 salles + boutique' : '5 gyms + store'} · Toulouse — {bc.year}
+                        {dict.homeWorlds.doors.boxingCenter.count}{' '}
+                        {locale === 'fr' ? 'pièces en ligne' : 'live pieces'} · Toulouse — {bc.year}
                       </span>
                       <p className="mt-2 max-w-md text-sm leading-relaxed text-white/75">
                         {bc.tagline[locale]}

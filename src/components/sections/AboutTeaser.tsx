@@ -32,7 +32,7 @@ export function AboutTeaser({ locale, dict }: { locale: Locale; dict: Dictionary
           <div className="grid grid-cols-2 gap-px self-start overflow-hidden rounded-lg border border-line bg-line">
             {about.stats.map((stat, i) => (
               <Reveal key={stat.label} delay={i * 70} dir="right" className="bg-deep p-8">
-                <p className="foil foil-anim font-display text-4xl leading-none">
+                <p className="foil foil-anim font-display text-[clamp(2.75rem,4.6vw,5rem)] leading-none">
                   <CountUp value={stat.value} />
                 </p>
                 <p className="mt-3 text-mono-label text-muted">{stat.label}</p>

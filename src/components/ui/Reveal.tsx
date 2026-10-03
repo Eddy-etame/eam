@@ -26,6 +26,16 @@ export function Reveal({
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    // Slow connection: the CSS failsafe (globals.css) already faded this block
+    // in before the script arrived — keep it shown rather than hide it again.
+    // Either way the block is live now, which switches its failsafe off.
+    const shown = Number(getComputedStyle(el).opacity) > 0.5
+    if (shown) el.classList.add('is-visible')
+    el.setAttribute('data-reveal-live', '')
+    if (shown) {
+      setVisible(true)
+      return
+    }
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {

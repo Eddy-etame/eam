@@ -110,7 +110,7 @@ console.log(`agentic-check → ${ORIGIN}\n`)
 {
   const { body } = await get('/fr', { accept: 'text/html' })
   check('Organization contactPoint', body.includes('"contactPoint"'))
-  check('contactPoint email present', body.includes('"contactType":"sales"'))
+  check('contactPoint sales channel present', body.includes('"contactType":"sales"'))
 }
 
 // 8 — llms.txt agent guidance

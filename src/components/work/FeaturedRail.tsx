@@ -1,7 +1,7 @@
 'use client'
 
 import { Children, useEffect, useRef, useState, type ReactNode } from 'react'
-import { gsap, useGSAP } from '@/lib/gsap'
+import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
 import { Reveal } from '@/components/ui/Reveal'
 
 type RailMode = 'static' | 'carousel' | 'pinned'
@@ -55,6 +55,11 @@ export function FeaturedRail({ children }: { children: ReactNode }) {
           },
         },
       })
+      // The pin inserts its spacer after the triggers further down the page
+      // were measured (chapter palette, world bands) — put every trigger back
+      // in page order and re-measure, so nothing below fires a rail too early.
+      ScrollTrigger.sort()
+      ScrollTrigger.refresh()
     },
     { scope, dependencies: [mode], revertOnUpdate: true },
   )
@@ -101,6 +106,11 @@ export function FeaturedRail({ children }: { children: ReactNode }) {
     }
     measure()
     strip.addEventListener('scroll', onScroll, { passive: true })
+    // The server rendered these cards as a tall stacked grid; the strip is a
+    // fraction of that height. Every trigger below was measured against the
+    // tall version — re-measure, or sections further down reveal thousands of
+    // pixels late (or never, past the end of the page).
+    ScrollTrigger.refresh()
     return () => {
       strip.removeEventListener('scroll', onScroll)
       if (raf) cancelAnimationFrame(raf)

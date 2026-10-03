@@ -11,7 +11,7 @@ import {
   organizationSchema,
 } from '@/lib/schema'
 import { BCWorld } from '@/components/work/BCWorld'
-import { getProject, getProjectsByCategory } from '@/lib/projects'
+import { getProject, publicProjects } from '@/lib/projects'
 
 export async function generateMetadata({
   params,
@@ -30,15 +30,15 @@ export async function generateMetadata({
     images: [absoluteUrl(`/${locale}/work/boxing-center/opengraph-image`)],
   })
   // Share-card copy, distinct from the <title>/meta description: the five
-  // named salles plus the official Box Plus boutique.
+  // named salles, then the scale of the whole ecosystem.
   const ogTitle =
     locale === 'fr'
-      ? 'Le monde Boxing Center — 5 salles et la boutique officielle Box Plus'
-      : 'The Boxing Center world — 5 gyms and the official Box Plus store'
+      ? 'Le monde Boxing Center — 5 salles, 19 pièces en ligne'
+      : 'The Boxing Center world — 5 gyms, 19 live pieces'
   const ogDescription =
     locale === 'fr'
-      ? "Cinq salles toulousaines — Portet, États-Unis, Minimes, St-Cyprien, Ramonville — un site immersif par salle, jamais cloné, et Box Plus, la boutique en ligne officielle du réseau. Forgé par EAM."
-      : "Five Toulouse gyms — Portet, États-Unis, Minimes, St-Cyprien, Ramonville — one immersive site per gym, never cloned, plus Box Plus, the network's official online store. Forged by EAM."
+      ? "Cinq salles toulousaines — Portet, États-Unis, Minimes, St-Cyprien, Ramonville — un site par salle, jamais cloné, deux clubs de boxe anglaise, sept sites de proximité et trois boutiques. Forgé par EAM."
+      : 'Five Toulouse gyms — Portet, États-Unis, Minimes, St-Cyprien, Ramonville — one site per gym, never cloned, two English-boxing clubs, seven proximity sites and three stores. Forged by EAM.'
   return {
     ...base,
     openGraph: { ...base.openGraph, title: ogTitle, description: ogDescription },
@@ -48,10 +48,10 @@ export async function generateMetadata({
 
 /**
  * The Boxing Center world — a literal route that takes precedence over
- * work/[slug]. EAM's richest direct engagement (five immersive sites, a print
- * campaign, coach plannings) rendered as a cinematic journey. All copy and
- * every real link stay in the DOM (SEO first); BCWorld layers the iris
- * entrance, parallax salle bands and print spread on top.
+ * work/[slug]. EAM's richest direct engagement (gym sites, clubs, proximity
+ * sites, stores, tools) rendered as a cinematic journey. All copy and every
+ * real link stay in the DOM (SEO first); BCWorld layers the iris entrance,
+ * the parallax bands and the proximity rail on top.
  */
 export default async function BoxingCenterPage({
   params,
@@ -64,11 +64,12 @@ export default async function BoxingCenterPage({
 
   // The umbrella 'boxing-center' project is shadowed by this literal route, so
   // its CreativeWork #work node (referenced by /work's CollectionPage hasPart)
-  // must be emitted HERE. Organization + CollectionPage bind the per-salle
-  // case studies to EAM for answer engines.
+  // must be emitted HERE. Organization + CollectionPage bind every case study
+  // of the world (gyms, clubs, proximity family, stores) to EAM for answer
+  // engines.
   const umbrella = getProject('boxing-center')
-  const salleSlugs = getProjectsByCategory('Sport & Bien-être')
-    .filter((p) => p.slug !== 'boxing-center')
+  const salleSlugs = publicProjects
+    .filter((p) => p.world === 'boxing-center' && p.slug !== 'boxing-center')
     .map((p) => p.slug)
 
   const schemas = [

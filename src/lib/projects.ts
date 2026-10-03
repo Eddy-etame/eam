@@ -34,6 +34,12 @@ export interface Project {
   /** Built under the Microdidact collective (Eddy 2026-07-14) — badges + the
    *  Microdidact world on /work. Solo works: kermhosting, jcboyang-conseil. */
   underMicrodidact?: boolean
+  /** Member of a world on /work — it is shown inside that world, never as a
+   *  solo card on the registre. */
+  world?: 'boxing-center'
+  /** A family entry standing for several separately deployed sites — each one
+   *  counts in the live-site total and is listed on the case page. */
+  sites?: { name: string; url: string; thumb: string }[]
   /** Brand colour used as the card accent. */
   color: string
   year: number
@@ -56,27 +62,34 @@ export interface Project {
 
 export const projects: Project[] = [
   // ── SPORT & BIEN-ÊTRE ─────────────────────────────────────────────────────
-  // Boxing Center ecosystem is LIVE (verified 2026-07-29): five salle sites on
-  // their own deployments + Box Plus boutique + the coach-planning app
-  // (planning-bc.vercel.app) + the «séance d'essai offerte» funnel
-  // (bc-seance-offerte.vercel.app). boxingcenter.fr remains the legacy
-  // WordPress site being replaced. The umbrella keeps liveUrl '#' — it IS the
-  // world door, each piece carries its own link. No client metrics invented.
+  // Boxing Center ecosystem is LIVE on its own bought domains (every URL
+  // probed 200 on 2026-10-03): five salle sites (boxing-center-portet.fr,
+  // clubmma.fr, boxe-toulouse.com, club-boxe-toulouse.com, mmatoulouse.com),
+  // two boxe-anglaise clubs (toulouse-minimes-boxing-club.fr,
+  // club-boxe-blagnac.fr), seven proximity sites (boxingcenter-<ville>.fr),
+  // three stores (boutique.boxingcenter.fr, boutique-de-boxe.com,
+  // matos-de-boxe.fr) + the coach-planning app and the «séance d'essai
+  // offerte» funnel (still on vercel.app). boxingcenter.fr remains the legacy
+  // WordPress site. The umbrella keeps liveUrl '#' — it IS the world door,
+  // each piece carries its own link. No client metrics invented.
+  // NOT listed on purpose (Eddy 2026-10-03): concours.boxingcenter.fr and
+  // materiel-de-boxe.fr.
   {
     slug: 'boxing-center',
     name: 'Boxing Center',
     client: 'Boxing Center Toulouse',
     tagline: {
-      fr: 'Cinq salles, une boutique. Une seule obsession.',
-      en: 'Five gyms, one store. One obsession.',
+      fr: 'Cinq salles, dix-neuf pièces en ligne. Une seule obsession.',
+      en: 'Five gyms, nineteen live pieces. One obsession.',
     },
     description: {
-      fr: "Refonte digitale du réseau Boxing Center — cinq sites de salle immersifs en ligne (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), jamais dupliqués, la boutique officielle Box Plus (Stripe, passerelle PrestaShop, sync Deciplus), le planning des coachs et le tunnel « séance d'essai offerte ».",
-      en: 'A digital rebuild of the Boxing Center network — five immersive salle sites live (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), never duplicated, the official Box Plus store (Stripe, PrestaShop bridge, Deciplus sync), the coach-planning app and the free-trial funnel.',
+      fr: "L'écosystème digital du réseau Boxing Center — cinq sites de salle immersifs (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), deux clubs de boxe anglaise (TMBC, Blagnac), sept sites de proximité autour de Toulouse, trois boutiques (Box Plus, Boutique de Boxe, Matos de Boxe), le planning des coachs et le tunnel « séance d'essai offerte ». Chaque site sur son propre domaine, aucun dupliqué.",
+      en: 'The digital ecosystem of the Boxing Center network — five immersive gym sites (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), two English-boxing clubs (TMBC, Blagnac), seven proximity sites around Toulouse, three stores (Box Plus, Boutique de Boxe, Matos de Boxe), the coach-planning app and the free-trial funnel. Every site on its own domain, none duplicated.',
     },
     category: 'Sport & Bien-être',
     tags: ['Sport de combat', 'Boxe', 'WebGL / 3D', 'Three.js', 'Réseau', 'Toulouse'],
     liveUrl: '#',
+    world: 'boxing-center',
     color: '#1E2044',
     year: 2026,
     isFeatured: false, // the umbrella lives as the world door on /work, not a rail card
@@ -92,22 +105,26 @@ export const projects: Project[] = [
         en: 'One immersive maquette per gym: a real-time 3D steel monolith, a scroll-driven flythrough of the zones, a switchable dual palette, and per-venue type and metal — all copy stays in the DOM (SEO/a11y), 3D as progressive enhancement with a no-WebGL fallback.',
       },
       outcome: {
-        fr: "En ligne (2026) — les cinq sites de salle sont déployés, chacun sur sa propre plateforme, aux côtés de la boutique Box Plus, du planning des coachs et du tunnel « séance d'essai offerte ». Indicateurs clients publiés après mesure, jamais avant.",
-        en: 'Live (2026) — all five salle sites are deployed on their own platforms, alongside the Box Plus store, the coach-planning app and the free-trial funnel. Client metrics published after measurement, never before.',
+        fr: "En ligne (2026) — dix-neuf pièces déployées : cinq sites de salle, deux clubs de boxe anglaise, sept sites de proximité, trois boutiques et deux outils, chaque site sur son propre nom de domaine. Indicateurs clients publiés après mesure, jamais avant.",
+        en: 'Live (2026) — nineteen pieces deployed: five gym sites, two English-boxing clubs, seven proximity sites, three stores and two tools, every site on its own domain name. Client metrics published after measurement, never before.',
       },
       // Craft facts — not client outcomes.
       metrics: [
         { value: '5', label: { fr: 'salles, une identité chacune', en: 'gyms, one identity each' } },
-        { value: '8', label: { fr: 'pièces en ligne — salles, boutique, outils', en: 'live pieces — gyms, store, tools' } },
+        { value: '19', label: { fr: 'pièces en ligne — sites, boutiques, outils', en: 'live pieces — sites, stores, tools' } },
         { value: '3D', label: { fr: 'monolithe temps réel (Three.js)', en: 'real-time monolith (Three.js)' } },
       ],
-      // The five salles + the official boutique — captures of what EAM built.
+      // Captures of what EAM built — salles, clubs, proximity, stores.
       gallery: [
-        '/thumbs/bc-portet.jpg',
-        '/thumbs/bc-etats-unis.jpg',
-        '/thumbs/bc-minimes.jpg',
-        '/thumbs/bc-ramonville.jpg',
-        '/thumbs/bc-st-cyprien.jpg',
+        '/thumbs/boxing-center-portet.jpg',
+        '/thumbs/boxing-center-etats-unis.jpg',
+        '/thumbs/boxing-center-minimes.jpg',
+        '/thumbs/boxing-center-st-cyprien.jpg',
+        '/thumbs/boxing-center-ramonville.jpg',
+        '/thumbs/tmbc.jpg',
+        '/thumbs/club-boxe-blagnac.jpg',
+        '/thumbs/bc-sat-colomiers.jpg',
+        '/thumbs/boutique-de-boxe.jpg',
         '/thumbs/bc-box-plus.jpg',
       ],
     },
@@ -121,12 +138,13 @@ export const projects: Project[] = [
       en: 'The arena, forged for the web',
     },
     description: {
-      fr: "Vitrine immersive pour la salle amirale du réseau — 900 m² de boxe et de cross training à Portet-sur-Garonne. Ring poli en noir profond, argent et rouge de combat, scroll cinématique et arène 3D discrète.",
-      en: 'An immersive showcase for the flagship of the network — 900 m² of boxing and cross training in Portet-sur-Garonne. A polished ring in deep black, silver and fight-red, cinematic scroll and a quiet 3D arena.',
+      fr: "Vitrine immersive pour la salle phare du réseau — 600 m² dédiés aux sports de combat à Portet-sur-Garonne, avec ring de boxe anglaise et cage MMA. Le nom du club se forme en particules à l'ouverture, puis scroll cinématique, scènes 3D et son d'ambiance.",
+      en: 'An immersive showcase for the flagship of the network — 600 m² dedicated to combat sports in Portet-sur-Garonne, with an English-boxing ring and an MMA cage. The club name assembles from particles on arrival, then cinematic scroll, 3D scenes and ambient sound.',
     },
     category: 'Sport & Bien-être',
     tags: ['Boxe', 'Sport de combat', 'WebGL / 3D', 'Immersif', 'Toulouse'],
-    liveUrl: 'https://boxing-center-portet.vercel.app',
+    liveUrl: 'https://boxing-center-portet.fr/',
+    world: 'boxing-center',
     color: '#E8001C',
     year: 2026,
     isFeatured: true,
@@ -134,16 +152,16 @@ export const projects: Project[] = [
     techStack: ['Next.js', 'TypeScript', 'Three.js / WebGL', 'GSAP', 'Lenis', 'Tailwind CSS'],
     caseStudy: {
       problem: {
-        fr: "Une salle phare — ring olympique, tatami, panneaux MMA, 24 sacs, 500 m² de boxe et 400 m² de cross training — enfermée dans un site générique qui ne transmettait ni la puissance du lieu ni l'accès illimité 7 j/7.",
-        en: 'A flagship room — Olympic ring, tatami, MMA panels, 24 heavy bags, 500 m² of boxing and 400 m² of cross training — trapped in a generic site that conveyed neither the power of the place nor its unlimited 7-day-a-week concept.',
+        fr: "Une salle phare — 600 m², un ring de boxe anglaise, une cage MMA, neuf disciplines — enfermée dans un site générique qui ne transmettait ni la puissance du lieu ni la richesse de son planning.",
+        en: 'A flagship room — 600 m², an English-boxing ring, an MMA cage, nine disciplines — trapped in a generic site that conveyed neither the power of the place nor the depth of its schedule.',
       },
       solution: {
         fr: "Une vitrine « arène polie » : noir mat, argent et rouge de combat, défilement lissé par Lenis, chorégraphie GSAP et décor d'arène en Three.js en surcouche discrète, avec repli sans-WebGL. Toute la copie reste dans le DOM ; la 3D n'est qu'atmosphère. Légibilité WCAG AA verrouillée.",
         en: 'A “polished-arena” showcase: matte black, silver and fight-red, Lenis-smoothed scroll, GSAP choreography and a quiet Three.js arena overlay, with a no-WebGL fallback. Every line of copy stays in the DOM; the 3D is atmosphere only. WCAG-AA legibility locked.',
       },
       outcome: {
-        fr: "En ligne (2026) sur sa propre plateforme — l'expérience « arène polie » complète, avec repli sans-WebGL et copie DOM pour la performance, le SEO local et l'accessibilité.",
-        en: 'Live (2026) on its own platform — the full “polished-arena” experience, with a no-WebGL fallback and DOM copy for performance, local SEO and accessibility.',
+        fr: "En ligne (2026) sur boxing-center-portet.fr — l'expérience « arène polie » complète, 31 pages dont une par discipline et par coach, planning vivant, FAQ et conseils, avec repli sans-WebGL et copie DOM pour la performance, le SEO local et l'accessibilité.",
+        en: 'Live (2026) at boxing-center-portet.fr — the full “polished-arena” experience, 31 pages including one per discipline and per coach, a live schedule, FAQs and guides, with a no-WebGL fallback and DOM copy for performance, local SEO and accessibility.',
       },
     },
   },
@@ -161,10 +179,11 @@ export const projects: Project[] = [
     },
     category: 'Sport & Bien-être',
     tags: ['Boxe', 'Sport de combat', 'WebGL / 3D', 'Three.js', 'Toulouse'],
-    liveUrl: 'https://etas-unis.vercel.app',
+    liveUrl: 'https://clubmma.fr/',
+    world: 'boxing-center',
     color: '#7A3D16',
     year: 2026,
-    isFeatured: false,
+    isFeatured: true,
     isInternal: false,
     techStack: ['Next.js', 'TypeScript', 'Three.js / WebGL', 'GSAP', 'Lenis', 'Tailwind CSS'],
     caseStudy: {
@@ -177,9 +196,247 @@ export const projects: Project[] = [
         en: 'A steel/bronze monolith hero revealed by the cursor, then a scroll-driven flythrough of three zone-rooms (I/II/III), cross-dissolved by camera distance. A persisted bronze/steel palette toggle (no flash). Video + photo-scroll fallback when WebGL is unavailable.',
       },
       outcome: {
-        fr: "En ligne (2026) sur sa propre plateforme — le walkthrough Three.js réel avec repli DOM, au service de la plus grande salle de sports de combat de France.",
-        en: 'Live (2026) on its own platform — the real Three.js walkthrough with a DOM fallback, serving the largest combat-sports gym in France.',
+        fr: "En ligne (2026) sur clubmma.fr — le walkthrough Three.js réel avec repli DOM, au service de la plus grande salle de sports de combat de France.",
+        en: 'Live (2026) at clubmma.fr — the real Three.js walkthrough with a DOM fallback, serving the largest combat-sports gym in France.',
       },
+    },
+  },
+  {
+    slug: 'boxing-center-minimes',
+    name: 'Boxing Center — Minimes',
+    client: 'Boxing Center Toulouse',
+    tagline: {
+      fr: 'Le club où Toulouse apprend à boxer',
+      en: 'Where Toulouse learns to box',
+    },
+    description: {
+      fr: "Le site du club des Minimes, à la Barrière de Paris — boxe anglaise, boxe éducative, Boxing Lady, pieds-poings et cross training. Un hero vidéo découpé dans le lettrage du club, avec bascule pochoir / plein, et une visite rythmée en rounds.",
+      en: 'The site of the Minimes club, at Barrière de Paris — English boxing, youth boxing, Boxing Lady, kick-boxing and cross training. A video hero cut through the club lettering, with a stencil / solid toggle, and a visit paced in rounds.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['Boxe', 'Sport de combat', 'Vidéo', 'SEO Local', 'Toulouse'],
+    liveUrl: 'https://boxe-toulouse.com/',
+    world: 'boxing-center',
+    color: '#C8102E',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Astro', 'Canvas', 'Cloudinary', 'Schema.org'],
+    caseStudy: {
+      problem: {
+        fr: "Le club historique du réseau devait répondre en une page à la question de tout débutant — « est-ce pour moi ? » — et se classer sur la requête la plus disputée de la ville : club de boxe à Toulouse.",
+        en: 'The network’s historic club had to answer every beginner’s question in one page — “is this for me?” — and rank on the most contested query in town: boxing club in Toulouse.',
+      },
+      solution: {
+        fr: "Un hero où la vidéo de la salle passe à travers le lettrage BOXING MINIMES, commutable en un clic entre pochoir et plein. La visite avance par rounds numérotés — salle, activités, coachs, planning, tarifs — et chaque page porte ses données structurées, ses avis et son plan d'accès.",
+        en: 'A hero where the gym video plays through the BOXING MINIMES lettering, switchable in one click between stencil and solid. The visit moves in numbered rounds — gym, classes, coaches, schedule, pricing — and every page carries its structured data, reviews and access map.',
+      },
+      outcome: {
+        fr: "En ligne (2026) sur boxe-toulouse.com — son propre nom de domaine, taillé pour la requête. Positions publiées après mesure, jamais avant.",
+        en: 'Live (2026) at boxe-toulouse.com — its own domain name, cut for the query. Rankings published after measurement, never before.',
+      },
+    },
+  },
+  {
+    slug: 'boxing-center-st-cyprien',
+    name: 'Boxing Center — Saint-Cyprien',
+    client: 'Boxing Center Toulouse',
+    tagline: {
+      fr: 'Rive gauche, à quatre minutes du métro',
+      en: 'Left bank, four minutes from the metro',
+    },
+    description: {
+      fr: "Le site du club de Saint-Cyprien, rive gauche de Toulouse — boxe anglaise, thaï / K1, grappling, Hyrox, Lady Punch et école de boxe dès 3 ans, à 4 minutes du métro A. Le blason du réseau posé sur la salle elle-même, et l'essentiel dès le premier écran.",
+      en: 'The site of the Saint-Cyprien club, on Toulouse’s left bank — English boxing, Thai / K1, grappling, Hyrox, Lady Punch and a boxing school from age 3, four minutes from metro line A. The network crest set over the room itself, and the essentials on the very first screen.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['Boxe', 'Sport de combat', 'SEO Local', 'Toulouse'],
+    liveUrl: 'https://club-boxe-toulouse.com/',
+    world: 'boxing-center',
+    color: '#1F3A6B',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Astro', 'SEO Local', 'Schema.org'],
+    caseStudy: {
+      problem: {
+        fr: "Un club de centre-ville, proche du métro, noyé parmi les salles de sport toulousaines : il fallait dire en un écran où il est, pour qui il est, et ce qu'on y pratique.",
+        en: 'A city-centre club, close to the metro, lost among Toulouse’s gyms: one screen had to say where it is, who it is for, and what you train there.',
+      },
+      solution: {
+        fr: "Un hero qui pose le blason sur la salle elle-même, trois faits sous le titre — l'adresse, les six jours d'ouverture, l'accueil des débutants — puis activités, coachs, planning et tarifs. L'offre du moment reste à un clic depuis chaque écran.",
+        en: 'A hero that sets the crest over the room itself, three facts under the title — the address, six days a week, beginners welcome — then classes, coaches, schedule and pricing. The current offer stays one click away from every screen.',
+      },
+      outcome: {
+        fr: "En ligne (2026) sur club-boxe-toulouse.com — son propre nom de domaine. Positions publiées après mesure, jamais avant.",
+        en: 'Live (2026) at club-boxe-toulouse.com — its own domain name. Rankings published after measurement, never before.',
+      },
+    },
+  },
+  {
+    slug: 'boxing-center-ramonville',
+    name: 'Boxing Center — Ramonville',
+    client: 'Boxing Center Toulouse',
+    tagline: {
+      fr: "L'octogone qui donne l'heure",
+      en: 'The octagon that tells the time',
+    },
+    description: {
+      fr: "Le site du club de Ramonville-Saint-Agne — 300 m² d'entraînement dehors et à l'abri, un octogone de 7 mètres, un grand ring, au terminus du métro B. L'octogone du hero tourne : ses huit côtés sont les huit disciplines, et la page affiche l'heure de Paris et la température du plateau.",
+      en: 'The site of the Ramonville-Saint-Agne club — 300 m² of covered outdoor training, a 7-metre octagon, a full ring, at the end of metro line B. The hero octagon turns: its eight sides are the eight disciplines, and the page shows Paris time and the temperature on the training floor.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['MMA', 'Boxe', 'Sport de combat', 'Assistant IA', 'SEO Local', 'Toulouse'],
+    liveUrl: 'https://mmatoulouse.com/',
+    world: 'boxing-center',
+    color: '#4A6A8F',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Astro', 'GSAP', 'SVG', 'Assistant IA', 'Schema.org'],
+    caseStudy: {
+      problem: {
+        fr: "Une salle à ciel ouvert, unique à Toulouse, que rien ne distinguait en ligne : son octogone, son plein air et son métro au bout de la rue n'apparaissaient nulle part.",
+        en: 'An open-air gym, unique in Toulouse, with nothing online to set it apart: its octagon, its outdoor floor and the metro at the end of the street appeared nowhere.',
+      },
+      solution: {
+        fr: "L'octogone devient la navigation : il tourne, chaque côté ouvre une discipline. Le planning est vivant — il sait quel cours est en cours et lequel suit —, chaque discipline et chaque coach a sa page, et un assistant répond aux questions du visiteur à partir du planning et des tarifs réels.",
+        en: 'The octagon becomes the navigation: it turns, each side opens a discipline. The schedule is live — it knows which class is on and which is next — every discipline and coach has a page, and an assistant answers visitors’ questions from the real schedule and prices.',
+      },
+      outcome: {
+        fr: "En ligne (2026) sur mmatoulouse.com — 28 pages, FAQ et données structurées à l'appui. Positions publiées après mesure, jamais avant.",
+        en: 'Live (2026) at mmatoulouse.com — 28 pages, backed by FAQs and structured data. Rankings published after measurement, never before.',
+      },
+    },
+  },
+  {
+    // The FFBoxe-affiliated English-boxing club hosted at the Minimes gym —
+    // its own brand, its own domain (verified on its live pages 2026-10-03).
+    slug: 'tmbc',
+    name: 'TMBC',
+    client: 'Toulouse Minimes Boxing Club',
+    tagline: {
+      fr: 'Toulouse Minimes Boxing Club — boxe anglaise, depuis 2017',
+      en: 'Toulouse Minimes Boxing Club — English boxing, since 2017',
+    },
+    description: {
+      fr: "Le site du Toulouse Minimes Boxing Club, club de boxe anglaise affilié FFBoxe aux Minimes — débutants, loisirs, compétiteurs et école de boxe dès 3 ans. Une identité d'affiche de gala : lettrage usé, rouge de combat, ring dans la pénombre.",
+      en: 'The site of the Toulouse Minimes Boxing Club, an FFBoxe-affiliated English-boxing club in the Minimes district — beginners, leisure, competitors and a boxing school from age 3. A fight-poster identity: distressed lettering, fight-red, a ring in half-light.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['Boxe anglaise', 'Club', 'FFBoxe', 'SEO Local', 'Toulouse'],
+    liveUrl: 'https://toulouse-minimes-boxing-club.fr/',
+    world: 'boxing-center',
+    color: '#B0121A',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['HTML / CSS / JavaScript', 'SEO Local', 'Schema.org', 'Vercel'],
+    caseStudy: {
+      problem: {
+        fr: "Un club de boxe anglaise avec sa propre histoire et ses compétiteurs, sans adresse en ligne à son nom : ses tarifs, ses horaires et son école de boxe étaient introuvables.",
+        en: 'An English-boxing club with its own history and its competitors, but no online address under its name: its prices, hours and boxing school were nowhere to be found.',
+      },
+      solution: {
+        fr: "Un site à son image — le blason TMBC plein écran, traité comme une affiche de gala —, puis l'essentiel sans détour : l'essai à 10 €, le tarif saison, le métro à 3 minutes, le planning, la galerie et le contact.",
+        en: 'A site in its image — the TMBC crest full-screen, treated like a fight poster — then the essentials, straight: the €10 trial, the season price, the metro three minutes away, the schedule, the gallery and the contact.',
+      },
+      outcome: {
+        fr: "En ligne (2026) sur toulouse-minimes-boxing-club.fr — 14 pages sur son propre nom de domaine. Positions publiées après mesure, jamais avant.",
+        en: 'Live (2026) at toulouse-minimes-boxing-club.fr — 14 pages on its own domain name. Rankings published after measurement, never before.',
+      },
+    },
+  },
+  {
+    slug: 'club-boxe-blagnac',
+    name: 'Club de Boxe Blagnac',
+    client: 'Club de Boxe Blagnac — réseau Boxing Center',
+    tagline: {
+      fr: "Six cours, de l'éveil dès 3 ans au groupe compétition",
+      en: 'Six classes, from age 3 to the competition squad',
+    },
+    description: {
+      fr: "Le site du club de boxe anglaise de Blagnac, membre du réseau Boxing Center — six cours, six jours sur sept, de l'éveil dès 3 ans au groupe compétition. Une direction éditoriale : grand titre typographique, photographie réelle, aucune information inventée.",
+      en: 'The site of the Blagnac English-boxing club, a member of the Boxing Center network — six classes, six days a week, from age 3 to the competition squad. An editorial direction: large typographic title, real photography, no invented information.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['Boxe anglaise', 'Club', 'SEO Local', 'GEO', 'Blagnac'],
+    liveUrl: 'https://www.club-boxe-blagnac.fr/',
+    world: 'boxing-center',
+    color: '#C5F04A',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Astro', 'TypeScript', 'MCP', 'llms.txt', 'Schema.org'],
+    caseStudy: {
+      problem: {
+        fr: "Un club à faire exister en ligne à Blagnac, face à des clubs installés qui tiennent la première page — avec une règle : ne publier que des faits confirmés.",
+        en: 'A club to bring online in Blagnac, against established clubs holding page one — with one rule: publish confirmed facts only.',
+      },
+      solution: {
+        fr: "Un site statique, pensé mobile d'abord : 23 pages, et un build qui audite chacune — titre, description, H1, données structurées, images, indexabilité. Les moteurs de réponse y lisent un llms.txt et un point d'accès MCP en lecture seule.",
+        en: 'A static, mobile-first site: 23 pages, and a build that audits each one — title, description, H1, structured data, images, indexability. Answer engines read an llms.txt and a read-only MCP endpoint.',
+      },
+      outcome: {
+        fr: "En ligne (2026) sur club-boxe-blagnac.fr — 23 pages indexables sur son propre nom de domaine. Positions publiées après mesure, jamais avant.",
+        en: 'Live (2026) at club-boxe-blagnac.fr — 23 indexable pages on its own domain name. Rankings published after measurement, never before.',
+      },
+    },
+  },
+  {
+    // The proximity family — seven separately deployed sites, one per town
+    // around Toulouse, each on its own bought domain. Same mechanics, never
+    // the same text, colour or motion. Page count = sum of the seven live
+    // sitemaps (125, counted 2026-10-03).
+    slug: 'boxing-center-proximite',
+    name: 'Boxing Center — Proximité',
+    client: 'Boxing Center Toulouse',
+    tagline: {
+      fr: 'Sept villes, sept sites, zéro copie',
+      en: 'Seven towns, seven sites, zero copies',
+    },
+    description: {
+      fr: "Sept sites, un par commune autour de Toulouse — Colomiers, Muret, Cugnaux, Tournefeuille, Labège, L'Union, Castelginest. Chacun répond à l'habitant qui cherche un club de boxe près de chez lui : le club qui l'accueille, la ligne de bus ou la sortie qui y mène, la séance qui lui convient. Même mécanique, mais un texte, une couleur et un mouvement propres à chaque ville.",
+      en: 'Seven sites, one per town around Toulouse — Colomiers, Muret, Cugnaux, Tournefeuille, Labège, L’Union, Castelginest. Each answers the resident looking for a boxing club nearby: the club that welcomes them, the bus line or exit that gets them there, the class that fits. Same mechanics, but a text, a colour and a motion signature of its own for every town.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['SEO Local', 'GEO', 'Multi-sites', 'Boxe', 'Toulouse'],
+    liveUrl: 'https://www.boxingcenter-colomiers.fr/',
+    thumb: '/thumbs/bc-sat-colomiers.jpg',
+    world: 'boxing-center',
+    color: '#1E2044',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Astro 5', 'TypeScript', 'SVG', 'Inlet', 'MCP', 'llms.txt', 'Schema.org'],
+    sites: [
+      { name: 'Colomiers', url: 'https://www.boxingcenter-colomiers.fr/', thumb: '/thumbs/bc-sat-colomiers.jpg' },
+      { name: 'Muret', url: 'https://www.boxingcenter-muret.fr/', thumb: '/thumbs/bc-sat-muret.jpg' },
+      { name: 'Cugnaux', url: 'https://www.boxingcenter-cugnaux.fr/', thumb: '/thumbs/bc-sat-cugnaux.jpg' },
+      { name: 'Tournefeuille', url: 'https://www.boxingcenter-tournefeuille.fr/', thumb: '/thumbs/bc-sat-tournefeuille.jpg' },
+      { name: 'Labège', url: 'https://www.boxingcenter-labege.fr/', thumb: '/thumbs/bc-sat-labege.jpg' },
+      { name: "L'Union", url: 'https://www.boxingcenter-lunion.fr/', thumb: '/thumbs/bc-sat-lunion.jpg' },
+      { name: 'Castelginest', url: 'https://www.boxingcenter-castelginest.fr/', thumb: '/thumbs/bc-sat-castelginest.jpg' },
+    ],
+    caseStudy: {
+      problem: {
+        fr: "Les habitants de sept communes cherchent « club de boxe » suivi du nom de leur ville. Le réseau les accueille dans le club voisin — encore fallait-il le leur dire, ville par ville, sans cloner sept fois la même page.",
+        en: 'Residents of seven towns search “boxing club” followed by their town’s name. The network welcomes them at the neighbouring club — it still had to tell them so, town by town, without cloning the same page seven times.',
+      },
+      solution: {
+        fr: "Une famille de sites statiques : chaque fait vit dans un registre unique et le build refuse une page qui contredit ce registre, oublie un mot-clé ou reste fermée à l'indexation. Chaque ville a sa teinte, sa signature de mouvement, ses pages par commune voisine, ses articles conseils, son formulaire protégé par preuve de travail — et moins de 7 ko de JavaScript par page.",
+        en: 'A family of static sites: every fact lives in a single registry and the build rejects a page that contradicts it, misses a keyword or stays closed to indexing. Every town has its own hue, its motion signature, its pages for neighbouring towns, its guides, a form protected by proof-of-work — and under 7 KB of JavaScript per page.',
+      },
+      outcome: {
+        fr: "En ligne (2026) — sept sites sur sept noms de domaine, 125 pages au plan du site. Positions publiées après mesure, jamais avant.",
+        en: 'Live (2026) — seven sites on seven domain names, 125 pages in their sitemaps. Rankings published after measurement, never before.',
+      },
+      // Craft facts — counted on the live sitemaps, not client outcomes.
+      metrics: [
+        { value: '7', label: { fr: 'sites, un par ville', en: 'sites, one per town' } },
+        { value: '125', label: { fr: 'pages en ligne', en: 'pages live' } },
+        { value: '< 7 ko', label: { fr: 'de JavaScript par page', en: 'of JavaScript per page' } },
+      ],
     },
   },
   {
@@ -199,7 +456,8 @@ export const projects: Project[] = [
     },
     category: 'Commerce & Services',
     tags: ['E-commerce', 'Stripe', 'PrestaShop', 'Automatisation', 'Sport', 'Toulouse'],
-    liveUrl: 'https://box-plus.vercel.app/',
+    liveUrl: 'https://boutique.boxingcenter.fr/',
+    world: 'boxing-center',
     color: '#B3001B',
     year: 2026,
     isFeatured: false,
@@ -219,6 +477,86 @@ export const projects: Project[] = [
         en: "Live — the network's official store runs on this rebuild. No commercial metrics published without the client's sign-off.",
       },
       gallery: ['/thumbs/bc-box-plus.jpg'],
+    },
+  },
+  {
+    // Facts: its README + the live sitemap (1 222 URLs, 2026-10-03). Sales are
+    // not open yet — the site says so, and so do we.
+    slug: 'boutique-de-boxe',
+    name: 'Boutique de Boxe',
+    client: 'SAS Boxing Center',
+    tagline: {
+      fr: 'Tout pour la boxe et le MMA — 1 222 pages, un seul catalogue',
+      en: 'Everything for boxing and MMA — 1,222 pages, one catalogue',
+    },
+    description: {
+      fr: "Le catalogue français de matériel de boxe, MMA et sports de combat : plus de mille modèles, des guides, un outil de choix du poids des gants et une page « où boxer » pour plus de trente villes, bâtie sur le recensement officiel des équipements sportifs. Avant l'ouverture des ventes, chaque fiche inscrit le visiteur à l'alerte d'ouverture.",
+      en: 'The French catalogue of boxing, MMA and combat-sports gear: more than a thousand models, guides, a glove-weight picker and a “where to box” page for more than thirty cities, built on the official register of sports facilities. Ahead of the sales opening, every product page signs the visitor up for the opening alert.',
+    },
+    category: 'Commerce & Services',
+    tags: ['E-commerce', 'Catalogue', 'SEO', 'GEO', 'Sport', 'France'],
+    liveUrl: 'https://www.boutique-de-boxe.com/',
+    world: 'boxing-center',
+    color: '#D8F34B',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Next.js 16', 'TypeScript', 'Supabase', 'PostgreSQL', 'Drizzle', 'MCP'],
+    caseStudy: {
+      problem: {
+        fr: "Lancer une boutique nationale de matériel de combat face à des enseignes installées, avec un domaine neuf et un catalogue fournisseur aux photos hétérogènes.",
+        en: 'Launching a national combat-gear store against established retailers, with a brand-new domain and a supplier catalogue of mismatched photos.',
+      },
+      solution: {
+        fr: "Un catalogue de plus de mille références sur une base Postgres, des fiches aux questions-réponses tirées des faits du modèle, des pages par rayon et par ville avec leurs données structurées, un panier persistant et une administration par lien magique. Les moteurs de réponse disposent d'un llms.txt et d'un outil MCP qui répond « où boxer dans ma ville ».",
+        en: 'A catalogue of more than a thousand references on Postgres, product pages with Q&As drawn from each model’s facts, pages per aisle and per city with their structured data, a persistent cart and magic-link administration. Answer engines get an llms.txt and an MCP tool that answers “where can I box in my city”.',
+      },
+      outcome: {
+        fr: "En ligne (2026) sur boutique-de-boxe.com — 1 222 pages, titres et descriptions uniques. Les ventes ouvrent prochainement ; aucun indicateur commercial publié avant.",
+        en: 'Live (2026) at boutique-de-boxe.com — 1,222 pages, unique titles and descriptions. Sales open soon; no commercial metric is published before then.',
+      },
+      // Craft facts — counted on the live sitemap, not client outcomes.
+      metrics: [
+        { value: '1 222', label: { fr: 'pages en ligne', en: 'pages live' } },
+        { value: '1 042', label: { fr: 'modèles au catalogue', en: 'models in the catalogue' } },
+        { value: 'MCP', label: { fr: 'outil pour les agents IA', en: 'tool for AI agents' } },
+      ],
+    },
+  },
+  {
+    slug: 'matos-de-boxe',
+    name: 'Matos de Boxe',
+    client: 'Matos de Boxe',
+    tagline: {
+      fr: 'Le matos des combattants',
+      en: 'The fighters’ gear',
+    },
+    description: {
+      fr: "Boutique spécialisée Metal Boxe — gants de boxe, gants MMA, protections et textile de combat. Une vitrine claire et lumineuse où le produit tient la scène, avec inscription à l'alerte d'ouverture des ventes.",
+      en: 'A specialist Metal Boxe store — boxing gloves, MMA gloves, protection and fight wear. A bright, clean storefront where the product holds the stage, with sign-up for the sales-opening alert.',
+    },
+    category: 'Commerce & Services',
+    tags: ['E-commerce', 'Catalogue', 'Metal Boxe', 'Sport', 'France'],
+    liveUrl: 'https://www.matos-de-boxe.fr/',
+    world: 'boxing-center',
+    color: '#B89B6A',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Astro', 'TypeScript'],
+    caseStudy: {
+      problem: {
+        fr: "Ouvrir une boutique spécialisée Metal Boxe où le produit est le héros, pas le gabarit.",
+        en: 'Opening a specialist Metal Boxe store where the product is the hero, not the template.',
+      },
+      solution: {
+        fr: "Une boutique Astro rapide : chaque produit photographié sur sa scène, rayons par discipline — boxe, MMA, protections, entraînement, textile —, guides de choix et recherche. La vente n'est pas encore ouverte : le site le dit, et inscrit le visiteur pour le prévenir.",
+        en: 'A fast Astro store: every product shot on its own stage, aisles by discipline — boxing, MMA, protection, training, apparel — buying guides and search. Sales are not open yet: the site says so, and signs visitors up to be told.',
+      },
+      outcome: {
+        fr: "En ligne (2026) sur matos-de-boxe.fr — 58 pages. Ouverture des ventes prochaine ; aucun indicateur commercial publié avant.",
+        en: 'Live (2026) at matos-de-boxe.fr — 58 pages. Sales open soon; no commercial metric is published before then.',
+      },
     },
   },
 
@@ -1047,8 +1385,18 @@ export const projects: Project[] = [
 // capture we own belongs to ONE specific salle's site, and EAM did not build
 // boxingcenter.fr itself. Mislabeling a salle shot as "the network" is a lie.
 const THUMBED = new Set([
-  'boxing-center-portet', // the 3D ring entry
-  'boxing-center-etats-unis', // les-zones spread (the maquette's own "Colosse" DA)
+  // Boxing Center ecosystem — recaptured from the LIVE domains 2026-10-03
+  // (image-complete gated, every frame eyeballed). 'boxing-center-proximite'
+  // sets its own thumb (the Colomiers site) in its entry.
+  'boxing-center-portet',
+  'boxing-center-etats-unis',
+  'boxing-center-minimes',
+  'boxing-center-st-cyprien',
+  'boxing-center-ramonville',
+  'tmbc',
+  'club-boxe-blagnac',
+  'boutique-de-boxe',
+  'matos-de-boxe',
   'box-plus', // the live boutique hero (image-complete gated capture)
   'kermhosting',
   'la-brigade-mobile',
@@ -1081,10 +1429,11 @@ const FEATURED_RANK: Record<string, number> = {
   kermhosting: 1,
   'the-911': 2,
   'boxing-center-portet': 3,
-  'la-brigade-mobile': 4,
-  'temps-dance': 5,
-  'mon-boum': 6,
-  'beldi-fusion': 7,
+  'boxing-center-etats-unis': 4,
+  'la-brigade-mobile': 5,
+  'temps-dance': 6,
+  'mon-boum': 7,
+  'beldi-fusion': 8,
 }
 export const featuredProjects = projects
   .filter((p) => p.isFeatured && !p.isInternal)
@@ -1092,7 +1441,13 @@ export const featuredProjects = projects
 export const publicProjects = projects.filter((p) => !p.isInternal)
 export const internalProjects = projects.filter((p) => p.isInternal)
 export const microdidactProjects = publicProjects.filter((p) => p.underMicrodidact)
-export const soloProjects = publicProjects.filter((p) => !p.underMicrodidact)
+/** Genuine solos — outside Microdidact AND outside any world on /work. */
+export const soloProjects = publicProjects.filter((p) => !p.underMicrodidact && !p.world)
+/** Sites actually online — a family entry counts each of its deployments. */
+export const liveSiteCount = publicProjects.reduce(
+  (n, p) => n + (p.liveUrl !== '#' ? (p.sites?.length ?? 1) : 0),
+  0,
+)
 export const getProject = (slug: string) => projects.find((p) => p.slug === slug)
 export const getProjectsByCategory = (category: ProjectCategory) =>
   publicProjects.filter((p) => p.category === category)

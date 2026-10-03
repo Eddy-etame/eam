@@ -154,6 +154,30 @@
     overflow: clip;
   }
 
+  /* Slow connections — the curtain is in the HTML, its ceremony is in the JS
+     bundle. While the bundle travels, the crest draws itself in plain CSS;
+     if it is still missing after 3.6s the curtain lifts by itself so the page
+     underneath (already rendered) is never held hostage. The preloader marks
+     itself [data-live] the instant its script runs, which ends both rules —
+     unless the lift has already begun, which it then lets finish. */
+  [data-preloader]:not([data-live]) {
+    animation: eam-curtain-failsafe 0.7s var(--ease-reveal) 3.6s forwards;
+  }
+  [data-preloader]:not([data-live]) [data-crest-draw] {
+    animation: eam-crest-draw 2s var(--ease-silk) 1.2s forwards;
+  }
+  /* The counter only counts once the script runs — a parked "0 %" under a
+     drawn crest reads as a stall. */
+  [data-preloader]:not([data-live]) [data-preloader-count] {
+    visibility: hidden;
+  }
+  @keyframes eam-crest-draw {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes eam-curtain-failsafe {
+    to { opacity: 0; visibility: hidden; }
+  }
+
   body {
     background-color: var(--c-deep);
     color: var(--c-ink);
@@ -166,20 +190,21 @@
 
   /* Chapter palette morph — when ChapterPalette swaps [data-theme] mid-scroll,
      backgrounds and static text tween instead of snapping. Interactive elements
-     keep their own faster transition-colors utilities (they win the cascade). */
+     keep their own faster transition-colors utilities (they win the cascade).
+     Scoped to the sections near the viewport (.is-near, set by ChapterPalette):
+     a transition on every heading and paragraph of the page cost a full style
+     pass per frame for the whole morph — the hitch at each chapter boundary. */
   body,
   header,
   footer,
-  main section,
-  .bg-deep,
-  .bg-surface,
-  .bg-surface-2 {
+  main section.is-near,
+  main section.is-near :is(.bg-deep, .bg-surface, .bg-surface-2) {
     transition:
-      background-color 0.9s var(--ease-silk),
-      border-color 0.9s var(--ease-silk);
+      background-color 0.7s var(--ease-silk),
+      border-color 0.7s var(--ease-silk);
   }
-  main h1, main h2, main h3, main h4, main p, main li, main blockquote {
-    transition: color 0.9s var(--ease-silk);
+  main section.is-near :is(h1, h2, h3, h4, p, li, blockquote) {
+    transition: color 0.7s var(--ease-silk);
   }
 
   /* Ambient gradients on a composited fixed layer — NOT background-attachment:
@@ -237,6 +262,16 @@
     opacity: 0.035;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    /* An explicit tile: without it the SVG (viewBox only) scales to the box,
+       and the browser rasterises turbulence at page width — slow first paint,
+       slow scroll. The noise is stitchable, so a 256px tile repeats seamlessly. */
+    background-size: 256px 256px;
+  }
+  /* The page-wide grain is a viewport-sized fixed layer, not a page-tall one:
+     the blend is composited once per frame over the screen, never over
+     thousands of pixels of document. */
+  body.grain::after {
+    position: fixed;
   }
 
   /* Gold-foil text — stops are per-theme tokens so the metal survives paper */
@@ -280,6 +315,15 @@
   }
   [data-reveal]:not(.is-visible) {
     will-change: opacity, transform;
+  }
+  /* Until its script takes over ([data-reveal-live]), no block may stay
+     hidden: on a slow connection — or with no script at all — every reveal
+     fades in by itself 5s after first paint. */
+  [data-reveal]:not([data-reveal-live]) {
+    animation: eam-reveal-failsafe 0.8s var(--ease-reveal) 5s forwards;
+  }
+  @keyframes eam-reveal-failsafe {
+    to { opacity: 1; transform: none; }
   }
   [data-reveal][data-reveal-dir='left']  { transform: translateX(-2.4rem); }
   [data-reveal][data-reveal-dir='right'] { transform: translateX(2.4rem); }
@@ -337,6 +381,8 @@
     transform-origin: left;
     transition: transform 1.1s var(--ease-gold) 0.2s;
   }
+  /* The card sits inside its Reveal wrapper — the wrapper carries .is-visible. */
+  .is-visible > .svc-card::before,
   .svc-card.is-visible::before { transform: scaleX(1); }
   .svc-card::after {
     content: '';

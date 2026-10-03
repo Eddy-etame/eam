@@ -6,7 +6,7 @@ import { publicProjects } from '@/lib/projects'
 /** hreflang codes must match the <link rel="alternate"> tags from buildMetadata. */
 const hreflang = (locale: Locale) => (locale === 'fr' ? 'fr-FR' : 'en-US')
 /** Bump when static content meaningfully changes — truthful lastmod beats new Date(). */
-const BUILD_DATE = new Date('2026-07-29')
+const BUILD_DATE = new Date('2026-10-03')
 
 /**
  * Bilingual sitemap. One entry per path (French URL as the canonical), each

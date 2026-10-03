@@ -15,6 +15,8 @@ import { CREST_PATHS, CREST_VIEWBOX } from './crest-paths'
  * first paint — and the inline <script> below hides it BEFORE paint on
  * repeat visits (the old version flashed "0%" for a frame on refresh).
  * A <noscript> rule hides it when JS is off so content stays reachable.
+ * On a slow connection the crest draws in CSS until this script arrives, and
+ * the curtain lifts by itself after 3.6s if it never does (see globals.css).
  */
 const SESSION_KEY = 'eam:intro-shown'
 
@@ -45,6 +47,24 @@ export function Preloader({ locale = 'fr' }: { locale?: string }) {
         return
       }
       sessionStorage.setItem(SESSION_KEY, '1')
+
+      // Slow connection: the CSS failsafe (globals.css) lifted the curtain —
+      // or is lifting it right now — before this bundle arrived. The visitor
+      // is already reading, so no ceremony over their shoulder: let the lift
+      // finish, then release.
+      const failsafe = el
+        .getAnimations()
+        .find((a) => (a as CSSAnimation).animationName === 'eam-curtain-failsafe')
+      if (failsafe && failsafe.effect?.getComputedTiming().progress != null) {
+        failsafe.finished.then(finish, finish)
+        return
+      }
+      // Take over from the CSS stand-in: freeze each line where the CSS draw
+      // left it, then mark the curtain live (ends the stand-in and the failsafe).
+      el.querySelectorAll<SVGPathElement>('[data-crest-draw]').forEach((path) => {
+        path.style.strokeDashoffset = getComputedStyle(path).strokeDashoffset
+      })
+      el.setAttribute('data-live', '')
       document.documentElement.classList.add('is-loading')
 
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -167,7 +187,7 @@ export function Preloader({ locale = 'fr' }: { locale?: string }) {
           ))}
         </svg>
 
-        <div className="flex items-baseline gap-1 font-mono text-xs tracking-widest text-gold">
+        <div data-preloader-count className="flex items-baseline gap-1 font-mono text-xs tracking-widest text-gold">
           <span ref={countRef}>0</span>
           <span className="text-muted">%</span>
         </div>

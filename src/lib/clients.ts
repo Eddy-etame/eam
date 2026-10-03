@@ -28,9 +28,14 @@ export const clients: Client[] = [
   { name: 'Boxing Center', logo: '/logos/boxing-center.png', slug: 'boxing-center' },
   { name: "Chicken Ben's", logo: '/logos/chicken-bens.png', slug: 'chicken-bens' },
   { name: 'JCBoyang Conseil', logo: '/logos/jcboyang-conseil.png', slug: 'jcboyang-conseil' },
+  // TMBC and Matos de Boxe: their own logo files (the club's nav logo, levelled
+  // to the plaque's white; the store's logo.png). Boutique de Boxe has no
+  // wordmark file — its header logo is typeset in the page — so no plaque.
+  { name: 'TMBC', logo: '/logos/tmbc.png', slug: 'tmbc' },
   { name: "Marché de Mo'", logo: '/logos/marche-de-mo.png', slug: 'marche-de-mo' },
   { name: 'THE 911', logo: '/logos/the-911.svg', slug: 'the-911', vector: true },
   { name: 'La Brigade Mobile', logo: '/logos/la-brigade-mobile.png', slug: 'la-brigade-mobile' },
+  { name: 'Matos de Boxe', logo: '/logos/matos-de-boxe.png', slug: 'matos-de-boxe' },
   { name: 'Mon Boum', logo: '/logos/mon-boum.png', slug: 'mon-boum' },
   { name: 'Beldi Fusion', logo: '/logos/beldi-fusion.png', slug: 'beldi-fusion' },
   { name: 'ID SKILLZ', logo: '/logos/id-skillz.png', slug: 'id-skillz' },

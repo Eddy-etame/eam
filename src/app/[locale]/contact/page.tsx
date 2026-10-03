@@ -7,7 +7,6 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { organizationSchema, breadcrumbSchema } from '@/lib/schema'
 import { ContactForm } from '@/components/sections/ContactForm'
 import { PricingBands } from '@/components/sections/PricingBands'
-import { CopyEmail } from '@/components/ui/CopyEmail'
 import { siteConfig } from '@/lib/site.config'
 import { team } from '@/lib/team'
 import { PageEntrance } from '@/components/ui/PageEntrance'
@@ -60,10 +59,11 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               </p>
             </PageEntrance>
 
-            <div className="mt-10">
-              <p className="text-mono-label text-faint">{dict.contact.emailLabel}</p>
-              <CopyEmail email={siteConfig.email} copiedLabel={dict.contact.copied} />
-            </div>
+            {/* The standing offer — said where the decision is made. */}
+            <p className="mt-6 max-w-md border-l-2 border-gold/50 pl-4 text-ink">
+              <span className="text-mono-label block text-gold/85">{dict.pricing.offer.label}</span>
+              <span className="mt-1.5 block leading-relaxed">{dict.pricing.offer.text}</span>
+            </p>
 
             {/* WhatsApp — the channel SMB owners actually use (FR/MA/Africa) */}
             <a
@@ -72,7 +72,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-mono-label mt-6 inline-flex items-center gap-2.5 rounded-full border border-gold/35 px-5 py-3 text-ink transition-colors duration-300 hover:bg-gold hover:text-deep"
+              className="text-mono-label mt-8 inline-flex items-center gap-2.5 rounded-full border border-gold/35 px-5 py-3 text-ink transition-colors duration-300 hover:bg-gold hover:text-deep"
             >
               <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-gold" />
               {dict.servicesPage.whatsappCta} <span aria-hidden>↗</span>
@@ -112,12 +112,13 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               {siteConfig.location.areaServed[locale].join(' · ')}
             </p>
           </div>
-          <div className="min-w-0">
+          {/* #devis — the offer bands below (and every ?sujet= link) land here */}
+          <div id="devis" className="min-w-0 scroll-mt-32">
             <ContactForm dict={dict} />
           </div>
         </div>
 
-        <PricingBands dict={dict} />
+        <PricingBands locale={locale} dict={dict} offer={false} />
       </div>
     </main>
   )

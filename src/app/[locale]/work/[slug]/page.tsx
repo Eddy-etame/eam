@@ -271,6 +271,47 @@ export default async function CaseStudyPage({
         </div>
       </div>
 
+      {/* A family entry — every deployment gets its capture and its own door */}
+      {project.sites?.length ? (
+        <div className="px-6 pb-24 md:px-12 lg:px-20">
+          <div className="mx-auto grid max-w-[1640px] gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-3">
+            {project.sites.map((site, i) => (
+              <Reveal key={site.url} delay={(i % 3) * 80}>
+                <a
+                  href={site.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="voir"
+                  className="group block"
+                >
+                  <span className="relative block aspect-[16/10] overflow-hidden rounded-lg border border-line">
+                    <Image
+                      src={site.thumb}
+                      alt={`${project.name} — ${site.name}`}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                      className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                    />
+                    <span
+                      aria-hidden
+                      className="absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition-colors duration-500 group-hover:ring-gold/60"
+                    />
+                  </span>
+                  <span className="mt-4 flex items-baseline justify-between gap-4">
+                    <span className="font-display text-xl text-ink transition-colors duration-300 group-hover:text-gold">
+                      {site.name}
+                    </span>
+                    <span className="text-mono-label inline-flex items-center gap-2 text-muted">
+                      {new URL(site.url).hostname.replace(/^www\./, '')} <span aria-hidden>↗</span>
+                    </span>
+                  </span>
+                </a>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
       {/* Screenshot gallery — renders as soon as gallery assets exist */}
       {cs.gallery?.length ? (
         <div className="px-6 pb-24 md:px-12 lg:px-20">

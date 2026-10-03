@@ -35,7 +35,7 @@ function footerLinks(locale: Locale): string {
     `- ${locale === 'fr' ? 'Réalisations' : 'Work'}: ${l('/work')}`,
     `- Services: ${l('/services')}`,
     `- ${locale === 'fr' ? 'Preuves (citations IA mesurées)' : 'Proof (measured AI citations)'}: ${l('/preuves')}`,
-    `- Contact: ${l('/contact')} · ${siteConfig.email} · WhatsApp https://wa.me/${siteConfig.whatsapp}`,
+    `- Contact: ${l('/contact')} · WhatsApp https://wa.me/${siteConfig.whatsapp}`,
     `- Machine index: ${abs('/llms.txt')} · ${abs('/sitemap.xml')}`,
   ].join('\n')
 }
@@ -93,7 +93,11 @@ function caseMarkdown(locale: Locale, slug: string): string | null {
     `- ${dict.common.category}: ${p.category}`,
     `- ${dict.common.year}: ${p.year}`,
     `- ${dict.common.stack}: ${p.techStack?.join(', ') ?? '—'}`,
-    ...(p.liveUrl !== '#' ? [`- ${dict.common.visitSite}: ${p.liveUrl}`] : []),
+    ...(p.sites
+      ? p.sites.map((site) => `- ${dict.common.visitSite} — ${site.name}: ${site.url}`)
+      : p.liveUrl !== '#'
+        ? [`- ${dict.common.visitSite}: ${p.liveUrl}`]
+        : []),
   ]
   if (cs) {
     lines.push(
@@ -123,7 +127,8 @@ function servicesHubMarkdown(locale: Locale): string {
     '',
     ...servicePages.map((s) => {
       const band = dict.pricing.bands[s.bandIndex]
-      return `- **${s.name[locale]}** — ${s.h1[locale]} (${locale === 'fr' ? 'à partir de' : 'from'} ${band.price}) → ${abs(`/${locale}/services/${s.slug}`)}`
+      const terms = band.price ? `${dict.pricing.from} ${band.price}` : dict.servicesPage.metaQuote
+      return `- **${s.name[locale]}** — ${s.h1[locale]} (${terms}) → ${abs(`/${locale}/services/${s.slug}`)}`
     }),
     footerLinks(locale),
   ]
@@ -136,7 +141,7 @@ function servicePageMarkdown(locale: Locale, slug: string): string | null {
   const dict = getDictionary(locale)
   const band = dict.pricing.bands[page.bandIndex]
   const lines: string[] = [
-    frontmatter(locale, `/services/${slug}`, `${page.name[locale]} — ${band.price}`),
+    frontmatter(locale, `/services/${slug}`, `${page.name[locale]} — ${band.price ?? dict.servicesPage.metaQuote}`),
     page.h1[locale],
     '',
     page.lead[locale],
@@ -196,13 +201,19 @@ function contactMarkdown(locale: Locale): string {
     frontmatter(locale, '/contact', dict.contact.title),
     dict.contact.lead,
     '',
-    `- Email: ${siteConfig.email}`,
+    `- ${locale === 'fr' ? 'Formulaire' : 'Form'}: ${abs(`/${locale}/contact`)}`,
     `- WhatsApp: https://wa.me/${siteConfig.whatsapp}`,
     `- ${dict.contact.responseChip}`,
+    `- ${dict.pricing.offer.label}: ${dict.pricing.offer.text}`,
     '',
-    `## ${locale === 'fr' ? 'Tarifs planchers (HT)' : 'Price floors (excl. VAT)'}`,
+    `## ${dict.pricing.title}`,
     '',
-    ...dict.pricing.bands.map((b) => `- ${b.name}: ${b.price}`),
+    dict.pricing.intro,
+    '',
+    ...dict.pricing.bands.map(
+      (b) =>
+        `- ${b.name}: ${b.price ? `${dict.pricing.from} ${b.price}` : dict.servicesPage.metaQuote} → ${abs(`/${locale}/contact?sujet=${b.sujet}`)}`,
+    ),
     footerLinks(locale),
   ]
   return lines.join('\n')

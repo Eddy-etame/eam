@@ -6,15 +6,16 @@ import { sujetLabels } from '@/lib/sujets'
 import type { Dictionary } from '@/i18n/dictionaries'
 
 /**
- * Real contact form. POSTs to /api/contact (Resend-backed once RESEND_API_KEY
- * is set); while the endpoint is unconfigured (501) it falls back to a
- * prefilled mailto — visibly, with status feedback, never a silent failure.
- * States: idle → sending → sent | fallback | error. aria-live announces them.
+ * The contact form — the one conversion surface every offer leads to. POSTs
+ * to /api/contact, which relays to Inlet. States: idle → sending → sent |
+ * error, announced through aria-live. On failure the visitor is never left
+ * with nothing: the message stays in the form and WhatsApp is one tap away.
  */
-type Status = 'idle' | 'sending' | 'sent' | 'fallback' | 'error'
+type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 export function ContactForm({ dict }: { dict: Dictionary }) {
   const f = dict.contact.form
+  const fr = dict.nav.home === 'Accueil'
   const [data, setData] = useState({ name: '', email: '', company: '', message: '', website: '' })
   const [status, setStatus] = useState<Status>('idle')
 
@@ -22,25 +23,45 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
   // arrive here with context; the lead should never retype it. Seeds the
   // message once, only while it is still empty (post-hydration, static-safe).
   useEffect(() => {
-    const sujet = new URLSearchParams(window.location.search).get('sujet')
-    if (!sujet) return
-    const fr = dict.nav.home === 'Accueil'
-    const label = sujetLabels[sujet]?.[fr ? 'fr' : 'en']
-    if (!label) return
-    const seed = `${fr ? 'Sujet' : 'Subject'} : ${label}\n\n`
-    setData((prev) => (prev.message ? prev : { ...prev, message: seed }))
-  }, [dict])
+    const seedFor = (sujet: string | null) => {
+      const label = sujet ? sujetLabels[sujet]?.[fr ? 'fr' : 'en'] : undefined
+      return label ? `${fr ? 'Sujet' : 'Subject'} : ${label}\n\n` : null
+    }
+
+    const fromUrl = seedFor(new URLSearchParams(window.location.search).get('sujet'))
+    if (fromUrl) setData((prev) => (prev.message ? prev : { ...prev, message: fromUrl }))
+
+    // The offer bands on this very page: pick one and the form takes its
+    // subject in place — a previous subject line is swapped, anything the
+    // visitor already typed is kept — then the form comes to them.
+    const onPick = (e: MouseEvent) => {
+      const link = (e.target as Element | null)?.closest<HTMLAnchorElement>('a[data-sujet]')
+      const seed = seedFor(link?.dataset.sujet ?? null)
+      if (!link || !seed) return
+      e.preventDefault()
+      setData((prev) => {
+        const old = prev.message.match(/^(?:Sujet|Subject) : [^\n]*\n\n?/)
+        if (old) return { ...prev, message: seed + prev.message.slice(old[0].length) }
+        return prev.message ? prev : { ...prev, message: seed }
+      })
+      window.history.replaceState(null, '', link.getAttribute('href'))
+      const form = document.getElementById('devis')
+      // Ride the page's own smooth scroll when it runs (128px = scroll-mt-32).
+      if (form && window.__eamLenis) window.__eamLenis.scrollTo(form, { offset: -128 })
+      else form?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      document.getElementById('name')?.focus({ preventScroll: true })
+    }
+    document.addEventListener('click', onPick)
+    return () => document.removeEventListener('click', onPick)
+  }, [fr])
 
   const set =
     (key: keyof typeof data) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
       setData((prev) => ({ ...prev, [key]: e.target.value }))
 
-  const mailtoHref = () => {
-    const subject = `[EAM] ${data.name || 'Projet'}`
-    const who = [data.name, data.company].filter(Boolean).join(' — ')
-    const body = `${who}\n${data.email}\n\n${data.message}`
-    return `mailto:${siteConfig.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-  }
+  const whatsappHref = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(
+    fr ? 'Bonjour EAM — je vous contacte au sujet de mon projet.' : "Hello EAM — I'm reaching out about my project.",
+  )}`
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -50,17 +71,9 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, lang: fr ? 'fr' : 'en' }),
       })
-      if (res.ok) {
-        setStatus('sent')
-      } else if (res.status === 501) {
-        // Endpoint not configured yet → open the visitor's mail client, visibly.
-        setStatus('fallback')
-        window.location.href = mailtoHref()
-      } else {
-        setStatus('error')
-      }
+      setStatus(res.ok ? 'sent' : 'error')
     } catch {
       setStatus('error')
     }
@@ -77,10 +90,12 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
         </p>
         <p className="mt-5 text-xl text-ink">{f.success}</p>
         <a
-          href={`mailto:${siteConfig.email}`}
-          className="text-mono-label mt-6 inline-block text-muted transition-colors hover:text-ink"
+          href={whatsappHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-mono-label mt-6 inline-flex items-center gap-2 text-muted transition-colors hover:text-ink"
         >
-          {siteConfig.email}
+          {dict.servicesPage.whatsappCta} <span aria-hidden>↗</span>
         </a>
       </div>
     )
@@ -96,6 +111,7 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
           id="name"
           name="name"
           required
+          autoComplete="name"
           value={data.name}
           onChange={set('name')}
           placeholder={f.namePlaceholder}
@@ -111,6 +127,7 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
           name="email"
           type="email"
           required
+          autoComplete="email"
           value={data.email}
           onChange={set('email')}
           placeholder={f.emailPlaceholder}
@@ -124,6 +141,7 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
         <input
           id="company"
           name="company"
+          autoComplete="organization"
           value={data.company}
           onChange={set('company')}
           className={field}
@@ -167,12 +185,16 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
         {status === 'error' && (
           <span className="text-[#E5643E]">
             {f.error}{' '}
-            <a href={mailtoHref()} className="underline decoration-gold/60 underline-offset-2">
-              {siteConfig.email}
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-gold/60 underline-offset-2"
+            >
+              WhatsApp ↗
             </a>
           </span>
         )}
-        {status === 'fallback' && <span className="text-faint">{f.note}</span>}
       </p>
     </form>
   )

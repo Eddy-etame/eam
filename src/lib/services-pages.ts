@@ -4,7 +4,7 @@ import type { Locale } from '@/i18n/config'
  * The four commercial landing pages — the lead engine. Every line is
  * OUTCOME-LED (the client’s gain, not our identity) and truth-audited:
  * deliverables are what we actually ship, proofs are real case slugs with
- * captures, floors mirror dict.pricing. The `sujet` key prefills the contact
+ * captures; the only public figure (SEO & GEO) mirrors dict.pricing. The `sujet` key prefills the contact
  * form. (Conversion audit 2026-07-16: these pages are the missing funnel.)
  */
 
@@ -13,7 +13,7 @@ type L = Record<Locale, string>
 export interface ServicePage {
   slug: string
   sujet: string
-  /** Index into dict.pricing.bands for the floor shown on the page. */
+  /** Index into dict.pricing.bands — its price (when one is public) shows on the page. */
   bandIndex: number
   name: L
   /** Outcome-led H1 — what the CLIENT gets. */
@@ -76,8 +76,8 @@ export const servicePages: ServicePage[] = [
       {
         q: { fr: 'Combien coûte un site vitrine ?', en: 'How much does a showcase site cost?' },
         a: {
-          fr: 'À partir de 2 000 € HT. Chaque projet reçoit un devis précis et gratuit sous 24 à 48 heures.',
-          en: 'From €2,000 excl. VAT. Every project gets a precise, free quote within 24–48 hours.',
+          fr: 'Chaque site vitrine est chiffré sur-mesure, selon le nombre de pages, les fonctionnalités et les contenus à créer. Décrivez-nous votre projet : vous recevez un devis précis et gratuit sous 24 à 48 heures, sans engagement.',
+          en: 'Every showcase site is priced to measure — number of pages, features, content to create. Tell us about your project: you get a precise, free quote within 24–48 hours, with no commitment.',
         },
       },
       {
@@ -145,8 +145,8 @@ export const servicePages: ServicePage[] = [
       {
         q: { fr: 'Combien coûte une boutique en ligne ?', en: 'How much does an online store cost?' },
         a: {
-          fr: 'À partir de 3 000 € HT selon le catalogue et les intégrations. Devis précis et gratuit sous 24 à 48 heures.',
-          en: 'From €3,000 excl. VAT depending on catalogue and integrations. Precise, free quote within 24–48 hours.',
+          fr: 'Chaque boutique est chiffrée selon son catalogue et ses intégrations — paiement, stock, livraison. Décrivez-nous la vôtre : vous recevez un devis précis et gratuit sous 24 à 48 heures, sans engagement.',
+          en: 'Every store is priced on its catalogue and integrations — payment, stock, delivery. Tell us about yours: you get a precise, free quote within 24–48 hours, with no commitment.',
         },
       },
       {
@@ -286,8 +286,8 @@ export const servicePages: ServicePage[] = [
       {
         q: { fr: 'Combien coûte une refonte ?', en: 'How much does a rebuild cost?' },
         a: {
-          fr: "À partir de 2 000 € HT selon l’existant. L’audit initial est gratuit et vous appartient, même si nous ne travaillons pas ensemble.",
-          en: 'From €2,000 excl. VAT depending on the existing site. The initial audit is free and yours to keep, even if we never work together.',
+          fr: "Le prix d’une refonte dépend de l’existant : taille du site, contenus à reprendre, fonctionnalités. L’audit initial est gratuit et vous appartient, même si nous ne travaillons pas ensemble — le devis suit sous 24 à 48 heures.",
+          en: 'A rebuild is priced on what exists: site size, content to carry over, features. The initial audit is free and yours to keep, even if we never work together — the quote follows within 24–48 hours.',
         },
       },
       {

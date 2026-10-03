@@ -83,9 +83,8 @@ export default async function WorkPage({ params }: { params: Promise<{ locale: s
             // chunk — the gallery receives exactly what it renders.
             data={{
               bc: publicProjects.find((p) => p.slug === 'boxing-center'),
-              solos: soloProjects.filter(
-                (p) => !p.slug.startsWith('boxing-center') && p.slug !== 'box-plus',
-              ),
+              // soloProjects already leaves out world members (Project.world).
+              solos: soloProjects,
               internals: internalProjects,
               microdidactCount: microdidactProjects.length,
             }}

@@ -20,8 +20,8 @@ export default async function OpengraphImage({
     eyebrow: lang === 'fr' ? 'Le monde Boxing Center' : 'The Boxing Center world',
     title:
       lang === 'fr'
-        ? 'Cinq salles, une boutique. Une seule obsession.'
-        : 'Five gyms, one store. One obsession.',
+        ? 'Cinq salles, dix-neuf pièces en ligne. Une seule obsession.'
+        : 'Five gyms, nineteen live pieces. One obsession.',
     accent: '#E8001C',
   })
 }

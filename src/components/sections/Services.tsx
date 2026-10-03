@@ -44,7 +44,8 @@ export function Services({ locale, dict }: { locale: Locale; dict: Dictionary })
                     </span>
                     <h3 className="mt-6 font-display text-2xl text-ink">{item.title}</h3>
                     <p className="mt-3 leading-relaxed text-muted">{item.description}</p>
-                    <span className="text-mono-label mt-auto inline-flex items-center gap-2 pt-6 text-gold opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    {/* Touch has no hover: the door stays marked there. */}
+                    <span className="text-mono-label mt-auto inline-flex items-center gap-2 pt-6 text-gold opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100 [@media(hover:none)]:opacity-100">
                       {dict.common.viewProject}
                       <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
                         →

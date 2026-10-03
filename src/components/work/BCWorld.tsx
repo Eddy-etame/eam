@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { gsap, SplitText, useGSAP } from '@/lib/gsap'
 import { BrowserFrame } from '@/components/ui/BrowserFrame'
+import { FeaturedRail } from '@/components/work/FeaturedRail'
 import { localizedPath } from '@/lib/seo'
 import type { Locale } from '@/i18n/config'
 import type { Dictionary } from '@/i18n/dictionaries'
@@ -13,26 +14,186 @@ import type { Dictionary } from '@/i18n/dictionaries'
 const BC_NAVY = '#1E2044'
 const BC_RED = '#E8001C'
 
-/** The five salles — captures of the delivered maquettes. Order = the tour.
- *  imgM = the phone-shaped capture, shown below `sm` so the bands never squish
- *  a desktop screenshot on mobile. */
-// `site` = the LIVE deployment (all five verified live 2026-07-29). Salles
-// without a case page get the whole band as their external door.
-const SALLES: { img: string; imgM: string; href?: string; site: string; numeral: string }[] = [
-  { img: '/thumbs/bc-portet.jpg', imgM: '/thumbs/bc-portet-m.jpg', href: 'work/boxing-center-portet', site: 'https://boxing-center-portet.vercel.app', numeral: 'I' },
-  { img: '/thumbs/bc-etats-unis.jpg', imgM: '/thumbs/bc-etats-unis-m.jpg', href: 'work/boxing-center-etats-unis', site: 'https://etas-unis.vercel.app', numeral: 'II' },
-  { img: '/thumbs/bc-minimes.jpg', imgM: '/thumbs/bc-minimes-m.jpg', site: 'https://bc-minimes.vercel.app', numeral: 'III' },
-  { img: '/thumbs/bc-st-cyprien.jpg', imgM: '/thumbs/bc-st-cyprien-m.jpg', site: 'https://bc-st-cyprien.vercel.app', numeral: 'IV' },
-  { img: '/thumbs/bc-ramonville.jpg', imgM: '/thumbs/bc-ramonville-m.jpg', site: 'https://bc-ramonville.vercel.app', numeral: 'V' },
+/** A full-bleed site band: desktop capture, phone-shaped capture below `sm`
+ *  (so a band never squishes a desktop screenshot on mobile), the case-study
+ *  route and the LIVE site on its own bought domain (all probed 2026-10-03). */
+interface BandMeta {
+  img: string
+  imgM: string
+  href: string
+  site: string
+  numeral: string
+}
+
+const band = (slug: string, site: string, numeral: string): BandMeta => ({
+  img: `/thumbs/${slug}.jpg`,
+  imgM: `/thumbs/${slug}-m.jpg`,
+  href: `work/${slug}`,
+  site,
+  numeral,
+})
+
+/** Order = the tour; each array mirrors its dict.bcWorld.*.items order. */
+const SALLES = [
+  band('boxing-center-portet', 'https://boxing-center-portet.fr/', 'I'),
+  band('boxing-center-etats-unis', 'https://clubmma.fr/', 'II'),
+  band('boxing-center-minimes', 'https://boxe-toulouse.com/', 'III'),
+  band('boxing-center-st-cyprien', 'https://club-boxe-toulouse.com/', 'IV'),
+  band('boxing-center-ramonville', 'https://mmatoulouse.com/', 'V'),
 ]
 
+const CLUBS = [
+  band('tmbc', 'https://toulouse-minimes-boxing-club.fr/', 'VI'),
+  band('club-boxe-blagnac', 'https://www.club-boxe-blagnac.fr/', 'VII'),
+]
+
+const STORES = [
+  band('boutique-de-boxe', 'https://www.boutique-de-boxe.com/', 'II'),
+  band('matos-de-boxe', 'https://www.matos-de-boxe.fr/', 'III'),
+]
+
+/** The seven proximity sites — one per town, each on its own domain. */
+const PROXIMITE = ['colomiers', 'muret', 'cugnaux', 'tournefeuille', 'labege', 'lunion', 'castelginest'].map(
+  (town) => ({
+    img: `/thumbs/bc-sat-${town}.jpg`,
+    imgM: `/thumbs/bc-sat-${town}-m.jpg`,
+    site: `https://www.boxingcenter-${town}.fr/`,
+    domain: `boxingcenter-${town}.fr`,
+  }),
+)
+
 /** The official e-boutique — live, EAM-built (Stripe + PrestaShop bridge + Deciplus sync). */
-const BOUTIQUE_URL = 'https://box-plus.vercel.app/'
+const BOUTIQUE_URL = 'https://boutique.boxingcenter.fr/'
+
+function SiteBand({
+  locale,
+  meta,
+  label,
+  index,
+  copy,
+  caseCta,
+  visitCta,
+  right,
+  prefix = '',
+}: {
+  locale: Locale
+  meta: BandMeta
+  /** "Salle" / "Club" / "Boutique" — printed with the running number. */
+  label: string
+  index: number
+  copy: { name: string; place: string; line: string }
+  caseCta: string
+  visitCta: string
+  /** Copy block on the right (alternates down the tour). */
+  right: boolean
+  /** Spoken before the name in alt/aria only — the band prints the bare name big. */
+  prefix?: string
+}) {
+  const fullName = `${prefix}${copy.name}`
+  const alt =
+    locale === 'fr'
+      ? `${fullName} — capture du site conçu par EAM`
+      : `${fullName} — capture of the site built by EAM`
+  return (
+    // The whole band is the door to the case study (a stretched link); the
+    // caption sits above it and carries both doors side by side — the case
+    // study and the LIVE site. Siblings, never nested anchors.
+    <div
+      data-bc-band
+      className="group relative h-[80vh] min-h-[520px] w-full overflow-hidden border-t border-line"
+    >
+      {/* Oversized inner frame — the parallax travel never shows edges.
+          These captures ARE content (the sites EAM built) — real alts. */}
+      <div data-bc-band-img className="absolute -inset-y-[9%] inset-x-0">
+        <Image src={meta.imgM} alt={alt} fill sizes="100vw" className="object-cover object-top sm:hidden" />
+        <Image src={meta.img} alt={alt} fill sizes="100vw" className="hidden object-cover object-top sm:block" />
+      </div>
+      {/* Legibility scrim (desktop): solid house navy under the caption, so
+          the capture's own headline never shows through our words, then a
+          long fall-off that leaves the other half of the site untouched. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 hidden sm:block"
+        style={{
+          background: `linear-gradient(${right ? '270deg' : '90deg'}, ${BC_NAVY} 0%, ${BC_NAVY} 27%, ${BC_NAVY}E0 39%, rgba(13,17,40,0.5) 54%, transparent 74%), linear-gradient(0deg, rgba(7,13,24,0.6) 0%, transparent 32%)`,
+        }}
+      />
+      {/* Mobile: a bottom-weighted scrim — the phone capture reads up top
+          (the striking visual), the caption sits on darkness so it never
+          fights the capture's own hero text. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 sm:hidden"
+        style={{
+          background:
+            'linear-gradient(0deg, rgb(7,13,24) 0%, rgb(7,13,24) 34%, rgba(7,13,24,0.9) 43%, rgba(7,13,24,0.45) 55%, transparent 74%)',
+        }}
+      />
+      {/* Ghost numeral — Fraunces, drifting against the scroll */}
+      <span
+        data-bc-numeral
+        aria-hidden
+        className={`pointer-events-none absolute top-1/2 -translate-y-1/2 select-none font-display leading-none text-white/[0.07] ${right ? 'left-6 md:left-16' : 'right-6 md:right-16'}`}
+        style={{ fontSize: 'clamp(9rem, 26vw, 24rem)' }}
+      >
+        {meta.numeral}
+      </span>
+
+      <Link
+        href={localizedPath(locale, meta.href)}
+        data-cursor="voir"
+        tabIndex={-1}
+        aria-hidden
+        className="absolute inset-0 z-10"
+      />
+
+      <div
+        data-bc-band-copy
+        className={`pointer-events-none absolute bottom-0 z-20 flex max-w-xl flex-col gap-4 p-8 md:p-14 ${right ? 'right-0 items-end text-right' : 'left-0 items-start text-left'}`}
+      >
+        <p className="text-mono-label text-ink/70">
+          <span style={{ color: BC_RED }}>{`${label} 0${index}`}</span>
+          <span className="px-2 text-faint" aria-hidden>
+            ·
+          </span>
+          {copy.place}
+        </p>
+        <p className="font-display text-3xl leading-none text-ink md:text-[clamp(2.75rem,5.5vw,4.5rem)]">
+          {copy.name}
+        </p>
+        {/* The long line stays off-screen on mobile — the phone capture is
+            the hero there, the caption is a compact label. */}
+        <p className="hidden text-base leading-relaxed text-ink/80 sm:block md:text-lg">{copy.line}</p>
+        <div
+          className={`pointer-events-auto mt-2 flex flex-wrap items-center gap-x-6 gap-y-3 ${right ? 'justify-end' : ''}`}
+        >
+          <Link
+            href={localizedPath(locale, meta.href)}
+            aria-label={`${caseCta} — ${fullName}`}
+            className="text-mono-label -my-3 inline-flex items-center gap-2 py-3 text-gold transition-colors duration-300 hover:text-gold-bright group-hover:text-gold-bright"
+          >
+            {caseCta} <span aria-hidden>→</span>
+          </Link>
+          <a
+            href={meta.site}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${visitCta} — ${fullName}`}
+            className="text-mono-label inline-flex items-center gap-2 rounded-full border border-line-strong bg-deep/60 px-4 py-2 text-ink backdrop-blur-sm transition-colors duration-300 hover:border-gold/60 hover:text-gold sm:px-5 sm:py-2.5"
+          >
+            {visitCta} <span aria-hidden>↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 /**
  * The Boxing Center world — EAM's richest direct engagement as a cinematic
- * journey, not a grid. An iris entrance over the Colosse monolith, five
- * full-bleed salle bands with inner parallax, a foil stat band and a
+ * journey, not a grid. An iris entrance on the house colours, full-bleed
+ * bands with inner parallax for the salles, the clubs and the stores, a
+ * pinned rail for the seven proximity sites, a foil stat band and a
  * provenance close. Web and code only — the print work is out of scope.
  *
  * Doctrine: every string comes from dict.bcWorld; all copy and links live in
@@ -92,9 +253,9 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
         .from('[data-bc-hint]', { autoAlpha: 0, y: -8, duration: 0.6 }, '-=0.4')
         .from('[data-bc-back]', { autoAlpha: 0, y: 16, duration: 0.6 }, '-=0.3')
 
-      // ── CINQ SALLES — inner image parallax per band ─────────────────────
-      gsap.utils.toArray<HTMLElement>('[data-bc-band]').forEach((band) => {
-        const img = band.querySelector<HTMLElement>('[data-bc-band-img]')
+      // ── THE BANDS — inner image parallax per band ───────────────────────
+      gsap.utils.toArray<HTMLElement>('[data-bc-band]').forEach((bandEl) => {
+        const img = bandEl.querySelector<HTMLElement>('[data-bc-band-img]')
         if (img) {
           gsap.fromTo(
             img,
@@ -102,11 +263,11 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
             {
               yPercent: 7,
               ease: 'none',
-              scrollTrigger: { trigger: band, start: 'top bottom', end: 'bottom top', scrub: true },
+              scrollTrigger: { trigger: bandEl, start: 'top bottom', end: 'bottom top', scrub: true },
             },
           )
         }
-        const numeral = band.querySelector<HTMLElement>('[data-bc-numeral]')
+        const numeral = bandEl.querySelector<HTMLElement>('[data-bc-numeral]')
         if (numeral) {
           gsap.fromTo(
             numeral,
@@ -114,11 +275,11 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
             {
               yPercent: -24,
               ease: 'none',
-              scrollTrigger: { trigger: band, start: 'top bottom', end: 'bottom top', scrub: true },
+              scrollTrigger: { trigger: bandEl, start: 'top bottom', end: 'bottom top', scrub: true },
             },
           )
         }
-        const content = band.querySelector<HTMLElement>('[data-bc-band-copy]')
+        const content = bandEl.querySelector<HTMLElement>('[data-bc-band-copy]')
         if (content) {
           gsap.fromTo(
             content,
@@ -128,7 +289,7 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
               y: 0,
               duration: 1,
               ease: 'eam-reveal',
-              scrollTrigger: { trigger: band, start: 'top 62%' },
+              scrollTrigger: { trigger: bandEl, start: 'top 62%' },
             },
           )
         }
@@ -247,201 +408,212 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
             <p className="mt-6 max-w-2xl text-lg text-muted">{d.salles.intro}</p>
           </header>
 
-          {d.salles.items.map((salle, i) => {
-            const meta = SALLES[i]
-            const right = i % 2 === 1
-            const inner = (
-              <>
-                {/* Oversized inner frame — the parallax travel never shows edges.
-                    These captures ARE content (the sites EAM built) — real alts.
-                    Phone-shaped capture below sm; desktop capture at sm+. */}
-                <div data-bc-band-img className="absolute -inset-y-[9%] inset-x-0">
-                  <Image
-                    src={meta.imgM}
-                    alt={`Boxing Center ${salle.name} — capture du site conçu par EAM`}
-                    fill
-                    sizes="100vw"
-                    className="object-cover object-top sm:hidden"
-                  />
-                  <Image
-                    src={meta.img}
-                    alt={`Boxing Center ${salle.name} — capture du site conçu par EAM`}
-                    fill
-                    sizes="100vw"
-                    className="hidden object-cover object-top sm:block"
-                  />
-                </div>
-                {/* Legibility scrim, anchored to the copy side (desktop). */}
-                <div
-                  aria-hidden
-                  className="absolute inset-0 hidden sm:block"
-                  style={{
-                    background: `linear-gradient(${right ? '270deg' : '90deg'}, ${BC_NAVY}E6 0%, rgba(7,13,24,0.55) 46%, transparent 78%), linear-gradient(0deg, rgba(7,13,24,0.72) 0%, transparent 38%)`,
-                  }}
-                />
-                {/* Mobile: a bottom-weighted scrim — the phone capture reads up
-                    top (the striking visual), the caption sits on darkness so it
-                    never fights the capture's own hero text. */}
-                <div
-                  aria-hidden
-                  className="absolute inset-0 sm:hidden"
-                  style={{
-                    background:
-                      'linear-gradient(0deg, rgba(7,13,24,0.94) 4%, rgba(7,13,24,0.62) 42%, transparent 80%)',
-                  }}
-                />
-                {/* Ghost numeral — Fraunces, drifting against the scroll */}
-                <span
-                  data-bc-numeral
-                  aria-hidden
-                  className={`pointer-events-none absolute top-1/2 -translate-y-1/2 select-none font-display leading-none text-white/[0.07] ${right ? 'left-6 md:left-16' : 'right-6 md:right-16'}`}
-                  style={{ fontSize: 'clamp(9rem, 26vw, 24rem)' }}
-                >
-                  {meta.numeral}
-                </span>
-
-                <div
-                  data-bc-band-copy
-                  className={`absolute bottom-0 flex max-w-xl flex-col gap-4 p-8 md:p-14 ${right ? 'right-0 items-end text-right' : 'left-0 items-start text-left'}`}
-                >
-                  <p className="text-mono-label text-ink/70">
-                    <span style={{ color: BC_RED }}>{`Salle 0${i + 1}`}</span>
-                    <span className="px-2 text-faint" aria-hidden>
-                      ·
-                    </span>
-                    {salle.place}
-                  </p>
-                  <p className="font-display text-3xl leading-none text-ink md:text-[clamp(2.75rem,5.5vw,4.5rem)]">
-                    {salle.name}
-                  </p>
-                  {/* The long line stays compact off-screen on mobile — the phone
-                      capture is the hero there, the caption is a compact label. */}
-                  <p className="hidden text-base leading-relaxed text-ink/80 sm:block md:text-lg">
-                    {salle.line}
-                  </p>
-                  <span className="text-mono-label mt-2 inline-flex items-center gap-2 text-gold transition-colors duration-300 group-hover:text-gold-bright">
-                    {meta.href ? (
-                      <>
-                        {d.salles.caseCta} <span aria-hidden>→</span>
-                      </>
-                    ) : (
-                      <>
-                        {d.salles.visitCta} <span aria-hidden>↗</span>
-                      </>
-                    )}
-                  </span>
-                </div>
-              </>
-            )
-
-            const bandClass =
-              'group relative block h-[80vh] min-h-[520px] w-full overflow-hidden border-t border-line'
-
-            return meta.href ? (
-              // Case-backed salles: the band enters the case study; the LIVE
-              // site link floats as a sibling overlay (never a nested anchor),
-              // on the corner opposite the copy block.
-              <div key={salle.name} className="relative">
-                <Link
-                  data-bc-band
-                  data-cursor="voir"
-                  href={localizedPath(locale, meta.href)}
-                  className={bandClass}
-                  aria-label={`Boxing Center ${salle.name} — ${salle.place}`}
-                >
-                  {inner}
-                </Link>
-                <a
-                  href={meta.site}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`text-mono-label absolute bottom-6 z-20 hidden items-center gap-2 rounded-full border border-line-strong bg-deep/70 px-5 py-2.5 text-ink backdrop-blur-sm transition-colors duration-300 hover:border-gold/60 hover:text-gold sm:inline-flex md:bottom-10 ${right ? 'left-8 md:left-14' : 'right-8 md:right-14'}`}
-                >
-                  {d.salles.visitCta} <span aria-hidden>↗</span>
-                </a>
-              </div>
-            ) : (
-              // No case page: the LIVE site IS the destination — the whole
-              // band finally has a door.
-              <a
-                key={salle.name}
-                data-bc-band
-                data-cursor="voir"
-                href={meta.site}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={bandClass}
-                aria-label={`Boxing Center ${salle.name} — ${salle.place} (site en ligne)`}
-              >
-                {inner}
-              </a>
-            )
-          })}
+          {d.salles.items.map((salle, i) => (
+            <SiteBand
+              key={salle.name}
+              locale={locale}
+              meta={SALLES[i]}
+              label={d.salles.label}
+              index={i + 1}
+              copy={salle}
+              prefix="Boxing Center "
+              caseCta={d.caseCta}
+              visitCta={d.visitCta}
+              right={i % 2 === 1}
+            />
+          ))}
         </section>
 
-        {/* ── CHAPTER II — BOX PLUS, the official e-boutique (live) ──────── */}
+        {/* ── CHAPTER II — the two English-boxing clubs, same band grammar ── */}
+        <section className="border-t border-line">
+          <header data-bc-reveal className="mx-auto max-w-[1640px] px-6 py-20 md:px-12 md:py-24 lg:px-20">
+            <p className="text-mono-label" style={{ color: BC_RED }}>
+              {d.clubs.eyebrow}
+            </p>
+            <h2 className="mt-5 max-w-3xl text-3xl">
+              <span className="foil">{d.clubs.title}</span>
+            </h2>
+            <p className="mt-6 max-w-2xl text-lg text-muted">{d.clubs.intro}</p>
+          </header>
+
+          {d.clubs.items.map((club, i) => (
+            <SiteBand
+              key={club.name}
+              locale={locale}
+              meta={CLUBS[i]}
+              label={d.clubs.label}
+              index={i + 1}
+              copy={club}
+              caseCta={d.caseCta}
+              visitCta={d.visitCta}
+              // Keeps alternating after the five salles (the fifth sat left).
+              right={i % 2 === 0}
+            />
+          ))}
+        </section>
+
+        {/* ── CHAPTER III — the seven proximity sites: a rail you travel, town
+            by town (pinned scrub on desktop, snap carousel on touch) ──────── */}
         <section className="border-t border-line px-6 py-20 md:px-12 md:py-28 lg:px-20">
           <div className="mx-auto max-w-[1640px]">
-            <header data-bc-reveal>
-              <p className="text-mono-label" style={{ color: BC_RED }}>
-                {d.boutique.eyebrow}
-              </p>
-              <div className="mt-5 flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
-                <h2 className="font-display text-3xl leading-none text-ink md:text-[clamp(2.75rem,5.5vw,4.5rem)]">
-                  {d.boutique.name}
+            <header data-bc-reveal className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
+              <div className="max-w-3xl">
+                <p className="text-mono-label" style={{ color: BC_RED }}>
+                  {d.proximite.eyebrow}
+                </p>
+                <h2 className="mt-5 text-3xl">
+                  <span className="foil">{d.proximite.title}</span>
                 </h2>
-                <p className="text-mono-label text-muted">{d.boutique.tag}</p>
+                <p className="mt-6 max-w-2xl text-lg text-muted">{d.proximite.intro}</p>
               </div>
-              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{d.boutique.line}</p>
+              <Link
+                href={localizedPath(locale, 'work/boxing-center-proximite')}
+                className="text-mono-label -my-3 inline-flex items-center gap-2 py-3 text-gold transition-colors hover:text-gold-bright"
+              >
+                {d.caseCta} <span aria-hidden>→</span>
+              </Link>
             </header>
 
-            <div data-bc-reveal className="mt-12">
-              <BrowserFrame url={BOUTIQUE_URL}>
-                {/* Phone-shaped store capture on mobile (taller frame), the
-                    desktop capture at sm+ (16/10). */}
-                <div className="relative aspect-[3/4] w-full sm:hidden">
-                  <Image
-                    src="/thumbs/box-plus-m.jpg"
-                    alt={`Box Plus — ${d.boutique.tag}`}
-                    fill
-                    sizes="100vw"
-                    className="object-cover object-top"
-                  />
-                </div>
-                <div className="relative hidden aspect-[16/10] w-full sm:block">
-                  <Image
-                    src="/thumbs/bc-box-plus.jpg"
-                    alt={`Box Plus — ${d.boutique.tag}`}
-                    fill
-                    sizes="(max-width: 1640px) 100vw, 1640px"
-                    className="object-cover object-top"
-                  />
-                </div>
-              </BrowserFrame>
-              <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
-                <a
-                  href={BOUTIQUE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-mono-label inline-flex items-center gap-2 rounded-full border px-6 py-3 text-ink transition-colors duration-300 hover:text-deep"
-                  style={{ borderColor: `${BC_RED}66` }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = BC_RED)}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-                >
-                  {d.boutique.visit} <span aria-hidden>↗</span>
-                </a>
-                <Link
-                  href={localizedPath(locale, 'work/box-plus')}
-                  className="text-mono-label inline-flex items-center gap-2 py-3 text-muted transition-colors duration-300 hover:text-ink"
-                >
-                  {d.salles.caseCta} <span aria-hidden>→</span>
-                </Link>
-              </div>
-            </div>
+            <FeaturedRail>
+              {d.proximite.items.map((town, i) => {
+                const meta = PROXIMITE[i]
+                const alt =
+                  locale === 'fr'
+                    ? `Boxing Center — site de proximité ${town.name}, conçu par EAM`
+                    : `Boxing Center — ${town.name} proximity site, built by EAM`
+                return (
+                  <a
+                    key={town.name}
+                    href={meta.site}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor="voir"
+                    className="group block"
+                  >
+                    <BrowserFrame url={meta.site}>
+                      <div className="relative aspect-[4/5] w-full sm:hidden">
+                        <Image src={meta.imgM} alt={alt} fill sizes="86vw" className="object-cover object-top" />
+                      </div>
+                      <div className="relative hidden aspect-[16/10] w-full overflow-hidden sm:block">
+                        <Image
+                          src={meta.img}
+                          alt={alt}
+                          fill
+                          sizes="(max-width: 1024px) 86vw, 44vw"
+                          className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                        />
+                      </div>
+                    </BrowserFrame>
+                    <div className="mt-5 flex items-start justify-between gap-4">
+                      <div>
+                        <p className="text-mono-label">
+                          <span className="tabular-nums" style={{ color: BC_RED }}>{`0${i + 1}`}</span>
+                          <span className="px-2 text-faint" aria-hidden>
+                            ·
+                          </span>
+                          <span className="text-muted">{meta.domain}</span>
+                        </p>
+                        <h3 className="mt-2 font-display text-2xl text-ink transition-colors duration-300 group-hover:text-gold">
+                          {town.name}
+                        </h3>
+                        <p lang="fr" className="mt-1 text-muted">
+                          {town.line}
+                        </p>
+                      </div>
+                      <span
+                        aria-hidden
+                        className="mt-1.5 shrink-0 text-gold transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      >
+                        ↗
+                      </span>
+                    </div>
+                  </a>
+                )
+              })}
+            </FeaturedRail>
           </div>
         </section>
 
-        {/* ── CHAPTER III — the backstage tools (live, 2026) ─────────────── */}
+        {/* ── CHAPTER IV — the three stores: Box Plus in its frame, then the
+            two catalogue stores as full-bleed bands ─────────────────────── */}
+        <section className="border-t border-line">
+          <div className="px-6 py-20 md:px-12 md:py-28 lg:px-20">
+            <div className="mx-auto max-w-[1640px]">
+              <header data-bc-reveal>
+                <p className="text-mono-label" style={{ color: BC_RED }}>
+                  {d.boutique.eyebrow}
+                </p>
+                <div className="mt-5 flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
+                  <h2 className="font-display text-3xl leading-none text-ink md:text-[clamp(2.75rem,5.5vw,4.5rem)]">
+                    {d.boutique.name}
+                  </h2>
+                  <p className="text-mono-label text-muted">{d.boutique.tag}</p>
+                </div>
+                <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{d.boutique.line}</p>
+              </header>
+
+              <div data-bc-reveal className="mt-12">
+                <BrowserFrame url={BOUTIQUE_URL}>
+                  {/* Phone-shaped store capture on mobile (taller frame), the
+                      desktop capture at sm+ (16/10). */}
+                  <div className="relative aspect-[3/4] w-full sm:hidden">
+                    <Image
+                      src="/thumbs/box-plus-m.jpg"
+                      alt={`Box Plus — ${d.boutique.tag}`}
+                      fill
+                      sizes="100vw"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                  <div className="relative hidden aspect-[16/10] w-full sm:block">
+                    <Image
+                      src="/thumbs/bc-box-plus.jpg"
+                      alt={`Box Plus — ${d.boutique.tag}`}
+                      fill
+                      sizes="(max-width: 1640px) 100vw, 1640px"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                </BrowserFrame>
+                <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+                  <a
+                    href={BOUTIQUE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-mono-label inline-flex items-center gap-2 rounded-full border px-6 py-3 text-ink transition-colors duration-300 hover:text-deep"
+                    style={{ borderColor: `${BC_RED}66` }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = BC_RED)}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                  >
+                    {d.boutique.visit} <span aria-hidden>↗</span>
+                  </a>
+                  <Link
+                    href={localizedPath(locale, 'work/box-plus')}
+                    className="text-mono-label inline-flex items-center gap-2 py-3 text-muted transition-colors duration-300 hover:text-ink"
+                  >
+                    {d.caseCta} <span aria-hidden>→</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {d.boutique.others.map((store, i) => (
+            <SiteBand
+              key={store.name}
+              locale={locale}
+              meta={STORES[i]}
+              label={d.boutique.label}
+              index={i + 2}
+              copy={store}
+              caseCta={d.caseCta}
+              visitCta={d.visitCta}
+              right={i % 2 === 1}
+            />
+          ))}
+        </section>
+
+        {/* ── CHAPTER V — the backstage tools (live, 2026) ───────────────── */}
         <section className="border-t border-line px-6 py-20 md:px-12 md:py-24 lg:px-20">
           <div className="mx-auto max-w-[1640px]">
             <header data-bc-reveal>

@@ -1,8 +1,8 @@
-import { publicProjects, microdidactProjects } from '@/lib/projects'
+import { publicProjects, microdidactProjects, liveSiteCount } from '@/lib/projects'
 
 // Derived counts — mirror fr.ts (the registry is the single source of truth).
 const PROJECT_COUNT = publicProjects.length
-const LIVE_COUNT = publicProjects.filter((p) => p.liveUrl !== '#').length
+const LIVE_COUNT = liveSiteCount
 const MICRODIDACT_COUNT = microdidactProjects.length
 const SECTOR_COUNT = new Set(publicProjects.map((p) => p.category)).size
 
@@ -41,7 +41,7 @@ export const en = {
     subtitle: `${PROJECT_COUNT} projects shipped, from Toulouse to Casablanca — by three engineers who answer you themselves. The next reigning brand could be yours.`,
     ctaPrimary: 'See our work',
     ctaSecondary: 'Get my free quote',
-    riskNote: 'Free quote in 24-48h · no commitment',
+    riskNote: 'Free quote in 24-48h · no commitment · 2 months of maintenance free',
     scrollHint: 'Scroll',
   },
   marquee: ['Bespoke', 'A+ security', 'SEO & GEO', 'Schema.org', 'llms.txt', '24-48h response'],
@@ -81,8 +81,8 @@ export const en = {
       },
       boxingCenter: {
         name: 'Boxing Center',
-        count: '8',
-        line: 'Five gym sites live, the Box Plus store — and the tools that run the network.',
+        count: '19',
+        line: 'Five gym sites, seven proximity sites, three stores — and the tools that run the network.',
       },
     },
   },
@@ -180,7 +180,7 @@ export const en = {
       },
       {
         q: 'How much does a website with EAM cost?',
-        a: 'A bespoke showcase site starts at €2,000 (excl. VAT), an immersive site with full identity at €4,000, e-commerce at €3,000, and monthly SEO & GEO support at €300. These floors are a starting point: every project gets a precise, free quote within 24–48 hours.',
+        a: 'Every site is priced to measure: the cost depends on scope — number of pages, features, content to create. Tell us about your project and you get a precise, free quote within 24–48 hours, with no commitment, straight from the engineers who will build it. Monthly SEO & GEO support starts at €300 (excl. VAT).',
       },
       {
         q: 'How long does it take to get a quote?',
@@ -199,8 +199,12 @@ export const en = {
         a: 'Yes. EAM builds bilingual and multilingual sites and serves both francophone and international clients.',
       },
       {
+        q: 'Is maintenance included?',
+        a: 'The first two months of maintenance on your site are free — worth €50 a month. EAM stays directly reachable during and after that period.',
+      },
+      {
         q: 'How do I contact EAM?',
-        a: 'By email at eam.agency@gmail.com, or through the form on the Contact page. We reply within 24–48 hours.',
+        a: 'Through the form on the Contact page, or on WhatsApp. You get a reply within 24–48 hours, straight from the three engineers.',
       },
     ],
   },
@@ -230,10 +234,8 @@ export const en = {
     eyebrow: 'Contact',
     title: 'A project to forge?',
     lead: 'Tell us about your brand, your goals and your timeline. We get back to you within 24–48 hours with a first direction.',
-    emailLabel: 'Write to us',
     responseChip: 'Reply within 24–48h',
     whoAnswers: 'Who answers you',
-    copied: 'Copied ✓',
     form: {
       name: 'Name',
       email: 'Email',
@@ -242,11 +244,10 @@ export const en = {
       submit: 'Send message',
       sending: 'Sending…',
       success: 'Received. We get back to you within 24–48h.',
-      error: 'Sending failed — try again, or write to us directly.',
+      error: 'Sending failed — try again in a moment, or message us on',
       namePlaceholder: 'Your name',
       emailPlaceholder: 'you@example.com',
       messagePlaceholder: 'Your project, in a few words…',
-      note: 'Sending this opens your email client pre-filled with the details.',
     },
   },
   work: {
@@ -360,57 +361,106 @@ export const en = {
     meta: {
       title: 'The Boxing Center world',
       description:
-        'A direct EAM client: the Boxing Center network in Toulouse — five immersive sites live, the official Box Plus store and the network tools. Navy, red and sweat.',
+        'A direct EAM client: the Boxing Center network in Toulouse — five gym sites, two clubs, seven proximity sites and three stores, each on its own domain.',
     },
     eyebrow: 'Direct client · Toulouse',
     title: 'The Boxing Center world.',
-    lead: 'A navy-and-red crest, five gyms, one discipline: combat. For this Toulouse network EAM forged one immersive site per gym — all five are live — plus the official store and the tools that run the network.',
+    lead: 'A navy-and-red crest, five gyms, one discipline: combat. For this Toulouse network EAM forged nineteen live pieces — one site per gym, two English-boxing clubs, seven proximity sites, three stores and the tools that run the network.',
     logoAlt: 'Boxing Center — combat-sports gym network, Toulouse',
     scrollHint: 'Step into the arena',
+    caseCta: 'Case study',
+    visitCta: 'Visit the site',
     salles: {
       eyebrow: 'Chapter I — The five gyms',
       title: 'Five gyms. Five sites live. Zero duplication.',
       intro:
-        'One immersive site per gym, never cloned — all five are live, each on its own platform. Each gym carries its neighbourhood name — each asserts its own matter, its metal, its type, its 3D — under the same navy-and-red crest.',
-      caseCta: 'Case study',
-      visitCta: 'Visit the site',
+        'One site per gym, never cloned — each on its own domain name. Each gym carries its neighbourhood name and asserts its own matter, its metal, its type — under the same navy-and-red crest.',
+      label: 'Gym',
       items: [
         {
           name: 'Portet',
           place: 'Portet-sur-Garonne',
-          line: '“Here, we don’t do sport. We forge fighters.” — the flagship: 900 m² of boxing and cross training, deep black, silver and fight-red.',
+          line: '“Here, sport becomes a passion. Passion becomes a way of life.” — the flagship: 600 m² dedicated to combat sports, a ring and an MMA cage. The club name assembles from particles on arrival.',
         },
         {
           name: 'États-Unis',
           place: 'Toulouse — avenue des États-Unis',
-          line: '“Le Colosse” — 1,200 m², the largest combat-sports gym in France: three zones under one roof, a real-time 3D monolith you walk through.',
+          line: 'The largest combat-sports gym in France — 1,200 m², three 400 m² spaces, two rings and a cage. MMA, grappling, boxing and conditioning under one roof.',
         },
         {
           name: 'Minimes',
           place: 'Toulouse — Barrière de Paris',
-          line: 'Since 2016, the cradle of champions — English boxing, beginners and lady boxing: this is where you start.',
+          line: '“The first class is enough to understand why people come back.” — English boxing, youth boxing, Boxing Lady and kick-boxing; the gym video plays through the club lettering.',
         },
         {
           name: 'St-Cyprien',
           place: 'Toulouse — Saint-Cyprien, left bank',
-          line: '“The new generation. That’s you.” — 1,200 m² on the left bank, 4 minutes from metro A, from Baby Boxing to the rising disciplines.',
+          line: 'Beginners, leisure, competition — English boxing, K1, Muay Thai and cross-training, four minutes from metro line A.',
         },
         {
           name: 'Ramonville',
           place: 'Ramonville-Saint-Agne',
-          line: '“The open-air octagon” — 300 m² outdoors, covered and heated, a 7-metre octagon at the end of metro line B.',
+          line: 'The octagon turns: eight sides, eight disciplines — 300 m² of covered outdoor training, a 7-metre octagon, at the end of metro line B.',
         },
       ],
     },
+    clubs: {
+      eyebrow: 'Chapter II — Two English-boxing clubs',
+      title: 'Two clubs. Two identities.',
+      intro:
+        'Around the network, two English-boxing clubs have a site of their own: TMBC in the Minimes district, FFBoxe-affiliated, and Club de Boxe Blagnac, a member of the Boxing Center network.',
+      label: 'Club',
+      items: [
+        {
+          name: 'TMBC',
+          place: 'Toulouse — Les Minimes',
+          line: 'Toulouse Minimes Boxing Club, since 2017 — leisure and competitive English boxing, a boxing school from age 3. The club crest, treated like a fight poster.',
+        },
+        {
+          name: 'Blagnac',
+          place: 'Blagnac — 31700',
+          line: 'Six classes, six days a week, from age 3 to the competition squad — a 23-page editorial site, readable by answer engines too.',
+        },
+      ],
+    },
+    proximite: {
+      eyebrow: 'Chapter III — The seven proximity sites',
+      title: 'Seven towns. Seven sites. Zero copies.',
+      intro:
+        'One site per town around Toulouse, for the resident looking for a boxing club nearby. Same mechanics, but a text, a colour and a motion signature of its own for every town — 125 pages in total.',
+      // Each line is the town site's own H1, quoted as published (French sites).
+      items: [
+        { name: 'Colomiers', line: 'Boxing Center accueille les Columérins à Toulouse Minimes et à Portet.' },
+        { name: 'Muret', line: 'Ton club de boxe proche de Muret.' },
+        { name: 'Cugnaux', line: 'Des cours de boxe accessibles depuis Cugnaux.' },
+        { name: 'Tournefeuille', line: 'Ton club de MMA et de boxe thaï près de Tournefeuille.' },
+        { name: 'Labège', line: 'Sports de combat à proximité de Labège.' },
+        { name: 'L’Union', line: 'La plus grande salle de sports de combat, proche de L’Union.' },
+        { name: 'Castelginest', line: 'Boxe, MMA et sports de combat accessibles depuis Castelginest.' },
+      ],
+    },
     boutique: {
-      eyebrow: 'Chapter II — The official store',
+      eyebrow: 'Chapter IV — The three stores',
       name: 'Box Plus',
       tag: 'Official Boxing Center store · Toulouse',
       line: "The network’s online store — memberships, trial sessions, coaching and gear. Stripe checkout, PrestaShop bridge, catalogue continuously synced with Deciplus.",
       visit: 'Visit the store',
+      label: 'Store',
+      others: [
+        {
+          name: 'Boutique de Boxe',
+          place: 'France — national catalogue',
+          line: 'Everything for boxing and MMA: more than a thousand models, guides and a “where to box” page per city — 1,222 pages live, sales opening soon.',
+        },
+        {
+          name: 'Matos de Boxe',
+          place: 'France — Metal Boxe catalogue',
+          line: '“The fighters’ gear” — Metal Boxe gloves, protection and fight wear, every product on its own stage. Sales opening soon.',
+        },
+      ],
     },
     outils: {
-      eyebrow: 'Chapter III — Backstage',
+      eyebrow: 'Chapter V — Backstage',
       title: 'The network also runs backstage.',
       intro:
         'Beyond the showcases: EAM builds the tools that run the network day to day — and the funnel that fills the gyms.',
@@ -431,17 +481,17 @@ export const en = {
     stats: {
       eyebrow: 'The facts',
       items: [
-        { value: '5', label: 'gym sites — live' },
-        { value: '8', label: 'live pieces in total' },
-        { value: '3D', label: 'real time — Three.js' },
-        { value: 'Zero', label: 'duplication across the gyms' },
+        { value: '5', label: 'gym sites' },
+        { value: '7', label: 'proximity sites' },
+        { value: '3', label: 'online stores' },
+        { value: '19', label: 'live pieces in total' },
       ],
     },
     close: {
       provenance:
-        'Boxing Center is a direct EAM client — one immersive site per gym, the official store and the network tools, forged under our crest.',
+        'Boxing Center is a direct EAM client — gym sites, proximity sites, stores and the network tools, forged under our crest.',
       title: 'Your brand deserves an arena.',
-      text: 'Five sites live, one store, real business tools — zero duplication. Tell us about your project: we forge at this scale.',
+      text: 'Nineteen live pieces, each on its own domain name — zero duplication. Tell us about your project: we forge at this scale.',
       button: 'Get my free quote',
     },
     back: 'Back to the registry',
@@ -460,7 +510,7 @@ export const en = {
       {
         heading: 'What we collect',
         body: [
-          'The contact form transmits only what you type into it: name, email address, company (optional) and your message. It reaches us by email and is used exclusively to reply to you.',
+          'The contact form sends only what you write in it: name, email address, company (optional) and your message. It goes through Inlet, the form service built by EAM, and is used solely to reply to you.',
           'Browsing itself is not profiled: no advertising cookies, no tracking pixels, no third-party behavioural analytics.',
         ],
       },
@@ -474,7 +524,7 @@ export const en = {
       {
         heading: 'Your rights',
         body: [
-          'Under the GDPR you have the right to access, rectify and delete data concerning you. An email is enough: eam.agency@gmail.com — answered within 24-48 hours, like everything else.',
+          'Under the GDPR you have the right to access, rectify and delete data concerning you. A request through the form on the Contact page is enough — answered within 24–48 hours, like everything else.',
         ],
       },
     ],
@@ -498,7 +548,7 @@ export const en = {
         heading: 'Site publisher',
         body: [
           'This site is published by EAM, a collective of three engineers: Eddy Etame, Raphaël Angoula and Brad Mbosseu.',
-          'Contact: eam.agency@gmail.com.',
+          'Contact: the form on the Contact page.',
           'Publication director: EAM.',
         ],
       },
@@ -520,7 +570,7 @@ export const en = {
         body: [
           'Information submitted through the contact form (name, email, company, message) is delivered to EAM by email and used solely to answer your request. It feeds no marketing list and is shared with no third party.',
           'This site uses no trackers, no audience analytics and no advertising cookies.',
-          'Under the General Data Protection Regulation (GDPR), you can exercise your rights of access, rectification and erasure by writing to eam.agency@gmail.com.',
+          'Under the General Data Protection Regulation (GDPR), you can exercise your rights of access, rectification and erasure through the form on the Contact page.',
         ],
       },
       {
@@ -538,7 +588,7 @@ export const en = {
       lead: 'Every service ships with receipts — performance, structured data, AI visibility — from the three engineers you actually meet.',
       metaTitle: 'Services — website creation, e-commerce, SEO & GEO, rebuilds',
       metaDescription:
-        'Bespoke websites from €2,000, e-commerce, SEO & GEO, rebuilds. Free quote within 24-48h — you speak directly to the engineers.',
+        'Bespoke websites, e-commerce, SEO & GEO, rebuilds: every project gets a free quote within 24-48h — you speak directly to the engineers.',
     },
     quoteCta: 'Get my free quote',
     quoteNote: '24-48h response · no commitment',
@@ -546,6 +596,17 @@ export const en = {
     deliverablesTitle: 'What you get',
     floorLabel: 'from',
     floorNote: 'excl. VAT — precise, free quote within 24-48h',
+    /** Shown where a service carries no public price: the quote IS the offer. */
+    hubQuote: 'Free quote · 24-48h',
+    metaQuote: 'free quote in 24-48h',
+    steps: {
+      title: 'How it works',
+      items: [
+        'You tell us about your project — form, email or WhatsApp.',
+        'You get a precise, free quote within 24 to 48 hours.',
+        'You approve, we build — you talk to the engineers from start to finish.',
+      ],
+    },
     proofsCta: 'View the case study',
     receiptsCta: 'See our published measurements — hits and misses',
     faqTitle: 'Frequently asked',
@@ -591,16 +652,22 @@ export const en = {
     cta: 'Measure your visibility',
   },
   pricing: {
-    eyebrow: 'Pricing',
-    title: 'Clear floors. The rest is a conversation.',
+    eyebrow: 'Your quote',
+    title: 'A quote cut to your project.',
     intro:
-      'These floors are a starting point, not a rigid grid — every project gets a precise, free quote within 24–48 hours.',
+      'Every project has its scope, every business its budget. Pick what fits and tell us about yours: you get a precise, free proposal within 24 to 48 hours, with no commitment.',
     from: 'from',
-    note: 'Prices excl. VAT. Business applications, SaaS or out-of-scope projects: custom quote.',
+    cta: 'Talk about my project',
+    offer: {
+      label: 'Free',
+      text: 'The first two months of maintenance on your site — worth €50 a month.',
+    },
+    note: 'Business application, SaaS or anything off the map: let’s talk — that quote is free too.',
     bands: [
       {
+        sujet: 'site-vitrine',
         name: 'Bespoke showcase site',
-        price: '€2,000',
+        price: null as string | null,
         includes: [
           'Bespoke design — never a template',
           'Technical SEO + structured data',
@@ -608,8 +675,9 @@ export const en = {
         ],
       },
       {
+        sujet: 'identite',
         name: 'Immersive site & identity',
-        price: '€4,000',
+        price: null as string | null,
         includes: [
           'Full art direction',
           'Motion, real-time 3D when the project deserves it',
@@ -617,8 +685,9 @@ export const en = {
         ],
       },
       {
+        sujet: 'e-commerce',
         name: 'E-commerce',
-        price: '€3,000',
+        price: null as string | null,
         includes: [
           'Frictionless checkout funnel',
           'Stripe or your existing payment stack',
@@ -626,8 +695,9 @@ export const en = {
         ],
       },
       {
+        sujet: 'seo-geo',
         name: 'Monthly SEO & GEO',
-        price: '€300 / mo',
+        price: '€300 / mo' as string | null,
         includes: [
           'Continuous optimisation — Google and AI engines',
           'Structured data and llms.txt maintained',

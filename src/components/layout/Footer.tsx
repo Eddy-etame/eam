@@ -48,12 +48,26 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
           <div>
             <h2 className="text-mono-label mb-5 text-faint">{dict.footer.contactTitle}</h2>
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="-my-2 inline-block py-2 text-muted transition-colors hover:text-gold"
-            >
-              {siteConfig.email}
-            </a>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link
+                  href={localizedPath(locale, 'contact')}
+                  className="-my-2 inline-block py-2 text-muted transition-colors hover:text-gold"
+                >
+                  {dict.conversion.button} →
+                </Link>
+              </li>
+              <li>
+                <a
+                  href={`https://wa.me/${siteConfig.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="-my-2 inline-block py-2 text-muted transition-colors hover:text-gold"
+                >
+                  {dict.servicesPage.whatsappCta} ↗
+                </a>
+              </li>
+            </ul>
             <p className="mt-4 text-sm text-faint">{siteConfig.location.areaServed[locale].join(' · ')}</p>
           </div>
         </div>

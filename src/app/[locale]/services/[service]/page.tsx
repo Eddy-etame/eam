@@ -33,9 +33,9 @@ export async function generateMetadata({
   if (!page) return {}
   const dict = getDictionary(locale)
   const floor = dict.pricing.bands[page.bandIndex].price
-  // Intent-led SERP title: service + floor — what a searching owner scans for.
-  const title =
-    locale === 'fr' ? `${page.name.fr} — ${floor}` : `${page.name.en} — ${floor}`
+  // Intent-led SERP title: service + what a searching owner scans for — the
+  // public figure where one exists (SEO & GEO), the free quote everywhere else.
+  const title = `${page.name[locale]} — ${floor ?? dict.servicesPage.metaQuote}`
   return buildMetadata({
     locale,
     title,
@@ -129,17 +129,43 @@ export default async function ServicePage({
               </a>
             </div>
             <p data-pe="cta" className="text-mono-label mt-4 text-faint">{sp.quoteNote}</p>
+            {/* The standing offer, at the moment of the ask. */}
+            <p data-pe="cta" className="mt-6 max-w-md border-l-2 border-gold/50 pl-4 text-ink">
+              <span className="text-mono-label block text-gold/85">{dict.pricing.offer.label}</span>
+              <span className="mt-1.5 block leading-relaxed">{dict.pricing.offer.text}</span>
+            </p>
           </PageEntrance>
 
-          {/* The floor — honest anchor, never a cage */}
+          {/* Right column — the public figure where the service has one (the
+              SEO & GEO retainer); otherwise the path to the quote, step by
+              step: the price is settled in the conversation, not on the page. */}
           <Reveal dir="right">
-            <div className="rounded-lg border border-line bg-deep p-8">
-              <p className="text-mono-label text-faint">{sp.floorLabel}</p>
-              <p className="foil mt-2 whitespace-nowrap font-display text-4xl leading-none">
-                {band.price}
-              </p>
-              <p className="text-mono-label mt-3 text-faint">{sp.floorNote}</p>
-            </div>
+            {band.price ? (
+              <div className="rounded-lg border border-line bg-deep p-8">
+                <p className="text-mono-label text-faint">{sp.floorLabel}</p>
+                <p className="foil mt-2 whitespace-nowrap font-display text-4xl leading-none">
+                  {band.price}
+                </p>
+                <p className="text-mono-label mt-3 text-faint">{sp.floorNote}</p>
+              </div>
+            ) : (
+              <div className="rounded-lg border border-line bg-deep p-8">
+                <p className="text-mono-label text-gold/85">{sp.steps.title}</p>
+                <ol className="mt-5 space-y-4">
+                  {sp.steps.items.map((step, i) => (
+                    <li key={step} className="flex gap-4">
+                      <span
+                        aria-hidden
+                        className="foil shrink-0 font-display text-2xl leading-none tabular-nums"
+                      >
+                        {i + 1}
+                      </span>
+                      <span className="text-sm leading-relaxed text-muted">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
           </Reveal>
         </header>
 

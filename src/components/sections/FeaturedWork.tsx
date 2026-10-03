@@ -21,6 +21,7 @@ const SEQUENCE: (string | { door: 'microdidact' | 'boxingCenter' })[] = [
   { door: 'boxingCenter' },
   'the-911',
   'boxing-center-portet',
+  'boxing-center-etats-unis',
   'la-brigade-mobile',
   'temps-dance',
   'mon-boum',

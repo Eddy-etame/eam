@@ -76,7 +76,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line md:grid-cols-4">
             {about.stats.map((stat, i) => (
               <Reveal key={stat.label} delay={i * 60} className="bg-deep p-8 text-center">
-                <p className="foil foil-anim font-display text-4xl leading-none">
+                <p className="foil foil-anim font-display text-[clamp(2.75rem,4.6vw,5rem)] leading-none">
                   <CountUp value={stat.value} />
                 </p>
                 <p className="text-mono-label mt-3 text-muted">{stat.label}</p>
