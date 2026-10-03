@@ -45,7 +45,7 @@ export const fr = {
     subtitle: `${PROJECT_COUNT} projets livrés, de Toulouse à Casablanca — par trois ingénieurs qui vous répondent eux-mêmes. La prochaine marque qui règne peut être la vôtre.`,
     ctaPrimary: 'Voir nos réalisations',
     ctaSecondary: 'Obtenir mon devis gratuit',
-    riskNote: 'Devis gratuit sous 24-48 h · sans engagement · 2 mois de maintenance offerts',
+    riskNote: 'Devis gratuit sous 24-48 h · sans engagement · maintenance optionnelle, 2 mois offerts',
     scrollHint: 'Défiler',
   },
   marquee: ['Sur-mesure', 'Sécurité A+', 'SEO & GEO', 'Schema.org', 'llms.txt', 'Réponse 24-48 h'],
@@ -85,8 +85,8 @@ export const fr = {
       },
       boxingCenter: {
         name: 'Boxing Center',
-        count: '19',
-        line: "Cinq sites de salle, sept sites de proximité, trois boutiques — et les outils qui font tourner le réseau.",
+        count: '17',
+        line: "Cinq sites de salle, deux clubs, sept sites de proximité — la boutique officielle et les outils qui font tourner le réseau.",
       },
     },
   },
@@ -204,7 +204,7 @@ export const fr = {
       },
       {
         q: 'La maintenance est-elle comprise ?',
-        a: "Les deux premiers mois de maintenance de votre site sont offerts — une valeur de 50 € par mois. EAM reste joignable en direct pendant et après cette période.",
+        a: "La maintenance est optionnelle, à 50 € par mois. Si vous la choisissez, les deux premiers mois sont offerts.",
       },
       {
         q: 'Comment contacter EAM ?',
@@ -365,11 +365,11 @@ export const fr = {
     meta: {
       title: 'Le monde Boxing Center',
       description:
-        "Client direct d’EAM : le réseau Boxing Center à Toulouse — cinq sites de salle, deux clubs, sept sites de proximité et trois boutiques, chacun sur son domaine.",
+        "Client direct d’EAM : le réseau Boxing Center à Toulouse — cinq sites de salle, deux clubs, sept sites de proximité et la boutique officielle, chacun sur son domaine.",
     },
     eyebrow: 'Client direct · Toulouse',
     title: 'Le monde Boxing Center.',
-    lead: "Un blason marine et rouge, cinq salles, une seule discipline : le combat. Pour ce réseau toulousain, EAM a forgé dix-neuf pièces en ligne — un site par salle, deux clubs de boxe anglaise, sept sites de proximité, trois boutiques et les outils qui font tourner le réseau.",
+    lead: "Un blason marine et rouge, cinq salles, une seule discipline : le combat. Pour ce réseau toulousain, EAM a forgé dix-sept pièces en ligne — un site par salle, deux clubs de boxe anglaise, sept sites de proximité, la boutique officielle et les outils qui font tourner le réseau.",
     logoAlt: 'Boxing Center — réseau de salles de sports de combat, Toulouse',
     scrollHint: "Entrer dans l’arène",
     caseCta: 'Étude de cas',
@@ -444,24 +444,11 @@ export const fr = {
       ],
     },
     boutique: {
-      eyebrow: 'Chapitre IV — Les trois boutiques',
+      eyebrow: 'Chapitre IV — La boutique officielle',
       name: 'Box Plus',
       tag: 'Boutique officielle Boxing Center · Toulouse',
       line: "La boutique en ligne du réseau — abonnements, séances d’essai, coachings et matériel. Paiement Stripe, passerelle PrestaShop, catalogue synchronisé en continu avec Deciplus.",
       visit: 'Visiter la boutique',
-      label: 'Boutique',
-      others: [
-        {
-          name: 'Boutique de Boxe',
-          place: 'France — catalogue national',
-          line: "Tout pour la boxe et le MMA : plus de mille modèles, des guides et une page « où boxer » par ville — 1 222 pages en ligne, ouverture des ventes prochaine.",
-        },
-        {
-          name: 'Matos de Boxe',
-          place: 'France — catalogue Metal Boxe',
-          line: "« Le matos des combattants » — gants, protections et textile Metal Boxe, chaque produit sur sa scène. Ouverture des ventes prochaine.",
-        },
-      ],
     },
     outils: {
       eyebrow: 'Chapitre V — Les coulisses',
@@ -487,15 +474,15 @@ export const fr = {
       items: [
         { value: '5', label: 'sites de salle' },
         { value: '7', label: 'sites de proximité' },
-        { value: '3', label: 'boutiques en ligne' },
-        { value: '19', label: 'pièces en ligne au total' },
+        { value: '2', label: 'clubs de boxe anglaise' },
+        { value: '17', label: 'pièces en ligne au total' },
       ],
     },
     close: {
       provenance:
-        "Boxing Center est un client direct d’EAM — sites de salle, sites de proximité, boutiques et outils du réseau, forgés sous notre blason.",
+        "Boxing Center est un client direct d’EAM — sites de salle, sites de proximité, boutique et outils du réseau, forgés sous notre blason.",
       title: 'Votre marque mérite une arène.',
-      text: "Dix-neuf pièces en ligne, chacune sur son nom de domaine — zéro duplication. Parlez-nous de votre projet : nous forgeons à cette échelle.",
+      text: "Dix-sept pièces en ligne, chaque site sur son nom de domaine — zéro duplication. Parlez-nous de votre projet : nous forgeons à cette échelle.",
       button: 'Obtenir mon devis gratuit',
     },
     back: 'Retour au registre',
@@ -667,7 +654,7 @@ export const fr = {
     cta: 'Parler de mon projet',
     offer: {
       label: 'Offert',
-      text: "Les deux premiers mois de maintenance de votre site — une valeur de 50 € par mois.",
+      text: "Maintenance optionnelle, à 50 € par mois : si vous la choisissez, les deux premiers mois sont offerts.",
     },
     note: 'Application métier, SaaS ou projet hors cadre : parlons-en, le devis est gratuit lui aussi.',
     bands: [

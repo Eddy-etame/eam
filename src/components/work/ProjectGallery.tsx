@@ -54,8 +54,16 @@ const pad2 = (n: number) => String(n).padStart(2, '0')
 /** Deep navy used for the Microdidact door's palette morph (no screenshot to sample). */
 const MICRODIDACT_NAVY = '#1B2559'
 
-/** Editorial order for the solo band — the SaaS with real scale leads. */
-const SOLO_RANK: Record<string, number> = { kermhosting: 0, inlet: 1, 'jcboyang-conseil': 2 }
+/** Editorial order for the solo band — the SaaS with real scale leads, then
+ *  the two heaviest live sites; unranked entries follow in registry order. */
+const SOLO_RANK: Record<string, number> = {
+  kermhosting: 0,
+  'boutique-de-boxe': 1,
+  'jcboyang-conseil': 2,
+  'noble-art-portesien': 3,
+  inlet: 4,
+  'matos-de-boxe': 5,
+}
 
 /**
  * MAIN REGISTRE v2 — no leak, in both senses: world projects stay inside their
@@ -359,29 +367,30 @@ export function ProjectGallery({
         </div>
 
         {/* ── LES SOLOS — asymmetric woven band, not a uniform grid ─────────
-            First solo spans wide (16/10); the others stack offset at 5/12. */}
+            Rows of a wide panel (7/12, 16/10) and a narrow one (5/12), the
+            second of each pair dropped — and the wide side alternates, so
+            the band zigzags down the page. DOM order = reading order, so a
+            phone gets the same sequence in one column. */}
         {solos.length > 0 && <h2 className="sr-only">{dict.work.solosHeading}</h2>}
         {solos.length > 0 && (
           <div className="mt-20 grid gap-x-8 gap-y-14 md:grid-cols-12">
-            <div className="md:col-span-7" {...paletteProps(solos[0].color)}>
-              <ProjectCard
-                project={solos[0]}
-                locale={locale}
-                numeral="N°03"
-                aspectClass="aspect-[16/10]"
-              />
-            </div>
-            <div className="flex flex-col gap-y-14 md:col-span-5 md:mt-24">
-              {solos.slice(1).map((project, index) => (
-                <div key={project.slug} {...paletteProps(project.color)}>
+            {solos.map((project, index) => {
+              const wide = index % 4 === 0 || index % 4 === 3
+              return (
+                <div
+                  key={project.slug}
+                  className={`${wide ? 'md:col-span-7' : 'md:col-span-5'} ${index % 2 === 1 ? 'md:mt-24' : ''}`}
+                  {...paletteProps(project.color)}
+                >
                   <ProjectCard
                     project={project}
                     locale={locale}
-                    numeral={`N°${pad2(index + 4)}`}
+                    numeral={`N°${pad2(index + 3)}`}
+                    aspectClass={wide ? 'aspect-[16/10]' : undefined}
                   />
                 </div>
-              ))}
-            </div>
+              )
+            })}
           </div>
         )}
 

@@ -41,7 +41,7 @@ export const en = {
     subtitle: `${PROJECT_COUNT} projects shipped, from Toulouse to Casablanca — by three engineers who answer you themselves. The next reigning brand could be yours.`,
     ctaPrimary: 'See our work',
     ctaSecondary: 'Get my free quote',
-    riskNote: 'Free quote in 24-48h · no commitment · 2 months of maintenance free',
+    riskNote: 'Free quote in 24-48h · no commitment · optional maintenance, 2 months free',
     scrollHint: 'Scroll',
   },
   marquee: ['Bespoke', 'A+ security', 'SEO & GEO', 'Schema.org', 'llms.txt', '24-48h response'],
@@ -81,8 +81,8 @@ export const en = {
       },
       boxingCenter: {
         name: 'Boxing Center',
-        count: '19',
-        line: 'Five gym sites, seven proximity sites, three stores — and the tools that run the network.',
+        count: '17',
+        line: 'Five gym sites, two clubs, seven proximity sites — the official store and the tools that run the network.',
       },
     },
   },
@@ -200,7 +200,7 @@ export const en = {
       },
       {
         q: 'Is maintenance included?',
-        a: 'The first two months of maintenance on your site are free — worth €50 a month. EAM stays directly reachable during and after that period.',
+        a: 'Maintenance is optional, at €50 a month. If you take it, the first two months are free.',
       },
       {
         q: 'How do I contact EAM?',
@@ -361,11 +361,11 @@ export const en = {
     meta: {
       title: 'The Boxing Center world',
       description:
-        'A direct EAM client: the Boxing Center network in Toulouse — five gym sites, two clubs, seven proximity sites and three stores, each on its own domain.',
+        'A direct EAM client: the Boxing Center network in Toulouse — five gym sites, two clubs, seven proximity sites and the official store, each on its own domain.',
     },
     eyebrow: 'Direct client · Toulouse',
     title: 'The Boxing Center world.',
-    lead: 'A navy-and-red crest, five gyms, one discipline: combat. For this Toulouse network EAM forged nineteen live pieces — one site per gym, two English-boxing clubs, seven proximity sites, three stores and the tools that run the network.',
+    lead: 'A navy-and-red crest, five gyms, one discipline: combat. For this Toulouse network EAM forged seventeen live pieces — one site per gym, two English-boxing clubs, seven proximity sites, the official store and the tools that run the network.',
     logoAlt: 'Boxing Center — combat-sports gym network, Toulouse',
     scrollHint: 'Step into the arena',
     caseCta: 'Case study',
@@ -440,24 +440,11 @@ export const en = {
       ],
     },
     boutique: {
-      eyebrow: 'Chapter IV — The three stores',
+      eyebrow: 'Chapter IV — The official store',
       name: 'Box Plus',
       tag: 'Official Boxing Center store · Toulouse',
       line: "The network’s online store — memberships, trial sessions, coaching and gear. Stripe checkout, PrestaShop bridge, catalogue continuously synced with Deciplus.",
       visit: 'Visit the store',
-      label: 'Store',
-      others: [
-        {
-          name: 'Boutique de Boxe',
-          place: 'France — national catalogue',
-          line: 'Everything for boxing and MMA: more than a thousand models, guides and a “where to box” page per city — 1,222 pages live, sales opening soon.',
-        },
-        {
-          name: 'Matos de Boxe',
-          place: 'France — Metal Boxe catalogue',
-          line: '“The fighters’ gear” — Metal Boxe gloves, protection and fight wear, every product on its own stage. Sales opening soon.',
-        },
-      ],
     },
     outils: {
       eyebrow: 'Chapter V — Backstage',
@@ -483,15 +470,15 @@ export const en = {
       items: [
         { value: '5', label: 'gym sites' },
         { value: '7', label: 'proximity sites' },
-        { value: '3', label: 'online stores' },
-        { value: '19', label: 'live pieces in total' },
+        { value: '2', label: 'English-boxing clubs' },
+        { value: '17', label: 'live pieces in total' },
       ],
     },
     close: {
       provenance:
-        'Boxing Center is a direct EAM client — gym sites, proximity sites, stores and the network tools, forged under our crest.',
+        'Boxing Center is a direct EAM client — gym sites, proximity sites, the store and the network tools, forged under our crest.',
       title: 'Your brand deserves an arena.',
-      text: 'Nineteen live pieces, each on its own domain name — zero duplication. Tell us about your project: we forge at this scale.',
+      text: 'Seventeen live pieces, every site on its own domain name — zero duplication. Tell us about your project: we forge at this scale.',
       button: 'Get my free quote',
     },
     back: 'Back to the registry',
@@ -660,7 +647,7 @@ export const en = {
     cta: 'Talk about my project',
     offer: {
       label: 'Free',
-      text: 'The first two months of maintenance on your site — worth €50 a month.',
+      text: 'Optional maintenance, at €50 a month: if you take it, the first two months are free.',
     },
     note: 'Business application, SaaS or anything off the map: let’s talk — that quote is free too.',
     bands: [

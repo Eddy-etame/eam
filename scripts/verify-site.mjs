@@ -160,6 +160,7 @@ async function pages() {
     ['/fr/work', 'work'],
     ['/fr/work/boxing-center-proximite', 'case-proximite'],
     ['/fr/work/boutique-de-boxe', 'case-boutique'],
+    ['/fr/work/noble-art-portesien', 'case-noble-art'],
     ['/fr/work/tmbc', 'case-tmbc'],
     ['/fr/work/boxing-center-ramonville', 'case-ramonville'],
     ['/en/work/club-boxe-blagnac', 'case-blagnac-en'],
@@ -177,6 +178,22 @@ async function pages() {
         await page.waitForTimeout(1200)
         await shot(page, `${name}-${mode}-sites`)
       }
+      if (name === 'work') {
+        // The registre: two world doors + the solos — stores and Noble Art
+        // stand here on their own, never inside the Boxing Center world.
+        for (const slug of ['kermhosting', 'boutique-de-boxe', 'matos-de-boxe', 'noble-art-portesien'])
+          log((await page.locator(`a[href$="/work/${slug}"]`).count()) > 0, `[${mode}] registre shows ${slug}`)
+        const total = await page.evaluate(() => document.documentElement.scrollHeight)
+        const vh = mode === 'd' ? 900 : 844
+        for (let y = vh, i = 1; y < total && i <= 8; y += vh, i++) {
+          if (mode === 'd') await wheelTo(page, y)
+          else {
+            await page.evaluate((to) => window.scrollTo(0, to), y)
+            await page.waitForTimeout(800)
+          }
+          await shot(page, `${name}-${mode}-${String(i).padStart(2, '0')}`)
+        }
+      }
       await ctx.close()
     }
   }
@@ -192,10 +209,15 @@ async function world() {
       'boxing-center-portet.fr', 'clubmma.fr', 'boxe-toulouse.com', 'club-boxe-toulouse.com', 'mmatoulouse.com',
       'toulouse-minimes-boxing-club.fr', 'club-boxe-blagnac.fr', 'boxingcenter-colomiers.fr', 'boxingcenter-muret.fr',
       'boxingcenter-cugnaux.fr', 'boxingcenter-tournefeuille.fr', 'boxingcenter-labege.fr', 'boxingcenter-lunion.fr',
-      'boxingcenter-castelginest.fr', 'boutique.boxingcenter.fr', 'boutique-de-boxe.com', 'matos-de-boxe.fr',
+      'boxingcenter-castelginest.fr', 'boutique.boxingcenter.fr',
     ]
     for (const host of must) log(links.some((l) => l.includes(host)), `[${mode}] world links ${host}`)
-    for (const banned of ['concours.boxingcenter.fr', 'materiel-de-boxe.fr', 'etas-unis.vercel.app', 'bc-minimes.vercel.app', 'box-plus.vercel.app'])
+    // Not Boxing Center websites (stores with their own brand, a distinct
+    // association) or not to be listed at all — none may appear in the world.
+    for (const banned of [
+      'concours.boxingcenter.fr', 'materiel-de-boxe.fr', 'creneau-coach', 'boutique-de-boxe.com', 'matos-de-boxe.fr',
+      'noble-art-portesien.com', 'etas-unis.vercel.app', 'bc-minimes.vercel.app', 'box-plus.vercel.app',
+    ])
       log(!links.some((l) => l.includes(banned)), `[${mode}] world does NOT link ${banned}`)
 
     const total = await page.evaluate(() => document.documentElement.scrollHeight)
@@ -234,11 +256,10 @@ async function home() {
   for (const mode of ['d', 'm']) {
     const { ctx, page, errors } = await open(mode, '/fr')
     await shot(page, `home-${mode}-00`)
-    const cards = await page.evaluate(() => ({
-      etats: !!document.querySelector('a[href$="/work/boxing-center-etats-unis"]'),
-      portet: !!document.querySelector('a[href$="/work/boxing-center-portet"]'),
-    }))
-    log(cards.etats && cards.portet, `[${mode}] rail carries Portet and États-Unis`)
+    for (const slug of ['boxing-center-portet', 'boxing-center-etats-unis', 'boxing-center-ramonville', 'boutique-de-boxe'])
+      log((await page.locator(`a[href$="/work/${slug}"]`).count()) > 0, `[${mode}] home rail carries ${slug}`)
+    const hero = await page.evaluate(() => document.querySelector('main')?.innerText ?? '')
+    log(/maintenance optionnelle/i.test(hero), `[${mode}] home states the optional maintenance offer`)
     if (mode === 'd') {
       // Frame pacing while wheeling the whole page.
       await page.evaluate(() => {

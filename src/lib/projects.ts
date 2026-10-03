@@ -67,24 +67,27 @@ export const projects: Project[] = [
   // clubmma.fr, boxe-toulouse.com, club-boxe-toulouse.com, mmatoulouse.com),
   // two boxe-anglaise clubs (toulouse-minimes-boxing-club.fr,
   // club-boxe-blagnac.fr), seven proximity sites (boxingcenter-<ville>.fr),
-  // three stores (boutique.boxingcenter.fr, boutique-de-boxe.com,
-  // matos-de-boxe.fr) + the coach-planning app and the «séance d'essai
-  // offerte» funnel (still on vercel.app). boxingcenter.fr remains the legacy
-  // WordPress site. The umbrella keeps liveUrl '#' — it IS the world door,
-  // each piece carries its own link. No client metrics invented.
-  // NOT listed on purpose (Eddy 2026-10-03): concours.boxingcenter.fr and
-  // materiel-de-boxe.fr.
+  // the official store (boutique.boxingcenter.fr) + the coach-planning app
+  // and the «séance d'essai offerte» funnel (still on vercel.app) — 17 live
+  // pieces. boxingcenter.fr remains the legacy WordPress site. The umbrella
+  // keeps liveUrl '#' — it IS the world door, each piece carries its own
+  // link. No client metrics invented.
+  // NOT in this world (Eddy 2026-10-03): Boutique de Boxe "is not a Boxing
+  // Center website" — it and Matos de Boxe are stores with their own brand
+  // and stand as solo projects; Noble Art Portésien is a distinct association
+  // sharing the Portet venue, solo too. NOT listed at all:
+  // concours.boxingcenter.fr, materiel-de-boxe.fr, Créneau Coach.
   {
     slug: 'boxing-center',
     name: 'Boxing Center',
     client: 'Boxing Center Toulouse',
     tagline: {
-      fr: 'Cinq salles, dix-neuf pièces en ligne. Une seule obsession.',
-      en: 'Five gyms, nineteen live pieces. One obsession.',
+      fr: 'Cinq salles, dix-sept pièces en ligne. Une seule obsession.',
+      en: 'Five gyms, seventeen live pieces. One obsession.',
     },
     description: {
-      fr: "L'écosystème digital du réseau Boxing Center — cinq sites de salle immersifs (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), deux clubs de boxe anglaise (TMBC, Blagnac), sept sites de proximité autour de Toulouse, trois boutiques (Box Plus, Boutique de Boxe, Matos de Boxe), le planning des coachs et le tunnel « séance d'essai offerte ». Chaque site sur son propre domaine, aucun dupliqué.",
-      en: 'The digital ecosystem of the Boxing Center network — five immersive gym sites (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), two English-boxing clubs (TMBC, Blagnac), seven proximity sites around Toulouse, three stores (Box Plus, Boutique de Boxe, Matos de Boxe), the coach-planning app and the free-trial funnel. Every site on its own domain, none duplicated.',
+      fr: "L'écosystème digital du réseau Boxing Center — cinq sites de salle immersifs (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), deux clubs de boxe anglaise (TMBC, Blagnac), sept sites de proximité autour de Toulouse, la boutique officielle Box Plus, le planning des coachs et le tunnel « séance d'essai offerte ». Chaque site sur son propre domaine, aucun dupliqué.",
+      en: 'The digital ecosystem of the Boxing Center network — five immersive gym sites (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), two English-boxing clubs (TMBC, Blagnac), seven proximity sites around Toulouse, the official Box Plus store, the coach-planning app and the free-trial funnel. Every site on its own domain, none duplicated.',
     },
     category: 'Sport & Bien-être',
     tags: ['Sport de combat', 'Boxe', 'WebGL / 3D', 'Three.js', 'Réseau', 'Toulouse'],
@@ -105,16 +108,16 @@ export const projects: Project[] = [
         en: 'One immersive maquette per gym: a real-time 3D steel monolith, a scroll-driven flythrough of the zones, a switchable dual palette, and per-venue type and metal — all copy stays in the DOM (SEO/a11y), 3D as progressive enhancement with a no-WebGL fallback.',
       },
       outcome: {
-        fr: "En ligne (2026) — dix-neuf pièces déployées : cinq sites de salle, deux clubs de boxe anglaise, sept sites de proximité, trois boutiques et deux outils, chaque site sur son propre nom de domaine. Indicateurs clients publiés après mesure, jamais avant.",
-        en: 'Live (2026) — nineteen pieces deployed: five gym sites, two English-boxing clubs, seven proximity sites, three stores and two tools, every site on its own domain name. Client metrics published after measurement, never before.',
+        fr: "En ligne (2026) — dix-sept pièces déployées : cinq sites de salle, deux clubs de boxe anglaise, sept sites de proximité, la boutique officielle et deux outils, chaque site sur son propre nom de domaine. Indicateurs clients publiés après mesure, jamais avant.",
+        en: 'Live (2026) — seventeen pieces deployed: five gym sites, two English-boxing clubs, seven proximity sites, the official store and two tools, every site on its own domain name. Client metrics published after measurement, never before.',
       },
       // Craft facts — not client outcomes.
       metrics: [
         { value: '5', label: { fr: 'salles, une identité chacune', en: 'gyms, one identity each' } },
-        { value: '19', label: { fr: 'pièces en ligne — sites, boutiques, outils', en: 'live pieces — sites, stores, tools' } },
+        { value: '17', label: { fr: 'pièces en ligne — sites, boutique, outils', en: 'live pieces — sites, store, tools' } },
         { value: '3D', label: { fr: 'monolithe temps réel (Three.js)', en: 'real-time monolith (Three.js)' } },
       ],
-      // Captures of what EAM built — salles, clubs, proximity, stores.
+      // Captures of what EAM built — salles, clubs, proximity, the store.
       gallery: [
         '/thumbs/boxing-center-portet.jpg',
         '/thumbs/boxing-center-etats-unis.jpg',
@@ -124,8 +127,7 @@ export const projects: Project[] = [
         '/thumbs/tmbc.jpg',
         '/thumbs/club-boxe-blagnac.jpg',
         '/thumbs/bc-sat-colomiers.jpg',
-        '/thumbs/boutique-de-boxe.jpg',
-        '/thumbs/bc-box-plus.jpg',
+        '/thumbs/box-plus.jpg',
       ],
     },
   },
@@ -291,7 +293,7 @@ export const projects: Project[] = [
     world: 'boxing-center',
     color: '#4A6A8F',
     year: 2026,
-    isFeatured: false,
+    isFeatured: true,
     isInternal: false,
     techStack: ['Astro', 'GSAP', 'SVG', 'Assistant IA', 'Schema.org'],
     caseStudy: {
@@ -476,12 +478,13 @@ export const projects: Project[] = [
         fr: "En ligne — la boutique officielle du réseau tourne sur cette refonte. Aucun indicateur commercial publié sans l'accord du client.",
         en: "Live — the network's official store runs on this rebuild. No commercial metrics published without the client's sign-off.",
       },
-      gallery: ['/thumbs/bc-box-plus.jpg'],
+      gallery: ['/thumbs/box-plus.jpg'],
     },
   },
   {
     // Facts: its README + the live sitemap (1 222 URLs, 2026-10-03). Sales are
-    // not open yet — the site says so, and so do we.
+    // not open yet — the site says so, and so do we. A store with its own
+    // brand: NOT a Boxing Center website (Eddy 2026-10-03) — a solo project.
     slug: 'boutique-de-boxe',
     name: 'Boutique de Boxe',
     client: 'SAS Boxing Center',
@@ -496,10 +499,9 @@ export const projects: Project[] = [
     category: 'Commerce & Services',
     tags: ['E-commerce', 'Catalogue', 'SEO', 'GEO', 'Sport', 'France'],
     liveUrl: 'https://www.boutique-de-boxe.com/',
-    world: 'boxing-center',
     color: '#D8F34B',
     year: 2026,
-    isFeatured: false,
+    isFeatured: true,
     isInternal: false,
     techStack: ['Next.js 16', 'TypeScript', 'Supabase', 'PostgreSQL', 'Drizzle', 'MCP'],
     caseStudy: {
@@ -538,7 +540,6 @@ export const projects: Project[] = [
     category: 'Commerce & Services',
     tags: ['E-commerce', 'Catalogue', 'Metal Boxe', 'Sport', 'France'],
     liveUrl: 'https://www.matos-de-boxe.fr/',
-    world: 'boxing-center',
     color: '#B89B6A',
     year: 2026,
     isFeatured: false,
@@ -556,6 +557,44 @@ export const projects: Project[] = [
       outcome: {
         fr: "En ligne (2026) sur matos-de-boxe.fr — 58 pages. Ouverture des ventes prochaine ; aucun indicateur commercial publié avant.",
         en: 'Live (2026) at matos-de-boxe.fr — 58 pages. Sales open soon; no commercial metric is published before then.',
+      },
+    },
+  },
+  {
+    // A distinct association sharing the Portet venue with the Boxing Center
+    // gym ("deux entités distinctes qui partagent le même lieu" — its own data
+    // file). Facts: that data file + the live site (11 pages, 2026-10-03).
+    slug: 'noble-art-portesien',
+    name: 'Noble Art Portésien',
+    client: 'Noble Art Portésien — association de boxe anglaise',
+    tagline: {
+      fr: 'La boxe sous toutes ses coutures',
+      en: 'Boxing, down to every seam',
+    },
+    description: {
+      fr: "Refonte du site du Noble Art Portésien, association de boxe anglaise déclarée en 1983 à Portet-sur-Garonne — boxe éducative, loisir, amateur et handi-boxe, avec un pôle insertion et inclusion. Le texte du club est repris au mot près ; chaque donnée — tarif, horaire, contact — existe une seule fois et alimente les pages, les données structurées et le planning imprimable.",
+      en: 'A rebuild of the site of Noble Art Portésien, an English-boxing association registered in 1983 in Portet-sur-Garonne — youth, leisure, amateur and adaptive boxing, with an integration and inclusion programme. The club’s own text is kept word for word; every piece of data — price, schedule, contact — exists once and feeds the pages, the structured data and the printable schedule.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['Boxe anglaise', 'Association', 'Insertion', 'Refonte', 'Portet-sur-Garonne'],
+    liveUrl: 'https://noble-art-portesien.com/',
+    color: '#FF7F1E',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Astro', 'Schema.org', 'llms.txt', 'MCP'],
+    caseStudy: {
+      problem: {
+        fr: "Sur l'ancien site, un même tarif était recopié sur huit pages : en changer un demandait huit modifications, et une seule oubliée créait une contradiction publique. L'identité légale de l'association n'y figurait pas.",
+        en: 'On the old site the same price was copied across eight pages: changing one took eight edits, and a single miss created a public contradiction. The association’s legal identity was nowhere on it.',
+      },
+      solution: {
+        fr: "Un site où chaque donnée existe une fois et se projette partout — pages, données structurées, planning imprimable. L'identité de l'association est publiée, le texte du club conservé au mot près, et le lien avec la salle voisine dit clairement : deux entités distinctes, un même lieu.",
+        en: 'A site where every piece of data exists once and is projected everywhere — pages, structured data, printable schedule. The association’s identity is published, the club’s text kept word for word, and the link with the neighbouring gym stated plainly: two distinct entities, one venue.',
+      },
+      outcome: {
+        fr: "En ligne (2026) sur noble-art-portesien.com — 11 pages sur son propre nom de domaine. Indicateurs publiés après mesure, jamais avant.",
+        en: 'Live (2026) at noble-art-portesien.com — 11 pages on its own domain name. Metrics published after measurement, never before.',
       },
     },
   },
@@ -1397,6 +1436,7 @@ const THUMBED = new Set([
   'club-boxe-blagnac',
   'boutique-de-boxe',
   'matos-de-boxe',
+  'noble-art-portesien',
   'box-plus', // the live boutique hero (image-complete gated capture)
   'kermhosting',
   'la-brigade-mobile',
@@ -1429,11 +1469,13 @@ const FEATURED_RANK: Record<string, number> = {
   kermhosting: 1,
   'the-911': 2,
   'boxing-center-portet': 3,
-  'boxing-center-etats-unis': 4,
-  'la-brigade-mobile': 5,
-  'temps-dance': 6,
-  'mon-boum': 7,
-  'beldi-fusion': 8,
+  'boutique-de-boxe': 4,
+  'boxing-center-etats-unis': 5,
+  'la-brigade-mobile': 6,
+  'boxing-center-ramonville': 7,
+  'temps-dance': 8,
+  'mon-boum': 9,
+  'beldi-fusion': 10,
 }
 export const featuredProjects = projects
   .filter((p) => p.isFeatured && !p.isInternal)

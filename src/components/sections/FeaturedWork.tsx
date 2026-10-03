@@ -13,6 +13,9 @@ import type { Dictionary } from '@/i18n/dictionaries'
  * separate band, they ride IN the sequence. Order of show: JCBO, the
  * Microdidact door, KermHosting, the Boxing Center door, then the heavyweight
  * individual sites from inside both worlds to give the walk its length.
+ * 2026-10-03: Boutique de Boxe (a store of its own, not a Boxing Center
+ * site) and two more salles — États-Unis, Ramonville — join; the three
+ * Boxing Center sites are spaced out so no two ride side by side.
  */
 const SEQUENCE: (string | { door: 'microdidact' | 'boxingCenter' })[] = [
   'jcboyang-conseil',
@@ -21,8 +24,10 @@ const SEQUENCE: (string | { door: 'microdidact' | 'boxingCenter' })[] = [
   { door: 'boxingCenter' },
   'the-911',
   'boxing-center-portet',
+  'boutique-de-boxe',
   'boxing-center-etats-unis',
   'la-brigade-mobile',
+  'boxing-center-ramonville',
   'temps-dance',
   'mon-boum',
 ]

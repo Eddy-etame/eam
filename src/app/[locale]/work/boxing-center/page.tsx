@@ -33,12 +33,12 @@ export async function generateMetadata({
   // named salles, then the scale of the whole ecosystem.
   const ogTitle =
     locale === 'fr'
-      ? 'Le monde Boxing Center — 5 salles, 19 pièces en ligne'
-      : 'The Boxing Center world — 5 gyms, 19 live pieces'
+      ? 'Le monde Boxing Center — 5 salles, 17 pièces en ligne'
+      : 'The Boxing Center world — 5 gyms, 17 live pieces'
   const ogDescription =
     locale === 'fr'
-      ? "Cinq salles toulousaines — Portet, États-Unis, Minimes, St-Cyprien, Ramonville — un site par salle, jamais cloné, deux clubs de boxe anglaise, sept sites de proximité et trois boutiques. Forgé par EAM."
-      : 'Five Toulouse gyms — Portet, États-Unis, Minimes, St-Cyprien, Ramonville — one site per gym, never cloned, two English-boxing clubs, seven proximity sites and three stores. Forged by EAM.'
+      ? "Cinq salles toulousaines — Portet, États-Unis, Minimes, St-Cyprien, Ramonville — un site par salle, jamais cloné, deux clubs de boxe anglaise, sept sites de proximité et la boutique officielle. Forgé par EAM."
+      : 'Five Toulouse gyms — Portet, États-Unis, Minimes, St-Cyprien, Ramonville — one site per gym, never cloned, two English-boxing clubs, seven proximity sites and the official store. Forged by EAM.'
   return {
     ...base,
     openGraph: { ...base.openGraph, title: ogTitle, description: ogDescription },

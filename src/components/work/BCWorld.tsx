@@ -47,11 +47,6 @@ const CLUBS = [
   band('club-boxe-blagnac', 'https://www.club-boxe-blagnac.fr/', 'VII'),
 ]
 
-const STORES = [
-  band('boutique-de-boxe', 'https://www.boutique-de-boxe.com/', 'II'),
-  band('matos-de-boxe', 'https://www.matos-de-boxe.fr/', 'III'),
-]
-
 /** The seven proximity sites — one per town, each on its own domain. */
 const PROXIMITE = ['colomiers', 'muret', 'cugnaux', 'tournefeuille', 'labege', 'lunion', 'castelginest'].map(
   (town) => ({
@@ -78,7 +73,7 @@ function SiteBand({
 }: {
   locale: Locale
   meta: BandMeta
-  /** "Salle" / "Club" / "Boutique" — printed with the running number. */
+  /** "Salle" / "Club" — printed with the running number. */
   label: string
   index: number
   copy: { name: string; place: string; line: string }
@@ -192,9 +187,9 @@ function SiteBand({
 /**
  * The Boxing Center world — EAM's richest direct engagement as a cinematic
  * journey, not a grid. An iris entrance on the house colours, full-bleed
- * bands with inner parallax for the salles, the clubs and the stores, a
- * pinned rail for the seven proximity sites, a foil stat band and a
- * provenance close. Web and code only — the print work is out of scope.
+ * bands with inner parallax for the salles and the clubs, a pinned rail for
+ * the seven proximity sites, the official store in its frame, a foil stat
+ * band and a provenance close. Web and code only — the print work is out of scope.
  *
  * Doctrine: every string comes from dict.bcWorld; all copy and links live in
  * the DOM (SEO). Reduced motion renders the whole page static and readable —
@@ -534,8 +529,9 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
           </div>
         </section>
 
-        {/* ── CHAPTER IV — the three stores: Box Plus in its frame, then the
-            two catalogue stores as full-bleed bands ─────────────────────── */}
+        {/* ── CHAPTER IV — BOX PLUS, the official e-boutique (live). The
+            catalogue stores (Boutique de Boxe, Matos de Boxe) are NOT Boxing
+            Center websites — they stand as solo projects on the registre. ── */}
         <section className="border-t border-line">
           <div className="px-6 py-20 md:px-12 md:py-28 lg:px-20">
             <div className="mx-auto max-w-[1640px]">
@@ -567,7 +563,7 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
                   </div>
                   <div className="relative hidden aspect-[16/10] w-full sm:block">
                     <Image
-                      src="/thumbs/bc-box-plus.jpg"
+                      src="/thumbs/box-plus.jpg"
                       alt={`Box Plus — ${d.boutique.tag}`}
                       fill
                       sizes="(max-width: 1640px) 100vw, 1640px"
@@ -597,20 +593,6 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
               </div>
             </div>
           </div>
-
-          {d.boutique.others.map((store, i) => (
-            <SiteBand
-              key={store.name}
-              locale={locale}
-              meta={STORES[i]}
-              label={d.boutique.label}
-              index={i + 2}
-              copy={store}
-              caseCta={d.caseCta}
-              visitCta={d.visitCta}
-              right={i % 2 === 1}
-            />
-          ))}
         </section>
 
         {/* ── CHAPTER V — the backstage tools (live, 2026) ───────────────── */}

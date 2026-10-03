@@ -37,6 +37,8 @@ export const clients: Client[] = [
   { name: 'La Brigade Mobile', logo: '/logos/la-brigade-mobile.png', slug: 'la-brigade-mobile' },
   { name: 'Matos de Boxe', logo: '/logos/matos-de-boxe.png', slug: 'matos-de-boxe' },
   { name: 'Mon Boum', logo: '/logos/mon-boum.png', slug: 'mon-boum' },
+  // The association's own badge, as published on its site (orange ground).
+  { name: 'Noble Art Portésien', logo: '/logos/noble-art-portesien.png', slug: 'noble-art-portesien' },
   { name: 'Beldi Fusion', logo: '/logos/beldi-fusion.png', slug: 'beldi-fusion' },
   { name: 'ID SKILLZ', logo: '/logos/id-skillz.png', slug: 'id-skillz' },
   { name: 'Temps Dance', logo: '/logos/temps-dance.png', slug: 'temps-dance' },
