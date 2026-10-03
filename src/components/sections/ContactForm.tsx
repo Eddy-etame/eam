@@ -103,8 +103,9 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
 
   return (
     <form onSubmit={onSubmit} className="space-y-5">
-      <div>
-        <label htmlFor="name" className="text-mono-label text-muted">
+      {/* group: the label lights up while its field has the focus */}
+      <div className="group">
+        <label htmlFor="name" className="text-mono-label text-muted transition-colors duration-300 group-focus-within:text-gold">
           {f.name}
         </label>
         <input
@@ -118,8 +119,8 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
           className={field}
         />
       </div>
-      <div>
-        <label htmlFor="email" className="text-mono-label text-muted">
+      <div className="group">
+        <label htmlFor="email" className="text-mono-label text-muted transition-colors duration-300 group-focus-within:text-gold">
           {f.email}
         </label>
         <input
@@ -134,8 +135,8 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
           className={field}
         />
       </div>
-      <div>
-        <label htmlFor="company" className="text-mono-label text-muted">
+      <div className="group">
+        <label htmlFor="company" className="text-mono-label text-muted transition-colors duration-300 group-focus-within:text-gold">
           {f.company}
         </label>
         <input
@@ -159,8 +160,8 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
           onChange={set('website')}
         />
       </div>
-      <div>
-        <label htmlFor="message" className="text-mono-label text-muted">
+      <div className="group">
+        <label htmlFor="message" className="text-mono-label text-muted transition-colors duration-300 group-focus-within:text-gold">
           {f.message}
         </label>
         <textarea

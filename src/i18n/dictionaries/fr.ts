@@ -45,7 +45,8 @@ export const fr = {
     subtitle: `${PROJECT_COUNT} projets livrés, de Toulouse à Casablanca — par trois ingénieurs qui vous répondent eux-mêmes. La prochaine marque qui règne peut être la vôtre.`,
     ctaPrimary: 'Voir nos réalisations',
     ctaSecondary: 'Obtenir mon devis gratuit',
-    riskNote: 'Devis gratuit sous 24-48 h · sans engagement · maintenance optionnelle, 2 mois offerts',
+    riskNote: 'Devis gratuit sous 24-48 h · sans engagement',
+    offerNote: 'Maintenance optionnelle · 2 mois offerts',
     scrollHint: 'Défiler',
   },
   marquee: ['Sur-mesure', 'Sécurité A+', 'SEO & GEO', 'Schema.org', 'llms.txt', 'Réponse 24-48 h'],
@@ -577,7 +578,7 @@ export const fr = {
       eyebrow: 'Services',
       title: 'Quatre façons de travailler ensemble.',
       lead: "Chaque service est livré avec preuves — performance, données structurées, visibilité IA — par les trois ingénieurs que vous rencontrez.",
-      metaTitle: 'Services — création de site, e-commerce, SEO & GEO, refonte',
+      metaTitle: 'Services — sites, e-commerce, SEO & GEO, refonte',
       metaDescription:
         "Sites sur-mesure, e-commerce, SEO & GEO, refonte : chaque projet reçoit un devis gratuit sous 24-48 h — vous parlez directement aux ingénieurs.",
     },

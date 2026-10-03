@@ -161,10 +161,14 @@ for (const mode of ['desktop', 'phone']) {
       if (isPhone)
         for (const el of document.querySelectorAll('a, button, summary, input, textarea')) {
           if (!visible(el) || el.closest('[aria-hidden="true"]') || el.tabIndex < 0) continue
+          if (el.classList.contains('sr-only')) continue // the skip link, shown on focus only
           const r = el.getBoundingClientRect()
+          // The hit area may be widened by a ::before (globals.css, pointer: coarse).
+          const before = getComputedStyle(el, '::before')
+          const grown = before.content !== 'none' && before.position === 'absolute' ? -2 * parseFloat(before.top || '0') : 0
           // Inline links inside running text are exempt (WCAG 2.5.8).
-          if (el.tagName === 'A' && getComputedStyle(el).display === 'inline') continue
-          if (r.height < 40 && r.width < 200) out.small.push(`${el.tagName.toLowerCase()} "${(el.innerText || el.getAttribute('aria-label') || '').trim().slice(0, 30)}" ${Math.round(r.width)}×${Math.round(r.height)}`)
+          if (el.tagName === 'A' && getComputedStyle(el).display === 'inline' && !grown) continue
+          if (r.height + grown < 40 && r.width < 200) out.small.push(`${el.tagName.toLowerCase()} "${(el.innerText || el.getAttribute('aria-label') || '').trim().slice(0, 30)}" ${Math.round(r.width)}×${Math.round(r.height)}`)
         }
       // Contrast, only where the ground is a solid colour we can read.
       const lum = (c) => {

@@ -200,6 +200,8 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       {/* Risk-reducer — the check-writer's hesitation, answered at the button */}
       <p data-hero-cta className="text-mono-label mt-4 text-faint">
         {hero.riskNote}
+        {/* The standing offer on its own line, in gold — an incentive, not fine print. */}
+        <span className="mt-1.5 block text-gold/85">{hero.offerNote}</span>
       </p>
       </div>
 

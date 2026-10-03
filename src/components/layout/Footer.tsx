@@ -48,7 +48,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
           <div>
             <h2 className="text-mono-label mb-5 text-faint">{dict.footer.contactTitle}</h2>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-3">
               <li>
                 <Link
                   href={localizedPath(locale, 'contact')}

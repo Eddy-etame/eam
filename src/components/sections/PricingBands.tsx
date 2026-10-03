@@ -44,7 +44,8 @@ export function PricingBands({
             <a
               href={`${contact}?sujet=${band.sujet}#devis`}
               data-sujet={band.sujet}
-              className="group flex flex-1 flex-col p-8 transition-colors duration-500 hover:bg-surface focus-visible:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-gold md:p-9"
+              // svc-card: the gold top edge draws itself when the band is revealed.
+              className="svc-card group flex flex-1 flex-col p-8 transition-colors duration-500 hover:bg-surface focus-visible:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-gold md:p-9"
             >
               <span aria-hidden className="text-mono-label tabular-nums text-faint">
                 {String(i + 1).padStart(2, '0')}

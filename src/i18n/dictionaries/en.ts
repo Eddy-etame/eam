@@ -41,7 +41,8 @@ export const en = {
     subtitle: `${PROJECT_COUNT} projects shipped, from Toulouse to Casablanca — by three engineers who answer you themselves. The next reigning brand could be yours.`,
     ctaPrimary: 'See our work',
     ctaSecondary: 'Get my free quote',
-    riskNote: 'Free quote in 24-48h · no commitment · optional maintenance, 2 months free',
+    riskNote: 'Free quote in 24-48h · no commitment',
+    offerNote: 'Optional maintenance · 2 months free',
     scrollHint: 'Scroll',
   },
   marquee: ['Bespoke', 'A+ security', 'SEO & GEO', 'Schema.org', 'llms.txt', '24-48h response'],
@@ -573,7 +574,7 @@ export const en = {
       eyebrow: 'Services',
       title: 'Four ways to work together.',
       lead: 'Every service ships with receipts — performance, structured data, AI visibility — from the three engineers you actually meet.',
-      metaTitle: 'Services — website creation, e-commerce, SEO & GEO, rebuilds',
+      metaTitle: 'Services — websites, e-commerce, SEO & GEO, rebuilds',
       metaDescription:
         'Bespoke websites, e-commerce, SEO & GEO, rebuilds: every project gets a free quote within 24-48h — you speak directly to the engineers.',
     },

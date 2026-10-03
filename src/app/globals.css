@@ -66,7 +66,7 @@
   --c-surface-2:   #13243F;
   --c-ink:         #F5F0E8;
   --c-muted:       #8892A4;
-  --c-faint:       #6B7688; /* ≥4.5:1 on --c-deep (WCAG AA) */
+  --c-faint:       #7B869C; /* measured: 5.31:1 on --c-deep, 4.75:1 on --c-surface (WCAG AA) */
   --c-gold:        #C9A96E;
   --c-gold-dim:    #8C6F3E;
   --c-gold-bright: #F3DCA6;
@@ -87,7 +87,7 @@
   --c-surface-2:   #122231;
   --c-ink:         #E9EEF3;
   --c-muted:       #7E8C9A;
-  --c-faint:       #66788C; /* ≥4.5:1 on --c-deep (WCAG AA) */
+  --c-faint:       #72859A; /* measured: 5.26:1 on --c-deep, 4.73:1 on --c-surface (WCAG AA) */
   --c-gold:        #A9B7C4;
   --c-gold-dim:    #5C6B79;
   --c-gold-bright: #D6E0E9;
@@ -104,7 +104,7 @@
   --c-surface-2:   #FFFFFF;
   --c-ink:         #16110A;
   --c-muted:       #5C5346;
-  --c-faint:       #756A54; /* ≥4.5:1 on the paper ground (WCAG AA) */
+  --c-faint:       #6B604B; /* measured: 5.39:1 on --c-deep, 4.80:1 on --c-navy (WCAG AA) */
   --c-gold:        #8C6F3E;
   --c-gold-dim:    #B79B6A;
   --c-gold-bright: #5E4A22;
@@ -301,6 +301,19 @@
     font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
+  }
+  /* Touch: a mono-label link is one line of 12px type — a 17px-tall target.
+     Its ::before widens the hit area to a thumb's width without moving the
+     layout. Pills and positioned links size themselves and are left alone. */
+  @media (pointer: coarse) {
+    a.text-mono-label:not(.rounded-full):not(.absolute):not(.fixed) {
+      position: relative;
+    }
+    a.text-mono-label:not(.rounded-full):not(.absolute):not(.fixed)::before {
+      content: '';
+      position: absolute;
+      inset: -13px -6px;
+    }
   }
 
   /* Scroll-reveal primitive (toggled by IntersectionObserver → .is-visible).

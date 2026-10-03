@@ -44,10 +44,14 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         ]}
       />
       <div className="mx-auto max-w-[1640px]">
-        <div className="grid gap-16 lg:grid-cols-2">
-          {/* min-w-0 on both columns: grid items default to min-width auto, so one
-              long unbreakable token (e.g. the email) would force both columns wide */}
-          <div className="min-w-0">
+        {/* Three blocks: the ask, the form, the reassurance. On a phone they
+            read in that order — the form sits right under the ask, never a
+            full screen of side matter above it. From lg the form takes the
+            right column and the reassurance returns under the ask.
+            min-w-0: grid items default to min-width auto, so one long
+            unbreakable token would force both columns wide. */}
+        <div className="grid gap-x-16 gap-y-12 lg:grid-cols-2 lg:grid-rows-[auto_1fr]">
+          <div className="min-w-0 lg:col-start-1 lg:row-start-1">
             <PageEntrance>
               <p data-pe="eyebrow" className="text-mono-label text-gold/85">{dict.contact.eyebrow}</p>
               <h1 data-pe="title" className="mt-5 text-4xl">{dict.contact.title}</h1>
@@ -64,7 +68,14 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               <span className="text-mono-label block text-gold/85">{dict.pricing.offer.label}</span>
               <span className="mt-1.5 block leading-relaxed">{dict.pricing.offer.text}</span>
             </p>
+          </div>
 
+          {/* #devis — the offer bands below (and every ?sujet= link) land here */}
+          <div id="devis" className="min-w-0 scroll-mt-32 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+            <ContactForm dict={dict} />
+          </div>
+
+          <div className="min-w-0 lg:col-start-1 lg:row-start-2">
             {/* WhatsApp — the channel SMB owners actually use (FR/MA/Africa) */}
             <a
               href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(
@@ -72,7 +83,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-mono-label mt-8 inline-flex items-center gap-2.5 rounded-full border border-gold/35 px-5 py-3 text-ink transition-colors duration-300 hover:bg-gold hover:text-deep"
+              className="text-mono-label inline-flex items-center gap-2.5 rounded-full border border-gold/35 px-5 py-3 text-ink transition-colors duration-300 hover:bg-gold hover:text-deep"
             >
               <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-gold" />
               {dict.servicesPage.whatsappCta} <span aria-hidden>↗</span>
@@ -111,10 +122,6 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
             <p className="text-mono-label mt-10 text-faint">
               {siteConfig.location.areaServed[locale].join(' · ')}
             </p>
-          </div>
-          {/* #devis — the offer bands below (and every ?sujet= link) land here */}
-          <div id="devis" className="min-w-0 scroll-mt-32">
-            <ContactForm dict={dict} />
           </div>
         </div>
 

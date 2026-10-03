@@ -13,6 +13,9 @@ import type { Dictionary } from '@/i18n/dictionaries'
 /** Boxing Center house accents — local to this world, never global tokens. */
 const BC_NAVY = '#1E2044'
 const BC_RED = '#E8001C'
+/** The same red, lifted for SMALL TEXT: #E8001C is 4.12:1 on the page deep
+ *  and 3.31:1 on the house navy — under AA. Fills, rules and glows keep BC_RED. */
+const BC_RED_TEXT = '#FF4B5C'
 
 /** A full-bleed site band: desktop capture, phone-shaped capture below `sm`
  *  (so a band never squishes a desktop screenshot on mobile), the case-study
@@ -147,7 +150,7 @@ function SiteBand({
         className={`pointer-events-none absolute bottom-0 z-20 flex max-w-xl flex-col gap-4 p-8 md:p-14 ${right ? 'right-0 items-end text-right' : 'left-0 items-start text-left'}`}
       >
         <p className="text-mono-label text-ink/70">
-          <span style={{ color: BC_RED }}>{`${label} 0${index}`}</span>
+          <span style={{ color: BC_RED_TEXT }}>{`${label} 0${index}`}</span>
           <span className="px-2 text-faint" aria-hidden>
             ·
           </span>
@@ -174,7 +177,7 @@ function SiteBand({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${visitCta} — ${fullName}`}
-            className="text-mono-label inline-flex items-center gap-2 rounded-full border border-line-strong bg-deep/60 px-4 py-2 text-ink backdrop-blur-sm transition-colors duration-300 hover:border-gold/60 hover:text-gold sm:px-5 sm:py-2.5"
+            className="text-mono-label inline-flex items-center gap-2 rounded-full border border-line-strong bg-deep/60 px-4 py-3 text-ink backdrop-blur-sm transition-colors duration-300 hover:border-gold/60 hover:text-gold sm:px-5"
           >
             {visitCta} <span aria-hidden>↗</span>
           </a>
@@ -347,7 +350,7 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
           </div>
 
           <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center">
-            <p data-bc-eyebrow className="text-mono-label" style={{ color: BC_RED }}>
+            <p data-bc-eyebrow className="text-mono-label" style={{ color: BC_RED_TEXT }}>
               {d.eyebrow}
             </p>
 
@@ -373,7 +376,7 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
             </p>
 
             <div className="mt-10 flex w-full max-w-md items-center gap-5">
-              <span className="text-mono-label [font-variant-numeric:tabular-nums]" style={{ color: BC_RED }}>
+              <span className="text-mono-label [font-variant-numeric:tabular-nums]" style={{ color: BC_RED_TEXT }}>
                 5 × 1
               </span>
               <span data-bc-rule className="h-px flex-1" style={{ background: `linear-gradient(90deg, ${BC_RED}, transparent)` }} />
@@ -394,7 +397,7 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
         {/* ── CHAPTER I — CINQ SALLES, full-bleed bands, never a grid ────── */}
         <section className="border-t border-line">
           <header data-bc-reveal className="mx-auto max-w-[1640px] px-6 py-20 md:px-12 md:py-24 lg:px-20">
-            <p className="text-mono-label" style={{ color: BC_RED }}>
+            <p className="text-mono-label" style={{ color: BC_RED_TEXT }}>
               {d.salles.eyebrow}
             </p>
             <h2 className="mt-5 max-w-3xl text-3xl">
@@ -422,7 +425,7 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
         {/* ── CHAPTER II — the two English-boxing clubs, same band grammar ── */}
         <section className="border-t border-line">
           <header data-bc-reveal className="mx-auto max-w-[1640px] px-6 py-20 md:px-12 md:py-24 lg:px-20">
-            <p className="text-mono-label" style={{ color: BC_RED }}>
+            <p className="text-mono-label" style={{ color: BC_RED_TEXT }}>
               {d.clubs.eyebrow}
             </p>
             <h2 className="mt-5 max-w-3xl text-3xl">
@@ -453,7 +456,7 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
           <div className="mx-auto max-w-[1640px]">
             <header data-bc-reveal className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
               <div className="max-w-3xl">
-                <p className="text-mono-label" style={{ color: BC_RED }}>
+                <p className="text-mono-label" style={{ color: BC_RED_TEXT }}>
                   {d.proximite.eyebrow}
                 </p>
                 <h2 className="mt-5 text-3xl">
@@ -502,7 +505,7 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
                     <div className="mt-5 flex items-start justify-between gap-4">
                       <div>
                         <p className="text-mono-label">
-                          <span className="tabular-nums" style={{ color: BC_RED }}>{`0${i + 1}`}</span>
+                          <span className="tabular-nums" style={{ color: BC_RED_TEXT }}>{`0${i + 1}`}</span>
                           <span className="px-2 text-faint" aria-hidden>
                             ·
                           </span>
@@ -536,7 +539,7 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
           <div className="px-6 py-20 md:px-12 md:py-28 lg:px-20">
             <div className="mx-auto max-w-[1640px]">
               <header data-bc-reveal>
-                <p className="text-mono-label" style={{ color: BC_RED }}>
+                <p className="text-mono-label" style={{ color: BC_RED_TEXT }}>
                   {d.boutique.eyebrow}
                 </p>
                 <div className="mt-5 flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
@@ -599,7 +602,7 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
         <section className="border-t border-line px-6 py-20 md:px-12 md:py-24 lg:px-20">
           <div className="mx-auto max-w-[1640px]">
             <header data-bc-reveal>
-              <p className="text-mono-label" style={{ color: BC_RED }}>
+              <p className="text-mono-label" style={{ color: BC_RED_TEXT }}>
                 {d.outils.eyebrow}
               </p>
               <h2 className="mt-5 max-w-3xl text-3xl">{d.outils.title}</h2>

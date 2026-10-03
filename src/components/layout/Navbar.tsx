@@ -71,7 +71,7 @@ export function Navbar({ locale, dict }: { locale: Locale; dict: Dictionary }) {
         <Link
           href={localizedPath(locale)}
           aria-label={`EAM — ${dict.nav.home}`}
-          className="text-ink transition-colors duration-300 hover:text-gold"
+          className="-m-2 p-2 text-ink transition-colors duration-300 hover:text-gold"
         >
           <Logo className="h-9 md:h-10" />
         </Link>
@@ -156,7 +156,7 @@ export function Navbar({ locale, dict }: { locale: Locale; dict: Dictionary }) {
               <LanguageSwitcher locale={locale} />
               <Link
                 href={localizedPath(locale, 'contact')}
-                className="rounded-full border border-gold/40 px-5 py-2.5 text-mono-label text-ink"
+                className="rounded-full border border-gold/40 px-5 py-3 text-mono-label text-ink"
               >
                 {dict.nav.startProject}
               </Link>

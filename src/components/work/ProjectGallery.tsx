@@ -193,7 +193,8 @@ export function ProjectGallery({
   )
 
   const doorEnter = (
-    <span className="absolute bottom-5 right-5 flex translate-y-3 items-center gap-2 text-gold opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 sm:bottom-7 sm:right-7">
+    // Touch has no hover: the door's invitation stays lit there.
+    <span className="absolute bottom-5 right-5 flex translate-y-3 items-center gap-2 text-gold opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 sm:bottom-7 sm:right-7 [@media(hover:none)]:translate-y-0 [@media(hover:none)]:opacity-100">
       <span className="text-mono-label">{enterWorld}</span>
       <span aria-hidden>→</span>
     </span>
