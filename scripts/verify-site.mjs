@@ -173,7 +173,7 @@ async function pages() {
       log(errors.length === 0, `[${mode}] console clean ${url}`, errors.join(' | '))
       if (name === 'case-proximite') {
         const n = await page.locator('a[href^="https://www.boxingcenter-"]').count()
-        log(n >= 7, `[${mode}] proximity case lists the 7 sites`, String(n))
+        log(n >= 8, `[${mode}] proximity case lists the 8 sites`, String(n))
         await page.locator('a[href^="https://www.boxingcenter-muret"]').first().scrollIntoViewIfNeeded()
         await page.waitForTimeout(1200)
         await shot(page, `${name}-${mode}-sites`)

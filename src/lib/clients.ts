@@ -39,6 +39,9 @@ export const clients: Client[] = [
   { name: 'Mon Boum', logo: '/logos/mon-boum.png', slug: 'mon-boum' },
   // The association's own badge, as published on its site (orange ground).
   { name: 'Noble Art Portésien', logo: '/logos/noble-art-portesien.png', slug: 'noble-art-portesien' },
+  // The media's own tile (dark ground, navy wordmark, red cage P) — cropped
+  // to the wordmark, the tile kept as the brand's own ground.
+  { name: 'PRISE MMA', logo: '/logos/prise-mma.png', slug: 'prise-mma' },
   { name: 'Beldi Fusion', logo: '/logos/beldi-fusion.png', slug: 'beldi-fusion' },
   { name: 'ID SKILLZ', logo: '/logos/id-skillz.png', slug: 'id-skillz' },
   { name: 'Temps Dance', logo: '/logos/temps-dance.png', slug: 'temps-dance' },

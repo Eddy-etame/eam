@@ -50,8 +50,8 @@ const CLUBS = [
   band('club-boxe-blagnac', 'https://www.club-boxe-blagnac.fr/', 'VII'),
 ]
 
-/** The seven proximity sites — one per town, each on its own domain. */
-const PROXIMITE = ['colomiers', 'muret', 'cugnaux', 'tournefeuille', 'labege', 'lunion', 'castelginest'].map(
+/** The eight proximity sites — one per town, each on its own domain. */
+const PROXIMITE = ['colomiers', 'muret', 'cugnaux', 'tournefeuille', 'labege', 'lunion', 'castelginest', 'blagnac'].map(
   (town) => ({
     img: `/thumbs/bc-sat-${town}.jpg`,
     imgM: `/thumbs/bc-sat-${town}-m.jpg`,
@@ -191,7 +191,7 @@ function SiteBand({
  * The Boxing Center world — EAM's richest direct engagement as a cinematic
  * journey, not a grid. An iris entrance on the house colours, full-bleed
  * bands with inner parallax for the salles and the clubs, a pinned rail for
- * the seven proximity sites, the official store in its frame, a foil stat
+ * the eight proximity sites, the official store in its frame, a foil stat
  * band and a provenance close. Web and code only — the print work is out of scope.
  *
  * Doctrine: every string comes from dict.bcWorld; all copy and links live in
@@ -450,7 +450,7 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
           ))}
         </section>
 
-        {/* ── CHAPTER III — the seven proximity sites: a rail you travel, town
+        {/* ── CHAPTER III — the eight proximity sites: a rail you travel, town
             by town (pinned scrub on desktop, snap carousel on touch) ──────── */}
         <section className="border-t border-line px-6 py-20 md:px-12 md:py-28 lg:px-20">
           <div className="mx-auto max-w-[1640px]">

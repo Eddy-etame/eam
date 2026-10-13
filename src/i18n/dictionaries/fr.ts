@@ -86,8 +86,8 @@ export const fr = {
       },
       boxingCenter: {
         name: 'Boxing Center',
-        count: '17',
-        line: "Cinq sites de salle, deux clubs, sept sites de proximité — la boutique officielle et les outils qui font tourner le réseau.",
+        count: '20',
+        line: "Cinq sites de salle, deux clubs, huit sites de proximité — la boutique officielle et les outils qui font tourner le réseau.",
       },
     },
   },
@@ -366,11 +366,11 @@ export const fr = {
     meta: {
       title: 'Le monde Boxing Center',
       description:
-        "Client direct d’EAM : le réseau Boxing Center à Toulouse — cinq sites de salle, deux clubs, sept sites de proximité et la boutique officielle, chacun sur son domaine.",
+        "Client direct d’EAM : le réseau Boxing Center à Toulouse — cinq sites de salle, deux clubs, huit sites de proximité et la boutique officielle, chacun sur son domaine.",
     },
     eyebrow: 'Client direct · Toulouse',
     title: 'Le monde Boxing Center.',
-    lead: "Un blason marine et rouge, cinq salles, une seule discipline : le combat. Pour ce réseau toulousain, EAM a forgé dix-sept pièces en ligne — un site par salle, deux clubs de boxe anglaise, sept sites de proximité, la boutique officielle et les outils qui font tourner le réseau.",
+    lead: "Un blason marine et rouge, cinq salles, une seule discipline : le combat. Pour ce réseau toulousain, EAM a forgé vingt pièces en ligne — un site par salle, deux clubs de boxe anglaise, huit sites de proximité, la boutique officielle et les outils qui font tourner le réseau.",
     logoAlt: 'Boxing Center — réseau de salles de sports de combat, Toulouse',
     scrollHint: "Entrer dans l’arène",
     caseCta: 'Étude de cas',
@@ -429,10 +429,10 @@ export const fr = {
       ],
     },
     proximite: {
-      eyebrow: 'Chapitre III — Les sept sites de proximité',
-      title: 'Sept villes. Sept sites. Zéro copie.',
+      eyebrow: 'Chapitre III — Les huit sites de proximité',
+      title: 'Huit villes. Huit sites. Zéro copie.',
       intro:
-        "Un site par commune autour de Toulouse, pour l’habitant qui cherche un club de boxe près de chez lui. Même mécanique, mais un texte, une couleur et un mouvement propres à chaque ville — 125 pages au total.",
+        "Un site par commune autour de Toulouse, pour l’habitant qui cherche un club de boxe près de chez lui. Même mécanique, mais un texte, une couleur et un mouvement propres à chaque ville — 137 pages au total.",
       // Each line is the town site's own H1, quoted as published.
       items: [
         { name: 'Colomiers', line: 'Boxing Center accueille les Columérins à Toulouse Minimes et à Portet.' },
@@ -442,6 +442,7 @@ export const fr = {
         { name: 'Labège', line: 'Sports de combat à proximité de Labège.' },
         { name: 'L’Union', line: 'La plus grande salle de sports de combat, proche de L’Union.' },
         { name: 'Castelginest', line: 'Boxe, MMA et sports de combat accessibles depuis Castelginest.' },
+        { name: 'Blagnac', line: 'Club de boxe à Blagnac. Boxing Center proche de Blagnac · le club est à Toulouse Minimes.' },
       ],
     },
     boutique: {
@@ -465,7 +466,17 @@ export const fr = {
         {
           name: 'Séance d’essai offerte',
           line: "Le tunnel d’acquisition du réseau — une page, une promesse, un formulaire : la séance d’essai qui remplit les salles.",
-          url: 'https://bc-seance-offerte.vercel.app',
+          url: 'https://seance-offerte.boxingcenter.fr',
+        },
+        {
+          name: 'Continuer l’aventure',
+          line: "Le formulaire d’accueil des adhérents de la salle de Balma dans les cinq salles du réseau — identité, formule choisie, badge réactivé.",
+          url: 'https://aventure.boxingcenter.fr',
+        },
+        {
+          name: 'Stages enfants',
+          line: "Le site des Vacances des Boxeurs — stage de boxe anglaise pour les 8–16 ans à Portet et aux Minimes, inscription et paiement en ligne.",
+          url: 'https://stage-boxing.vercel.app',
         },
       ],
       open: 'Ouvrir',
@@ -474,16 +485,16 @@ export const fr = {
       eyebrow: 'Les faits',
       items: [
         { value: '5', label: 'sites de salle' },
-        { value: '7', label: 'sites de proximité' },
+        { value: '8', label: 'sites de proximité' },
         { value: '2', label: 'clubs de boxe anglaise' },
-        { value: '17', label: 'pièces en ligne au total' },
+        { value: '20', label: 'pièces en ligne au total' },
       ],
     },
     close: {
       provenance:
         "Boxing Center est un client direct d’EAM — sites de salle, sites de proximité, boutique et outils du réseau, forgés sous notre blason.",
       title: 'Votre marque mérite une arène.',
-      text: "Dix-sept pièces en ligne, chaque site sur son nom de domaine — zéro duplication. Parlez-nous de votre projet : nous forgeons à cette échelle.",
+      text: "Vingt pièces en ligne, chaque site sur son nom de domaine — zéro duplication. Parlez-nous de votre projet : nous forgeons à cette échelle.",
       button: 'Obtenir mon devis gratuit',
     },
     back: 'Retour au registre',

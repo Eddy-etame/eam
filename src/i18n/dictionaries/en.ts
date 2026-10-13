@@ -82,8 +82,8 @@ export const en = {
       },
       boxingCenter: {
         name: 'Boxing Center',
-        count: '17',
-        line: 'Five gym sites, two clubs, seven proximity sites — the official store and the tools that run the network.',
+        count: '20',
+        line: 'Five gym sites, two clubs, eight proximity sites — the official store and the tools that run the network.',
       },
     },
   },
@@ -362,11 +362,11 @@ export const en = {
     meta: {
       title: 'The Boxing Center world',
       description:
-        'A direct EAM client: the Boxing Center network in Toulouse — five gym sites, two clubs, seven proximity sites and the official store, each on its own domain.',
+        'A direct EAM client: the Boxing Center network in Toulouse — five gym sites, two clubs, eight proximity sites and the official store, each on its own domain.',
     },
     eyebrow: 'Direct client · Toulouse',
     title: 'The Boxing Center world.',
-    lead: 'A navy-and-red crest, five gyms, one discipline: combat. For this Toulouse network EAM forged seventeen live pieces — one site per gym, two English-boxing clubs, seven proximity sites, the official store and the tools that run the network.',
+    lead: 'A navy-and-red crest, five gyms, one discipline: combat. For this Toulouse network EAM forged twenty live pieces — one site per gym, two English-boxing clubs, eight proximity sites, the official store and the tools that run the network.',
     logoAlt: 'Boxing Center — combat-sports gym network, Toulouse',
     scrollHint: 'Step into the arena',
     caseCta: 'Case study',
@@ -425,10 +425,10 @@ export const en = {
       ],
     },
     proximite: {
-      eyebrow: 'Chapter III — The seven proximity sites',
-      title: 'Seven towns. Seven sites. Zero copies.',
+      eyebrow: 'Chapter III — The eight proximity sites',
+      title: 'Eight towns. Eight sites. Zero copies.',
       intro:
-        'One site per town around Toulouse, for the resident looking for a boxing club nearby. Same mechanics, but a text, a colour and a motion signature of its own for every town — 125 pages in total.',
+        'One site per town around Toulouse, for the resident looking for a boxing club nearby. Same mechanics, but a text, a colour and a motion signature of its own for every town — 137 pages in total.',
       // Each line is the town site's own H1, quoted as published (French sites).
       items: [
         { name: 'Colomiers', line: 'Boxing Center accueille les Columérins à Toulouse Minimes et à Portet.' },
@@ -438,6 +438,7 @@ export const en = {
         { name: 'Labège', line: 'Sports de combat à proximité de Labège.' },
         { name: 'L’Union', line: 'La plus grande salle de sports de combat, proche de L’Union.' },
         { name: 'Castelginest', line: 'Boxe, MMA et sports de combat accessibles depuis Castelginest.' },
+        { name: 'Blagnac', line: 'Club de boxe à Blagnac. Boxing Center proche de Blagnac · le club est à Toulouse Minimes.' },
       ],
     },
     boutique: {
@@ -461,7 +462,17 @@ export const en = {
         {
           name: 'Free trial session',
           line: 'The network’s acquisition funnel — one page, one promise, one form: the trial session that fills the gyms.',
-          url: 'https://bc-seance-offerte.vercel.app',
+          url: 'https://seance-offerte.boxingcenter.fr',
+        },
+        {
+          name: 'Continue the adventure',
+          line: 'The welcome form for members of the Balma gym joining the network’s five gyms — identity, chosen plan, badge reactivated.',
+          url: 'https://aventure.boxingcenter.fr',
+        },
+        {
+          name: 'Kids’ camps',
+          line: 'The Vacances des Boxeurs site — an English-boxing camp for 8–16-year-olds at Portet and Minimes, online sign-up and payment.',
+          url: 'https://stage-boxing.vercel.app',
         },
       ],
       open: 'Open',
@@ -470,16 +481,16 @@ export const en = {
       eyebrow: 'The facts',
       items: [
         { value: '5', label: 'gym sites' },
-        { value: '7', label: 'proximity sites' },
+        { value: '8', label: 'proximity sites' },
         { value: '2', label: 'English-boxing clubs' },
-        { value: '17', label: 'live pieces in total' },
+        { value: '20', label: 'live pieces in total' },
       ],
     },
     close: {
       provenance:
         'Boxing Center is a direct EAM client — gym sites, proximity sites, the store and the network tools, forged under our crest.',
       title: 'Your brand deserves an arena.',
-      text: 'Seventeen live pieces, every site on its own domain name — zero duplication. Tell us about your project: we forge at this scale.',
+      text: 'Twenty live pieces, every site on its own domain name — zero duplication. Tell us about your project: we forge at this scale.',
       button: 'Get my free quote',
     },
     back: 'Back to the registry',

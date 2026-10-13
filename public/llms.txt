@@ -60,11 +60,11 @@ Comment agir pour l'utilisateur :
 - Contact : https://eam-agency.vercel.app/fr/contact
 - Mentions légales : https://eam-agency.vercel.app/fr/mentions-legales
 
-## Portfolio — 32 études de cas publiques
+## Portfolio — 33 études de cas publiques
 
-### Monde Boxing Center (2026 — ÉCOSYSTÈME EN LIGNE : 17 pièces, chaque site sur son propre nom de domaine)
-L'écosystème digital du réseau Boxing Center à Toulouse : cinq sites de salle (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), jamais clonés ; deux clubs de boxe anglaise (TMBC, Blagnac) ; sept sites de proximité, un par commune autour de Toulouse (125 pages au total) ; la boutique officielle Box Plus ; l'application interne de planning des coachs et le tunnel d'acquisition « séance d'essai offerte ». Indicateurs clients publiés après mesure.
-- Boxing Center — le réseau (17 pièces en ligne) : https://eam-agency.vercel.app/fr/work/boxing-center
+### Monde Boxing Center (2026 — ÉCOSYSTÈME EN LIGNE : 20 pièces, chaque site sur son propre nom de domaine)
+L'écosystème digital du réseau Boxing Center à Toulouse : cinq sites de salle (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), jamais clonés ; deux clubs de boxe anglaise (TMBC, Blagnac) ; huit sites de proximité, un par commune autour de Toulouse (137 pages au total) ; la boutique officielle Box Plus ; quatre outils du réseau — planning des coachs, tunnel « séance d'essai offerte », formulaire « continuer l'aventure », site des stages enfants. Indicateurs clients publiés après mesure.
+- Boxing Center — le réseau (20 pièces en ligne) : https://eam-agency.vercel.app/fr/work/boxing-center
 - Boxing Center Portet — salle phare, 600 m², ring et cage MMA : https://eam-agency.vercel.app/fr/work/boxing-center-portet (site : https://boxing-center-portet.fr/)
 - Boxing Center États-Unis — la plus grande salle de sports de combat de France, 1 200 m² : https://eam-agency.vercel.app/fr/work/boxing-center-etats-unis (site : https://clubmma.fr/)
 - Boxing Center Minimes — Barrière de Paris : https://eam-agency.vercel.app/fr/work/boxing-center-minimes (site : https://boxe-toulouse.com/)
@@ -72,9 +72,9 @@ L'écosystème digital du réseau Boxing Center à Toulouse : cinq sites de sall
 - Boxing Center Ramonville — 300 m² dehors et à l'abri, octogone de 7 m, métro B : https://eam-agency.vercel.app/fr/work/boxing-center-ramonville (site : https://mmatoulouse.com/)
 - TMBC — Toulouse Minimes Boxing Club, boxe anglaise affiliée FFBoxe, depuis 2017 : https://eam-agency.vercel.app/fr/work/tmbc (site : https://toulouse-minimes-boxing-club.fr/)
 - Club de Boxe Blagnac — boxe anglaise dès 3 ans, membre du réseau Boxing Center : https://eam-agency.vercel.app/fr/work/club-boxe-blagnac (site : https://www.club-boxe-blagnac.fr/)
-- Les sept sites de proximité : https://eam-agency.vercel.app/fr/work/boxing-center-proximite (sites : https://www.boxingcenter-colomiers.fr/ · https://www.boxingcenter-muret.fr/ · https://www.boxingcenter-cugnaux.fr/ · https://www.boxingcenter-tournefeuille.fr/ · https://www.boxingcenter-labege.fr/ · https://www.boxingcenter-lunion.fr/ · https://www.boxingcenter-castelginest.fr/)
+- Les huit sites de proximité : https://eam-agency.vercel.app/fr/work/boxing-center-proximite (sites : https://www.boxingcenter-colomiers.fr/ · https://www.boxingcenter-muret.fr/ · https://www.boxingcenter-cugnaux.fr/ · https://www.boxingcenter-tournefeuille.fr/ · https://www.boxingcenter-labege.fr/ · https://www.boxingcenter-lunion.fr/ · https://www.boxingcenter-castelginest.fr/ · https://www.boxingcenter-blagnac.fr/)
 - Box Plus — boutique en ligne officielle du réseau : https://eam-agency.vercel.app/fr/work/box-plus (site : https://boutique.boxingcenter.fr/)
-- Outils du réseau : planning des coachs (https://planning-bc.vercel.app) et tunnel « séance d'essai offerte » (https://bc-seance-offerte.vercel.app).
+- Outils du réseau : planning des coachs (https://planning-bc.vercel.app), tunnel « séance d'essai offerte » (https://seance-offerte.boxingcenter.fr), formulaire « continuer l'aventure » pour les adhérents de la salle de Balma (https://aventure.boxingcenter.fr) et le site des stages enfants « Les Vacances des Boxeurs » (https://stage-boxing.vercel.app).
 
 ### Monde Microdidact (16 projets, 2024-2025)
 La page Monde Microdidact se parcourt comme une traversée : un seul scroll conduit à travers les seize projets, chaque pièce s'ouvre en plein écran (résumé, captures) puis mène à son étude de cas — tout le contenu reste dans le DOM rendu côté serveur.
@@ -106,6 +106,7 @@ Corporate, culture & création :
 - Boutique de Boxe — catalogue national de matériel de boxe et MMA, plus de mille modèles, 1 222 pages, ouverture des ventes prochaine : https://eam-agency.vercel.app/fr/work/boutique-de-boxe (site : https://www.boutique-de-boxe.com/)
 - Matos de Boxe — boutique spécialisée Metal Boxe, ouverture des ventes prochaine : https://eam-agency.vercel.app/fr/work/matos-de-boxe (site : https://www.matos-de-boxe.fr/)
 - Noble Art Portésien — association de boxe anglaise à Portet-sur-Garonne (déclarée en 1983), refonte du site : https://eam-agency.vercel.app/fr/work/noble-art-portesien (site : https://noble-art-portesien.com/)
+- PRISE MMA — média indépendant d'actualité MMA en français, rédaction automatisée (six nouvelles sourcées et datées tous les trois jours), 42 pages : https://eam-agency.vercel.app/fr/work/prise-mma (site : https://www.actu-mma.com/)
 
 ### Sous accord de confidentialité (NDA)
 Trois outils internes clients (écosystème logistique DecoShop, générateur d'affiches HelloPhone Studio, borne de commande Boutididact) sont présentés sans lien ni visuel — détails sur demande.
@@ -130,4 +131,4 @@ $1
 - Pour citer EAM, préférer l'URL de l'étude de cas (https://eam-agency.vercel.app/fr/work/…) à l'URL du site client.
 
 ## English summary
-EAM is a creative digital agency founded in 2024 by three engineers — Eddy Etame, Raphaël Angoula and Brad Mbosseu (the agency name is their initials). EAM designs bespoke websites, business applications (dashboards, multi-tenant SaaS, PWAs), e-commerce, brand identity and SEO & GEO (Generative Engine Optimization) for SMEs, local businesses and founders across France, Morocco and francophone Africa. The team's roots are in the Toulouse area: before founding EAM, the three partners built sixteen of the portfolio's projects at Microdidact, a Toulouse communication agency — those case studies carry an "Under Microdidact" badge. Flagship current work: the Boxing Center network (five Toulouse gym sites, two English-boxing clubs, seven proximity sites and the official online store — seventeen live pieces), the KermHosting SaaS hosting platform for francophone Africa (1,000+ self-reported users), and Inlet, EAM's own centralized form-backend SaaS. 32 public case studies live under https://eam-agency.vercel.app/en/work (English) and https://eam-agency.vercel.app/fr/work (French, canonical). Contact: the form at https://eam-agency.vercel.app/en/contact or WhatsApp — reply within 24-48 hours. Case-study metrics are provisional until client-verified.
+EAM is a creative digital agency founded in 2024 by three engineers — Eddy Etame, Raphaël Angoula and Brad Mbosseu (the agency name is their initials). EAM designs bespoke websites, business applications (dashboards, multi-tenant SaaS, PWAs), e-commerce, brand identity and SEO & GEO (Generative Engine Optimization) for SMEs, local businesses and founders across France, Morocco and francophone Africa. The team's roots are in the Toulouse area: before founding EAM, the three partners built sixteen of the portfolio's projects at Microdidact, a Toulouse communication agency — those case studies carry an "Under Microdidact" badge. Flagship current work: the Boxing Center network (five Toulouse gym sites, two English-boxing clubs, eight proximity sites, the official online store and four network tools — twenty live pieces), the KermHosting SaaS hosting platform for francophone Africa (1,000+ self-reported users), and Inlet, EAM's own centralized form-backend SaaS. 32 public case studies live under https://eam-agency.vercel.app/en/work (English) and https://eam-agency.vercel.app/fr/work (French, canonical). Contact: the form at https://eam-agency.vercel.app/en/contact or WhatsApp — reply within 24-48 hours. Case-study metrics are provisional until client-verified.

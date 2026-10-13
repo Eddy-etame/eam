@@ -66,10 +66,13 @@ export const projects: Project[] = [
   // probed 200 on 2026-10-03): five salle sites (boxing-center-portet.fr,
   // clubmma.fr, boxe-toulouse.com, club-boxe-toulouse.com, mmatoulouse.com),
   // two boxe-anglaise clubs (toulouse-minimes-boxing-club.fr,
-  // club-boxe-blagnac.fr), seven proximity sites (boxingcenter-<ville>.fr),
-  // the official store (boutique.boxingcenter.fr) + the coach-planning app
-  // and the «séance d'essai offerte» funnel (still on vercel.app) — 17 live
-  // pieces. boxingcenter.fr remains the legacy WordPress site. The umbrella
+  // club-boxe-blagnac.fr), eight proximity sites (boxingcenter-<ville>.fr —
+  // Blagnac joined 2026-10-13), the official store (boutique.boxingcenter.fr)
+  // + four network tools: the coach-planning app (vercel.app), the «séance
+  // d'essai offerte» funnel (seance-offerte.boxingcenter.fr), the «continuer
+  // l'aventure» member-transfer form (aventure.boxingcenter.fr) and the kids'
+  // camp site (stage-boxing.vercel.app until stages.boxingcenter.fr resolves)
+  // — 20 live pieces. boxingcenter.fr remains the legacy WordPress site. The umbrella
   // keeps liveUrl '#' — it IS the world door, each piece carries its own
   // link. No client metrics invented.
   // NOT in this world (Eddy 2026-10-03): Boutique de Boxe "is not a Boxing
@@ -82,12 +85,12 @@ export const projects: Project[] = [
     name: 'Boxing Center',
     client: 'Boxing Center Toulouse',
     tagline: {
-      fr: 'Cinq salles, dix-sept pièces en ligne. Une seule obsession.',
-      en: 'Five gyms, seventeen live pieces. One obsession.',
+      fr: 'Cinq salles, vingt pièces en ligne. Une seule obsession.',
+      en: 'Five gyms, twenty live pieces. One obsession.',
     },
     description: {
-      fr: "L'écosystème digital du réseau Boxing Center — cinq sites de salle immersifs (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), deux clubs de boxe anglaise (TMBC, Blagnac), sept sites de proximité autour de Toulouse, la boutique officielle Box Plus, le planning des coachs et le tunnel « séance d'essai offerte ». Chaque site sur son propre domaine, aucun dupliqué.",
-      en: 'The digital ecosystem of the Boxing Center network — five immersive gym sites (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), two English-boxing clubs (TMBC, Blagnac), seven proximity sites around Toulouse, the official Box Plus store, the coach-planning app and the free-trial funnel. Every site on its own domain, none duplicated.',
+      fr: "L'écosystème digital du réseau Boxing Center — cinq sites de salle immersifs (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), deux clubs de boxe anglaise (TMBC, Blagnac), huit sites de proximité autour de Toulouse, la boutique officielle Box Plus et les outils du réseau — planning des coachs, tunnel « séance d'essai offerte », transfert des adhérents, stages enfants. Chaque site sur son propre domaine, aucun dupliqué.",
+      en: 'The digital ecosystem of the Boxing Center network — five immersive gym sites (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), two English-boxing clubs (TMBC, Blagnac), eight proximity sites around Toulouse, the official Box Plus store and the network tools — coach planning, free-trial funnel, member transfer, kids’ camps. Every site on its own domain, none duplicated.',
     },
     category: 'Sport & Bien-être',
     tags: ['Sport de combat', 'Boxe', 'WebGL / 3D', 'Three.js', 'Réseau', 'Toulouse'],
@@ -108,13 +111,13 @@ export const projects: Project[] = [
         en: 'One immersive maquette per gym: a real-time 3D steel monolith, a scroll-driven flythrough of the zones, a switchable dual palette, and per-venue type and metal — all copy stays in the DOM (SEO/a11y), 3D as progressive enhancement with a no-WebGL fallback.',
       },
       outcome: {
-        fr: "En ligne (2026) — dix-sept pièces déployées : cinq sites de salle, deux clubs de boxe anglaise, sept sites de proximité, la boutique officielle et deux outils, chaque site sur son propre nom de domaine. Indicateurs clients publiés après mesure, jamais avant.",
-        en: 'Live (2026) — seventeen pieces deployed: five gym sites, two English-boxing clubs, seven proximity sites, the official store and two tools, every site on its own domain name. Client metrics published after measurement, never before.',
+        fr: "En ligne (2026) — vingt pièces déployées : cinq sites de salle, deux clubs de boxe anglaise, huit sites de proximité, la boutique officielle et quatre outils, chaque site sur son propre nom de domaine. Indicateurs clients publiés après mesure, jamais avant.",
+        en: 'Live (2026) — twenty pieces deployed: five gym sites, two English-boxing clubs, eight proximity sites, the official store and four tools, every site on its own domain name. Client metrics published after measurement, never before.',
       },
       // Craft facts — not client outcomes.
       metrics: [
         { value: '5', label: { fr: 'salles, une identité chacune', en: 'gyms, one identity each' } },
-        { value: '17', label: { fr: 'pièces en ligne — sites, boutique, outils', en: 'live pieces — sites, store, tools' } },
+        { value: '20', label: { fr: 'pièces en ligne — sites, boutique, outils', en: 'live pieces — sites, store, tools' } },
         { value: '3D', label: { fr: 'monolithe temps réel (Three.js)', en: 'real-time monolith (Three.js)' } },
       ],
       // Captures of what EAM built — salles, clubs, proximity, the store.
@@ -388,18 +391,18 @@ export const projects: Project[] = [
   {
     // The proximity family — seven separately deployed sites, one per town
     // around Toulouse, each on its own bought domain. Same mechanics, never
-    // the same text, colour or motion. Page count = sum of the seven live
+    // the same text, colour or motion. Page count = sum of the eight live
     // sitemaps (125, counted 2026-10-03).
     slug: 'boxing-center-proximite',
     name: 'Boxing Center — Proximité',
     client: 'Boxing Center Toulouse',
     tagline: {
-      fr: 'Sept villes, sept sites, zéro copie',
-      en: 'Seven towns, seven sites, zero copies',
+      fr: 'Huit villes, huit sites, zéro copie',
+      en: 'Eight towns, eight sites, zero copies',
     },
     description: {
-      fr: "Sept sites, un par commune autour de Toulouse — Colomiers, Muret, Cugnaux, Tournefeuille, Labège, L'Union, Castelginest. Chacun répond à l'habitant qui cherche un club de boxe près de chez lui : le club qui l'accueille, la ligne de bus ou la sortie qui y mène, la séance qui lui convient. Même mécanique, mais un texte, une couleur et un mouvement propres à chaque ville.",
-      en: 'Seven sites, one per town around Toulouse — Colomiers, Muret, Cugnaux, Tournefeuille, Labège, L’Union, Castelginest. Each answers the resident looking for a boxing club nearby: the club that welcomes them, the bus line or exit that gets them there, the class that fits. Same mechanics, but a text, a colour and a motion signature of its own for every town.',
+      fr: "Huit sites, un par commune autour de Toulouse — Colomiers, Muret, Cugnaux, Tournefeuille, Labège, L'Union, Castelginest, Blagnac. Chacun répond à l'habitant qui cherche un club de boxe près de chez lui : le club qui l'accueille, la ligne de bus ou la sortie qui y mène, la séance qui lui convient. Même mécanique, mais un texte, une couleur et un mouvement propres à chaque ville.",
+      en: 'Eight sites, one per town around Toulouse — Colomiers, Muret, Cugnaux, Tournefeuille, Labège, L’Union, Castelginest, Blagnac. Each answers the resident looking for a boxing club nearby: the club that welcomes them, the bus line or exit that gets them there, the class that fits. Same mechanics, but a text, a colour and a motion signature of its own for every town.',
     },
     category: 'Sport & Bien-être',
     tags: ['SEO Local', 'GEO', 'Multi-sites', 'Boxe', 'Toulouse'],
@@ -419,25 +422,26 @@ export const projects: Project[] = [
       { name: 'Labège', url: 'https://www.boxingcenter-labege.fr/', thumb: '/thumbs/bc-sat-labege.jpg' },
       { name: "L'Union", url: 'https://www.boxingcenter-lunion.fr/', thumb: '/thumbs/bc-sat-lunion.jpg' },
       { name: 'Castelginest', url: 'https://www.boxingcenter-castelginest.fr/', thumb: '/thumbs/bc-sat-castelginest.jpg' },
+      { name: 'Blagnac', url: 'https://www.boxingcenter-blagnac.fr/', thumb: '/thumbs/bc-sat-blagnac.jpg' },
     ],
     caseStudy: {
       problem: {
-        fr: "Les habitants de sept communes cherchent « club de boxe » suivi du nom de leur ville. Le réseau les accueille dans le club voisin — encore fallait-il le leur dire, ville par ville, sans cloner sept fois la même page.",
-        en: 'Residents of seven towns search “boxing club” followed by their town’s name. The network welcomes them at the neighbouring club — it still had to tell them so, town by town, without cloning the same page seven times.',
+        fr: "Les habitants de huit communes cherchent « club de boxe » suivi du nom de leur ville. Le réseau les accueille dans le club voisin — encore fallait-il le leur dire, ville par ville, sans cloner huit fois la même page.",
+        en: 'Residents of eight towns search “boxing club” followed by their town’s name. The network welcomes them at the neighbouring club — it still had to tell them so, town by town, without cloning the same page eight times.',
       },
       solution: {
-        fr: "Une famille de sites statiques : chaque fait vit dans un registre unique et le build refuse une page qui contredit ce registre, oublie un mot-clé ou reste fermée à l'indexation. Chaque ville a sa teinte, sa signature de mouvement, ses pages par commune voisine, ses articles conseils, son formulaire protégé par preuve de travail — et moins de 7 ko de JavaScript par page.",
-        en: 'A family of static sites: every fact lives in a single registry and the build rejects a page that contradicts it, misses a keyword or stays closed to indexing. Every town has its own hue, its motion signature, its pages for neighbouring towns, its guides, a form protected by proof-of-work — and under 7 KB of JavaScript per page.',
+        fr: "Une famille de sites statiques : chaque fait vit dans un registre unique et le build refuse une page qui contredit ce registre, oublie un mot-clé ou reste fermée à l'indexation. Chaque ville a sa teinte, sa signature de mouvement, ses pages par commune voisine, ses articles conseils, son formulaire protégé par preuve de travail — et moins de 9 ko de JavaScript par page.",
+        en: 'A family of static sites: every fact lives in a single registry and the build rejects a page that contradicts it, misses a keyword or stays closed to indexing. Every town has its own hue, its motion signature, its pages for neighbouring towns, its guides, a form protected by proof-of-work — and under 9 KB of JavaScript per page.',
       },
       outcome: {
-        fr: "En ligne (2026) — sept sites sur sept noms de domaine, 125 pages au plan du site. Positions publiées après mesure, jamais avant.",
-        en: 'Live (2026) — seven sites on seven domain names, 125 pages in their sitemaps. Rankings published after measurement, never before.',
+        fr: "En ligne (2026) — huit sites sur huit noms de domaine, 137 pages au plan du site. Positions publiées après mesure, jamais avant.",
+        en: 'Live (2026) — eight sites on eight domain names, 137 pages in their sitemaps. Rankings published after measurement, never before.',
       },
       // Craft facts — counted on the live sitemaps, not client outcomes.
       metrics: [
-        { value: '7', label: { fr: 'sites, un par ville', en: 'sites, one per town' } },
-        { value: '125', label: { fr: 'pages en ligne', en: 'pages live' } },
-        { value: '< 7 ko', label: { fr: 'de JavaScript par page', en: 'of JavaScript per page' } },
+        { value: '8', label: { fr: 'sites, un par ville', en: 'sites, one per town' } },
+        { value: '137', label: { fr: 'pages en ligne', en: 'pages live' } },
+        { value: '< 9 ko', label: { fr: 'de JavaScript par page', en: 'of JavaScript per page' } },
       ],
     },
   },
@@ -596,6 +600,54 @@ export const projects: Project[] = [
         fr: "En ligne (2026) sur noble-art-portesien.com — 11 pages sur son propre nom de domaine. Indicateurs publiés après mesure, jamais avant.",
         en: 'Live (2026) at noble-art-portesien.com — 11 pages on its own domain name. Metrics published after measurement, never before.',
       },
+    },
+  },
+
+  {
+    // Independent French-language MMA news media, EAM-built (Astro 7, static).
+    // Facts: its README + PROJECT-STATE (2026-10-12), the live site and its
+    // sitemap (42 URLs, 2026-10-13), its own legal notice ("publication
+    // numérique d'information sportive indépendante"). Training partner shown
+    // on the site: Boxing Center États-Unis. No audience figure is published.
+    slug: 'prise-mma',
+    name: 'PRISE MMA',
+    client: 'PRISE MMA — média indépendant',
+    tagline: {
+      fr: "L'actualité du MMA, en français",
+      en: 'MMA news, in French',
+    },
+    description: {
+      fr: "Média indépendant d'actualité MMA : nouvelles sourcées et datées, combats à venir, fiches combattants, organisations et annuaire des clubs. Une rédaction automatisée publie six nouvelles vérifiées tous les trois jours — l'ordinateur éteint.",
+      en: 'An independent MMA news media: sourced, dated news, upcoming fights, fighter profiles, organisations and a club directory. An automated newsroom publishes six verified stories every three days — with the computer switched off.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['Média', 'Newsroom automatisée', 'Astro', 'MMA', 'France'],
+    liveUrl: 'https://www.actu-mma.com/',
+    color: '#2B3C5E',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Astro 7', 'TypeScript', 'GitHub Actions', 'RSS', 'Schema.org', 'llms.txt'],
+    caseStudy: {
+      problem: {
+        fr: "Un média MMA en français doit rester frais tous les jours — sans rédaction permanente, et sans jamais publier une nouvelle inventée ou non datée.",
+        en: 'A French-language MMA media has to stay fresh every day — without a permanent newsroom, and without ever publishing an invented or undated story.',
+      },
+      solution: {
+        fr: "Un site statique Astro 7 et une chaîne éditoriale qui tourne sur GitHub Actions : découverte des sujets par flux, page originale et date vérifiées, photo tirée de la source, rédaction puis second contrôle factuel sur la source, build, audit et publication. Chaque article porte sa date de publication, la date de l'information, ses liens sources et ses crédits ; cartes de partage composées par page, polices servies localement, RSS, Schema.org et llms.txt.",
+        en: 'A static Astro 7 site and an editorial pipeline running on GitHub Actions: topic discovery from feeds, original page and date verified, photo taken from the source, drafting then a second fact check against the source, build, audit and publish. Every article carries its publication date, the date of the information, its source links and credits; share cards composed per page, locally served fonts, RSS, Schema.org and llms.txt.',
+      },
+      outcome: {
+        fr: "En ligne (2026) sur actu-mma.com — 42 pages au plan du site, une édition automatique toutes les 72 heures. Audience publiée après mesure, jamais avant.",
+        en: 'Live (2026) at actu-mma.com — 42 pages in the sitemap, one automatic edition every 72 hours. Audience published after measurement, never before.',
+      },
+      // Craft facts — counted on the live sitemap and the pipeline's own
+      // configuration, not audience data.
+      metrics: [
+        { value: '42', label: { fr: 'pages au plan du site', en: 'pages in the sitemap' } },
+        { value: '6', label: { fr: 'nouvelles sourcées par édition', en: 'sourced stories per edition' } },
+        { value: '72 h', label: { fr: 'entre deux éditions automatiques', en: 'between two automatic editions' } },
+      ],
     },
   },
 
@@ -787,7 +839,7 @@ export const projects: Project[] = [
     name: 'NYC Cookies Casablanca',
     client: 'NYC Cookies Casablanca',
     tagline: {
-      fr: 'The taste of happiness. Version Casa.',
+      fr: 'Le goût du bonheur, à Casa.',
       en: 'The taste of happiness. Casablanca edition.',
     },
     description: {
@@ -1437,6 +1489,7 @@ const THUMBED = new Set([
   'boutique-de-boxe',
   'matos-de-boxe',
   'noble-art-portesien',
+  'prise-mma', // captured 2026-10-13 from the live domain (desktop + phone)
   'box-plus', // the live boutique hero (image-complete gated capture)
   'kermhosting',
   'la-brigade-mobile',
