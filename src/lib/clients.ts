@@ -42,6 +42,9 @@ export const clients: Client[] = [
   // The media's own tile (dark ground, navy wordmark, red cage P) — cropped
   // to the wordmark, the tile kept as the brand's own ground.
   { name: 'PRISE MMA', logo: '/logos/prise-mma.png', slug: 'prise-mma' },
+  // The media's own wordmark (charcoal + slate, off-white ground), cut from
+  // the logo file in its repo — a light wordmark between two dark grounds.
+  { name: 'Combat Boxe', logo: '/logos/combat-boxe.png', slug: 'combat-boxe' },
   { name: 'Beldi Fusion', logo: '/logos/beldi-fusion.png', slug: 'beldi-fusion' },
   { name: 'ID SKILLZ', logo: '/logos/id-skillz.png', slug: 'id-skillz' },
   { name: 'Temps Dance', logo: '/logos/temps-dance.png', slug: 'temps-dance' },

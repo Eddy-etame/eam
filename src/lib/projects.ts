@@ -422,7 +422,7 @@ export const projects: Project[] = [
       { name: 'Labège', url: 'https://www.boxingcenter-labege.fr/', thumb: '/thumbs/bc-sat-labege.jpg' },
       { name: "L'Union", url: 'https://www.boxingcenter-lunion.fr/', thumb: '/thumbs/bc-sat-lunion.jpg' },
       { name: 'Castelginest', url: 'https://www.boxingcenter-castelginest.fr/', thumb: '/thumbs/bc-sat-castelginest.jpg' },
-      { name: 'Blagnac', url: 'https://www.boxingcenter-blagnac.fr/', thumb: '/thumbs/bc-sat-blagnac.jpg' },
+      { name: 'Blagnac', url: 'https://boxingcenter-blagnac.fr/', thumb: '/thumbs/bc-sat-blagnac.jpg' },
     ],
     caseStudy: {
       problem: {
@@ -647,6 +647,56 @@ export const projects: Project[] = [
         { value: '42', label: { fr: 'pages au plan du site', en: 'pages in the sitemap' } },
         { value: '6', label: { fr: 'nouvelles sourcées par édition', en: 'sourced stories per edition' } },
         { value: '72 h', label: { fr: 'entre deux éditions automatiques', en: 'between two automatic editions' } },
+      ],
+    },
+  },
+
+  {
+    // Independent boxing news media, EAM-built for Raphaël / Boxing Center
+    // (Astro 5, static on Vercel; the editorial agent runs on a dedicated
+    // Node server). Facts: the repo's docs (identite-editoriale,
+    // configuration-ia, mise-en-ligne — 2026-10-13), the live site, its legal
+    // notice ("édité dans le cadre des activités liées à Boxing Center",
+    // publication director Raphael) and its sitemap (141 URLs, 2026-10-15).
+    // No audience figure is published.
+    slug: 'combat-boxe',
+    name: 'Combat Boxe',
+    client: 'Combat Boxe — média indépendant',
+    tagline: {
+      fr: "L'actu sportive autour du ring",
+      en: 'Sports news from around the ring',
+    },
+    description: {
+      fr: "Média indépendant de boxe anglaise : combats à venir, résultats, calendrier, galas, boxeurs français et internationaux, clubs et entraîneurs. Un agent de rédaction passe deux fois par jour et n'écrit ni résultat, ni date, ni classement sans URL source.",
+      en: 'An independent boxing news media: upcoming fights, results, calendar, fight nights, French and international boxers, clubs and trainers. An editorial agent runs twice a day and never writes a result, a date or a ranking without a source URL.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['Média', 'Newsroom automatisée', 'Astro', 'Boxe anglaise', 'France'],
+    liveUrl: 'https://combat-boxe.com/',
+    color: '#101D29',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Astro 5', 'Node.js', 'Claude / GPT-4.1', 'sharp', 'Vercel', 'Schema.org'],
+    caseStudy: {
+      problem: {
+        fr: "Un média de boxe anglaise doit suivre les affiches, les verdicts et les salles au jour le jour, en France et à l'international — sans rédaction permanente, et sans jamais écrire un résultat, une date ou un classement sans source.",
+        en: 'A boxing news media has to follow the fight cards, the verdicts and the venues day by day, in France and abroad — without a permanent newsroom, and without ever writing a result, a date or a ranking without a source.',
+      },
+      solution: {
+        fr: "Un site statique Astro 5 sur Vercel, et un agent de rédaction qui tourne sur un serveur dédié, deux fois par jour, à 8 h et à 14 h : lecture des pages officielles (fédération, organisations, promoteurs, presse), un article par fait nouveau sourcé, fiche combat avec lecture et pronostic, vraie photo du boxeur nommé (Commons, promoteurs — jamais d'image générée), puis commit et push qui déclenchent le déploiement. L'accueil ne garde que l'édition du jour, les mois passés partent en archives ; des pages piliers portent chaque requête du cahier des charges, et un bloc Schema.org décrit le média.",
+        en: "A static Astro 5 site on Vercel, and an editorial agent running on a dedicated server twice a day, at 8 am and 2 pm: it reads the official pages (federation, organisations, promoters, press), writes one article per new sourced fact, a fight page with analysis and prediction, a real photo of the named boxer (Commons, promoters — never a generated image), then commits and pushes, which triggers the deploy. The home page keeps only the day's edition, past months go to the archives; pillar pages carry each query of the brief, and a Schema.org block describes the media.",
+      },
+      outcome: {
+        fr: "En ligne (2026) sur combat-boxe.com — 141 pages au plan du site, une édition par jour, archives par mois. Audience publiée après mesure, jamais avant.",
+        en: 'Live (2026) at combat-boxe.com — 141 pages in the sitemap, one edition a day, archives by month. Audience published after measurement, never before.',
+      },
+      // Craft facts — counted on the live sitemap and the agent's own
+      // configuration, not audience data.
+      metrics: [
+        { value: '141', label: { fr: 'pages au plan du site', en: 'pages in the sitemap' } },
+        { value: '2', label: { fr: 'passages de rédaction par jour', en: 'editorial runs a day' } },
+        { value: '6', label: { fr: 'papiers sourcés au plus par passage', en: 'sourced stories at most per run' } },
       ],
     },
   },
@@ -1490,6 +1540,7 @@ const THUMBED = new Set([
   'matos-de-boxe',
   'noble-art-portesien',
   'prise-mma', // captured 2026-10-13 from the live domain (desktop + phone)
+  'combat-boxe', // captured 2026-10-15 from the live domain (desktop + phone)
   'box-plus', // the live boutique hero (image-complete gated capture)
   'kermhosting',
   'la-brigade-mobile',
