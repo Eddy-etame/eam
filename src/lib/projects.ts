@@ -63,7 +63,7 @@ export interface Project {
 export const projects: Project[] = [
   // ── SPORT & BIEN-ÊTRE ─────────────────────────────────────────────────────
   // Boxing Center ecosystem is LIVE on its own bought domains (every URL
-  // probed 200 on 2026-10-03): five salle sites (boxing-center-portet.fr,
+  // probed 200 on 2026-10-22): five salle sites (boxing-center-portet.fr,
   // clubmma.fr, boxe-toulouse.com, club-boxe-toulouse.com, mmatoulouse.com),
   // two boxe-anglaise clubs (toulouse-minimes-boxing-club.fr,
   // club-boxe-blagnac.fr), eight proximity sites (boxingcenter-<ville>.fr —
@@ -71,7 +71,7 @@ export const projects: Project[] = [
   // + four network tools: the coach-planning app (vercel.app), the «séance
   // d'essai offerte» funnel (seance-offerte.boxingcenter.fr), the «continuer
   // l'aventure» member-transfer form (aventure.boxingcenter.fr) and the kids'
-  // camp site (stage-boxing.vercel.app until stages.boxingcenter.fr resolves)
+  // camp site, now on its bought domain too (stage.boxingcenter.fr)
   // — 20 live pieces. boxingcenter.fr remains the legacy WordPress site. The umbrella
   // keeps liveUrl '#' — it IS the world door, each piece carries its own
   // link. No client metrics invented.

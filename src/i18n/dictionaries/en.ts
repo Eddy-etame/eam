@@ -472,7 +472,7 @@ export const en = {
         {
           name: 'Kids’ camps',
           line: 'The Vacances des Boxeurs site — an English-boxing camp for 8–16-year-olds at Portet and Minimes, online sign-up and payment.',
-          url: 'https://stage-boxing.vercel.app',
+          url: 'https://stage.boxingcenter.fr',
         },
       ],
       open: 'Open',

@@ -476,7 +476,7 @@ export const fr = {
         {
           name: 'Stages enfants',
           line: "Le site des Vacances des Boxeurs — stage de boxe anglaise pour les 8–16 ans à Portet et aux Minimes, inscription et paiement en ligne.",
-          url: 'https://stage-boxing.vercel.app',
+          url: 'https://stage.boxingcenter.fr',
         },
       ],
       open: 'Ouvrir',
