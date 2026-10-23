@@ -63,16 +63,17 @@ export interface Project {
 export const projects: Project[] = [
   // ── SPORT & BIEN-ÊTRE ─────────────────────────────────────────────────────
   // Boxing Center ecosystem is LIVE on its own bought domains (every URL
-  // probed 200 on 2026-10-22): five salle sites (boxing-center-portet.fr,
+  // probed 200 on 2026-10-23): five salle sites (boxing-center-portet.fr,
   // clubmma.fr, boxe-toulouse.com, club-boxe-toulouse.com, mmatoulouse.com),
   // two boxe-anglaise clubs (toulouse-minimes-boxing-club.fr,
   // club-boxe-blagnac.fr), eight proximity sites (boxingcenter-<ville>.fr —
   // Blagnac joined 2026-10-13), the official store (boutique.boxingcenter.fr)
-  // + four network tools: the coach-planning app (vercel.app), the «séance
+  // + five network tools: the coach-planning app (vercel.app), the «séance
   // d'essai offerte» funnel (seance-offerte.boxingcenter.fr), the «continuer
   // l'aventure» member-transfer form (aventure.boxingcenter.fr) and the kids'
-  // camp site, now on its bought domain too (stage.boxingcenter.fr)
-  // — 20 live pieces. boxingcenter.fr remains the legacy WordPress site. The umbrella
+  // camp site, now on its bought domain too (stage.boxingcenter.fr) and the
+  // educational-boxing site for children (boxe-enfant.fr, joined 2026-10-23)
+  // — 21 live pieces. boxingcenter.fr remains the legacy WordPress site. The umbrella
   // keeps liveUrl '#' — it IS the world door, each piece carries its own
   // link. No client metrics invented.
   // NOT in this world (Eddy 2026-10-03): Boutique de Boxe "is not a Boxing
@@ -85,12 +86,12 @@ export const projects: Project[] = [
     name: 'Boxing Center',
     client: 'Boxing Center Toulouse',
     tagline: {
-      fr: 'Cinq salles, vingt pièces en ligne. Une seule obsession.',
-      en: 'Five gyms, twenty live pieces. One obsession.',
+      fr: 'Cinq salles, vingt et une pièces en ligne. Une seule obsession.',
+      en: 'Five gyms, twenty-one live pieces. One obsession.',
     },
     description: {
-      fr: "L'écosystème digital du réseau Boxing Center — cinq sites de salle immersifs (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), deux clubs de boxe anglaise (TMBC, Blagnac), huit sites de proximité autour de Toulouse, la boutique officielle Box Plus et les outils du réseau — planning des coachs, tunnel « séance d'essai offerte », transfert des adhérents, stages enfants. Chaque site sur son propre domaine, aucun dupliqué.",
-      en: 'The digital ecosystem of the Boxing Center network — five immersive gym sites (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), two English-boxing clubs (TMBC, Blagnac), eight proximity sites around Toulouse, the official Box Plus store and the network tools — coach planning, free-trial funnel, member transfer, kids’ camps. Every site on its own domain, none duplicated.',
+      fr: "L'écosystème digital du réseau Boxing Center — cinq sites de salle immersifs (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), deux clubs de boxe anglaise (TMBC, Blagnac), huit sites de proximité autour de Toulouse, la boutique officielle Box Plus et les outils du réseau — planning des coachs, tunnel « séance d'essai offerte », transfert des adhérents, stages enfants, cours enfants. Chaque site sur son propre domaine, aucun dupliqué.",
+      en: 'The digital ecosystem of the Boxing Center network — five immersive gym sites (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), two English-boxing clubs (TMBC, Blagnac), eight proximity sites around Toulouse, the official Box Plus store and the network tools — coach planning, free-trial funnel, member transfer, kids’ camps, kids’ classes. Every site on its own domain, none duplicated.',
     },
     category: 'Sport & Bien-être',
     tags: ['Sport de combat', 'Boxe', 'WebGL / 3D', 'Three.js', 'Réseau', 'Toulouse'],
@@ -111,13 +112,13 @@ export const projects: Project[] = [
         en: 'One immersive maquette per gym: a real-time 3D steel monolith, a scroll-driven flythrough of the zones, a switchable dual palette, and per-venue type and metal — all copy stays in the DOM (SEO/a11y), 3D as progressive enhancement with a no-WebGL fallback.',
       },
       outcome: {
-        fr: "En ligne (2026) — vingt pièces déployées : cinq sites de salle, deux clubs de boxe anglaise, huit sites de proximité, la boutique officielle et quatre outils, chaque site sur son propre nom de domaine. Indicateurs clients publiés après mesure, jamais avant.",
-        en: 'Live (2026) — twenty pieces deployed: five gym sites, two English-boxing clubs, eight proximity sites, the official store and four tools, every site on its own domain name. Client metrics published after measurement, never before.',
+        fr: "En ligne (2026) — vingt et une pièces déployées : cinq sites de salle, deux clubs de boxe anglaise, huit sites de proximité, la boutique officielle et cinq outils, chaque site sur son propre nom de domaine. Indicateurs clients publiés après mesure, jamais avant.",
+        en: 'Live (2026) — twenty-one pieces deployed: five gym sites, two English-boxing clubs, eight proximity sites, the official store and five tools, every site on its own domain name. Client metrics published after measurement, never before.',
       },
       // Craft facts — not client outcomes.
       metrics: [
         { value: '5', label: { fr: 'salles, une identité chacune', en: 'gyms, one identity each' } },
-        { value: '20', label: { fr: 'pièces en ligne — sites, boutique, outils', en: 'live pieces — sites, store, tools' } },
+        { value: '21', label: { fr: 'pièces en ligne — sites, boutique, outils', en: 'live pieces — sites, store, tools' } },
         { value: '3D', label: { fr: 'monolithe temps réel (Three.js)', en: 'real-time monolith (Three.js)' } },
       ],
       // Captures of what EAM built — salles, clubs, proximity, the store.
@@ -697,6 +698,152 @@ export const projects: Project[] = [
         { value: '141', label: { fr: 'pages au plan du site', en: 'pages in the sitemap' } },
         { value: '2', label: { fr: 'passages de rédaction par jour', en: 'editorial runs a day' } },
         { value: '6', label: { fr: 'papiers sourcés au plus par passage', en: 'sourced stories at most per run' } },
+      ],
+    },
+  },
+
+  {
+    // Independent French-language MMA media, built by Brad Mbosseu (repo
+    // mbosseu/ufc, pushed 2026-10-23). Facts: the live site — its À propos
+    // page and its llms.txt, which both state the site is NOT affiliated to
+    // the UFC, Zuffa or TKO Group; its sitemap (145 URLs, 2026-10-23) and the
+    // organisation pages it carries. Static on Vercel, fonts self-hosted
+    // (Newsreader + Outfit), images in WebP. No audience figure is published.
+    slug: 'ufc-fr',
+    name: 'UFC.FR',
+    client: 'UFC.FR — média MMA indépendant',
+    tagline: {
+      fr: 'Le MMA français, du ring au club d’à côté',
+      en: 'French MMA, from the cage to the gym next door',
+    },
+    description: {
+      fr: "Média MMA indépendant — ni affilié à l'UFC, ni son site officiel, et il l'écrit noir sur blanc dès sa page À propos. Actualités, résultats et dossiers sur sept organisations (UFC, PFL, ONE, KSW, Cage Warriors, ARES, Hexagone), quarante-quatre portraits de combattants, l'annuaire des clubs français avec leur carte, les classements et un forum.",
+      en: "An independent MMA media — not affiliated to the UFC, not its official site, and it says so plainly on its About page. News, results and features across seven organisations (UFC, PFL, ONE, KSW, Cage Warriors, ARES, Hexagone), forty-four fighter profiles, a directory of French gyms with their map, the rankings and a forum.",
+    },
+    category: 'Sport & Bien-être',
+    tags: ['Média', 'MMA', 'Annuaire de clubs', 'GEO', 'France'],
+    liveUrl: 'https://ufc.fr/',
+    color: '#9B1B26',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['HTML statique', 'Vercel', 'Schema.org', 'RSS', 'llms.txt', 'WebP'],
+    caseStudy: {
+      problem: {
+        fr: "Un nom de domaine comme ufc.fr attire d'abord les lecteurs qui cherchent l'organisation — et les moteurs de réponse avec eux. Le média doit lever la confusion avant de publier la moindre ligne, et couvrir bien plus large que l'organisation dont il porte le nom.",
+        en: 'A domain like ufc.fr first attracts readers looking for the organisation — and answer engines with them. The media has to clear up the confusion before publishing a single line, and to cover far more than the organisation whose name it carries.',
+      },
+      solution: {
+        fr: "Un site statique servi depuis Vercel, polices embarquées et images en WebP. La mise au point est écrite trois fois, aux trois endroits qui comptent : la méta description, la page À propos et le llms.txt, qui ouvre sur « ce qu'il faut savoir avant de citer » — le domaine n'appartient pas à l'UFC, aucun vainqueur n'est annoncé avant la fin d'un combat, les pages de référence portent leur date de mise à jour. Autour du fil d'actualité, un fonds qui ne périme pas : quarante-quatre portraits rangés par organisation, les sept organisations expliquées une par une, les clubs français avec leur carte, les classements, les guides et un forum. Données structurées NewsMediaOrganization, flux RSS et recherche interne.",
+        en: "A static site served from Vercel, fonts embedded and images in WebP. The clarification is written three times, in the three places that matter: the meta description, the About page and the llms.txt, which opens on “what to know before citing this site” — the domain does not belong to the UFC, no winner is announced before a fight ends, reference pages carry their last-updated date. Around the news feed sits a body of work that does not expire: forty-four profiles filed by organisation, the seven organisations each explained, French gyms with their map, the rankings, the guides and a forum. NewsMediaOrganization structured data, an RSS feed and on-site search.",
+      },
+      outcome: {
+        fr: "En ligne (2026) sur ufc.fr — 145 pages au plan du site, 44 portraits de combattants, 7 organisations couvertes et 15 rubriques. Audience publiée après mesure, jamais avant.",
+        en: 'Live (2026) at ufc.fr — 145 pages in the sitemap, 44 fighter profiles, 7 organisations covered and 15 sections. Audience published after measurement, never before.',
+      },
+      // Craft facts — counted on the live sitemap, not audience data.
+      metrics: [
+        { value: '145', label: { fr: 'pages au plan du site', en: 'pages in the sitemap' } },
+        { value: '44', label: { fr: 'portraits de combattants', en: 'fighter profiles' } },
+        { value: '7', label: { fr: 'organisations couvertes', en: 'organisations covered' } },
+      ],
+    },
+  },
+
+  {
+    // Independent French-language boxing media, built by Brad Mbosseu (repo
+    // mbosseu/blog_boxe, pushed 2026-10-23). Facts: the live site, its legal
+    // notice (editor "Actu Boxe", contact@actu-boxe.com, hosted by Vercel, the
+    // federation-communiqué and photo-credit rules quoted there) and its
+    // sitemap (53 URLs of which 39 articles, 2026-10-23). Distinct from Combat
+    // Boxe: that one is an automated newsroom, this one leads on interviews.
+    // Note: actu-boxe.fr is a DIFFERENT company — the media is .com only.
+    // No audience figure is published.
+    slug: 'actu-boxe',
+    name: 'Actu Boxe',
+    client: 'Actu Boxe — média indépendant',
+    tagline: {
+      fr: 'La boxe française, au micro et au bord du ring',
+      en: 'French boxing, at the microphone and at ringside',
+    },
+    description: {
+      fr: "Média francophone de boxe anglaise : entretiens de boxeurs et de coachs, résultats, galas et combats à venir, champions, clubs et organisations. Les communiqués de la Fédération française de boxe passent en filets datés, sans reprise du texte fédéral ; chaque photo porte son crédit, et un lien vers un club n'est posé que pour les structures réellement présentées.",
+      en: 'A French-language boxing media: interviews with boxers and coaches, results, fight nights and upcoming bouts, champions, gyms and organisations. French federation communiqués run as dated briefs, without reproducing the federal text; every photo carries its credit, and a link to a gym is only given to clubs the site actually covers.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['Média', 'Boxe anglaise', 'Interviews', 'France'],
+    liveUrl: 'https://actu-boxe.com/',
+    color: '#D81824',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['HTML statique', 'Vercel', 'Schema.org', 'RSS', 'WebP'],
+    caseStudy: {
+      problem: {
+        fr: "La boxe française se raconte surtout en communiqués de fédération et en publications de clubs : difficile d'en tirer un fil lisible, et tentant de recopier les textes officiels — ce qui ne fait ni un média, ni une page que l'on cite.",
+        en: 'French boxing is told mostly through federation communiqués and club posts: hard to turn into a readable thread, and tempting to copy the official texts — which makes neither a media outlet nor a page worth citing.',
+      },
+      solution: {
+        fr: "Un site statique sur Vercel, douze rubriques — actualités, résultats, combats à venir, galas, champions, boxeurs, coachs, clubs, organisations, analyses, interviews — et une règle d'écriture que les mentions légales tiennent par écrit : les communiqués fédéraux sont signalés en filets (titre, date, visuel) sans reprise du texte, les photos sont créditées une par une (Moselle TV, FFBoxe, clubs, visuels de gala), les liens sortants vers un club sont réservés aux structures présentées dans les articles. La une revient à l'entretien plutôt qu'à la dépêche. Données structurées NewsMediaOrganization, flux RSS, images WebP.",
+        en: 'A static site on Vercel, twelve sections — news, results, upcoming fights, fight nights, champions, boxers, coaches, gyms, organisations, analysis, interviews — and an editorial rule the legal notice puts in writing: federation communiqués run as briefs (title, date, visual) without reproducing the text, photos are credited one by one (Moselle TV, FFBoxe, clubs, fight-night artwork), and outbound links to a gym are reserved for clubs the articles actually cover. The lead slot goes to the interview rather than the wire story. NewsMediaOrganization structured data, RSS feed, WebP images.',
+      },
+      outcome: {
+        fr: "En ligne (2026) sur actu-boxe.com — 53 pages au plan du site, 39 articles publiés, 12 rubriques. Audience publiée après mesure, jamais avant.",
+        en: 'Live (2026) at actu-boxe.com — 53 pages in the sitemap, 39 published articles, 12 sections. Audience published after measurement, never before.',
+      },
+      // Craft facts — counted on the live sitemap, not audience data.
+      metrics: [
+        { value: '53', label: { fr: 'pages au plan du site', en: 'pages in the sitemap' } },
+        { value: '39', label: { fr: 'articles publiés', en: 'published articles' } },
+        { value: '12', label: { fr: 'rubriques', en: 'sections' } },
+      ],
+    },
+  },
+
+  {
+    // Kickboxing-family media (boxe thaï, Muay Thaï, Kick Boxing, K1), built by
+    // Brad Mbosseu (repo mbosseu/thaii). Facts: the live site, its legal notice
+    // and its sitemap (44 URLs of which 15 articles, 2026-10-23). Next.js +
+    // Tailwind on Vercel (verified from its /_next/ assets). Its rubrics are
+    // its own: « Guides débutants » beside « Derrière le KO » and « Le prix du
+    // corps ». No audience figure is published.
+    slug: 'actu-thaii',
+    name: 'Actu Thaii',
+    client: 'Actu Thaii — média indépendant',
+    tagline: {
+      fr: 'Les pieds-poings, du premier cours au dernier combat',
+      en: 'Kickboxing, from the first lesson to the last fight',
+    },
+    description: {
+      fr: "Média des sports pieds-poings — boxe thaï, Muay Thaï, Kick Boxing et K1. Deux entrées dans le même site : des guides pour qui pousse la porte d'une salle (son premier cours, la récupération, le clinch) et des enquêtes sur ce dont le milieu parle peu — cachets, coupe de poids, blessures tues. Combattants, coachs, clubs et organisations complètent le fonds.",
+      en: 'A media for the kickboxing family — Muay Thai, boxe thaï, Kick Boxing and K1. Two ways in, in one site: guides for someone walking into a gym for the first time (a first class, recovery, the clinch) and investigations into what the sport rarely discusses — purses, weight cutting, injuries kept quiet. Fighters, coaches, gyms and organisations round out the archive.',
+    },
+    category: 'Sport & Bien-être',
+    tags: ['Média', 'Pieds-poings', 'Next.js', 'Enquête'],
+    liveUrl: 'https://www.boxe-thai.com/',
+    color: '#C9551A',
+    year: 2026,
+    isFeatured: false,
+    isInternal: false,
+    techStack: ['Next.js', 'Tailwind CSS', 'Vercel', 'Schema.org'],
+    caseStudy: {
+      problem: {
+        fr: "Les sports pieds-poings se racontent en résultats de gala. Ce qui décide vraiment d'une carrière — l'argent, la coupe de poids, les blessures tues — ne s'écrit presque nulle part ; et le débutant qui cherche à quoi ressemble un premier cours ne trouve pas davantage.",
+        en: 'Kickboxing sports get told through fight-night results. What actually decides a career — the money, the weight cut, the injuries kept quiet — is written almost nowhere; and the beginner wondering what a first class looks like finds no more than that.',
+      },
+      solution: {
+        fr: "Un site Next.js et Tailwind sur Vercel, lu par deux entrées. « Guides débutants » s'adresse à qui n'a jamais mis de gants : préparer son premier cours, récupérer après une séance, comprendre à quoi sert le clinch. « Analyses » ouvre les dossiers que le milieu garde pour lui, sous des rubriques nommées — Derrière le KO, Le prix du corps : la précarité des cachets, la coupe de poids poussée jusqu'au malaise, les carrières abîmées par un silence médical. Autour, les combattants, les coachs, les clubs, les organisations et les quatre disciplines, chacune avec sa page ; chaque article annonce son temps de lecture et sa date.",
+        en: 'A Next.js and Tailwind site on Vercel, read through two doors. “Beginner guides” speaks to someone who has never put gloves on: preparing for a first class, recovering after a session, understanding what the clinch is for. “Analysis” opens the files the sport keeps to itself, under named rubrics — Behind the KO, The price of the body: low purses, weight cuts pushed to collapse, careers damaged by medical silence. Around them sit the fighters, the coaches, the gyms, the organisations and the four disciplines, each with its own page; every article states its reading time and its date.',
+      },
+      outcome: {
+        fr: "En ligne (2026) sur boxe-thai.com — 44 pages au plan du site, 15 articles, quatre disciplines couvertes. Audience publiée après mesure, jamais avant.",
+        en: 'Live (2026) at boxe-thai.com — 44 pages in the sitemap, 15 articles, four disciplines covered. Audience published after measurement, never before.',
+      },
+      // Craft facts — counted on the live sitemap, not audience data.
+      metrics: [
+        { value: '44', label: { fr: 'pages au plan du site', en: 'pages in the sitemap' } },
+        { value: '15', label: { fr: 'articles publiés', en: 'published articles' } },
+        { value: '4', label: { fr: 'disciplines couvertes', en: 'disciplines covered' } },
       ],
     },
   },
@@ -1558,6 +1705,11 @@ const THUMBED = new Set([
   'temps-dance',
   'inlet',
   'jcboyang-conseil',
+  // Brad's three media, captured 2026-10-23 from the live domains (desktop
+  // + phone, image-complete gated, every frame eyeballed).
+  'ufc-fr',
+  'actu-boxe',
+  'actu-thaii',
 ])
 for (const p of projects) if (THUMBED.has(p.slug)) p.thumb = `/thumbs/${p.slug}.jpg`
 

@@ -615,7 +615,9 @@ export function BCWorld({ locale, dict }: { locale: Locale; dict: Dictionary }) 
                   href={tool.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex h-full flex-col justify-between rounded-lg border border-line p-8 transition-colors duration-300 hover:border-gold/50 md:p-10"
+                  // An odd last card would sit alone beside an empty cell; let
+                  // it run the full width so the row reads as closing, not broken.
+                  className="group flex h-full flex-col justify-between rounded-lg border border-line p-8 transition-colors duration-300 hover:border-gold/50 md:p-10 md:last:odd:col-span-2"
                 >
                   <div>
                     <h3 className="font-display text-2xl text-ink transition-colors duration-300 group-hover:text-gold">

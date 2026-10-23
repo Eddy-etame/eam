@@ -33,8 +33,8 @@ export async function generateMetadata({
   // named salles, then the scale of the whole ecosystem.
   const ogTitle =
     locale === 'fr'
-      ? 'Le monde Boxing Center — 5 salles, 20 pièces en ligne'
-      : 'The Boxing Center world — 5 gyms, 20 live pieces'
+      ? 'Le monde Boxing Center — 5 salles, 21 pièces en ligne'
+      : 'The Boxing Center world — 5 gyms, 21 live pieces'
   const ogDescription =
     locale === 'fr'
       ? "Cinq salles toulousaines — Portet, États-Unis, Minimes, St-Cyprien, Ramonville — un site par salle, jamais cloné, deux clubs de boxe anglaise, huit sites de proximité et la boutique officielle. Forgé par EAM."
