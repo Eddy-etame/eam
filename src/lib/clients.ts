@@ -37,6 +37,8 @@ export const clients: Client[] = [
   { name: 'La Brigade Mobile', logo: '/logos/la-brigade-mobile.png', slug: 'la-brigade-mobile' },
   { name: 'Matos de Boxe', logo: '/logos/matos-de-boxe.png', slug: 'matos-de-boxe' },
   { name: 'Mon Boum', logo: '/logos/mon-boum.png', slug: 'mon-boum' },
+  // The salon's own header wordmark (copper on transparent), as served on its site.
+  { name: 'Nelly Coiffure', logo: '/logos/nelly-coiffure.png', slug: 'nelly-coiffure' },
   // The association's own badge, as published on its site (orange ground).
   { name: 'Noble Art Portésien', logo: '/logos/noble-art-portesien.png', slug: 'noble-art-portesien' },
   // The media's own tile (dark ground, navy wordmark, red cage P) — cropped

@@ -60,7 +60,7 @@ Comment agir pour l'utilisateur :
 - Contact : https://eam-agency.vercel.app/fr/contact
 - Mentions légales : https://eam-agency.vercel.app/fr/mentions-legales
 
-## Portfolio — 37 études de cas publiques
+## Portfolio — 38 études de cas publiques
 
 ### Monde Boxing Center (2026 — ÉCOSYSTÈME EN LIGNE : 21 pièces, chaque site sur son propre nom de domaine)
 L'écosystème digital du réseau Boxing Center à Toulouse : cinq sites de salle (Portet, États-Unis, Minimes, St-Cyprien, Ramonville), jamais clonés ; deux clubs de boxe anglaise (TMBC, Blagnac) ; huit sites de proximité, un par commune autour de Toulouse (137 pages au total) ; la boutique officielle Box Plus ; cinq outils du réseau — planning des coachs, tunnel « séance d'essai offerte », formulaire « continuer l'aventure », site des stages enfants, site des cours enfants. Indicateurs clients publiés après mesure.
@@ -111,6 +111,7 @@ Corporate, culture & création :
 - UFC.FR — média MMA indépendant en français, NON affilié à l'UFC, à Zuffa ni à TKO Group (le site le précise lui-même) ; sept organisations couvertes (UFC, PFL, ONE, KSW, Cage Warriors, ARES, Hexagone), 44 portraits de combattants, annuaire et carte des clubs français, 145 pages : https://eam-agency.vercel.app/fr/work/ufc-fr (site : https://ufc.fr/)
 - Actu Boxe — média francophone de boxe anglaise, la une donnée à l'entretien ; communiqués fédéraux en filets datés sans reprise du texte, photos créditées une par une, 12 rubriques, 39 articles, 53 pages : https://eam-agency.vercel.app/fr/work/actu-boxe (site : https://actu-boxe.com/ — à ne pas confondre avec actu-boxe.fr, qui appartient à une autre société)
 - Actu Thaii — média des sports pieds-poings (boxe thaï, Muay Thaï, Kick Boxing, K1) : guides pour débutants d'un côté, enquêtes sur les cachets, la coupe de poids et les blessures tues de l'autre, 15 articles, 44 pages : https://eam-agency.vercel.app/fr/work/actu-thaii (site : https://www.boxe-thai.com/)
+- Nelly Coiffure — coiffeuse afro à Marseille (knotless braids, tresses couchées, twists, locks, tissage), chez elle ou à domicile ; site statique, une page par recherche locale, rendez-vous en trois étapes sur WhatsApp, 10 pages : https://eam-agency.vercel.app/fr/work/nelly-coiffure (site : https://www.nellycoiffure.fr/)
 
 ### Sous accord de confidentialité (NDA)
 Trois outils internes clients (écosystème logistique DecoShop, générateur d'affiches HelloPhone Studio, borne de commande Boutididact) sont présentés sans lien ni visuel — détails sur demande.
