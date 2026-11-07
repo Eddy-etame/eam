@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node scripts/csp-harden.mjs",
+    "build": "node scripts/check-captures.mjs && next build && node scripts/csp-harden.mjs",
     "start": "next start",
     "lint": "eslint",
     "geo:probe": "node scripts/geo-probe.mjs",

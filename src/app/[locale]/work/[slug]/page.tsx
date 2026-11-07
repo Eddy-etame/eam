@@ -7,9 +7,10 @@ import { getDictionary } from '@/i18n/dictionaries'
 import { buildMetadata, absoluteUrl, localizedPath } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { breadcrumbSchema, creativeWorkSchema, organizationSchema } from '@/lib/schema'
-import { getProject, publicProjects, categoryLabels } from '@/lib/projects'
+import { getProject, publicProjects, categoryLabels, phoneCaptureOf } from '@/lib/projects'
 import { CaseCover } from '@/components/work/CaseCover'
 import { CaseAside } from '@/components/work/CaseAside'
+import { PhoneFrame } from '@/components/ui/PhoneFrame'
 import { ConversionBand } from '@/components/ui/ConversionBand'
 import { Reveal } from '@/components/ui/Reveal'
 
@@ -151,17 +152,14 @@ export default async function CaseStudyPage({
 
       <div className="mt-12 px-6 md:px-12 lg:px-20">
         <div data-case-cover className="mx-auto max-w-[1640px]">
-          <CaseCover color={project.color} url={project.liveUrl !== '#' ? project.liveUrl : undefined}>
-            {project.thumb ? (
-              <Image
-                src={project.thumb}
-                alt={project.name}
-                fill
-                sizes="(max-width: 1640px) 100vw, 1640px"
-                priority
-                className="object-cover object-top"
-              />
-            ) : slug === 'boxing-center' ? (
+          <CaseCover
+            color={project.color}
+            url={project.liveUrl !== '#' ? project.liveUrl : undefined}
+            name={project.name}
+            desktop={project.thumb}
+            phone={project.thumbM}
+          >
+            {slug === 'boxing-center' ? (
               /* The network umbrella carries NO salle screenshot on purpose —
                  every capture belongs to ONE salle's site. Brand stage instead. */
               <span aria-hidden className="absolute inset-0 overflow-hidden">
@@ -216,9 +214,16 @@ export default async function CaseStudyPage({
           <div className="mx-auto max-w-[1640px]">
             <div className="grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
               {cs.metrics.map((m) => (
-                <div key={m.label[locale]} className="bg-deep p-8 text-center">
-                  <p className="foil foil-anim font-display text-3xl leading-none">{m.value}</p>
-                  <p className="text-mono-label mt-3 text-muted">{m.label[locale]}</p>
+                /* Phones: a ledger row — the figure beside its label, so three
+                   numbers take three lines instead of three near-empty tiles. */
+                <div
+                  key={m.label[locale]}
+                  className="flex items-center gap-5 bg-deep px-5 py-4 sm:block sm:p-8 sm:text-center"
+                >
+                  <p className="foil foil-anim w-[3.2em] shrink-0 text-right font-display text-3xl leading-none sm:w-auto sm:text-center">
+                    {m.value}
+                  </p>
+                  <p className="text-mono-label text-muted sm:mt-3">{m.label[locale]}</p>
                 </div>
               ))}
             </div>
@@ -274,7 +279,7 @@ export default async function CaseStudyPage({
       {/* A family entry — every deployment gets its capture and its own door */}
       {project.sites?.length ? (
         <div className="px-6 pb-24 md:px-12 lg:px-20">
-          <div className="mx-auto grid max-w-[1640px] gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="mx-auto grid max-w-[1640px] grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-8 sm:gap-y-12 xl:grid-cols-3">
             {project.sites.map((site, i) => (
               <Reveal key={site.url} delay={(i % 3) * 80}>
                 <a
@@ -284,7 +289,27 @@ export default async function CaseStudyPage({
                   data-cursor="voir"
                   className="group block"
                 >
-                  <span className="relative block aspect-[16/10] overflow-hidden rounded-lg border border-line">
+                  {/* Phone screens: the town's site as a phone shows it (its
+                      domain sits in the device pill); from sm up the wide
+                      desktop capture, as before. */}
+                  {site.thumbM && (
+                    <span className="block sm:hidden">
+                      <PhoneFrame url={site.url}>
+                        <span className="relative block aspect-[430/932]">
+                          <Image
+                            src={site.thumbM}
+                            alt={`${project.name} — ${site.name} (mobile)`}
+                            fill
+                            sizes="46vw"
+                            className="object-cover object-top"
+                          />
+                        </span>
+                      </PhoneFrame>
+                    </span>
+                  )}
+                  <span
+                    className={`relative block aspect-[16/10] overflow-hidden rounded-lg border border-line ${site.thumbM ? 'hidden sm:block' : ''}`}
+                  >
                     <Image
                       src={site.thumb}
                       alt={`${project.name} — ${site.name}`}
@@ -297,12 +322,15 @@ export default async function CaseStudyPage({
                       className="absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition-colors duration-500 group-hover:ring-gold/60"
                     />
                   </span>
-                  <span className="mt-4 flex items-baseline justify-between gap-4">
+                  <span className="mt-3 flex items-baseline justify-between gap-4 sm:mt-4">
                     <span className="font-display text-xl text-ink transition-colors duration-300 group-hover:text-gold">
                       {site.name}
                     </span>
-                    <span className="text-mono-label inline-flex items-center gap-2 text-muted">
+                    <span className="text-mono-label hidden items-center gap-2 text-muted sm:inline-flex">
                       {new URL(site.url).hostname.replace(/^www\./, '')} <span aria-hidden>↗</span>
+                    </span>
+                    <span aria-hidden className="text-gold sm:hidden">
+                      ↗
                     </span>
                   </span>
                 </a>
@@ -315,21 +343,43 @@ export default async function CaseStudyPage({
       {/* Screenshot gallery — renders as soon as gallery assets exist */}
       {cs.gallery?.length ? (
         <div className="px-6 pb-24 md:px-12 lg:px-20">
-          <div className="mx-auto grid max-w-[1640px] gap-6 md:grid-cols-2">
-            {cs.gallery.map((src) => (
-              <div
-                key={src}
-                className="relative aspect-[16/10] overflow-hidden rounded-lg border border-line"
-              >
-                <Image
-                  src={src}
-                  alt={project.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover object-top"
-                />
-              </div>
-            ))}
+          <div className="mx-auto grid max-w-[1640px] grid-cols-2 gap-4 sm:grid-cols-1 sm:gap-6 md:grid-cols-2">
+            {cs.gallery.map((src) => {
+              const phoneSrc = phoneCaptureOf(src)
+              return (
+                <div
+                  key={src}
+                  className="max-sm:[&:last-child:nth-child(odd)]:col-span-2 max-sm:[&:last-child:nth-child(odd)]:mx-auto max-sm:[&:last-child:nth-child(odd)]:w-[calc(50%-0.5rem)]"
+                >
+                  {phoneSrc && (
+                    <div className="sm:hidden">
+                      <PhoneFrame>
+                        <div className="relative aspect-[430/932]">
+                          <Image
+                            src={phoneSrc}
+                            alt={`${project.name} (mobile)`}
+                            fill
+                            sizes="46vw"
+                            className="object-cover object-top"
+                          />
+                        </div>
+                      </PhoneFrame>
+                    </div>
+                  )}
+                  <div
+                    className={`relative aspect-[16/10] overflow-hidden rounded-lg border border-line ${phoneSrc ? 'hidden sm:block' : ''}`}
+                  >
+                    <Image
+                      src={src}
+                      alt={project.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       ) : null}

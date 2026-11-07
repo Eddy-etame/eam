@@ -31,6 +31,9 @@ export interface Project {
   liveUrl: string
   /** Real site screenshot under /public/thumbs/<slug>.jpg (set only when captured). */
   thumb?: string
+  /** Its phone twin under /public/thumbs/<slug>-m.jpg — a real 430×932 viewport
+   *  at 2x, shot in the same pass. Case covers lead with it on phone screens. */
+  thumbM?: string
   /** Built under the Microdidact collective (Eddy 2026-07-14) — badges + the
    *  Microdidact world on /work. Solo works: kermhosting, jcboyang-conseil. */
   underMicrodidact?: boolean
@@ -39,7 +42,7 @@ export interface Project {
   world?: 'boxing-center'
   /** A family entry standing for several separately deployed sites — each one
    *  counts in the live-site total and is listed on the case page. */
-  sites?: { name: string; url: string; thumb: string }[]
+  sites?: { name: string; url: string; thumb: string; thumbM?: string }[]
   /** Brand colour used as the card accent. */
   color: string
   year: number
@@ -409,6 +412,7 @@ export const projects: Project[] = [
     tags: ['SEO Local', 'GEO', 'Multi-sites', 'Boxe', 'Toulouse'],
     liveUrl: 'https://www.boxingcenter-colomiers.fr/',
     thumb: '/thumbs/bc-sat-colomiers.jpg',
+    thumbM: '/thumbs/bc-sat-colomiers-m.jpg',
     world: 'boxing-center',
     color: '#1E2044',
     year: 2026,
@@ -416,14 +420,14 @@ export const projects: Project[] = [
     isInternal: false,
     techStack: ['Astro 5', 'TypeScript', 'SVG', 'Inlet', 'MCP', 'llms.txt', 'Schema.org'],
     sites: [
-      { name: 'Colomiers', url: 'https://www.boxingcenter-colomiers.fr/', thumb: '/thumbs/bc-sat-colomiers.jpg' },
-      { name: 'Muret', url: 'https://www.boxingcenter-muret.fr/', thumb: '/thumbs/bc-sat-muret.jpg' },
-      { name: 'Cugnaux', url: 'https://www.boxingcenter-cugnaux.fr/', thumb: '/thumbs/bc-sat-cugnaux.jpg' },
-      { name: 'Tournefeuille', url: 'https://www.boxingcenter-tournefeuille.fr/', thumb: '/thumbs/bc-sat-tournefeuille.jpg' },
-      { name: 'Labège', url: 'https://www.boxingcenter-labege.fr/', thumb: '/thumbs/bc-sat-labege.jpg' },
-      { name: "L'Union", url: 'https://www.boxingcenter-lunion.fr/', thumb: '/thumbs/bc-sat-lunion.jpg' },
-      { name: 'Castelginest', url: 'https://www.boxingcenter-castelginest.fr/', thumb: '/thumbs/bc-sat-castelginest.jpg' },
-      { name: 'Blagnac', url: 'https://boxingcenter-blagnac.fr/', thumb: '/thumbs/bc-sat-blagnac.jpg' },
+      { name: 'Colomiers', url: 'https://www.boxingcenter-colomiers.fr/', thumb: '/thumbs/bc-sat-colomiers.jpg', thumbM: '/thumbs/bc-sat-colomiers-m.jpg' },
+      { name: 'Muret', url: 'https://www.boxingcenter-muret.fr/', thumb: '/thumbs/bc-sat-muret.jpg', thumbM: '/thumbs/bc-sat-muret-m.jpg' },
+      { name: 'Cugnaux', url: 'https://www.boxingcenter-cugnaux.fr/', thumb: '/thumbs/bc-sat-cugnaux.jpg', thumbM: '/thumbs/bc-sat-cugnaux-m.jpg' },
+      { name: 'Tournefeuille', url: 'https://www.boxingcenter-tournefeuille.fr/', thumb: '/thumbs/bc-sat-tournefeuille.jpg', thumbM: '/thumbs/bc-sat-tournefeuille-m.jpg' },
+      { name: 'Labège', url: 'https://www.boxingcenter-labege.fr/', thumb: '/thumbs/bc-sat-labege.jpg', thumbM: '/thumbs/bc-sat-labege-m.jpg' },
+      { name: "L'Union", url: 'https://www.boxingcenter-lunion.fr/', thumb: '/thumbs/bc-sat-lunion.jpg', thumbM: '/thumbs/bc-sat-lunion-m.jpg' },
+      { name: 'Castelginest', url: 'https://www.boxingcenter-castelginest.fr/', thumb: '/thumbs/bc-sat-castelginest.jpg', thumbM: '/thumbs/bc-sat-castelginest-m.jpg' },
+      { name: 'Blagnac', url: 'https://boxingcenter-blagnac.fr/', thumb: '/thumbs/bc-sat-blagnac.jpg', thumbM: '/thumbs/bc-sat-blagnac-m.jpg' },
     ],
     caseStudy: {
       problem: {
@@ -1759,7 +1763,28 @@ const THUMBED = new Set([
   'actu-thaii',
   'nelly-coiffure', // captured 2026-11-07 from the live domain (desktop + phone)
 ])
-for (const p of projects) if (THUMBED.has(p.slug)) p.thumb = `/thumbs/${p.slug}.jpg`
+// Every capture is a pair — desktop + phone, shot in the same pass; the build
+// runs scripts/check-captures.mjs, which fails when a twin is missing. One
+// deliberate exception: on 2026-11-07, when its phone twin was due,
+// jcbo-conseil.com answered a default WordPress install (“Hello world!”,
+// 2026-11-06). The desktop capture of the site EAM built stays; no phone
+// capture of a placeholder is published. Keep in step with the script.
+const PHONE_CAPTURE_PENDING = new Set(['jcboyang-conseil'])
+for (const p of projects) {
+  if (!THUMBED.has(p.slug)) continue
+  p.thumb = `/thumbs/${p.slug}.jpg`
+  if (!PHONE_CAPTURE_PENDING.has(p.slug)) p.thumbM = `/thumbs/${p.slug}-m.jpg`
+}
+
+/** The phone twin of a desktop capture path, when one exists — gallery
+ *  entries are plain paths. '/thumbs/<slug>.jpg' → '/thumbs/<slug>-m.jpg'. */
+export function phoneCaptureOf(src: string): string | undefined {
+  const m = /^\/thumbs\/([a-z0-9-]+)\.jpg$/.exec(src)
+  if (!m) return undefined
+  const slug = m[1]
+  if (PHONE_CAPTURE_PENDING.has(slug)) return undefined
+  return THUMBED.has(slug) || slug.startsWith('bc-sat-') ? `/thumbs/${slug}-m.jpg` : undefined
+}
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 // Curated featured order — lead with the most technically baffling work (SaaS
