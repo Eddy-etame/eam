@@ -9,7 +9,7 @@ import { siteConfig } from '@/lib/site.config'
  * never applies and the browser ships no hashing code. Where the lead lands
  * (inbox, dashboard) is configured in Inlet, not in this repo.
  */
-const INLET = 'https://inlett.vercel.app'
+const INLET = 'https://eam-inlet.vercel.app'
 /** EAM's form on Inlet — a public submit-endpoint id, not a secret (the BC
  *  relays carry theirs the same way). INLET_FORM_ID overrides it per deploy. */
 const FORM_ID = process.env.INLET_FORM_ID ?? '5659bb2f-3e79-4109-8b52-d67a8a48512b'

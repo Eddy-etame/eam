@@ -102,7 +102,7 @@ Corporate, culture & création :
 ### Réalisations en propre (hors Microdidact)
 - KermHosting — plateforme SaaS d'hébergement Node.js pour l'Afrique francophone, paiement FCFA/Mobile Money, 1 000+ utilisateurs (chiffres auto-déclarés) : https://eam-agency.vercel.app/fr/work/kermhosting (site : https://kermhosting.site/)
 - JCBoyang Conseil — cabinet de conseil stratégique : https://eam-agency.vercel.app/fr/work/jcboyang-conseil (site : https://www.jcbo-conseil.com/)
-- Inlet — produit maison : https://eam-agency.vercel.app/fr/work/inlet (site : https://inlett.vercel.app/)
+- Inlet — produit maison : https://eam-agency.vercel.app/fr/work/inlet (site : https://eam-inlet.vercel.app/)
 - Boutique de Boxe — catalogue national de matériel de boxe et MMA, plus de mille modèles, 1 222 pages, ouverture des ventes prochaine : https://eam-agency.vercel.app/fr/work/boutique-de-boxe (site : https://www.boutique-de-boxe.com/)
 - Matos de Boxe — boutique spécialisée Metal Boxe, ouverture des ventes prochaine : https://eam-agency.vercel.app/fr/work/matos-de-boxe (site : https://www.matos-de-boxe.fr/)
 - Noble Art Portésien — association de boxe anglaise à Portet-sur-Garonne (déclarée en 1983), refonte du site : https://eam-agency.vercel.app/fr/work/noble-art-portesien (site : https://noble-art-portesien.com/)

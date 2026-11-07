@@ -1614,7 +1614,7 @@ export const projects: Project[] = [
     },
     category: 'Tech & SaaS',
     tags: ['SaaS', 'Formulaires', 'Anti-spam', 'Multi-tenant', 'Produit'],
-    liveUrl: 'https://inlett.vercel.app/',
+    liveUrl: 'https://eam-inlet.vercel.app/',
     color: '#2563EB',
     year: 2026,
     isFeatured: false,
