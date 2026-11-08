@@ -21,6 +21,7 @@ facts = json.load(open(os.path.join(sweep, 'facts.json'), encoding='utf-8'))
 SCREEN2X = 1864
 MAX2X = 4660
 report = []
+gaps = []
 
 for slug, f in sorted(facts.items()):
     if only and slug not in only:
@@ -44,6 +45,14 @@ for slug, f in sorted(facts.items()):
         tiles.append((s['y'] * 2, im))
     doc_h2x = int((f.get('phone') or {}).get('docH', 932)) * 2
     height = max(SCREEN2X, min(MAX2X, doc_h2x, max(y + im.size[1] for y, im in tiles)))
+    # Coverage guard: a segment pasted below the previous one's bottom leaves a
+    # band of canvas — a dark bar across the capture (2026-11-08: the walk landed
+    # ~70 px low on Lenis sites). Such a stitch is refused, never shipped.
+    covered = 0
+    for y, im in tiles:
+        if y > covered:
+            gaps.append(f'{slug}: {y - covered} px uncovered at {covered}')
+        covered = max(covered, y + im.size[1])
     canvas = Image.new('RGB', (860, height), (7, 13, 24))
     for y, im in tiles:
         canvas.paste(im, (0, y))
@@ -53,3 +62,8 @@ for slug, f in sorted(facts.items()):
 for slug, line in report:
     print(f'{slug:28} {line}')
 print('converted', len(report))
+if gaps:
+    print('UNCOVERED BANDS — reshoot these, the stitch is not shippable:')
+    for g in gaps:
+        print('  ' + g)
+    sys.exit(1)
