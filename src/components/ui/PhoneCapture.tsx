@@ -1,5 +1,17 @@
 import Image from 'next/image'
 import { PhoneFrame } from './PhoneFrame'
+import captures from '@/lib/captures.json'
+
+const PHONE_W = 860
+
+/** Height of a phone capture at 2x, from the freshness manifest
+ *  (src/lib/captures.json, kept by scripts/check-captures.mjs). One screen —
+ *  1864 — when the slug is not registered yet. */
+function phoneHeight(src: string): number {
+  const m = /\/thumbs\/([a-z0-9-]+)-m\.jpg$/.exec(src)
+  const entry = m ? (captures as Record<string, { m?: number[] }>)[m[1]] : undefined
+  return entry?.m?.[1] ?? 1864
+}
 
 function initials(name: string): string {
   return name
@@ -17,17 +29,18 @@ function initials(name: string): string {
  * (2026-11-08), in the home rail, the registre's two-up grid and the service
  * pages' proofs. Pure presentational, zero hooks.
  *
- * - With a phone capture (/thumbs/<slug>-m.jpg, a real 430×932 viewport): the
- *   capture inside a PhoneFrame. The window is 430/880, so 5.5% of the page
- *   is slack the card scrolls through — `[data-rail-thumb]` is the layer the
- *   drifts translate (the home rail from scrollLeft, the registre from the
- *   page scroll); at rest the capture sits at its true top.
- * - Without one (JCBO — pending while its domain answers a WordPress
- *   placeholder; any future project before its capture pass): the PORTRAIT
- *   POSTER, the same silhouette so rails and grids keep one height — the
- *   desktop capture's centre column framed on the brand stage (a 9/10 crop
- *   of the 16/10 capture keeps a centred hero headline whole and readable at
- *   card size), the initials as a ghost in the lower half.
+ * - With a phone capture (/thumbs/<slug>-m.jpg: 860 px wide, one to two and a
+ *   half screens tall, walked from the top): the capture inside a PhoneFrame,
+ *   drawn at its real ratio as the `[data-rail-thumb]` layer, behind a window
+ *   of 430/880 — the first screen. Whatever stands below the window is the
+ *   page the drifts scroll through: the home rail from scrollLeft, and on its
+ *   own when a card is the centred one, the registre from the page scroll. At
+ *   rest the capture sits at its true top.
+ * - Without one (any project before its capture pass): the PORTRAIT POSTER,
+ *   the same silhouette so rails and grids keep one height — the desktop
+ *   capture's centre column framed on the brand stage (a 9/10 crop of the
+ *   16/10 capture keeps a centred hero headline whole and readable at card
+ *   size), the initials as a ghost in the lower half.
  * - No chips over the capture: on a phone the site's own header owns the top
  *   edge, so the trade and the year belong to the card's caption.
  */
@@ -47,7 +60,7 @@ export function PhoneCapture({
   color: string
   /** Desktop capture (16/10) — framed in the poster when no phone twin exists. */
   thumb?: string
-  /** Phone capture (430×932 at 2x). */
+  /** Phone capture (860 px wide at 2x). */
   thumbM?: string
   alt: string
   /** next/image `sizes` for the phone capture — the card's width on phone screens. */
@@ -59,11 +72,18 @@ export function PhoneCapture({
     return (
       <div data-rail-media="phone">
         <PhoneFrame url={url && url !== '#' ? url : undefined}>
-          <div className="relative aspect-[430/880] overflow-hidden" style={{ background: stage }}>
-            {/* The whole 430×932 capture, top-aligned — 5.5% taller than its
-                window: the slack the drifts scroll through. */}
-            <div data-rail-thumb className="absolute inset-x-0 top-0 aspect-[430/932] will-change-transform">
-              <Image src={thumbM} alt={alt} fill sizes={sizes} className="object-cover object-top" />
+          <div data-rail-window className="relative aspect-[430/880] overflow-hidden" style={{ background: stage }}>
+            {/* The whole capture at its real ratio, top-aligned — everything
+                below the window is the slack the drifts scroll through. */}
+            <div data-rail-thumb className="absolute inset-x-0 top-0 will-change-transform">
+              <Image
+                src={thumbM}
+                alt={alt}
+                width={PHONE_W}
+                height={phoneHeight(thumbM)}
+                sizes={sizes}
+                className="block h-auto w-full"
+              />
             </div>
           </div>
         </PhoneFrame>

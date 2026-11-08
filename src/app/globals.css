@@ -499,6 +499,11 @@
 [data-team-mode='iridescent'] .team-figure  { filter: url(#eam-duo-iri); }
 [data-team-mode='paper'] .team-figure       { filter: url(#eam-duo-paper); }
 
+/* The stage clips sideways only: the fog drift (scale 1.08, ±1.5%) and the
+   portrait tilt may bleed past the viewport on a phone and widen it by a few
+   pixels (437 px on a 430 px screen, /fr/about, 2026-11-08). `clip`, not
+   `hidden`: no scroll container, so the sticky WebGL mist keeps working. */
+.team-stage { overflow-x: clip; }
 .team-portrait { position: relative; isolation: isolate; perspective: 1200px; }
 /* 3D-tilt wrapper — holds figure + grain + rim so they lean together */
 .team-tilt {

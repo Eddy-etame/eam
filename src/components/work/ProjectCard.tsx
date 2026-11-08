@@ -95,23 +95,26 @@ export function ProjectCard({
   }, [])
 
   // The site under the glass — in the registre and any grid, the phone capture
-  // scrolls through its 5.5% of slack as the card crosses the viewport (scrub,
-  // transform-only). The home rail drives the same drift from scrollLeft, so a
-  // card inside a rail strip is skipped; a hidden twin (sm and up) has no box.
+  // scrolls through what was walked below its window (up to three fifths of a
+  // screen) as the card crosses the viewport: scrub, transform-only. The home
+  // rail drives its own drift from scrollLeft, so a card inside a rail strip is
+  // skipped; a hidden twin (sm and up) has no box and is skipped too.
   useGSAP(
     () => {
       const el = frameRef.current
       if (!el || el.closest('[data-rail-strip]')) return
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
       const layer = el.querySelector<HTMLElement>('[data-rail-media="phone"] [data-rail-thumb]')
-      if (!layer || layer.offsetParent === null) return
+      const win = layer?.closest<HTMLElement>('[data-rail-window]')
+      if (!layer || !win || layer.offsetParent === null) return
+      const travel = () => -Math.min(Math.max(0, layer.offsetHeight - win.offsetHeight), win.offsetHeight * 0.6)
       gsap.fromTo(
         layer,
-        { yPercent: 0 },
+        { y: 0 },
         {
-          yPercent: -5.5,
+          y: travel,
           ease: 'none',
-          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true },
         },
       )
     },

@@ -138,8 +138,11 @@ for (const mode of ['desktop', 'phone']) {
       continue
     }
     await page.waitForTimeout(900)
-    // Walk the whole page so every reveal has had its chance.
+    // Walk the whole page so every reveal has had its chance — and measure the
+    // width at every step: an animated layer can widen the viewport mid-page
+    // for a moment only (the About fog, 437 px on a 430 px phone, 2026-11-08).
     const total = await page.evaluate(() => document.documentElement.scrollHeight)
+    let widest = 0
     for (let y = 0; y < total; y += 700) {
       if (mode === 'desktop') {
         await page.mouse.wheel(0, 700)
@@ -148,6 +151,7 @@ for (const mode of ['desktop', 'phone']) {
         await page.evaluate((to) => window.scrollTo(0, to), y)
         await page.waitForTimeout(220)
       }
+      widest = Math.max(widest, await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth))
     }
     await page.waitForTimeout(1200)
     const report = await page.evaluate((isPhone) => {
@@ -238,6 +242,7 @@ for (const mode of ['desktop', 'phone']) {
       return out
     }, mode === 'phone')
     const where = `[${mode}] ${route}`
+    report.overflow = Math.max(report.overflow, widest)
     if (report.overflow > 0) add('BROWSER horizontal overflow', where, `${report.overflow}px`)
     for (const e of errors.slice(0, 3)) add('BROWSER console error', where, e)
     for (const a of report.noAlt.slice(0, 3)) add('BROWSER image without alt', where, a)
