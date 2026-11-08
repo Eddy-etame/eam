@@ -10,7 +10,9 @@
 //   libraries follow) and each screen shot as the visitor sees it, reveals
 //   played, fixed/sticky furniture hidden from the second screen on; the
 //   segments are stitched by scripts/capture-convert.py into the 2.5-screen
-//   capture for the rail that really scrolls.
+//   capture for the rail that really scrolls. Screens overlap by 200 px and
+//   each is shot after a look one screen ahead, so a reveal that had not
+//   played at the previous bottom edge is never lost at a seam.
 // PNGs and facts.json land in the out dir; nothing touches public/thumbs here.
 //
 //   node scripts/capture-sweep.mjs <targets.txt> [outDir]
@@ -27,6 +29,19 @@ fs.mkdirSync(OUT, { recursive: true })
 const targets = fs.readFileSync(listFile, 'utf8').split(/\r?\n/).filter(Boolean).map((l) => l.split('='))
 const SCREEN = 932
 const FULL_H = 2330 // 2.5 phone screens, css px
+const OVERLAP = 200 // css px re-shot by the next screen (a reveal at the edge has played by then)
+
+// Scroll position once it stops moving (smooth-scroll libraries glide for a while).
+const still = async (page) => {
+  let last = -1
+  for (let i = 0; i < 14; i++) {
+    const sy = await page.evaluate(() => Math.round(scrollY))
+    if (sy === last) return sy
+    last = sy
+    await page.waitForTimeout(150)
+  }
+  return last
+}
 
 const browser = await chromium.launch({ channel: 'msedge', headless: true })
 const factsFile = path.join(OUT, 'facts.json')
@@ -88,7 +103,25 @@ async function shoot(slug, url) {
     site.phone = await read(page)
     await page.screenshot({ path: path.join(OUT, `${slug}-m.png`), fullPage: false })
     site.segments.push({ file: `${slug}-m.png`, y: 0 })
-    for (let target = SCREEN; target < FULL_H; target += SCREEN) {
+    // The walk overlaps: every screen from the second on starts OVERLAP px above
+    // where the previous one ended and is pasted over it, so whatever sat at the
+    // previous bottom edge — a paragraph whose reveal had not played yet (L'Union,
+    // 2026-11-08: two lines lost at a seam) — is re-shot well inside the viewport.
+    // The pristine first screen keeps its own bottom band only when a fixed or
+    // sticky bar lives there (the visitor sees it; the walk hides such furniture).
+    const firstBandBusy = await page.evaluate(
+      (bandTop) =>
+        [...document.querySelectorAll('*')].some((el) => {
+          const p = getComputedStyle(el).position
+          if (p !== 'fixed' && p !== 'sticky') return false
+          const r = el.getBoundingClientRect()
+          return r.width > 0 && r.height > 0 && r.bottom > bandTop && r.top < innerHeight && el.offsetHeight < innerHeight * 0.6
+        }),
+      SCREEN - OVERLAP,
+    )
+    let covered = SCREEN
+    let target = firstBandBusy ? SCREEN : SCREEN - OVERLAP
+    while (covered < FULL_H) {
       let guard = 0
       while (guard++ < 30) {
         const sy = await page.evaluate(() => Math.round(scrollY))
@@ -96,8 +129,13 @@ async function shoot(slug, url) {
         await page.mouse.wheel(0, Math.min(300, target - sy))
         await page.waitForTimeout(90)
       }
+      // Look one screen ahead and come back: reveal libraries that play once
+      // have then played for everything this screen will show.
+      await page.evaluate((to) => window.scrollTo(0, to), target + SCREEN)
+      await page.waitForTimeout(600)
       await page.evaluate((to) => window.scrollTo(0, to), target)
       await page.waitForTimeout(900)
+      await still(page)
       await page.evaluate(async () => {
         for (const img of document.querySelectorAll('img')) { img.loading = 'eager' }
         const imgs = [...document.querySelectorAll('img')].filter((i) => { const r = i.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight })
@@ -108,11 +146,13 @@ async function shoot(slug, url) {
         }
         await new Promise((r) => setTimeout(r, 400))
       })
-      const sy = await page.evaluate(() => Math.round(scrollY))
+      const sy = await still(page)
       const file = `${slug}-seg${site.segments.length}.png`
       await page.screenshot({ path: path.join(OUT, file), fullPage: false })
       site.segments.push({ file, y: sy })
       if (sy < target - 2) break // the page ended before the target
+      covered = sy + SCREEN
+      target = sy + SCREEN - OVERLAP
     }
     await ctx.close()
   }
