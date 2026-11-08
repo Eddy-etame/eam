@@ -42,19 +42,29 @@ const SCREEN = 932
 const FULL_H = 2330 // 2.5 phone screens, css px
 const OVERLAP = 200 // css px re-shot by the next screen (a reveal at the edge has played by then)
 
-// From the second screen on, fixed/sticky furniture (header, bars, bubbles)
-// is hidden — the page content is what the capture shows. Run again right
+// From the second screen on, the furniture that floats over the page is
+// hidden — the page content is what the capture shows: every fixed element
+// under 60 % of the screen, and sticky ones only when they are bars (a header
+// or nav, or a thin strip pinned at an edge). A sticky CONTENT card is kept:
+// clubmma.fr pins its offers card while you scroll its section, and hiding it
+// exposed an under-layer with a leftover slide (2026-11-08). Run again right
 // before each shot: a header a framework re-renders comes back without it.
 const hideFurniture = () => {
   for (const el of document.querySelectorAll('*')) {
-    const p = getComputedStyle(el).position
-    if ((p === 'fixed' || p === 'sticky') && el.offsetHeight < innerHeight * 0.6) {
-      // Opacity, not only visibility: a child can set its own visibility back
-      // (clubmma.fr's logo stayed visible under a hidden header, 2026-11-08).
-      el.style.setProperty('opacity', '0', 'important')
-      el.style.setProperty('visibility', 'hidden', 'important')
-      el.style.setProperty('transition', 'none', 'important')
+    const cs = getComputedStyle(el)
+    if (cs.position !== 'fixed' && cs.position !== 'sticky') continue
+    if (!el.offsetHeight || el.offsetHeight >= innerHeight * 0.6) continue
+    if (cs.position === 'sticky') {
+      const r = el.getBoundingClientRect()
+      const barLike = /^(HEADER|NAV)$/.test(el.tagName) || el.closest('header, nav') || /header|navbar|topbar|menubar|nav/i.test(el.className + ' ' + el.id)
+      const thinAtEdge = el.offsetHeight < 120 && (Math.abs(r.top) <= 2 || Math.abs(innerHeight - r.bottom) <= 2)
+      if (!barLike && !thinAtEdge) continue
     }
+    // Opacity, not only visibility: a child can set its own visibility back
+    // (clubmma.fr's logo stayed visible under a hidden header, 2026-11-08).
+    el.style.setProperty('opacity', '0', 'important')
+    el.style.setProperty('visibility', 'hidden', 'important')
+    el.style.setProperty('transition', 'none', 'important')
   }
 }
 
@@ -218,16 +228,10 @@ async function shoot(slug, url) {
         for (const img of document.querySelectorAll('img')) { img.loading = 'eager' }
         const imgs = [...document.querySelectorAll('img')].filter((i) => { const r = i.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight })
         await Promise.all(imgs.map((i) => (i.complete ? Promise.resolve() : new Promise((r) => { i.onload = r; i.onerror = r; setTimeout(r, 6000) }))))
-        for (const el of document.querySelectorAll('*')) {
-          const p = getComputedStyle(el).position
-          if ((p === 'fixed' || p === 'sticky') && el.offsetHeight < innerHeight * 0.6) {
-            el.style.setProperty('opacity', '0', 'important')
-            el.style.setProperty('visibility', 'hidden', 'important')
-            el.style.setProperty('transition', 'none', 'important')
-          }
-        }
         await new Promise((r) => setTimeout(r, 400))
       })
+      await page.evaluate(hideFurniture)
+      await page.waitForTimeout(300)
       // The shot counts only if nothing moved during it: the position is read
       // before and after, and the shot is redone once if they differ (a glide
       // still creeping lost a title line at a seam on 2026-11-08).
