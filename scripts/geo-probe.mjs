@@ -89,19 +89,50 @@ const ENGINES = [
 ].filter((e) => !ONLY_ENGINES || ONLY_ENGINES.includes(e.id))
 
 async function dismissConsent(page) {
-  // Google/Bing consent walls — click the reject/accept button if present.
-  for (const text of ['Tout refuser', 'Reject all', 'Tout accepter', 'Accept all', 'Refuser tout', 'Rester déconnecté', 'Stay logged out']) {
+  // Google/Bing consent walls — click the reject/accept button if present
+  // (Bing's own dialog says just « Refuser », 2026-11-08).
+  for (const text of ['Tout refuser', 'Reject all', 'Refuser', 'Tout accepter', 'Accept all', 'Refuser tout', 'Rester déconnecté', 'Stay logged out']) {
     try {
-      const btn = page.getByRole('button', { name: text }).first()
+      const btn = page.getByRole('button', { name: text, exact: true }).first()
       if (await btn.isVisible({ timeout: 1200 })) {
         await btn.click()
         await page.waitForTimeout(1500)
-        return
+        break
       }
     } catch {
       /* not present — fine */
     }
   }
+  // ChatGPT's login nag (and most dialogs) close on Escape; a stray close
+  // button is tried too. Harmless when nothing is open.
+  try {
+    await page.keyboard.press('Escape')
+    const close = page.locator('button[aria-label*="Fermer" i], button[aria-label*="Close" i]').first()
+    if (await close.isVisible({ timeout: 800 })) await close.click()
+    await page.waitForTimeout(500)
+  } catch {
+    /* fine */
+  }
+}
+
+// A "cited" screenshot must SHOW the citation: scroll the first visible match
+// into view and outline it in gold before the shot (2026-11-08 — three of five
+// citations sat below the fold or behind a modal, unverifiable as evidence).
+async function revealMatch(page, terms) {
+  await page.evaluate((list) => {
+    const re = new RegExp(list.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'i')
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const el = n.parentElement
+      if (!el || !re.test(n.textContent || '') || el.offsetParent === null) continue
+      if (/^(SCRIPT|STYLE|NOSCRIPT)$/.test(el.tagName)) continue
+      el.scrollIntoView({ block: 'center' })
+      el.style.outline = '3px solid #C9A96E'
+      el.style.outlineOffset = '4px'
+      return
+    }
+  }, terms)
+  await page.waitForTimeout(700)
 }
 
 const browser = await chromium.launch({ channel: 'msedge', headless: false }) // headed = fewer bot-walls
@@ -138,6 +169,7 @@ for (const query of QUERIES) {
         )
         entry.matchedTerms = matched
         entry.status = matched.length > 0 ? 'cited' : 'not_cited'
+        if (matched.length > 0) await revealMatch(page, matched)
       }
       const shot = `${engine.id}-${query.id}.png`
       await page.screenshot({ path: path.join(shotsDir, shot), timeout: 15000 })
