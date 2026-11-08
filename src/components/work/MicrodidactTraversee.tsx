@@ -757,7 +757,7 @@ function Stage({
       />
       <span
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent"
+        className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent max-sm:from-black/90 max-sm:via-black/45"
       />
 
       <span
