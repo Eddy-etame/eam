@@ -371,16 +371,17 @@ export function ProjectGallery({
             Rows of a wide panel (7/12, 16/10) and a narrow one (5/12), the
             second of each pair dropped — and the wide side alternates, so
             the band zigzags down the page. DOM order = reading order, so a
-            phone gets the same sequence in one column. */}
+            phone gets the same sequence — two phone captures a row below sm
+            (2026-11-08), an odd last one centred at the same width. */}
         {solos.length > 0 && <h2 className="sr-only">{dict.work.solosHeading}</h2>}
         {solos.length > 0 && (
-          <div className="mt-20 grid gap-x-8 gap-y-14 md:grid-cols-12">
+          <div className="mt-20 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-1 sm:gap-x-8 sm:gap-y-14 md:grid-cols-12">
             {solos.map((project, index) => {
               const wide = index % 4 === 0 || index % 4 === 3
               return (
                 <div
                   key={project.slug}
-                  className={`${wide ? 'md:col-span-7' : 'md:col-span-5'} ${index % 2 === 1 ? 'md:mt-24' : ''}`}
+                  className={`max-sm:[&:last-child:nth-child(odd)]:col-span-2 max-sm:[&:last-child:nth-child(odd)]:mx-auto max-sm:[&:last-child:nth-child(odd)]:w-[calc(50%-0.5rem)] ${wide ? 'md:col-span-7' : 'md:col-span-5'} ${index % 2 === 1 ? 'md:mt-24' : ''}`}
                   {...paletteProps(project.color)}
                 >
                   <ProjectCard

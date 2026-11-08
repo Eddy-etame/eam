@@ -17,6 +17,11 @@ import type { Dictionary } from '@/i18n/dictionaries'
  * rail and in any grid its frame edges line up with the neighbouring cards.
  * The caption sits outside the artwork and uses the page tokens, as the
  * cards' captions do.
+ *
+ * PHONE SCREENS (below `sm`, 2026-11-08): the cards lead with their phone
+ * captures in a PhoneFrame, so the door takes the phone's silhouette too —
+ * the same 430/880 window, corner radius and bar height (container units,
+ * like PhoneFrame), the pill alone on the bar. A door is a tall thing anyway.
  */
 
 const DOORS = {
@@ -57,23 +62,23 @@ export function WorldDoor({
       <article className="relative">
         {/* Frame — the same silhouette as BrowserFrame + a 4/3 media area */}
         <div
-          className="relative z-[1] overflow-hidden rounded-lg border border-white/10"
+          className="@container relative z-[1] overflow-hidden rounded-[clamp(18px,9cqi,30px)] border border-white/10 sm:rounded-lg"
           style={{ background: '#070D18' }}
         >
           {/* Band — the door's "chrome": fixed dark, three dots, the path it opens */}
           <div
             aria-hidden
-            className="relative flex h-6 items-center border-b border-white/10 px-3 sm:h-9"
+            className="relative flex h-[clamp(22px,11cqi,30px)] items-center border-b border-white/10 px-3 sm:h-9"
             style={{ background: '#0C1526' }}
           >
-            <span className="flex shrink-0 gap-1.5">
+            <span className="hidden shrink-0 gap-1.5 sm:flex">
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgb(255 255 255 / 0.22)' }} />
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgb(255 255 255 / 0.22)' }} />
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgb(255 255 255 / 0.22)' }} />
             </span>
-            <span className="pointer-events-none absolute inset-x-0 hidden justify-center sm:flex">
+            <span className="pointer-events-none absolute inset-x-0 flex justify-center">
               <span
-                className="max-w-[60%] truncate rounded-full px-3 py-0.5 font-[family-name:var(--font-mono),ui-monospace,monospace] text-[10px] tracking-[0.08em]"
+                className="max-w-[92%] truncate rounded-full px-2.5 py-0.5 font-[family-name:var(--font-mono),ui-monospace,monospace] text-[clamp(8px,3.6cqi,10px)] leading-none tracking-[0.08em] sm:max-w-[60%] sm:px-3 sm:text-[10px] sm:leading-normal"
                 style={{ color: '#C9A96E', background: 'rgb(255 255 255 / 0.06)' }}
               >
                 {dict.homeWorlds.eyebrow.toLowerCase()} / {door.slug.split('/')[1]}
@@ -81,8 +86,8 @@ export function WorldDoor({
             </span>
           </div>
 
-          {/* Stage — 4/3 like the cards' media: fixed navy, world glow, ghost count, inverted wordmark */}
-          <div className="relative aspect-[4/3] overflow-hidden">
+          {/* Stage — the cards' media ratio (phone window below sm, 4/3 from sm): fixed navy, world glow, ghost count, inverted wordmark */}
+          <div className="relative aspect-[430/880] overflow-hidden sm:aspect-[4/3]">
             <div className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]">
               <span aria-hidden className="absolute inset-0" style={{ background: door.stage }} />
               <span
@@ -132,7 +137,7 @@ export function WorldDoor({
           </div>
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition-colors duration-500 group-hover:ring-[#C9A96E99] group-focus-visible:ring-[#C9A96E99]"
+            className="pointer-events-none absolute inset-0 rounded-[clamp(18px,9cqi,30px)] ring-1 ring-inset ring-transparent transition-colors duration-500 group-hover:ring-[#C9A96E99] group-focus-visible:ring-[#C9A96E99] sm:rounded-lg"
           />
         </div>
 

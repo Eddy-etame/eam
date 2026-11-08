@@ -92,26 +92,14 @@ const heroOf = (p: Project): string | null =>
 const stripOf = (p: Project): string[] =>
   SHOT_SLUGS.has(p.slug) ? [`/shots/${p.slug}/s2.webp`, `/shots/${p.slug}/s3.webp`] : []
 
-/** Slugs with a PHONE-SHAPED capture at /thumbs/<slug>-m.jpg — served on small
- *  screens so the journey bands never show a squished desktop screenshot. */
-const MOBILE_SHOTS = new Set([
-  'beldi-fusion',
-  'c-chez-toit',
-  'chicken-bens',
-  'decoshop-vitrine',
-  'drive-pneu',
-  'id-skillz',
-  'la-brigade-mobile',
-  'marche-de-mo',
-  'mon-boum',
-  'nyc-cookies',
-  'pieces-auto-colomiers',
-  'temps-dance',
-  'the-911',
-  'un-rire-pour-un-enfant',
-])
+/** Phone-shaped capture (/thumbs/<slug>-m.jpg), served below `sm` so the
+ *  journey bands never show a squished desktop screenshot. The registry's
+ *  `thumbM` is the source (capture pairs law, checked at build — a new
+ *  capture reaches the crossing without a list to update). Un rire pour un
+ *  enfant is the one twin kept by hand: its desktop capture stays out of the
+ *  registry (an empty app state), the band shows its /shots hero instead. */
 const mobileThumbOf = (p: Project): string | null =>
-  MOBILE_SHOTS.has(p.slug) ? `/thumbs/${p.slug}-m.jpg` : null
+  p.thumbM ?? (p.slug === 'un-rire-pour-un-enfant' ? '/thumbs/un-rire-pour-un-enfant-m.jpg' : null)
 
 function initials(name: string): string {
   return name

@@ -11,13 +11,10 @@ import path from 'node:path'
 const DIR = path.resolve('public/thumbs')
 
 // Deliberate exceptions — each with its reason and date. Keep in step with
-// PHONE_CAPTURE_PENDING in src/lib/projects.ts.
-const PENDING = new Map([
-  [
-    'jcboyang-conseil',
-    '2026-11-07: jcbo-conseil.com answered a default WordPress install (“Hello world!”, 2026-11-06) — no phone capture of a placeholder',
-  ],
-])
+// PHONE_CAPTURE_PENDING in src/lib/projects.ts. (JCBO sat here 2026-11-07 →
+// 2026-11-08: its live domain answered a WordPress placeholder; the twin was
+// shot from the delivered site's repository instead.)
+const PENDING = new Map([])
 
 /** Width/height from the first SOF marker — no image library needed. */
 function jpegSize(file) {

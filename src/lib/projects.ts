@@ -1765,11 +1765,12 @@ const THUMBED = new Set([
 ])
 // Every capture is a pair — desktop + phone, shot in the same pass; the build
 // runs scripts/check-captures.mjs, which fails when a twin is missing. One
-// deliberate exception: on 2026-11-07, when its phone twin was due,
-// jcbo-conseil.com answered a default WordPress install (“Hello world!”,
-// 2026-11-06). The desktop capture of the site EAM built stays; no phone
-// capture of a placeholder is published. Keep in step with the script.
-const PHONE_CAPTURE_PENDING = new Set(['jcboyang-conseil'])
+// deliberate exceptions, each with its reason — none today. JCBO was one
+// (2026-11-07: jcbo-conseil.com answered a default WordPress install) until
+// its twin was shot on 2026-11-08 from the delivered site's own repository
+// (angoularaphael/jcboyang-conseil at bae1c4c, the October state the desktop
+// capture shows). Keep in step with scripts/check-captures.mjs.
+const PHONE_CAPTURE_PENDING = new Set<string>([])
 for (const p of projects) {
   if (!THUMBED.has(p.slug)) continue
   p.thumb = `/thumbs/${p.slug}.jpg`

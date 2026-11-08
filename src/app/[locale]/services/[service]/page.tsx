@@ -1,47 +1,50 @@
-import type { Metadata } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
-import { isLocale, locales } from '@/i18n/config'
-import { getDictionary } from '@/i18n/dictionaries'
-import { buildMetadata, absoluteUrl, localizedPath } from '@/lib/seo'
-import { JsonLd } from '@/components/seo/JsonLd'
-import { breadcrumbSchema, faqSchema, organizationSchema } from '@/lib/schema'
-import { servicePages, getServicePage } from '@/lib/services-pages'
-import { getProject } from '@/lib/projects'
-import { testimonialFor } from '@/lib/testimonials'
-import { siteConfig } from '@/lib/site.config'
-import { Reveal } from '@/components/ui/Reveal'
-import { Magnetic } from '@/components/ui/Magnetic'
-import { ConversionBand } from '@/components/ui/ConversionBand'
-import { PageEntrance } from '@/components/ui/PageEntrance'
+import type { Metadata } from "next";
+import Image from "next/image";
+import { PhoneCapture } from "@/components/ui/PhoneCapture";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { isLocale, locales } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { buildMetadata, absoluteUrl, localizedPath } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema, faqSchema, organizationSchema } from "@/lib/schema";
+import { servicePages, getServicePage } from "@/lib/services-pages";
+import { getProject } from "@/lib/projects";
+import { testimonialFor } from "@/lib/testimonials";
+import { siteConfig } from "@/lib/site.config";
+import { Reveal } from "@/components/ui/Reveal";
+import { Magnetic } from "@/components/ui/Magnetic";
+import { ConversionBand } from "@/components/ui/ConversionBand";
+import { PageEntrance } from "@/components/ui/PageEntrance";
 
-export const dynamicParams = false
+export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return locales.flatMap((locale) => servicePages.map((s) => ({ locale, service: s.slug })))
+  return locales.flatMap((locale) =>
+    servicePages.map((s) => ({ locale, service: s.slug })),
+  );
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string; service: string }>
+  params: Promise<{ locale: string; service: string }>;
 }): Promise<Metadata> {
-  const { locale, service } = await params
-  if (!isLocale(locale)) return {}
-  const page = getServicePage(service)
-  if (!page) return {}
-  const dict = getDictionary(locale)
-  const floor = dict.pricing.bands[page.bandIndex].price
+  const { locale, service } = await params;
+  if (!isLocale(locale)) return {};
+  const page = getServicePage(service);
+  if (!page) return {};
+  const dict = getDictionary(locale);
+  const floor = dict.pricing.bands[page.bandIndex].price;
   // Intent-led SERP title: service + what a searching owner scans for — the
   // public figure where one exists (SEO & GEO), the free quote everywhere else.
-  const title = `${page.name[locale]} — ${floor ?? dict.servicesPage.metaQuote}`
+  const title = `${page.name[locale]} — ${floor ?? dict.servicesPage.metaQuote}`;
   return buildMetadata({
     locale,
     title,
     description: page.lead[locale],
     path: `services/${service}`,
-  })
+  });
 }
 
 /**
@@ -52,22 +55,24 @@ export async function generateMetadata({
 export default async function ServicePage({
   params,
 }: {
-  params: Promise<{ locale: string; service: string }>
+  params: Promise<{ locale: string; service: string }>;
 }) {
-  const { locale, service } = await params
-  if (!isLocale(locale)) notFound()
-  const page = getServicePage(service)
-  if (!page) notFound()
-  const dict = getDictionary(locale)
-  const sp = dict.servicesPage
-  const band = dict.pricing.bands[page.bandIndex]
-  const proofs = page.proofSlugs.map((slug) => getProject(slug)).filter((p) => p !== undefined)
-  const contactHref = `${localizedPath(locale, 'contact')}?sujet=${page.sujet}`
+  const { locale, service } = await params;
+  if (!isLocale(locale)) notFound();
+  const page = getServicePage(service);
+  if (!page) notFound();
+  const dict = getDictionary(locale);
+  const sp = dict.servicesPage;
+  const band = dict.pricing.bands[page.bandIndex];
+  const proofs = page.proofSlugs
+    .map((slug) => getProject(slug))
+    .filter((p) => p !== undefined);
+  const contactHref = `${localizedPath(locale, "contact")}?sujet=${page.sujet}`;
   const whatsappHref = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(
-    locale === 'fr'
+    locale === "fr"
       ? `Bonjour EAM — je vous contacte au sujet de : ${page.name.fr}`
       : `Hello EAM — I'm reaching out about: ${page.name.en}`,
-  )}`
+  )}`;
 
   return (
     <main id="content" className="px-6 pb-28 pt-36 md:px-12 md:pt-44 lg:px-20">
@@ -77,8 +82,14 @@ export default async function ServicePage({
           faqSchema(page.faq.map((f) => ({ q: f.q[locale], a: f.a[locale] }))),
           breadcrumbSchema([
             { name: dict.nav.home, url: absoluteUrl(localizedPath(locale)) },
-            { name: dict.nav.services, url: absoluteUrl(localizedPath(locale, 'services')) },
-            { name: page.name[locale], url: absoluteUrl(localizedPath(locale, `services/${service}`)) },
+            {
+              name: dict.nav.services,
+              url: absoluteUrl(localizedPath(locale, "services")),
+            },
+            {
+              name: page.name[locale],
+              url: absoluteUrl(localizedPath(locale, `services/${service}`)),
+            },
           ]),
         ]}
       />
@@ -92,7 +103,10 @@ export default async function ServicePage({
           <span className="px-2" aria-hidden>
             /
           </span>
-          <Link href={localizedPath(locale, 'services')} className="hover:text-ink">
+          <Link
+            href={localizedPath(locale, "services")}
+            className="hover:text-ink"
+          >
             {dict.nav.services}
           </Link>
           <span className="px-2" aria-hidden>
@@ -103,18 +117,33 @@ export default async function ServicePage({
 
         <header className="mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-end">
           <PageEntrance>
-            <p data-pe="eyebrow" className="text-mono-label text-gold/85">{page.name[locale]}</p>
-            <h1 data-pe="title" className="mt-4 max-w-3xl text-4xl md:text-5xl">{page.h1[locale]}</h1>
-            <p data-pe="lead" className="mt-6 max-w-2xl text-xl leading-relaxed text-muted">{page.lead[locale]}</p>
+            <p data-pe="eyebrow" className="text-mono-label text-gold/85">
+              {page.name[locale]}
+            </p>
+            <h1 data-pe="title" className="mt-4 max-w-3xl text-4xl md:text-5xl">
+              {page.h1[locale]}
+            </h1>
+            <p
+              data-pe="lead"
+              className="mt-6 max-w-2xl text-xl leading-relaxed text-muted"
+            >
+              {page.lead[locale]}
+            </p>
 
-            <div data-pe="cta" className="mt-9 flex flex-wrap items-center gap-4">
+            <div
+              data-pe="cta"
+              className="mt-9 flex flex-wrap items-center gap-4"
+            >
               <Magnetic>
                 <Link
                   href={contactHref}
                   className="cta-shine shadow-gold group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-gold px-8 py-4 font-medium text-deep transition-colors duration-300 hover:bg-gold-bright"
                 >
                   {sp.quoteCta}
-                  <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1.5">
+                  <span
+                    aria-hidden
+                    className="transition-transform duration-300 group-hover:translate-x-1.5"
+                  >
                     →
                   </span>
                 </Link>
@@ -128,11 +157,20 @@ export default async function ServicePage({
                 {sp.whatsappCta} <span aria-hidden>↗</span>
               </a>
             </div>
-            <p data-pe="cta" className="text-mono-label mt-4 text-faint">{sp.quoteNote}</p>
+            <p data-pe="cta" className="text-mono-label mt-4 text-faint">
+              {sp.quoteNote}
+            </p>
             {/* The standing offer, at the moment of the ask. */}
-            <p data-pe="cta" className="mt-6 max-w-md border-l-2 border-gold/50 pl-4 text-ink">
-              <span className="text-mono-label block text-gold/85">{dict.pricing.offer.label}</span>
-              <span className="mt-1.5 block leading-relaxed">{dict.pricing.offer.text}</span>
+            <p
+              data-pe="cta"
+              className="mt-6 max-w-md border-l-2 border-gold/50 pl-4 text-ink"
+            >
+              <span className="text-mono-label block text-gold/85">
+                {dict.pricing.offer.label}
+              </span>
+              <span className="mt-1.5 block leading-relaxed">
+                {dict.pricing.offer.text}
+              </span>
             </p>
           </PageEntrance>
 
@@ -146,7 +184,9 @@ export default async function ServicePage({
                 <p className="foil mt-2 whitespace-nowrap font-display text-4xl leading-none">
                   {band.price}
                 </p>
-                <p className="text-mono-label mt-3 text-faint">{sp.floorNote}</p>
+                <p className="text-mono-label mt-3 text-faint">
+                  {sp.floorNote}
+                </p>
               </div>
             ) : (
               <div className="rounded-lg border border-line bg-deep p-8">
@@ -160,7 +200,9 @@ export default async function ServicePage({
                       >
                         {i + 1}
                       </span>
-                      <span className="text-sm leading-relaxed text-muted">{step}</span>
+                      <span className="text-sm leading-relaxed text-muted">
+                        {step}
+                      </span>
                     </li>
                   ))}
                 </ol>
@@ -176,8 +218,12 @@ export default async function ServicePage({
             {page.deliverables.map((d, i) => (
               <li key={d.title[locale]}>
                 <Reveal delay={i * 70} className="border-t border-gold/30 pt-5">
-                  <h3 className="font-display text-xl text-ink">{d.title[locale]}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">{d.text[locale]}</p>
+                  <h3 className="font-display text-xl text-ink">
+                    {d.title[locale]}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">
+                    {d.text[locale]}
+                  </p>
                 </Reveal>
               </li>
             ))}
@@ -185,7 +231,7 @@ export default async function ServicePage({
           {/* Every service page claims AI visibility somewhere — every one gets
               the receipts link (claim + proof is the doctrine, not a feature). */}
           <Link
-            href={localizedPath(locale, 'preuves')}
+            href={localizedPath(locale, "preuves")}
             className="text-mono-label mt-8 inline-flex items-center gap-2 text-gold underline-offset-4 hover:underline"
           >
             {sp.receiptsCta} <span aria-hidden>→</span>
@@ -193,57 +239,83 @@ export default async function ServicePage({
         </section>
 
         {/* ── Three real proofs with captures ─────────────────────────────── */}
+        {/* Below sm the proofs are the phone captures themselves, on a snap
+            strip (2026-11-08) — a desktop capture at phone width was unreadable. */}
         <section className="mt-20 md:mt-24">
-          <h2 className="text-mono-label text-faint">{page.proofsTitle[locale]}</h2>
-          <div className="mt-8 grid gap-8 md:grid-cols-3">
-            {proofs.map((project, i) => (
-              <Reveal key={project.slug} delay={i * 80}>
-                <Link
-                  href={localizedPath(locale, `work/${project.slug}`)}
-                  data-cursor="voir"
-                  className="group block"
+          <h2 className="text-mono-label text-faint">
+            {page.proofsTitle[locale]}
+          </h2>
+          {/* Entrance: the strip as one block on phones, the tiles one by one
+              from sm — a tile waiting off-screen to the right must never sit
+              at opacity 0 until swiped. */}
+          <Reveal className="sm:opacity-100! sm:transform-none!">
+            <div className="-mx-6 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-pl-6 px-6 pb-3 [scrollbar-width:none] sm:mx-0 sm:grid sm:gap-8 sm:overflow-visible sm:px-0 sm:pb-0 md:grid-cols-3 [&::-webkit-scrollbar]:hidden">
+              {proofs.map((project, i) => (
+                <Reveal
+                  key={project.slug}
+                  delay={i * 80}
+                  className="w-[60vw] max-w-[272px] shrink-0 snap-start max-sm:opacity-100! max-sm:transform-none! sm:w-auto sm:max-w-none"
                 >
-                  <span className="relative block aspect-[16/10] overflow-hidden rounded-lg border border-line">
-                    {project.thumb ? (
-                      <Image
-                        src={project.thumb}
+                  <Link
+                    href={localizedPath(locale, `work/${project.slug}`)}
+                    data-cursor="voir"
+                    className="group block"
+                  >
+                    <span className="block sm:hidden">
+                      <PhoneCapture
+                        name={project.name}
+                        url={project.liveUrl}
+                        color={project.color}
+                        thumb={project.thumb}
+                        thumbM={project.thumbM}
                         alt={`${project.name} — ${page.name[locale]}`}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                        sizes="60vw"
                       />
-                    ) : (
+                    </span>
+                    <span className="relative hidden aspect-[16/10] overflow-hidden rounded-lg border border-line sm:block">
+                      {project.thumb ? (
+                        <Image
+                          src={project.thumb}
+                          alt={`${project.name} — ${page.name[locale]}`}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                        />
+                      ) : (
+                        <span
+                          aria-hidden
+                          className="absolute inset-0"
+                          style={{
+                            background: `linear-gradient(135deg, ${project.color}, var(--c-navy) 82%)`,
+                          }}
+                        />
+                      )}
                       <span
                         aria-hidden
-                        className="absolute inset-0"
-                        style={{ background: `linear-gradient(135deg, ${project.color}, var(--c-navy) 82%)` }}
+                        className="absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition-colors duration-500 group-hover:ring-gold/60"
                       />
-                    )}
-                    <span
-                      aria-hidden
-                      className="absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition-colors duration-500 group-hover:ring-gold/60"
-                    />
-                  </span>
-                  <span className="mt-4 block font-display text-xl text-ink transition-colors duration-300 group-hover:text-gold">
-                    {project.name}
-                  </span>
-                  <span className="text-mono-label mt-1 inline-flex items-center gap-2 text-muted">
-                    {sp.proofsCta} <span aria-hidden>→</span>
-                  </span>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
+                    </span>
+                    <span className="mt-4 block font-display text-xl text-ink transition-colors duration-300 group-hover:text-gold">
+                      {project.name}
+                    </span>
+                    <span className="text-mono-label mt-1 inline-flex items-center gap-2 text-muted">
+                      {sp.proofsCta} <span aria-hidden>→</span>
+                    </span>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          </Reveal>
           {(() => {
-            const t = testimonialFor(page.sujet)
-            if (!t) return null
+            const t = testimonialFor(page.sujet);
+            if (!t) return null;
             return (
               <Reveal>
                 <figure className="mt-12 max-w-3xl border-l-2 border-gold/50 pl-6">
                   <blockquote className="font-display text-xl leading-relaxed text-ink">
-                    {'« '}
+                    {"« "}
                     {t.quote[locale]}
-                    {' »'}
+                    {" »"}
                   </blockquote>
                   <figcaption className="mt-3 flex flex-wrap items-baseline gap-x-4">
                     <span className="text-mono-label text-gold">{t.org}</span>
@@ -251,7 +323,7 @@ export default async function ServicePage({
                   </figcaption>
                 </figure>
               </Reveal>
-            )
+            );
           })()}
         </section>
 
@@ -264,18 +336,22 @@ export default async function ServicePage({
                 className="absolute inset-0"
                 style={{
                   background:
-                    'radial-gradient(70% 120% at 15% 50%, color-mix(in srgb, var(--c-gold) 9%, transparent), transparent 70%)',
+                    "radial-gradient(70% 120% at 15% 50%, color-mix(in srgb, var(--c-gold) 9%, transparent), transparent 70%)",
                 }}
               />
               <div className="relative flex flex-wrap items-end justify-between gap-8">
                 <div className="max-w-xl">
-                  <p className="text-mono-label text-gold/85">{sp.radio.eyebrow}</p>
+                  <p className="text-mono-label text-gold/85">
+                    {sp.radio.eyebrow}
+                  </p>
                   <h2 className="mt-3 text-3xl">{sp.radio.title}</h2>
-                  <p className="mt-4 leading-relaxed text-muted">{sp.radio.text}</p>
+                  <p className="mt-4 leading-relaxed text-muted">
+                    {sp.radio.text}
+                  </p>
                 </div>
                 <Magnetic strength={0.22}>
                   <Link
-                    href={`${localizedPath(locale, 'contact')}?sujet=radiographie`}
+                    href={`${localizedPath(locale, "contact")}?sujet=radiographie`}
                     className="text-mono-label inline-flex items-center gap-2 rounded-full border border-gold/40 px-7 py-3.5 text-ink transition-colors duration-300 hover:bg-gold hover:text-deep"
                   >
                     {sp.radio.cta} <span aria-hidden>→</span>
@@ -291,7 +367,11 @@ export default async function ServicePage({
           <h2 className="text-mono-label text-faint">{sp.faqTitle}</h2>
           <div className="mt-6 max-w-3xl border-t border-line">
             {page.faq.map((item, i) => (
-              <details key={item.q[locale]} open={i === 0} className="faq-item group border-b border-line py-5">
+              <details
+                key={item.q[locale]}
+                open={i === 0}
+                className="faq-item group border-b border-line py-5"
+              >
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-6 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">
                   <h3 className="font-display text-lg text-ink transition-colors group-hover:text-gold group-open:text-gold">
                     {item.q[locale]}
@@ -303,7 +383,9 @@ export default async function ServicePage({
                     +
                   </span>
                 </summary>
-                <p className="mt-4 max-w-2xl leading-relaxed text-muted">{item.a[locale]}</p>
+                <p className="mt-4 max-w-2xl leading-relaxed text-muted">
+                  {item.a[locale]}
+                </p>
               </details>
             ))}
           </div>
@@ -316,5 +398,5 @@ export default async function ServicePage({
         </div>
       </div>
     </main>
-  )
+  );
 }

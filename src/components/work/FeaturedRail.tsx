@@ -11,8 +11,11 @@ type RailMode = 'static' | 'carousel' | 'pinned'
  * section pins and the cards scrub sideways with an 01/06 counter — the
  * flagship treatment. Touch and narrow viewports get the same rail grammar
  * as a native scroll-snap carousel (86vw cards, live counter, gold progress
- * hairline, inner-thumb parallax). Reduced-motion and SSR keep the original
- * two-column grid.
+ * hairline, inner-thumb parallax). Below `sm` the cards ARE the phone
+ * captures (2026-11-08): 60vw phones, the neighbours peeking and a step back
+ * in scale, each site scrolling under its glass as it crosses the centre.
+ * Reduced-motion and SSR keep the original grid — two phones a row below
+ * `sm`, two columns from `md`.
  */
 export function FeaturedRail({ children }: { children: ReactNode }) {
   const items = Children.toArray(children)
@@ -75,13 +78,22 @@ export function FeaturedRail({ children }: { children: ReactNode }) {
     if (!strip || !bar) return
 
     const cards = Array.from(strip.querySelectorAll<HTMLElement>('[data-rail-card]'))
-    const thumbs = cards.map((card) => card.querySelector<HTMLElement>('[data-gl-thumb] img'))
-    thumbs.forEach((img) => {
-      if (!img) return
-      // The card thumb ships a 700ms hover transition — mute it so parallax
+    // One drifting layer per card — whichever capture is laid out: below `sm`
+    // the phone capture's tall inner layer (it scrolls DOWN its window — the
+    // page moving under the glass), from `sm` the desktop thumb (sideways
+    // drift). A display:none twin has no box and is never picked.
+    const layers = cards.map((card) => {
+      const phone = card.querySelector<HTMLElement>('[data-rail-media="phone"] [data-rail-thumb]')
+      if (phone && phone.offsetParent !== null) return { el: phone, phone: true }
+      const img = card.querySelector<HTMLElement>('[data-gl-thumb] img')
+      return img && img.offsetParent !== null ? { el: img, phone: false } : null
+    })
+    layers.forEach((layer) => {
+      if (!layer || layer.phone) return
+      // The desktop thumb ships a 700ms hover transition — mute it so parallax
       // writes land raw, and over-scan so the drift never shows the frame edge.
-      img.style.transition = 'none'
-      gsap.set(img, { scale: 1.12 })
+      layer.el.style.transition = 'none'
+      gsap.set(layer.el, { scale: 1.12 })
     })
 
     const toBar = gsap.quickTo(bar, 'scaleX', { duration: 0.35, ease: 'eam-silk' })
@@ -94,11 +106,19 @@ export function FeaturedRail({ children }: { children: ReactNode }) {
       toBar(p)
       const mid = strip.scrollLeft + strip.clientWidth / 2
       cards.forEach((card, i) => {
-        const img = thumbs[i]
-        if (!img) return
-        const off = (card.offsetLeft + card.offsetWidth / 2 - mid) / strip.clientWidth
-        // ±6 xPercent stays inside the 1.12 over-scan (6% slack per side).
-        gsap.set(img, { xPercent: gsap.utils.clamp(-1, 1, off) * 6 })
+        const off = gsap.utils.clamp(-1, 1, (card.offsetLeft + card.offsetWidth / 2 - mid) / strip.clientWidth)
+        // Depth: the centred card stands at full size, its neighbours a step back.
+        gsap.set(card, { scale: 1 - Math.abs(off) * 0.06 })
+        const layer = layers[i]
+        if (!layer) return
+        if (layer.phone) {
+          // The phone window shows 430×880 of a 430×932 capture — 5.5% of slack:
+          // at the top of the page when centred, scrolled down at the sides.
+          gsap.set(layer.el, { yPercent: -5.5 * Math.abs(off) })
+        } else {
+          // ±6 xPercent stays inside the 1.12 over-scan (6% slack per side).
+          gsap.set(layer.el, { xPercent: off * 6 })
+        }
       })
     }
     const onScroll = () => {
@@ -115,10 +135,11 @@ export function FeaturedRail({ children }: { children: ReactNode }) {
       strip.removeEventListener('scroll', onScroll)
       if (raf) cancelAnimationFrame(raf)
       gsap.killTweensOf(bar)
-      thumbs.forEach((img) => {
-        if (!img) return
-        img.style.transition = ''
-        gsap.set(img, { clearProps: 'transform' })
+      if (cards.length) gsap.set(cards, { clearProps: 'transform' })
+      layers.forEach((layer) => {
+        if (!layer) return
+        layer.el.style.transition = ''
+        gsap.set(layer.el, { clearProps: 'transform' })
       })
     }
   }, [mode, items.length])
@@ -127,14 +148,15 @@ export function FeaturedRail({ children }: { children: ReactNode }) {
     return (
       <div className="mt-14">
         {/* Full-bleed past the section's responsive padding; side padding
-            centers the 86vw-capped cards so first/last snap dead-center too. */}
+            centers the cards (60vw phones below sm, 86vw frames above) so
+            first/last snap dead-center too. */}
         <div
           ref={stripRef}
           data-rail-strip
-          className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-[calc((100vw-min(86vw,560px))/2)] pb-2 [scrollbar-width:none] md:-mx-12 lg:-mx-20 [&::-webkit-scrollbar]:hidden"
+          className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-[calc((100vw-min(60vw,272px))/2)] pb-2 [scrollbar-width:none] sm:px-[calc((100vw-min(86vw,560px))/2)] md:-mx-12 lg:-mx-20 [&::-webkit-scrollbar]:hidden"
         >
           {items.map((child, i) => (
-            <div key={i} data-rail-card className="w-[86vw] max-w-[560px] shrink-0 snap-center">
+            <div key={i} data-rail-card className="w-[60vw] max-w-[272px] shrink-0 snap-center sm:w-[86vw] sm:max-w-[560px]">
               {child}
             </div>
           ))}
@@ -159,7 +181,7 @@ export function FeaturedRail({ children }: { children: ReactNode }) {
 
   if (mode !== 'pinned') {
     return (
-      <div className="mt-14 grid gap-x-8 gap-y-14 md:grid-cols-2">
+      <div className="mt-14 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-1 sm:gap-x-8 sm:gap-y-14 md:grid-cols-2">
         {items.map((child, i) => (
           <Reveal key={i} delay={(i % 2) * 90} dir={i % 2 === 0 ? 'left' : 'right'}>
             {child}
