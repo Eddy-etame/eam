@@ -122,7 +122,8 @@ export default async function PreuvesPage({ params }: { params: Promise<{ locale
               <p className="text-mono-label text-faint">
                 {p.lastRun} · {latest.runId}
               </p>
-              <div className="mt-6 overflow-x-auto rounded-lg border border-line">
+              {/* Below md the table scrolls sideways — the fade says so (2026-11-08 audit). */}
+              <div className="mt-6 overflow-x-auto rounded-lg border border-line max-md:[mask-image:linear-gradient(to_right,black_calc(100%-56px),transparent)]">
                 <table className="w-full min-w-[720px] border-collapse text-left">
                   <thead>
                     <tr className="border-b border-line">

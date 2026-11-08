@@ -52,6 +52,7 @@ export function PhoneCapture({
   thumbM,
   alt,
   sizes = '62vw',
+  eager = false,
 }: {
   name: string
   /** Live URL — '#', empty, or undefined means "no real address" (pill omitted). */
@@ -65,6 +66,8 @@ export function PhoneCapture({
   alt: string
   /** next/image `sizes` for the phone capture — the card's width on phone screens. */
   sizes?: string
+  /** Load the phone capture at once (the first cards of the home rail). */
+  eager?: boolean
 }) {
   const stage = `linear-gradient(135deg, ${color}, var(--c-navy) 82%)`
 
@@ -82,6 +85,7 @@ export function PhoneCapture({
                 width={PHONE_W}
                 height={phoneHeight(thumbM)}
                 sizes={sizes}
+                loading={eager ? 'eager' : undefined}
                 className="block h-auto w-full"
               />
             </div>

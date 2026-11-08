@@ -6,7 +6,9 @@ import type { Dictionary } from '@/i18n/dictionaries'
 /**
  * Reusable category filter chips — plain links (SSR-crawlable, zero client JS).
  * Each chip routes the visitor into the world that owns the category, already
- * filtered (`?cat=<slug>`). Horizontal scroll row on mobile, wrapping on md+.
+ * filtered (`?cat=<slug>`). Horizontal scroll row on mobile — faded at its
+ * right edge with room after the last chip, so a cut chip reads as "there is
+ * more" (2026-11-08 audit) — wrapping on md+.
  *
  * `tone`: 'theme' rides the chapter palette tokens (registre, home band);
  * 'stage' uses FIXED hex (white / #C9A96E) — LEGIBILITY LAW for chips sitting
@@ -44,7 +46,7 @@ export function CategoryChips({
 
   return (
     <nav aria-label={dict.filters.eyebrow}>
-      <ul className="flex snap-x gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex-wrap md:overflow-visible">
+      <ul className="flex snap-x gap-3 overflow-x-auto pb-1 [scrollbar-width:none] max-md:pr-16 max-md:[mask-image:linear-gradient(to_right,black_calc(100%-72px),transparent)] md:flex-wrap md:overflow-visible [&::-webkit-scrollbar]:hidden">
         {allHref && (
           <li className="shrink-0">
             <Link

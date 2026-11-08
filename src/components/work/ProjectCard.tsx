@@ -50,6 +50,7 @@ export function ProjectCard({
   locale,
   numeral,
   aspectClass = 'aspect-[4/3]',
+  eager = false,
 }: {
   project: Project
   locale: Locale
@@ -57,6 +58,8 @@ export function ProjectCard({
   numeral?: string
   /** Desktop thumb frame ratio — the woven solo band leads with a wide 16/10 panel. */
   aspectClass?: string
+  /** Phone capture loads at once — the first cards of the home rail. */
+  eager?: boolean
 }) {
   const frameRef = useRef<HTMLDivElement>(null)
 
@@ -150,6 +153,7 @@ export function ProjectCard({
               thumb={project.thumb}
               thumbM={project.thumbM}
               alt={alt}
+              eager={eager}
             />
           </div>
 

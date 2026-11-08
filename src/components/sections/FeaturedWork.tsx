@@ -50,13 +50,15 @@ export function FeaturedWork({ locale, dict }: { locale: Locale; dict: Dictionar
         </Reveal>
 
         <FeaturedRail>
-          {SEQUENCE.map((item) => {
+          {SEQUENCE.map((item, i) => {
             if (typeof item !== 'string') {
               return <WorldDoor key={item.door} world={item.door} locale={locale} dict={dict} />
             }
             const project = getProject(item)
+            // The first three cards are on screen or one swipe away on a phone:
+            // their captures load at once, the rest as they come into view.
             return project ? (
-              <ProjectCard key={project.slug} project={project} locale={locale} />
+              <ProjectCard key={project.slug} project={project} locale={locale} eager={i < 3} />
             ) : null
           })}
         </FeaturedRail>

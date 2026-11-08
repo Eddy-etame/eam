@@ -7,6 +7,8 @@ import { gsap, useGSAP } from '@/lib/gsap'
  * Rolls a numeric stat from 0 to its value when it scrolls into view (same
  * counter recipe as the preloader). Non-numeric prefixes bail out gracefully;
  * suffixes ('+', '%') are preserved. Reduced motion renders the final value.
+ * A YEAR is never counted (2026-11-08 audit: « fondée en » rolling from 1386
+ * to 2024 is a generic tic — a date is not a quantity).
  */
 export function CountUp({ value, className }: { value: string; className?: string }) {
   const ref = useRef<HTMLSpanElement>(null)
@@ -20,6 +22,7 @@ export function CountUp({ value, className }: { value: string; className?: strin
       if (!match) return
       const target = Number(match[1])
       const suffix = match[2] ?? ''
+      if (/^\d{4}$/.test(match[1]) && target >= 1900 && target <= 2100 && !suffix) return
       const proxy = { v: 0 }
       gsap.to(proxy, {
         v: target,
