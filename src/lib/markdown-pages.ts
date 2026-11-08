@@ -1,6 +1,6 @@
 import { getDictionary } from '@/i18n/dictionaries'
 import { isLocale, type Locale } from '@/i18n/config'
-import { publicProjects, getProject } from '@/lib/projects'
+import { publicProjects, getProject, visitUrl } from '@/lib/projects'
 import { servicePages, getServicePage } from '@/lib/services-pages'
 import { testimonials } from '@/lib/testimonials'
 import { siteConfig } from '@/lib/site.config'
@@ -73,7 +73,7 @@ function workMarkdown(locale: Locale): string {
     `## ${locale === 'fr' ? 'Projets' : 'Projects'} (${publicProjects.length})`,
     '',
     ...publicProjects.map((p) => {
-      const live = p.liveUrl !== '#' ? ` · ${locale === 'fr' ? 'site' : 'live'}: ${p.liveUrl}` : ''
+      const live = visitUrl(p) ? ` · ${locale === 'fr' ? 'site' : 'live'}: ${visitUrl(p)}` : ''
       return `- **${p.name}** — ${p.tagline[locale]} (${abs(`/${locale}/work/${p.slug}`)})${live}`
     }),
     footerLinks(locale),
@@ -95,8 +95,8 @@ function caseMarkdown(locale: Locale, slug: string): string | null {
     `- ${dict.common.stack}: ${p.techStack?.join(', ') ?? '—'}`,
     ...(p.sites
       ? p.sites.map((site) => `- ${dict.common.visitSite} — ${site.name}: ${site.url}`)
-      : p.liveUrl !== '#'
-        ? [`- ${dict.common.visitSite}: ${p.liveUrl}`]
+      : visitUrl(p)
+        ? [`- ${dict.common.visitSite}: ${visitUrl(p)}`]
         : []),
   ]
   if (cs) {

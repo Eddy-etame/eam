@@ -7,7 +7,8 @@ import { gsap, ScrollTrigger, SplitText, useGSAP } from '@/lib/gsap'
 import { localizedPath } from '@/lib/seo'
 import { rundowns } from '@/lib/rundowns'
 import { categoryLabels } from '@/lib/taxonomy'
-import type { Project } from '@/lib/projects'
+import { visitUrl, type Project } from '@/lib/projects'
+import { useMediaFlags } from '@/lib/use-media'
 import type { Locale } from '@/i18n/config'
 import type { Dictionary } from '@/i18n/dictionaries'
 
@@ -135,7 +136,13 @@ export function MicrodidactTraversee({
 }) {
   const scope = useRef<HTMLDivElement>(null)
   const progressRef = useRef<HTMLSpanElement>(null)
-  const [enhanced, setEnhanced] = useState(false)
+  // The pinned journey is a fine-pointer, wide-viewport, motion-allowed
+  // privilege; everyone else gets the dignified vertical crossing. Read on the
+  // client, false on the server and during hydration (useMediaFlags).
+  const enhanced = useMediaFlags(
+    (mq) => mq('(hover: hover) and (pointer: fine)') && mq('(min-width: 1024px)') && !mq('(prefers-reduced-motion: reduce)'),
+    false,
+  )
   const [rebuild, setRebuild] = useState(0)
   const [idx, setIdx] = useState(1)
   const [seen, setSeen] = useState<ReadonlySet<string>>(() => new Set())
@@ -145,15 +152,6 @@ export function MicrodidactTraversee({
     sync()
     window.addEventListener(ROOMS_SEEN_EVENT, sync)
     return () => window.removeEventListener(ROOMS_SEEN_EVENT, sync)
-  }, [])
-
-  // The pinned journey is a fine-pointer, wide-viewport, motion-allowed
-  // privilege. Everyone else gets the dignified vertical crossing.
-  useEffect(() => {
-    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches
-    const wide = window.matchMedia('(min-width: 1024px)').matches
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (fine && wide && !reduce) setEnhanced(true)
   }, [])
 
   // Rebuild the measured timeline when the viewport meaningfully resizes.
@@ -950,9 +948,9 @@ function Room({
             <h4 className="text-mono-label font-body text-gold">{dict.rooms.travail}</h4>
             <p className="mt-6 text-xl leading-relaxed text-white/90 md:text-2xl">{travail}</p>
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
-              {project.liveUrl !== '#' && (
+              {visitUrl(project) && (
                 <a
-                  href={project.liveUrl}
+                  href={visitUrl(project) ?? undefined}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-mono-label inline-flex items-center gap-2 text-gold-bright transition-colors duration-300 hover:text-gold"
@@ -1119,9 +1117,9 @@ function RoomDigest({
 
       {/* py + negative my: ~44px touch targets, unchanged visual rhythm */}
       <div className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3">
-        {project.liveUrl !== '#' && (
+        {visitUrl(project) && (
           <a
-            href={project.liveUrl}
+            href={visitUrl(project) ?? undefined}
             target="_blank"
             rel="noopener noreferrer"
             className="text-mono-label -my-3 inline-flex items-center gap-2 py-3 text-gold transition-colors duration-300 hover:text-gold-bright"

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -10,6 +10,7 @@ import { ConversionBand } from '@/components/ui/ConversionBand'
 import type { Project } from '@/lib/projects'
 import { localizedPath } from '@/lib/seo'
 import { gsap } from '@/lib/gsap'
+import { useMediaFlags } from '@/lib/use-media'
 import type { Locale } from '@/i18n/config'
 import type { Dictionary } from '@/i18n/dictionaries'
 
@@ -91,8 +92,17 @@ export function ProjectGallery({
   dict: Dictionary
   data: GalleryData
 }) {
-  const [enableFx, setEnableFx] = useState(false)
-  const [enablePalette, setEnablePalette] = useState(false)
+  // Gate the WebGL overlay to pointer-capable desktops with motion allowed;
+  // the palette morph only needs a real hover pointer + motion allowed. Read
+  // on the client, both false on the server and during hydration.
+  const enablePalette = useMediaFlags(
+    (mq) => mq('(hover: hover)') && !mq('(prefers-reduced-motion: reduce)'),
+    false,
+  )
+  const enableFx = useMediaFlags(
+    (mq) => mq('(min-width: 768px)') && mq('(hover: hover)') && !mq('(prefers-reduced-motion: reduce)'),
+    false,
+  )
 
   const enterWorld = dict.work.enterWorld
   const { bc, internals, microdidactCount } = data
@@ -100,15 +110,6 @@ export function ProjectGallery({
 
   // Registre inventory: 2 world doors + the solos, numbered in visible order.
   const totalEntries = 2 + solos.length
-
-  // Gate the WebGL overlay to pointer-capable desktops with motion allowed;
-  // the palette morph only needs a real hover pointer + motion allowed.
-  useEffect(() => {
-    const hover = window.matchMedia('(hover: hover)').matches
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    setEnableFx(window.matchMedia('(min-width: 768px)').matches && hover && !reduced)
-    setEnablePalette(hover && !reduced)
-  }, [])
 
   // Clean up any in-flight palette override if the gallery unmounts mid-hover.
   useEffect(() => {

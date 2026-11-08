@@ -7,7 +7,7 @@ import { getDictionary } from '@/i18n/dictionaries'
 import { buildMetadata, absoluteUrl, localizedPath } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { breadcrumbSchema, creativeWorkSchema, organizationSchema } from '@/lib/schema'
-import { getProject, publicProjects, categoryLabels, phoneCaptureOf } from '@/lib/projects'
+import { getProject, publicProjects, categoryLabels, phoneCaptureOf, visitUrl } from '@/lib/projects'
 import { CaseCover } from '@/components/work/CaseCover'
 import { CaseAside } from '@/components/work/CaseAside'
 import { PhoneFrame } from '@/components/ui/PhoneFrame'
@@ -49,6 +49,9 @@ export async function generateMetadata({
     title,
     description: project.description[locale],
     path: `work/${slug}`,
+    // Its own two-screen share card (opengraph-image.tsx beside this file) —
+    // the file convention alone does not replace the images buildMetadata sets.
+    images: [absoluteUrl(`/${locale}/work/${slug}/opengraph-image`)],
   })
 }
 
@@ -236,9 +239,9 @@ export default async function CaseStudyPage({
           <div>
             <h2 className="text-mono-label text-faint">{dict.caseStudy.overview}</h2>
             <p className="mt-5 text-2xl leading-relaxed text-ink">{project.description[locale]}</p>
-            {project.liveUrl !== '#' && (
+            {visitUrl(project) && (
               <a
-                href={project.liveUrl}
+                href={visitUrl(project) ?? undefined}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-mono-label mt-8 inline-flex rounded-full border border-gold/40 px-6 py-3 text-ink transition-colors hover:bg-gold hover:text-deep"
@@ -410,7 +413,7 @@ export default async function CaseStudyPage({
         </div>
       </div>
 
-      <CaseAside liveUrl={project.liveUrl} label={dict.common.visitSite} />
+      <CaseAside liveUrl={visitUrl(project) ?? '#'} label={dict.common.visitSite} />
     </main>
   )
 }

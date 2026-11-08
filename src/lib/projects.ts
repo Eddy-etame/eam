@@ -29,6 +29,10 @@ export interface Project {
   tags: string[]
   /** '#' for internal/NDA projects (never a live link). */
   liveUrl: string
+  /** Eddy's call, dated with its reason: the card and the case stay, but no
+   *  button leads out — frames keep the bare domain as a label only. Read
+   *  through `visitUrl()`; never test liveUrl alone where a link is drawn. */
+  visitHidden?: string
   /** Real site screenshot under /public/thumbs/<slug>.jpg (set only when captured). */
   thumb?: string
   /** Its phone twin under /public/thumbs/<slug>-m.jpg — a real 430×932 viewport
@@ -1391,6 +1395,8 @@ export const projects: Project[] = [
     category: 'Corporate & Formation',
     tags: ['Corporate', 'Conseil', 'Stratégie'],
     liveUrl: 'https://www.jcbo-conseil.com/',
+    visitHidden:
+      '2026-11-08 — jcbo-conseil.com answers a WordPress placeholder since 2026-11-06 (the site was switched to a non-payment notice on 2026-10-29); Eddy: keep the case, no external button',
     color: '#1C2B3A',
     year: 2024,
     isFeatured: true, // team 2026-07-15: JCBO = "notre site qui pèse le plus" — leads the rail
@@ -1503,6 +1509,8 @@ export const projects: Project[] = [
     category: 'Tech & SaaS',
     tags: ['SaaS', 'Hébergement', 'Afrique', 'International', 'Fintech'],
     liveUrl: 'https://kermhosting.site/',
+    visitHidden:
+      '2026-11-08 — Eddy: keep the card, no external buttons (www.kermhosting.site answers Cloudflare 526; the apex answers 200)',
     color: '#7C3AED',
     year: 2025,
     isFeatured: true,
@@ -1821,5 +1829,9 @@ export const liveSiteCount = publicProjects.reduce(
   0,
 )
 export const getProject = (slug: string) => projects.find((p) => p.slug === slug)
+/** The address a visitor may be sent to — null for in-production work ('#')
+ *  and for entries Eddy keeps without an external button (`visitHidden`). */
+export const visitUrl = (p: Project): string | null =>
+  p.liveUrl !== '#' && !p.visitHidden ? p.liveUrl : null
 export const getProjectsByCategory = (category: ProjectCategory) =>
   publicProjects.filter((p) => p.category === category)

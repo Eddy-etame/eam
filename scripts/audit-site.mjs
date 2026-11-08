@@ -8,7 +8,9 @@
  *   BROWSER   (desktop + phone, a representative set of routes) console
  *             errors, horizontal overflow, images without alt, tap targets
  *             under 40px on the phone, text contrast below AA on a solid
- *             ground, blocks still invisible after the whole page was scrolled
+ *             ground, blocks still invisible after the whole page was scrolled,
+ *             and — on the phone — a desktop capture shown without its phone
+ *             twin on the same page (the shrunken-site defect of 2026-11-07)
  *
  *   npm run build && npx next start -p 3030
  *   node scripts/audit-site.mjs http://localhost:3030 > .verify/audit.txt
@@ -149,7 +151,7 @@ for (const mode of ['desktop', 'phone']) {
     }
     await page.waitForTimeout(1200)
     const report = await page.evaluate((isPhone) => {
-      const out = { overflow: 0, noAlt: [], small: [], contrast: [], hidden: [] }
+      const out = { overflow: 0, noAlt: [], small: [], contrast: [], hidden: [], captureAlone: [] }
       out.overflow = document.documentElement.scrollWidth - document.documentElement.clientWidth
       const visible = (el) => {
         const r = el.getBoundingClientRect()
@@ -215,6 +217,21 @@ for (const mode of ['desktop', 'phone']) {
           out.contrast.push(`${ratio.toFixed(2)}:1 (needs ${need}) "${t.slice(0, 40)}" ${cs.color} on rgb(${bg})`)
         }
       }
+      // Capture pairs law on a phone: every visible desktop capture needs its
+      // phone twin visible on the same page — otherwise the visitor is looking
+      // at a 1440px site shrunk into a card (Eddy, 2026-11-07).
+      if (isPhone) {
+        const desktop = new Map()
+        const phoneTwins = new Set()
+        for (const img of document.images) {
+          if (!visible(img)) continue
+          const m = /thumbs\/([a-z0-9-]+?)(-m)?\.jpg/.exec(decodeURIComponent(img.currentSrc || img.src || ''))
+          if (!m) continue
+          if (m[2]) phoneTwins.add(m[1])
+          else desktop.set(m[1], Math.round(img.getBoundingClientRect().width))
+        }
+        for (const [slug, w] of desktop) if (!phoneTwins.has(slug)) out.captureAlone.push(`${slug} at ${w}px`)
+      }
       for (const el of document.querySelectorAll('[data-reveal], [data-bc-reveal], [data-bc-band-copy]'))
         if (Number(getComputedStyle(el).opacity) < 0.05 && el.getBoundingClientRect().height > 0)
           out.hidden.push((el.innerText || '').trim().slice(0, 50) || el.className.slice(0, 50))
@@ -227,6 +244,7 @@ for (const mode of ['desktop', 'phone']) {
     for (const s of report.small.slice(0, 6)) add('BROWSER small tap target', where, s)
     for (const c of report.contrast.slice(0, 5)) add('BROWSER contrast', where, c)
     for (const h of report.hidden.slice(0, 4)) add('BROWSER still invisible after full scroll', where, h)
+    for (const c of report.captureAlone.slice(0, 6)) add('BROWSER desktop capture alone on a phone', where, c)
     await page.close()
   }
   await ctx.close()

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* The pinned rail's device: a fine pointer on a wide screen — one variant so
+   markup and script agree on who gets it (FeaturedRail, 2026-11-08). */
+@custom-variant fine-wide (@media (hover: hover) and (pointer: fine) and (min-width: 1024px));
+
 /*═══════════════════════════════════════════════════════════════════════════
   EAM — DESIGN SYSTEM  ·  Tailwind v4 (CSS-first)
   Color & font tokens are mapped via `@theme inline` to live CSS variables

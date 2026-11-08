@@ -2,46 +2,62 @@
 
 import { Children, useEffect, useRef, useState, type ReactNode } from 'react'
 import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
-import { Reveal } from '@/components/ui/Reveal'
+import { useMediaFlags } from '@/lib/use-media'
 
 type RailMode = 'static' | 'carousel' | 'pinned'
 
 /**
- * Featured work as a pinned horizontal rail: on fine-pointer desktops the
- * section pins and the cards scrub sideways with an 01/06 counter — the
- * flagship treatment. Touch and narrow viewports get the same rail grammar
- * as a native scroll-snap carousel (86vw cards, live counter, gold progress
- * hairline, inner-thumb parallax). Below `sm` the cards ARE the phone
- * captures (2026-11-08): 60vw phones, the neighbours peeking and a step back
- * in scale, each site scrolling under its glass as it crosses the centre.
- * Reduced-motion and SSR keep the original grid — two phones a row below
- * `sm`, two columns from `md`.
+ * Featured work as a rail — ONE DOM for every device (2026-11-08).
+ *
+ * The server renders the strip itself: a native scroll-snap row with its
+ * counter and gold hairline. Phones get the rail from the first byte, nothing
+ * flashes as a grid before the script arrives, and the script never
+ * re-renders the twelve cards — it only adds instruments:
+ * - carousel (touch, or under 1024px): counter + hairline from scrollLeft,
+ *   depth (the centred card at full size, its neighbours a step back) and the
+ *   drift (a phone capture scrolls under its glass, a desktop thumb slides).
+ * - pinned (fine pointer, 1024px up, motion allowed): the section pins and the
+ *   same row scrubs sideways under the page scroll, with the velocity skew —
+ *   the flagship treatment. Its geometry (44vw cards, no snap, no bleed) is
+ *   CSS under the `fine-wide` variant, so the first paint already matches.
+ * - static (reduced motion): the row stays a plain swipeable strip; counter
+ *   and hairline still follow, without transforms.
+ * Below `sm` the cards are the phone captures (60vw, see ProjectCard) and the
+ * counter sits ABOVE the strip, so it never falls below the fold while a card
+ * is being swiped (Eddy 2026-11-08).
  */
 export function FeaturedRail({ children }: { children: ReactNode }) {
   const items = Children.toArray(children)
   const scope = useRef<HTMLDivElement>(null)
   const stripRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
   const barRef = useRef<HTMLSpanElement>(null)
-  const [mode, setMode] = useState<RailMode>('static')
+  // Which instruments this device gets — read on the client, 'static' on the
+  // server and during hydration (useMediaFlags: no setState in a mount effect).
+  const mode = useMediaFlags<RailMode>(
+    (mq) =>
+      mq('(prefers-reduced-motion: reduce)')
+        ? 'static'
+        : mq('(hover: hover) and (pointer: fine)') && mq('(min-width: 1024px)')
+          ? 'pinned'
+          : 'carousel',
+    'static',
+  )
   const [idx, setIdx] = useState(1)
 
-  useEffect(() => {
-    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches
-    const wide = window.matchMedia('(min-width: 1024px)').matches
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduce) return
-    setMode(fine && wide ? 'pinned' : 'carousel')
-  }, [])
-
+  // ── Pinned: the row scrubs under the page scroll ─────────────────────────
   useGSAP(
     () => {
       if (mode !== 'pinned') return
       const wrap = scope.current
-      const track = wrap?.querySelector<HTMLElement>('[data-rail-track]')
-      if (!wrap || !track) return
-      const dist = () => Math.max(0, track.scrollWidth - wrap.clientWidth)
+      const strip = stripRef.current
+      const track = trackRef.current
+      const bar = barRef.current
+      if (!wrap || !strip || !track || !bar) return
+      const dist = () => Math.max(0, track.scrollWidth - strip.clientWidth)
       // Velocity skew — the rail leans into the scroll like film pulled fast.
       const skewTo = gsap.quickTo(track, 'skewX', { duration: 0.4, ease: 'power2' })
+      const toBar = gsap.quickTo(bar, 'scaleX', { duration: 0.35, ease: 'eam-silk' })
       gsap.to(track, {
         x: () => -dist(),
         ease: 'none',
@@ -54,6 +70,7 @@ export function FeaturedRail({ children }: { children: ReactNode }) {
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             setIdx(1 + Math.round(self.progress * (items.length - 1)))
+            toBar(self.progress)
             skewTo(gsap.utils.clamp(-3.5, 3.5, -self.getVelocity() / 350))
           },
         },
@@ -67,27 +84,31 @@ export function FeaturedRail({ children }: { children: ReactNode }) {
     { scope, dependencies: [mode], revertOnUpdate: true },
   )
 
-  // Touch rail instruments: counter + gold hairline from scrollLeft, plus a
-  // per-card inner-thumb parallax. One rAF per scroll burst — reads are
-  // scrollLeft/offsetLeft only (transforms never dirty layout), writes are
-  // transform-only.
+  // ── Carousel / static: instruments from scrollLeft ───────────────────────
+  // One rAF per scroll burst — reads are scrollLeft/offsetLeft only
+  // (transforms never dirty layout), writes are transform-only. Static
+  // (reduced motion) keeps the counter and the hairline, nothing moves.
   useEffect(() => {
-    if (mode !== 'carousel') return
+    if (mode === 'pinned') return
     const strip = stripRef.current
+    const track = trackRef.current
     const bar = barRef.current
-    if (!strip || !bar) return
+    if (!strip || !track || !bar) return
+    const motion = mode === 'carousel'
 
-    const cards = Array.from(strip.querySelectorAll<HTMLElement>('[data-rail-card]'))
+    const cards = Array.from(track.querySelectorAll<HTMLElement>('[data-rail-card]'))
     // One drifting layer per card — whichever capture is laid out: below `sm`
     // the phone capture's tall inner layer (it scrolls DOWN its window — the
     // page moving under the glass), from `sm` the desktop thumb (sideways
     // drift). A display:none twin has no box and is never picked.
-    const layers = cards.map((card) => {
-      const phone = card.querySelector<HTMLElement>('[data-rail-media="phone"] [data-rail-thumb]')
-      if (phone && phone.offsetParent !== null) return { el: phone, phone: true }
-      const img = card.querySelector<HTMLElement>('[data-gl-thumb] img')
-      return img && img.offsetParent !== null ? { el: img, phone: false } : null
-    })
+    const layers = motion
+      ? cards.map((card) => {
+          const phone = card.querySelector<HTMLElement>('[data-rail-media="phone"] [data-rail-thumb]')
+          if (phone && phone.offsetParent !== null) return { el: phone, phone: true }
+          const img = card.querySelector<HTMLElement>('[data-gl-thumb] img')
+          return img && img.offsetParent !== null ? { el: img, phone: false } : null
+        })
+      : []
     layers.forEach((layer) => {
       if (!layer || layer.phone) return
       // The desktop thumb ships a 700ms hover transition — mute it so parallax
@@ -96,7 +117,7 @@ export function FeaturedRail({ children }: { children: ReactNode }) {
       gsap.set(layer.el, { scale: 1.12 })
     })
 
-    const toBar = gsap.quickTo(bar, 'scaleX', { duration: 0.35, ease: 'eam-silk' })
+    const toBar = motion ? gsap.quickTo(bar, 'scaleX', { duration: 0.35, ease: 'eam-silk' }) : (p: number) => gsap.set(bar, { scaleX: p })
     let raf = 0
     const measure = () => {
       raf = 0
@@ -104,6 +125,7 @@ export function FeaturedRail({ children }: { children: ReactNode }) {
       const p = gsap.utils.clamp(0, 1, strip.scrollLeft / max)
       setIdx(1 + Math.round(p * (items.length - 1)))
       toBar(p)
+      if (!motion) return
       const mid = strip.scrollLeft + strip.clientWidth / 2
       cards.forEach((card, i) => {
         const off = gsap.utils.clamp(-1, 1, (card.offsetLeft + card.offsetWidth / 2 - mid) / strip.clientWidth)
@@ -126,11 +148,6 @@ export function FeaturedRail({ children }: { children: ReactNode }) {
     }
     measure()
     strip.addEventListener('scroll', onScroll, { passive: true })
-    // The server rendered these cards as a tall stacked grid; the strip is a
-    // fraction of that height. Every trigger below was measured against the
-    // tall version — re-measure, or sections further down reveal thousands of
-    // pixels late (or never, past the end of the page).
-    ScrollTrigger.refresh()
     return () => {
       strip.removeEventListener('scroll', onScroll)
       if (raf) cancelAnimationFrame(raf)
@@ -144,69 +161,47 @@ export function FeaturedRail({ children }: { children: ReactNode }) {
     }
   }, [mode, items.length])
 
-  if (mode === 'carousel') {
-    return (
-      <div className="mt-14">
-        {/* Full-bleed past the section's responsive padding; side padding
-            centers the cards (60vw phones below sm, 86vw frames above) so
-            first/last snap dead-center too. */}
+  return (
+    <div ref={scope} className="mt-10 flex flex-col sm:mt-14">
+      {/* The strip — full-bleed past the section's responsive padding on touch
+          sizes, back inside it under `fine-wide` where the pinned row lives.
+          Side padding on the track centres the first and last card for the
+          snap (60vw phones below sm, 86vw frames above). */}
+      <div
+        ref={stripRef}
+        data-rail-strip
+        className="-mx-6 snap-x snap-mandatory overflow-x-auto pb-2 [scrollbar-width:none] md:-mx-12 lg:-mx-20 fine-wide:mx-0 fine-wide:snap-none motion-safe:fine-wide:overflow-hidden [&::-webkit-scrollbar]:hidden"
+      >
         <div
-          ref={stripRef}
-          data-rail-strip
-          className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-[calc((100vw-min(60vw,272px))/2)] pb-2 [scrollbar-width:none] sm:px-[calc((100vw-min(86vw,560px))/2)] md:-mx-12 lg:-mx-20 [&::-webkit-scrollbar]:hidden"
+          ref={trackRef}
+          data-rail-track
+          className="flex w-max gap-4 px-[calc((100vw-min(60vw,272px))/2)] sm:px-[calc((100vw-min(86vw,560px))/2)] fine-wide:gap-8 fine-wide:px-0"
         >
           {items.map((child, i) => (
-            <div key={i} data-rail-card className="w-[60vw] max-w-[272px] shrink-0 snap-center sm:w-[86vw] sm:max-w-[560px]">
-              {child}
-            </div>
-          ))}
-        </div>
-        <div className="mt-7 flex items-center gap-5">
-          <span className="text-mono-label text-gold [font-variant-numeric:tabular-nums]">
-            {String(idx).padStart(2, '0')} / {String(items.length).padStart(2, '0')}
-          </span>
-          <span className="relative flex-1">
-            <span className="hairline block opacity-60" />
-            <span
-              ref={barRef}
-              data-rail-progress
-              aria-hidden
-              className="absolute inset-0 origin-left scale-x-0 bg-gold"
-            />
-          </span>
-        </div>
-      </div>
-    )
-  }
-
-  if (mode !== 'pinned') {
-    return (
-      <div className="mt-14 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-1 sm:gap-x-8 sm:gap-y-14 md:grid-cols-2">
-        {items.map((child, i) => (
-          <Reveal key={i} delay={(i % 2) * 90} dir={i % 2 === 0 ? 'left' : 'right'}>
-            {child}
-          </Reveal>
-        ))}
-      </div>
-    )
-  }
-
-  return (
-    <div ref={scope} className="mt-14">
-      <div className="overflow-hidden">
-        <div data-rail-track className="flex gap-8">
-          {items.map((child, i) => (
-            <div key={i} className="w-[min(44vw,640px)] shrink-0">
+            <div
+              key={i}
+              data-rail-card
+              className="w-[60vw] max-w-[272px] shrink-0 snap-center sm:w-[86vw] sm:max-w-[560px] fine-wide:w-[min(44vw,640px)] fine-wide:max-w-none"
+            >
               {child}
             </div>
           ))}
         </div>
       </div>
-      <div className="mt-8 flex items-center gap-5">
+      {/* Counter + gold hairline — above the strip on phones, below from sm */}
+      <div className="order-first mb-5 flex items-center gap-5 sm:order-none sm:mt-7 sm:mb-0 fine-wide:mt-8">
         <span className="text-mono-label text-gold [font-variant-numeric:tabular-nums]">
           {String(idx).padStart(2, '0')} / {String(items.length).padStart(2, '0')}
         </span>
-        <span className="hairline flex-1 opacity-60" />
+        <span className="relative flex-1">
+          <span className="hairline block opacity-60" />
+          <span
+            ref={barRef}
+            data-rail-progress
+            aria-hidden
+            className="absolute inset-0 origin-left scale-x-0 bg-gold"
+          />
+        </span>
       </div>
     </div>
   )

@@ -2,7 +2,7 @@ import { siteConfig } from '@/lib/site.config'
 import { absoluteUrl, localizedPath } from '@/lib/seo'
 import { team } from '@/lib/team'
 import type { Locale } from '@/i18n/config'
-import type { Project } from '@/lib/projects'
+import { visitUrl, type Project } from '@/lib/projects'
 
 /** Stable @id anchors so nodes can reference each other across the graph. */
 const ORG_ID = `${siteConfig.url}/#organization`
@@ -158,7 +158,7 @@ export function creativeWorkSchema(project: Project, locale: Locale): Json {
   // never liveUrl (which is '#' for in-production work). The live site, when
   // real, is exposed separately as sameAs.
   const pageUrl = absoluteUrl(localizedPath(locale, `work/${project.slug}`))
-  const hasLive = !project.isInternal && project.liveUrl !== '#'
+  const live = project.isInternal ? null : visitUrl(project)
   // Inlet is a real SaaS product — dual-typed so engines see the application.
   const isApp = project.slug === 'inlet'
   return {
@@ -177,6 +177,6 @@ export function creativeWorkSchema(project: Project, locale: Locale): Json {
     about: project.category,
     creator: { '@id': ORG_ID },
     ...(project.thumb ? { image: absoluteUrl(project.thumb) } : {}),
-    ...(hasLive ? { sameAs: project.liveUrl } : {}),
+    ...(live ? { sameAs: live } : {}),
   }
 }
